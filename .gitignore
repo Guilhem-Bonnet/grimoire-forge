@@ -23,6 +23,7 @@ Thumbs.db
 # BMAD runtime (mémoire, cache)
 _bmad/_memory/*.json
 _bmad/_memory/qdrant_cache/
+qdrant_data/
 
 # pytest
 .pytest_cache/

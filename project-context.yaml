@@ -1,0 +1,34 @@
+# BMAD Custom Kit — Project Context (meta-projet)
+# Workspace dédié à la planification et l'amélioration du kit
+
+project:
+  name: "bmad-custom"
+  description: "Meta-projet d'auto-amélioration du bmad-custom-kit"
+  type: "meta"
+  metaphor: "forge"                     # La forge où l'on fabrique et affûte les outils
+  stack: ["python", "yaml", "markdown"]
+  repos:
+    - name: "bmad-custom"
+      path: "."
+      default_branch: "main"
+    - name: "bmad-custom-kit"
+      path: "./bmad-custom-kit"
+      default_branch: "main"
+
+user:
+  name: "Guilhem"
+  language: "Français"
+  document_language: "Français"
+  skill_level: "expert"
+
+memory:
+  backend: "qdrant-local"
+  collection_prefix: "bmad_meta"
+  embedding_model: "sentence-transformers/all-MiniLM-L6-v2"
+  # qdrant_data stocké dans framework/memory/qdrant_data/ par défaut
+
+agents:
+  archetype: "meta"
+  custom_agents: []
+
+installed_archetypes: ["meta"]
