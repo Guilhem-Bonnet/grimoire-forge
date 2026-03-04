@@ -1,0 +1,28 @@
+{
+  // ════════════════════════════════════════════════════════════════════
+  // bmad-custom workspace — VS Code settings
+  // Réglages pour le workspace racine (hérités par tous les sous-projets)
+  // ════════════════════════════════════════════════════════════════════
+
+  // ── Diff — éviter "L'algorithme diff a été arrêté tôt" ──────────────
+  "diffEditor.maxComputationTime": 0,
+  "diffEditor.maxFileSize": 0,
+
+  // ── Recherche — exclure les gros répertoires knowledge ──────────────
+  // Réduit le volume que Copilot indexe → moins de timeouts réseau
+  "search.exclude": {
+    "_bmad/tea/testarch/knowledge/": true,
+    "_bmad/tea/workflows/": true,
+    "_bmad/_memory/": true,
+    "_bmad-output/": true,
+    "**/node_modules": true,
+    "**/.terraform": true,
+    "**/.venv": true
+  },
+
+  // ── Fichiers exclus de l'explorateur ────────────────────────────────
+  "files.exclude": {
+    "**/__pycache__": true,
+    "**/*.pyc": true
+  }
+}

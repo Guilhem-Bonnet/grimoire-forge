@@ -1,0 +1,58 @@
+# CI — BMAD Custom Kit
+# Valide les scripts bash du framework à chaque push/PR sur main.
+
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  shellcheck:
+    name: ShellCheck — scripts framework
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install ShellCheck
+        run: sudo apt-get install -y shellcheck
+
+      - name: Lint bmad-init.sh
+        run: shellcheck -S warning bmad-custom-kit/bmad-init.sh
+
+      - name: Lint framework scripts
+        run: |
+          shellcheck -S warning bmad-custom-kit/framework/cc-verify.sh
+          shellcheck -S warning bmad-custom-kit/framework/sil-collect.sh
+          shellcheck -S warning bmad-custom-kit/framework/hooks/pre-commit-cc.sh
+
+  syntax-check:
+    name: Syntax bash — validation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate bash syntax
+        run: |
+          bash -n bmad-custom-kit/bmad-init.sh && echo "✅ bmad-init.sh"
+          bash -n bmad-custom-kit/framework/cc-verify.sh && echo "✅ cc-verify.sh"
+          bash -n bmad-custom-kit/framework/sil-collect.sh && echo "✅ sil-collect.sh"
+          bash -n bmad-custom-kit/framework/hooks/pre-commit-cc.sh && echo "✅ pre-commit-cc.sh"
+
+  smoke-test:
+    name: Smoke test — bmad-init.sh --help
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Test --help flag
+        run: bash bmad-custom-kit/bmad-init.sh --help
+
+      - name: Test detect_stack sur le repo lui-même
+        run: |
+          source <(sed -n '/^detect_stack/,/^}/p' bmad-custom-kit/bmad-init.sh)
+          stacks=$(detect_stack "$(pwd)/bmad-custom-kit")
+          echo "Stacks détectés : $stacks"
+          [[ -n "$stacks" ]] && echo "✅ detect_stack OK" || echo "⚠️  Aucun stack détecté"
