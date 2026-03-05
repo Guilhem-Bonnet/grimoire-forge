@@ -1,6 +1,6 @@
 {
   // ════════════════════════════════════════════════════════════════════
-  // bmad-custom workspace — VS Code settings
+  // grimoire workspace — VS Code settings
   // Réglages pour le workspace racine (hérités par tous les sous-projets)
   // ════════════════════════════════════════════════════════════════════
 
@@ -19,6 +19,13 @@
     "**/.terraform": true,
     "**/.venv": true
   },
+
+  // ── Python Testing — désactiver la discovery automatique ──────────────
+  // Empêche VS Code de spawner des centaines de processus
+  // `unittest discover` sur les 75+ fichiers de test du sous-projet.
+  // Lancer les tests manuellement via le terminal ou un task runner.
+  "python.testing.unittestEnabled": false,
+  "python.testing.pytestEnabled": false,
 
   // ── Fichiers exclus de l'explorateur ────────────────────────────────
   "files.exclude": {
