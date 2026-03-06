@@ -2,17 +2,17 @@
 # Workspace dédié à la planification et l'amélioration du kit
 
 project:
-  name: "bmad-custom"
-  description: "Meta-projet d'auto-amélioration du bmad-custom-kit"
+  name: "grimoire"
+  description: "Meta-projet d'auto-amélioration de grimoire-kit"
   type: "meta"
-  metaphor: "forge"                     # La forge où l'on fabrique et affûte les outils
+  metaphor: "grimoire"                   # Le livre de sorts où l'on invoque et perfectionne les agents
   stack: ["python", "yaml", "markdown"]
   repos:
-    - name: "bmad-custom"
+    - name: "grimoire"
       path: "."
       default_branch: "main"
-    - name: "bmad-custom-kit"
-      path: "./bmad-custom-kit"
+    - name: "grimoire-kit"
+      path: "./grimoire-kit"
       default_branch: "main"
 
 user:

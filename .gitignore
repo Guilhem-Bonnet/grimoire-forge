@@ -1,9 +1,9 @@
 # ═══════════════════════════════════════════════════════════════════════════════
-# bmad-custom (meta-projet) — .gitignore
+# grimoire (meta-projet) — .gitignore
 # ═══════════════════════════════════════════════════════════════════════════════
 
 # Le produit a son propre repo git — on l'exclut ici
-bmad-custom-kit/
+grimoire-kit/
 
 # Python
 __pycache__/
@@ -28,3 +28,4 @@ qdrant_data/
 # pytest
 .pytest_cache/
 .ruff_cache/
+bmad-custom-kit/

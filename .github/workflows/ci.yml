@@ -1,4 +1,4 @@
-# CI — BMAD Custom Kit
+# CI — Grimoire Kit
 # Valide les scripts bash du framework à chaque push/PR sur main.
 
 name: CI
@@ -20,13 +20,13 @@ jobs:
         run: sudo apt-get install -y shellcheck
 
       - name: Lint bmad-init.sh
-        run: shellcheck -S warning bmad-custom-kit/bmad-init.sh
+        run: shellcheck -S warning grimoire-kit/bmad-init.sh
 
       - name: Lint framework scripts
         run: |
-          shellcheck -S warning bmad-custom-kit/framework/cc-verify.sh
-          shellcheck -S warning bmad-custom-kit/framework/sil-collect.sh
-          shellcheck -S warning bmad-custom-kit/framework/hooks/pre-commit-cc.sh
+          shellcheck -S warning grimoire-kit/framework/cc-verify.sh
+          shellcheck -S warning grimoire-kit/framework/sil-collect.sh
+          shellcheck -S warning grimoire-kit/framework/hooks/pre-commit-cc.sh
 
   syntax-check:
     name: Syntax bash — validation
@@ -36,10 +36,10 @@ jobs:
 
       - name: Validate bash syntax
         run: |
-          bash -n bmad-custom-kit/bmad-init.sh && echo "✅ bmad-init.sh"
-          bash -n bmad-custom-kit/framework/cc-verify.sh && echo "✅ cc-verify.sh"
-          bash -n bmad-custom-kit/framework/sil-collect.sh && echo "✅ sil-collect.sh"
-          bash -n bmad-custom-kit/framework/hooks/pre-commit-cc.sh && echo "✅ pre-commit-cc.sh"
+          bash -n grimoire-kit/bmad-init.sh && echo "✅ bmad-init.sh"
+          bash -n grimoire-kit/framework/cc-verify.sh && echo "✅ cc-verify.sh"
+          bash -n grimoire-kit/framework/sil-collect.sh && echo "✅ sil-collect.sh"
+          bash -n grimoire-kit/framework/hooks/pre-commit-cc.sh && echo "✅ pre-commit-cc.sh"
 
   smoke-test:
     name: Smoke test — bmad-init.sh --help
@@ -48,11 +48,11 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Test --help flag
-        run: bash bmad-custom-kit/bmad-init.sh --help
+        run: bash grimoire-kit/bmad-init.sh --help
 
       - name: Test detect_stack sur le repo lui-même
         run: |
-          source <(sed -n '/^detect_stack/,/^}/p' bmad-custom-kit/bmad-init.sh)
-          stacks=$(detect_stack "$(pwd)/bmad-custom-kit")
+          source <(sed -n '/^detect_stack/,/^}/p' grimoire-kit/bmad-init.sh)
+          stacks=$(detect_stack "$(pwd)/grimoire-kit")
           echo "Stacks détectés : $stacks"
           [[ -n "$stacks" ]] && echo "✅ detect_stack OK" || echo "⚠️  Aucun stack détecté"

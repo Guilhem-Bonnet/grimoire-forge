@@ -63,12 +63,42 @@ For each selected agent:
 - **Innovator/Creative Agent**: "What an inspiring creative journey! Don't let those innovative ideas fade - nurture them and watch them grow. Keep thinking outside the box! 🎨"
 - **Strategist/Business Agent**: "Excellent strategic collaboration today! The insights we've developed will serve you well. Keep analyzing, keep optimizing, and keep winning! 📈"
 
-### 3. Session Highlight Summary
+### 3. Session Highlight Summary — Productive Conflict Report
 
-Briefly acknowledge key discussion outcomes:
+> Référence : `framework/productive-conflict-engine.md` (BM-54)
 
-**Session Recognition:**
-"**Session Highlights:** Today we explored [main topic] through [number] different perspectives, generating valuable insights on [key outcomes]. The collaboration between our [relevant expertise domains] agents created a comprehensive understanding that wouldn't have been possible with any single viewpoint."
+Produce a structured session summary that captures both the collaborative outcomes AND the quality of debate:
+
+**Session Summary Format:**
+
+```markdown
+## 📊 Synthèse du Party Mode
+
+### Décisions prises
+| # | Décision | Méthode | Confiance |
+|---|----------|---------|-----------|
+| 1 | {décision} | {consensus/vote/débat} | {haute/moyenne/basse} |
+
+### Désaccords non résolus
+| # | Sujet | Camps | Recommandation |
+|---|-------|-------|---------------|
+| 1 | {sujet} | {agent} vs {agent} | {vote/escalade/time-box} |
+
+### Hypothèses à vérifier
+- {hypothèse 1} — responsable : {agent}
+
+### Meilleures idées émergées
+1. {idée 1} — proposée par {agent}, renforcée par {agent}
+
+### Métriques du débat
+- Divergence score moyen : {score}
+- Rounds joués : {count}
+- Modes PCE utilisés : {free/red-blue/six-hats/adversarial}
+- Challenges substantiels : {count}
+- Votes effectués : {count}
+```
+
+If no formal PCE modes were used (simple discussion), generate a lighter summary focusing on key insights and next actions.
 
 ### 4. Final Party Mode Conclusion
 

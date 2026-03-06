@@ -232,12 +232,12 @@ mwm,phase-1,Daily Check In,DCI,10,_bmad/mwm/workflows/daily-checkin/workflow.md,
 mwm,phase-2,Wellness Journal,WJ,20,_bmad/mwm/workflows/wellness-journal/workflow.md,mwm_journal,false,wellness-companion,Journal Mode,"Reflect and track your wellness journey",mwm_output,"entry",
 ```
 
-### Standalone Module (like bmad-custom):
+### Standalone Module (like grimoire):
 ```csv
 module,phase,name,code,sequence,workflow-file,command,required,agent,options,description,output-location,outputs,
-bmad-custom,anytime,Quiz Master,QM,,"bmad_quiz",false,,Trivia,"Interactive trivia quiz with gameshow atmosphere",bmad_output,"results",
-bmad-custom,anytime,Wassup,WS,,"bmad_wassup",false,,Status,"Check uncommitted changes and suggest commits",bmad_output,"summary",
-bmad-custom,anytime,Write Commit,WC,,"bmad_write_commit",false,commit-poet,Write,"Craft a commit message from your changes",bmad_output,"message",
+grimoire,anytime,Quiz Master,QM,,"bmad_quiz",false,,Trivia,"Interactive trivia quiz with gameshow atmosphere",bmad_output,"results",
+grimoire,anytime,Wassup,WS,,"bmad_wassup",false,,Status,"Check uncommitted changes and suggest commits",bmad_output,"summary",
+grimoire,anytime,Write Commit,WC,,"bmad_write_commit",false,commit-poet,Write,"Craft a commit message from your changes",bmad_output,"message",
 ```
 
 ---

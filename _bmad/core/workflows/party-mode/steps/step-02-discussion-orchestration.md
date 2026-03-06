@@ -58,6 +58,50 @@ Select 2-3 most relevant agents based on analysis:
 - Rotate agent participation over time to ensure inclusive discussion
 - Balance expertise domains for comprehensive perspectives
 
+### 2b. Productive Conflict Engine (PCE) — Mode Selection
+
+> Référence complète : `framework/productive-conflict-engine.md`
+
+Pour chaque nouveau sujet ou question de l'utilisateur, le facilitateur choisit le **mode de discussion** :
+
+| Contexte | Mode | Description |
+|----------|------|-------------|
+| Discussion exploratoire | **Free Discussion** | Discussion libre avec divergence monitoring |
+| Choix binaire / décision | **Red Team / Blue Team** | Deux camps défendent des positions opposées |
+| Sujet complexe multi-facettes | **Six Thinking Hats** | Exploration systématique depuis 6 angles |
+| Review technique critique | **Adversarial Review** | Défenseur vs attaquant + jury |
+
+**Annonce du mode :**
+"Pour cette discussion, on va utiliser le mode {mode_name} — {1 ligne d'explication}"
+
+**Rôles Dynamiques (rotation chaque 2 rounds) :**
+- 🔴 **Devil's Advocate** : Critiquer les idées dominantes (jamais le même agent 2 rounds de suite)
+- 📝 **Synthétiseur** : Résumer le round en 3 bullets (agent qui a le moins parlé)
+- 🔍 **Vérificateur** : S'assurer que les affirmations sont étayées
+- 💥 **Provocateur** : Poser la question que personne n'ose poser
+
+**Divergence Monitoring (après chaque 2 rounds) :**
+- Score < 0.2 → 🔴 Consensus mou → Injecter Devil's Advocate, question provocatrice
+- Score 0.4-0.7 → 🟢 Zone productive → Continuer
+- Score > 0.7 → 🟡 Forte divergence → Guider vers Steelman croisé puis synthèse
+- Discussion circulaire détectée → STOP + résumé + proposition de vote ou escalade
+
+**Steelman Obligatoire (en Red Team / Blue Team) :**
+Avant de contre-argumenter, chaque camp DOIT reformuler l'argument adverse dans sa version LA PLUS FORTE.
+
+**Système de Réactions Inter-Agents :**
+Les agents utilisent des préfixes de réaction quand ils répondent à un autre agent :
+- ⚔️ CHALLENGE : contre-argumentation directe (avec preuve)
+- 🏗️ BUILD : construction sur l'idée (extension concrète)
+- 🔍 NUANCE : "Vrai, mais..." (avec la nuance précise)
+- ❓ QUESTION : hypothèse non vérifiée identifiée
+- 🤝 CONCEDE : reconnaissance de point + ajustement de position
+- 🃏 WILDCARD : perspective orthogonale au débat
+
+**Mécanisme de Vote (si divergence non résolue) :**
+Chaque agent vote avec : choix + confiance (1-5 ⭐) + rationale (1 phrase) + compromis acceptable.
+Résultat affiché en tableau avec répartition et niveau de consensus.
+
 ### 3. In-Character Response Generation
 
 Generate authentic responses for each selected agent:

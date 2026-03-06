@@ -3,7 +3,7 @@
 
 ## Project Configuration
 
-- **Project**: bmad-custom
+- **Project**: grimoire
 - **User**: Guilhem
 - **Communication Language**: Français
 - **Document Output Language**: Français
@@ -39,20 +39,31 @@
 
 ## Available Agents
 
+> **Architecture SOG (BM-53)** : Un seul agent est exposé à l'utilisateur — le BMad Master Orchestrator.
+> Tous les autres agents fonctionnent comme sub-agents invisibles, dispatchés automatiquement
+> par l'orchestrateur selon l'intention détectée. Voir `bmad-custom-kit/framework/orchestrator-gateway.md`.
+
 | Agent | Persona | Title | Capabilities |
 |---|---|---|---|
-| bmad-master | BMad Master | BMad Master Executor, Knowledge Custodian, and Workflow Orchestrator | runtime resource management, workflow orchestration, task execution, knowledge custodian |
-| analyst | Mary | Business Analyst | market research, competitive analysis, requirements elicitation, domain expertise |
-| architect | Winston | Architect | distributed systems, cloud infrastructure, API design, scalable patterns |
-| dev | Amelia | Developer Agent | story execution, test-driven development, code implementation |
-| pm | John | Product Manager | PRD creation, requirements discovery, stakeholder alignment, user interviews |
-| qa | Quinn | QA Engineer | test automation, API testing, E2E testing, coverage analysis |
-| quick-flow-solo-dev | Barry | Quick Flow Solo Dev | rapid spec creation, lean implementation, minimum ceremony |
-| sm | Bob | Scrum Master | sprint planning, story preparation, agile ceremonies, backlog management |
-| tech-writer | Paige | Technical Writer | documentation, Mermaid diagrams, standards compliance, concept explanation |
-| ux-designer | Sally | UX Designer | user research, interaction design, UI patterns, experience strategy |
+| bmad-master | BMad Master | Smart Orchestrator Gateway — Point d'entrée unique | orchestration SOG, dispatch intelligent, anti-hallucination HUP, escalation QEC, validation CVTL, party mode PCE |
+
+### Sub-agents internes (invisibles à l'utilisateur)
+
+L'orchestrateur dispatche automatiquement vers ces agents selon le besoin :
+
+| Sub-agent | Persona | Spécialité |
+|---|---|---|
+| analyst | Mary | Business analysis, requirements |
+| architect | Winston | Architecture, infrastructure |
+| dev | Amelia | Implémentation, TDD |
+| pm | John | Product management, PRD |
+| qa | Quinn | Tests, QA |
+| quick-flow-solo-dev | Barry | Rapid spec + implementation |
+| sm | Bob | Scrum, stories, backlog |
+| tech-writer | Paige | Documentation |
+| ux-designer | Sally | UX/UI design |
 
 ## Slash Commands
 
-Type `/bmad-` in Copilot Chat to see all available BMAD workflows and agent activators. Agents are also available in the agents dropdown.
+Type `/bmad-` in Copilot Chat to see all available BMAD workflows. L'orchestrateur est disponible dans le dropdown agents sous `bmad-master`.
 <!-- BMAD:END -->
