@@ -1,0 +1,119 @@
+{
+  // ════════════════════════════════════════════════════════════════════
+  // grimoire workspace — VS Code Tasks
+  // Ctrl+Shift+P → Tasks: Run Task → choisir la tâche
+  // ════════════════════════════════════════════════════════════════════
+  "version": "2.0.0",
+  "options": {
+    "cwd": "${workspaceFolder}/bmad-custom-kit"
+  },
+  "tasks": [
+    // ── Tests ────────────────────────────────────────────────────────
+    {
+      "label": "bmad: test-all",
+      "type": "shell",
+      "command": "python3 -m pytest tests/ -q --tb=short -x --ignore=tests/test_background_tasks.py",
+      "group": {
+        "kind": "test",
+        "isDefault": true
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": true,
+        "close": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "bmad: test-modified",
+      "type": "shell",
+      "command": "bash -c 'CHANGED=$(git diff --name-only --diff-filter=ACMR HEAD -- \"tests/test_*.py\" | tr \"\\n\" \" \"); if [ -z \"$CHANGED\" ]; then echo \"Aucun test modifié.\"; else python3 -m pytest $CHANGED -q --tb=short -x; fi'",
+      "group": "test",
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": true,
+        "close": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "bmad: test-file",
+      "type": "shell",
+      "command": "python3 -m pytest ${relativeFile} -v --tb=short -x",
+      "group": "test",
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": true,
+        "close": true
+      },
+      "problemMatcher": []
+    },
+    // ── Lint ─────────────────────────────────────────────────────────
+    {
+      "label": "bmad: lint",
+      "type": "shell",
+      "command": "python3 -m ruff check framework/tools/ tests/ --statistics",
+      "group": "build",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "clear": true,
+        "close": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "bmad: lint-fix",
+      "type": "shell",
+      "command": "python3 -m ruff check framework/tools/ tests/ --fix --statistics",
+      "group": "build",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "clear": true,
+        "close": true
+      },
+      "problemMatcher": []
+    },
+    // ── Validation rapide ────────────────────────────────────────────
+    {
+      "label": "bmad: quick-check",
+      "type": "shell",
+      "command": "bash -c 'echo \"=== LINT ===\" && python3 -m ruff check framework/tools/ --statistics -q 2>&1 | tail -5 && echo \"\\n=== TESTS (modifiés) ===\" && CHANGED=$(git diff --name-only --diff-filter=ACMR HEAD -- \"tests/test_*.py\" | tr \"\\n\" \" \"); if [ -z \"$CHANGED\" ]; then echo \"Aucun test modifié — skip\"; else python3 -m pytest $CHANGED -q --tb=line -x; fi'",
+      "group": "build",
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": true,
+        "close": true
+      },
+      "problemMatcher": []
+    },
+    // ── Memory tools ─────────────────────────────────────────────────
+    {
+      "label": "bmad: memory-lint",
+      "type": "shell",
+      "command": "python3 framework/tools/memory-lint.py --project-root ${workspaceFolder}",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "close": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "bmad: preflight",
+      "type": "shell",
+      "command": "python3 framework/tools/preflight-check.py --project-root ${workspaceFolder}",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "close": true
+      },
+      "problemMatcher": []
+    }
+  ]
+}
