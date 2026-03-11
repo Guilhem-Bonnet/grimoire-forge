@@ -152,6 +152,41 @@
         "close": true
       },
       "problemMatcher": []
+    },
+    // ── Configuration utilisateur ────────────────────────────────────
+    {
+      "label": "grimoire: setup",
+      "type": "shell",
+      "command": "bash grimoire.sh setup --sync",
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": true,
+        "close": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "grimoire: setup-check",
+      "type": "shell",
+      "command": "bash grimoire.sh setup --check",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "close": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "grimoire: setup-interactive",
+      "type": "shell",
+      "command": "bash grimoire.sh setup",
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": true
+      },
+      "problemMatcher": []
     }
   ]
 }
