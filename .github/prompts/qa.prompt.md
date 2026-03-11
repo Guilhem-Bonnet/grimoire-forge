@@ -1,7 +1,7 @@
 ---
-description: 'QA Engineer'
+description: 'QA Engineer — tests, quality assurance, validation'
 agent: 'agent'
-tools: ['read', 'edit', 'search', 'execute']
+tools: ['read', 'search', 'execute']
 ---
 
 1. Load {project-root}/_bmad/bmm/config.yaml and store ALL fields as session variables

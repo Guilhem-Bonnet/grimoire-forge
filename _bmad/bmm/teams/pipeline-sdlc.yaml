@@ -1,0 +1,104 @@
+# Pipeline SDLC — Software Development Lifecycle
+# Chaîne standard de handoff entre agents BMM
+# Chaque étape produit un artefact consommé par la suivante.
+
+pipeline:
+  name: SDLC Pipeline
+  description: >
+    Chaîne complète d'un projet logiciel : de l'idée brute au code testé.
+    Chaque agent produit un artefact qui devient l'input du suivant.
+  icon: 🔄
+
+stages:
+  - id: analysis
+    agent: analyst        # Mary
+    produces:
+      - product-brief
+      - market-research
+      - domain-research
+    handoff_to: pm
+    gate: "Brief validé avec confidence ≥ MEDIUM"
+
+  - id: product
+    agent: pm             # John
+    consumes:
+      - product-brief
+    produces:
+      - prd
+      - epics-and-stories
+    handoff_to: [ux-designer, architect]  # parallèle
+    gate: "PRD validé (workflow validate-prd)"
+
+  - id: ux-design
+    agent: ux-designer    # Sally
+    consumes:
+      - prd
+    produces:
+      - ux-design
+    handoff_to: architect
+    gate: "UX document avec personas et journey maps"
+
+  - id: architecture
+    agent: architect      # Winston
+    consumes:
+      - prd
+      - ux-design
+    produces:
+      - architecture
+    handoff_to: sm
+    gate: "Architecture doc avec ADRs et implementation readiness ✓"
+
+  - id: sprint-planning
+    agent: sm             # Bob
+    consumes:
+      - epics-and-stories
+      - architecture
+    produces:
+      - sprint-plan
+      - story-files
+    handoff_to: dev
+    gate: "Stories respectent Definition of Ready"
+
+  - id: implementation
+    agent: dev            # Amelia
+    consumes:
+      - story-files
+    produces:
+      - code
+      - tests
+    handoff_to: qa
+    gate: "Tous les tests passent, story file marquée [x]"
+
+  - id: qa-validation
+    agent: qa             # Quinn (quick) ou tea/Murat (stratégique)
+    consumes:
+      - code
+    produces:
+      - test-report
+      - coverage-report
+    handoff_to: null      # fin du pipeline ou retour à sm pour story suivante
+    gate: "Couverture minimum atteinte, 0 test en échec"
+
+# Boucle de feedback
+feedback_loops:
+  - from: qa
+    to: dev
+    trigger: "Tests échouent ou couverture insuffisante"
+  - from: architect
+    to: pm
+    trigger: "Faisabilité technique remet en question un requirement"
+  - from: sm
+    to: pm
+    trigger: "Story trop large ou ambiguë pour entrer en sprint"
+  - from: dev
+    to: sm
+    trigger: "Blocage technique nécessitant re-priorisation"
+
+# Cross-validation (CVTL triggers)
+cross_validation:
+  - output: architecture
+    validators: [pm, dev]
+    reason: "Décision irréversible — besoin de perspectives multiples"
+  - output: prd
+    validators: [analyst, architect]
+    reason: "Alignement business-technique"

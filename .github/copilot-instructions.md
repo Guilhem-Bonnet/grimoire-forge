@@ -36,6 +36,7 @@
 - Follow step-based workflow execution: load steps JIT, never multiple at once
 - Save outputs after EACH step when using the workflow engine
 - The `{project-root}` variable resolves to the workspace root at runtime
+- **Documentation charter**: Avant de créer ou modifier un fichier `.md`, charger `_bmad/_memory/tech-writer-sidecar/documentation-standards.md` et respecter la charte (CommonMark, style guide, quality checklist)
 
 ## Available Agents
 
@@ -51,17 +52,91 @@
 
 L'orchestrateur dispatche automatiquement vers ces agents selon le besoin :
 
-| Sub-agent | Persona | Spécialité |
+#### BMM — Méthode BMAD
+
+| Sub-agent | Persona | Outils | Handoffs | Spécialité |
+|---|---|---|---|---|
+| analyst | Mary | read, search | pm, architect | Business analysis, requirements |
+| architect | Winston | read, edit, search | dev, sm | Architecture, infrastructure |
+| dev | Amelia | read, edit, search, execute | qa, tea | Implémentation, TDD |
+| pm | John | read, edit, search | architect, sm, ux-designer | Product management, PRD |
+| qa | Quinn | read, search, execute | dev, tech-writer | Tests, QA |
+| quick-flow-solo-dev | Barry | read, edit, search, execute | qa | Rapid spec + implementation |
+| sm | Bob | read, edit, search | dev, qa | Scrum, stories, backlog |
+| tech-writer | Paige | read, edit, search | — | Documentation |
+| ux-designer | Sally | read, search | — | UX/UI design |
+
+#### BMB — Builders
+
+| Sub-agent | Persona | Outils | Spécialité |
+|---|---|---|---|
+| agent-builder | Bond | read, edit, search | Création d'agents BMAD |
+| module-builder | Morgan | read, edit, search | Création de modules |
+| workflow-builder | Wendy | read, edit, search | Création de workflows |
+
+#### CIS — Créativité et Innovation
+
+| Sub-agent | Persona | Outils | Spécialité |
+|---|---|---|---|
+| brainstorming-coach | Carson | read, search | Brainstorming, idéation |
+| creative-problem-solver | Dr. Quinn | read, search | TRIZ, problem solving |
+| design-thinking-coach | Maya | read, search | Design thinking |
+| innovation-strategist | Victor | read, search | Innovation, Blue Ocean |
+| presentation-master | Caravaggio | read, edit, search | Présentations, pitch decks |
+| storyteller | Sophia | read, search | Narratives, storytelling |
+
+#### TEA — Test Architecture
+
+| Sub-agent | Persona | Outils | Handoffs | Spécialité |
+|---|---|---|---|---|
+| tea | Murat | read, search, execute | dev, qa | Test architecture, ATDD, CI/CD |
+
+## Agent Lifecycle Hooks
+
+| Hook | Événement | Action |
 |---|---|---|
-| analyst | Mary | Business analysis, requirements |
-| architect | Winston | Architecture, infrastructure |
-| dev | Amelia | Implémentation, TDD |
-| pm | John | Product management, PRD |
-| qa | Quinn | Tests, QA |
-| quick-flow-solo-dev | Barry | Rapid spec + implementation |
-| sm | Bob | Scrum, stories, backlog |
-| tech-writer | Paige | Documentation |
-| ux-designer | Sally | UX/UI design |
+| bmad-session-start | SessionStart | Injection automatique du contexte BMAD |
+| bmad-memory-guard | PreToolUse | Protection mémoire `_bmad/_memory/` |
+| bmad-post-edit | PostToolUse | Auto-lint ruff (Python) + validation frontmatter YAML (artefacts UDF) |
+| bmad-subagent-trace | SubagentStart/Stop | Tracing des transitions SOG |
+
+## Unified Dynamic Factory (UDF)
+
+L'orchestrateur peut créer dynamiquement 4 types d'artefacts quand aucun existant ne couvre le besoin.
+
+**Registre centralisé** : `_bmad/_config/udf-registry.yaml` — source de vérité pour les conventions (paths, templates, seuils) de chaque type d'artefact.
+
+### Types d'artefacts
+
+| Type | Builder | Éphémère | Permanent | Emplacement |
+|---|---|---|---|---|
+| Agent | agent-builder | `_dyn-*.agent.md` | `{slug}.agent.md` | `.github/agents/` |
+| Workflow | workflow-builder | `_dyn-*.prompt.md` | `{slug}.prompt.md` | `.github/prompts/` |
+| Skill | workflow-builder + dev | `_dyn-*/SKILL.md` | `{slug}/SKILL.md` | `.github/skills/` |
+| Instruction | tech-writer | `_dyn-*.instructions.md` | `{slug}.instructions.md` | `.github/instructions/` |
+
+### Processus
+
+1. **Gap detection** : le SOG analyse la requête et identifie qu'aucun artefact existant ne correspond
+2. **Type classification** : le SOG détermine le type d'artefact nécessaire (agent, workflow, skill, instruction)
+3. **Triage de durabilité** : score de durabilité pour décider entre création éphémère ou permanente
+4. **Création** : dispatch vers le builder approprié en mode Rapid (éphémère) ou Full (permanent)
+5. **Post-use** : promotion automatique des éphémères réutilisés 3+ fois
+
+### Triage de durabilité
+
+| Signal | Score |
+|---|---|
+| Domaine lié au stack technique du projet | +2 |
+| Besoin déjà exprimé dans une session précédente | +2 |
+| Domaine transversal (sécurité, performance, accessibilité, data) | +2 |
+| Besoin récurrent dans le cycle de vie produit | +1 |
+| Besoin ponctuel/exploratoire | -2 |
+| Domaine très niche | -1 |
+
+- **Score ≥ 3** → Création permanente via template `permanent-*.tpl.md`
+- **Score < 3** → Création éphémère via template `dynamic-*.tpl.md` (expire 7j)
+- **Nettoyage** : task `bmad: cleanup-dynamic-artifacts` nettoie tous les artefacts expirés
 
 ## Slash Commands
 

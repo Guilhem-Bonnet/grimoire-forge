@@ -1,7 +1,7 @@
 ---
-description: 'UX Designer'
+description: 'UX Designer — design UX/UI, wireframes, user flows'
 agent: 'agent'
-tools: ['read', 'edit', 'search', 'execute']
+tools: ['read', 'search']
 ---
 
 1. Load {project-root}/_bmad/bmm/config.yaml and store ALL fields as session variables

@@ -22,8 +22,21 @@ Thumbs.db
 
 # BMAD runtime (mémoire, cache)
 _bmad/_memory/*.json
+_bmad/_memory/*.jsonl
 _bmad/_memory/qdrant_cache/
 qdrant_data/
+
+# BMAD output runtime (logs, dashboards, vector DB)
+_bmad-output/.agent-graph.yaml
+_bmad-output/.event-log.jsonl
+_bmad-output/.qdrant_data/
+_bmad-output/.router-stats.jsonl
+_bmad-output/.workers/
+_bmad-output/observatory.html
+_bmad-output/BMAD_TRACE.md
+
+# Grimoire output runtime
+_grimoire-output/
 
 # pytest
 .pytest_cache/

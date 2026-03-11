@@ -1,0 +1,11 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "type": "command",
+        "command": ".github/hooks/scripts/bmad-post-edit.sh",
+        "timeout": 15
+      }
+    ]
+  }
+}

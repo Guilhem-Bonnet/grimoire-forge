@@ -10,3 +10,8 @@ _Aucune requête en attente._
 
 - **Projet** : Grimoire
 - **Phase** : v2.4.1 stable — planification v4 en cours
+
+## Conventions obligatoires
+
+- **Documentation** : TOUTE création ou modification de document (.md) DOIT respecter la charte dans `_bmad/_memory/tech-writer-sidecar/documentation-standards.md`. Charger ce fichier AVANT d'écrire.
+- **Architecture Docs** : doivent inclure diagramme Mermaid, composants, data flow, ADRs. Voir section "Architecture Docs" de la charte.

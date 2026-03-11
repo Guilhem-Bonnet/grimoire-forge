@@ -1,7 +1,7 @@
 ---
-description: 'Product Manager'
+description: 'Product Manager — PRD, product strategy, roadmap'
 agent: 'agent'
-tools: ['read', 'edit', 'search', 'execute']
+tools: ['read', 'edit', 'search']
 ---
 
 1. Load {project-root}/_bmad/bmm/config.yaml and store ALL fields as session variables

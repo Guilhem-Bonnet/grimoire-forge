@@ -1,0 +1,97 @@
+# Pipeline Innovation — De l'idée au pitch
+# Chaîne standard de handoff entre agents CIS
+# Chaque étape transforme et enrichit le concept initial.
+
+pipeline:
+  name: Innovation Pipeline
+  description: >
+    Parcours complet d'innovation : de l'idéation libre au pitch structuré.
+    Chaque agent apporte une perspective unique qui enrichit le concept.
+  icon: 💡
+
+stages:
+  - id: ideation
+    agent: brainstorming-coach  # Carson
+    produces:
+      - idea-clusters
+      - evaluated-ideas
+    handoff_to: creative-problem-solver
+    gate: "Au moins 3 idées évaluées avec score Impact/Effort"
+
+  - id: problem-framing
+    agent: creative-problem-solver  # Dr. Quinn
+    consumes:
+      - idea-clusters
+    produces:
+      - root-cause-analysis
+      - solution-paths
+    handoff_to: design-thinking-coach
+    gate: "Cause racine identifiée, 2+ solution paths viables"
+
+  - id: user-validation
+    agent: design-thinking-coach  # Maya
+    consumes:
+      - solution-paths
+    produces:
+      - empathy-map
+      - user-insights
+      - prototype-spec
+    handoff_to: innovation-strategist
+    gate: "Insights utilisateur validés, prototype conceptualisé"
+
+  - id: strategy
+    agent: innovation-strategist  # Victor
+    consumes:
+      - user-insights
+      - solution-paths
+    produces:
+      - strategy-canvas
+      - business-model
+      - disruption-assessment
+    handoff_to: storyteller
+    gate: "Business model viable, position stratégique claire"
+
+  - id: narrative
+    agent: storyteller  # Sophia
+    consumes:
+      - strategy-canvas
+      - user-insights
+    produces:
+      - brand-narrative
+      - vision-story
+    handoff_to: presentation-master
+    gate: "Narrative cohérente avec arc émotionnel"
+
+  - id: presentation
+    agent: presentation-master  # Caravaggio
+    consumes:
+      - brand-narrative
+      - strategy-canvas
+    produces:
+      - pitch-deck
+      - concept-visuals
+    handoff_to: null  # fin du pipeline
+    gate: "Pitch prêt avec storytelling + visuels"
+
+# Boucles de feedback
+feedback_loops:
+  - from: innovation-strategist
+    to: brainstorming-coach
+    trigger: "Aucune idée ne passe le test de disruption — retour en idéation"
+  - from: design-thinking-coach
+    to: creative-problem-solver
+    trigger: "Insights utilisateur révèlent un problème différent du cadrage initial"
+  - from: storyteller
+    to: innovation-strategist
+    trigger: "Narrative ne tient pas — stratégie manque de clarté"
+
+# Points de jonction avec le pipeline SDLC
+sdlc_handoff:
+  - from: strategy
+    to_pipeline: sdlc
+    to_stage: analysis
+    trigger: "Concept validé → lancer l'analyse de faisabilité"
+  - from: user-validation
+    to_pipeline: sdlc
+    to_stage: product
+    trigger: "Prototype spec → créer le PRD"

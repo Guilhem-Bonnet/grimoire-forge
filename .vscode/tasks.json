@@ -114,6 +114,44 @@
         "close": true
       },
       "problemMatcher": []
+    },
+    // ── Dynamic Artifact Cleanup ─────────────────────────────────────
+    {
+      "label": "bmad: cleanup-dynamic-artifacts",
+      "type": "shell",
+      "command": "bash ${workspaceFolder}/.github/hooks/scripts/bmad-cleanup-dynamic-artifacts.sh",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "close": true
+      },
+      "problemMatcher": []
+    },
+    // ── Documentation auto-sync ──────────────────────────────────────
+    {
+      "label": "bmad: auto-doc-check",
+      "type": "shell",
+      "command": "python3 framework/tools/auto-doc.py --project-root . check",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "close": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "bmad: auto-doc-sync",
+      "type": "shell",
+      "command": "python3 framework/tools/auto-doc.py --project-root . sync",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "close": true
+      },
+      "problemMatcher": []
     }
   ]
 }

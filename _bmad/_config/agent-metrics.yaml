@@ -1,0 +1,351 @@
+# Agent Metrics — Configuration Observabilité
+# Métriques par agent pour le dashboard de l'observatory
+# Version: 1.0 — 2026-03-10
+
+schema_version: "1.0"
+
+# ═══════════════════════════════════════════════════════════
+# Métriques structurelles — état statique de chaque agent
+# ═══════════════════════════════════════════════════════════
+agents:
+  bmad-master:
+    module: core
+    persona_completeness: 100  # % des blocs persona remplis
+    menu_items: 8              # nombre d'items au menu
+    workflow_count: 0          # workflows dédiés (hors party-mode/help)
+    action_count: 3            # actions inline
+    handler_types: [action, exec, workflow]
+    has_voice: true
+    has_decision_framework: true
+    has_weaknesses: true
+    has_escalation: true
+    pipeline_position: orchestrator
+    quality_score: 28          # /30 (Bond's benchmark)
+
+  analyst:
+    module: bmm
+    persona_completeness: 100
+    menu_items: 10
+    workflow_count: 5
+    action_count: 0
+    handler_types: [exec, data, workflow]
+    has_voice: true
+    has_decision_framework: true
+    has_weaknesses: true
+    has_escalation: true
+    pipeline_position: sdlc.1
+    quality_score: 27
+
+  architect:
+    module: bmm
+    persona_completeness: 100
+    menu_items: 6
+    workflow_count: 2
+    action_count: 0
+    handler_types: [exec]
+    has_voice: true
+    has_decision_framework: true
+    has_weaknesses: true
+    has_escalation: true
+    pipeline_position: sdlc.4
+    quality_score: 26
+
+  dev:
+    module: bmm
+    persona_completeness: 100
+    menu_items: 6
+    workflow_count: 2
+    action_count: 0
+    handler_types: [workflow]
+    has_voice: true
+    has_decision_framework: true
+    has_weaknesses: true
+    has_escalation: true
+    pipeline_position: sdlc.6
+    quality_score: 28
+
+  pm:
+    module: bmm
+    persona_completeness: 100
+    menu_items: 10
+    workflow_count: 5
+    action_count: 0
+    handler_types: [exec, workflow]
+    has_voice: true
+    has_decision_framework: true
+    has_weaknesses: true
+    has_escalation: true
+    pipeline_position: sdlc.2
+    quality_score: 27
+
+  qa:
+    module: bmm
+    persona_completeness: 100
+    menu_items: 5
+    workflow_count: 1
+    action_count: 0
+    handler_types: [workflow]
+    has_voice: true
+    has_decision_framework: true
+    has_weaknesses: true
+    has_escalation: true
+    pipeline_position: sdlc.7
+    quality_score: 24
+
+  quick-flow-solo-dev:
+    module: bmm
+    persona_completeness: 100
+    menu_items: 6
+    workflow_count: 2
+    action_count: 0
+    handler_types: [exec]
+    has_voice: true
+    has_decision_framework: true
+    has_weaknesses: true
+    has_escalation: true
+    pipeline_position: standalone
+    quality_score: 25
+
+  sm:
+    module: bmm
+    persona_completeness: 100
+    menu_items: 8
+    workflow_count: 4
+    action_count: 0
+    handler_types: [workflow, data]
+    has_voice: true
+    has_decision_framework: true
+    has_weaknesses: true
+    has_escalation: true
+    pipeline_position: sdlc.5
+    quality_score: 27
+
+  tech-writer:
+    module: bmm
+    persona_completeness: 100
+    menu_items: 5
+    workflow_count: 0
+    action_count: 0
+    handler_types: [exec]
+    has_voice: true
+    has_decision_framework: true
+    has_weaknesses: true
+    has_escalation: true
+    pipeline_position: cross-cutting
+    quality_score: 26
+
+  ux-designer:
+    module: bmm
+    persona_completeness: 100
+    menu_items: 8
+    workflow_count: 1
+    action_count: 3
+    handler_types: [exec]
+    has_voice: true
+    has_decision_framework: true
+    has_weaknesses: true
+    has_escalation: true
+    pipeline_position: sdlc.3
+    quality_score: 27
+
+  brainstorming-coach:
+    module: cis
+    persona_completeness: 100
+    menu_items: 7
+    workflow_count: 1
+    action_count: 2
+    handler_types: [workflow]
+    has_voice: true
+    has_decision_framework: true
+    has_weaknesses: true
+    has_escalation: true
+    pipeline_position: innovation.1
+    quality_score: 26
+
+  creative-problem-solver:
+    module: cis
+    persona_completeness: 100
+    menu_items: 7
+    workflow_count: 1
+    action_count: 2
+    handler_types: [workflow]
+    has_voice: true
+    has_decision_framework: true
+    has_weaknesses: true
+    has_escalation: true
+    pipeline_position: innovation.2
+    quality_score: 27
+
+  design-thinking-coach:
+    module: cis
+    persona_completeness: 100
+    menu_items: 7
+    workflow_count: 1
+    action_count: 2
+    handler_types: [workflow]
+    has_voice: true
+    has_decision_framework: true
+    has_weaknesses: true
+    has_escalation: true
+    pipeline_position: innovation.3
+    quality_score: 26
+
+  innovation-strategist:
+    module: cis
+    persona_completeness: 100
+    menu_items: 9
+    workflow_count: 1
+    action_count: 4
+    handler_types: [workflow]
+    has_voice: true
+    has_decision_framework: true
+    has_weaknesses: true
+    has_escalation: true
+    pipeline_position: innovation.4
+    quality_score: 28
+
+  presentation-master:
+    module: cis
+    persona_completeness: 100
+    menu_items: 11
+    workflow_count: 0
+    action_count: 7
+    handler_types: [action]
+    has_voice: true
+    has_decision_framework: true
+    has_weaknesses: true
+    has_escalation: true
+    pipeline_position: innovation.6
+    quality_score: 27
+
+  storyteller:
+    module: cis
+    persona_completeness: 100
+    menu_items: 8
+    workflow_count: 1
+    action_count: 3
+    handler_types: [workflow]
+    has_voice: true
+    has_decision_framework: true
+    has_weaknesses: true
+    has_escalation: true
+    pipeline_position: innovation.5
+    quality_score: 26
+
+  tea:
+    module: tea
+    persona_completeness: 100
+    menu_items: 13
+    workflow_count: 9
+    action_count: 1
+    handler_types: [workflow]
+    has_voice: true
+    has_decision_framework: true
+    has_weaknesses: true
+    has_escalation: true
+    pipeline_position: cross-cutting
+    quality_score: 29
+
+  agent-builder:
+    module: bmb
+    persona_completeness: 100
+    menu_items: 9
+    workflow_count: 3
+    action_count: 2
+    handler_types: [exec]
+    has_voice: true
+    has_decision_framework: true
+    has_weaknesses: true
+    has_escalation: true
+    pipeline_position: meta
+    quality_score: 28
+
+  module-builder:
+    module: bmb
+    persona_completeness: 100
+    menu_items: 9
+    workflow_count: 4
+    action_count: 0
+    handler_types: [exec]
+    has_voice: true
+    has_decision_framework: true
+    has_weaknesses: true
+    has_escalation: true
+    pipeline_position: meta
+    quality_score: 26
+
+  workflow-builder:
+    module: bmb
+    persona_completeness: 100
+    menu_items: 9
+    workflow_count: 5
+    action_count: 0
+    handler_types: [exec]
+    has_voice: true
+    has_decision_framework: true
+    has_weaknesses: true
+    has_escalation: true
+    pipeline_position: meta
+    quality_score: 26
+
+# ═══════════════════════════════════════════════════════════
+# Agrégats par module
+# ═══════════════════════════════════════════════════════════
+module_summary:
+  core:
+    agent_count: 1
+    total_workflows: 2   # brainstorming, party-mode
+    total_tasks: 6
+    avg_quality_score: 28.0
+
+  bmm:
+    agent_count: 10
+    total_workflows: 24
+    total_tasks: 0
+    avg_quality_score: 26.4
+    pipeline: sdlc
+
+  cis:
+    agent_count: 6
+    total_workflows: 4
+    total_tasks: 0
+    avg_quality_score: 26.7
+    pipeline: innovation
+
+  tea:
+    agent_count: 1
+    total_workflows: 9
+    total_tasks: 0
+    avg_quality_score: 29.0
+
+  bmb:
+    agent_count: 3
+    total_workflows: 12
+    total_tasks: 0
+    avg_quality_score: 26.7
+
+# ═══════════════════════════════════════════════════════════
+# Santé globale
+# ═══════════════════════════════════════════════════════════
+global:
+  total_agents: 20
+  total_agents_with_voice: 20
+  total_agents_with_decision_framework: 20
+  total_agents_with_weaknesses: 20
+  total_agents_with_escalation: 20
+  persona_completeness_avg: 100
+  avg_quality_score: 26.8
+  total_workflows: 51
+  total_tasks: 6
+  total_menu_items: 160
+  total_action_items: 29
+  pipelines:
+    - name: sdlc
+      stages: 7
+      agents: [analyst, pm, ux-designer, architect, sm, dev, qa]
+    - name: innovation
+      stages: 6
+      agents: [brainstorming-coach, creative-problem-solver, design-thinking-coach, innovation-strategist, storyteller, presentation-master]
+  cross_cutting_agents: [tech-writer, tea]
+  meta_agents: [agent-builder, module-builder, workflow-builder]
+  standalone_agents: [quick-flow-solo-dev]

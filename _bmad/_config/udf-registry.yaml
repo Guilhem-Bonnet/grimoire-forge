@@ -1,0 +1,77 @@
+# UDF Registry — Source de vérité centralisée pour la Unified Dynamic Factory
+# Tous les acteurs (SOG, builders, cleanup script) lisent ce fichier
+# pour connaître les conventions de chaque type d'artefact.
+
+version: 1
+
+artifact_types:
+  agent:
+    builder: agent-builder
+    ephemeral:
+      pattern: "_dyn-{slug}.agent.md"
+      location: ".github/agents/"
+      template: ".github/agents/_templates/dynamic-agent.tpl.md"
+    permanent:
+      pattern: "{slug}.agent.md"
+      location: ".github/agents/"
+      template: ".github/agents/_templates/permanent-agent.tpl.md"
+      extras:
+        - ".github/prompts/{slug}.prompt.md"
+
+  workflow:
+    builder: workflow-builder
+    ephemeral:
+      pattern: "_dyn-{slug}.prompt.md"
+      location: ".github/prompts/"
+      template: ".github/agents/_templates/dynamic-workflow.tpl.md"
+    permanent:
+      pattern: "{slug}.prompt.md"
+      location: ".github/prompts/"
+      template: ".github/agents/_templates/permanent-workflow.tpl.md"
+
+  skill:
+    builder: workflow-builder
+    co_builder: dev
+    orchestration: "workflow-builder designs structure (SKILL.md), dev implements bundled assets if needed"
+    ephemeral:
+      pattern: "_dyn-{slug}/SKILL.md"
+      location: ".github/skills/"
+      template: ".github/agents/_templates/dynamic-skill.tpl.md"
+    permanent:
+      pattern: "{slug}/SKILL.md"
+      location: ".github/skills/"
+      template: ".github/agents/_templates/permanent-skill.tpl.md"
+
+  instruction:
+    builder: tech-writer
+    ephemeral:
+      pattern: "_dyn-{slug}.instructions.md"
+      location: ".github/instructions/"
+      template: ".github/agents/_templates/dynamic-instruction.tpl.md"
+    permanent:
+      pattern: "{slug}.instructions.md"
+      location: ".github/instructions/"
+      template: ".github/agents/_templates/permanent-instruction.tpl.md"
+
+durability_triage:
+  threshold: 3
+  signals:
+    - signal: "Domaine lié au stack technique du projet"
+      score: 2
+    - signal: "Besoin déjà exprimé dans une session précédente"
+      score: 2
+    - signal: "Domaine transversal (sécurité, performance, accessibilité, data)"
+      score: 2
+    - signal: "Besoin récurrent dans le cycle de vie produit"
+      score: 1
+    - signal: "Besoin ponctuel/exploratoire"
+      score: -2
+    - signal: "Domaine très niche"
+      score: -1
+
+ephemeral:
+  expiry_days: 7
+  prefix: "_dyn-"
+  promotion_threshold: 3
+  tracker: "_bmad/_memory/udf-usage-tracker.json"
+  cleanup_script: ".github/hooks/scripts/bmad-cleanup-dynamic-artifacts.sh"
