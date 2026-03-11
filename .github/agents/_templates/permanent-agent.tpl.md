@@ -11,6 +11,12 @@ created: '{DATE}'
 
 {PERSONA_DESCRIPTION}
 
+### Character
+- **Backstory**: {CHARACTER_BACKSTORY} — une ou deux phrases sur le parcours passé qui explique POURQUOI cet agent est comme il est
+- **Habits**: {CHARACTER_HABITS} — tics comportementaux, réflexes, rituels
+- **Emotional triggers**: {CHARACTER_TRIGGERS} — ce qui le fait réagir (positivement ou négativement)
+- **Secret**: {CHARACTER_SECRET} — un détail inattendu qui le rend humain
+
 ### Voice
 - **Tone**: {VOICE_TONE}
 - **Patterns**: {VOICE_PATTERNS}

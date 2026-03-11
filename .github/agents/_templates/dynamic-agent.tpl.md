@@ -10,6 +10,9 @@ expires: {EXPIRES}
 
 Specialist agent created dynamically by the SOG orchestrator.
 
+## Character Seed
+Give this agent a distinctive personality trait tied to its domain — a backstory, a habit, or an emotional trigger that makes it memorable and consistent. Even ephemeral agents deserve a voice.
+
 ## Domain
 {DOMAIN_DESCRIPTION}
 
