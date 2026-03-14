@@ -37,6 +37,8 @@
 - Save outputs after EACH step when using the workflow engine
 - The `{project-root}` variable resolves to the workspace root at runtime
 - **Documentation charter**: Avant de créer ou modifier un fichier `.md`, charger `_bmad/_memory/tech-writer-sidecar/documentation-standards.md` et respecter la charte (CommonMark, style guide, quality checklist)
+- **Autonomy protocols**: L'orchestrateur applique ALS (Autonomy Level System), AORA (boucle d'itération autonome), PIP (initiative proactive), DCF (confiance contextuelle), Session Momentum, et Friction Budget. Voir `bmad-custom-kit/framework/agent-base.md` et `bmad-custom-kit/framework/orchestrator-gateway.md`.
+- **Stability guard**: Pour éviter les crashs de l'extension host VSCode, respecter ces limites : jamais de grep_search sans `includePattern` ciblé, toujours un timeout raisonnable sur les commandes terminal. Le file watcher est configuré pour exclure `.venv`, `__pycache__`, `.pytest_cache`, `.ruff_cache` etc. (voir `.vscode/settings.json`).
 
 ## Available Agents
 
@@ -46,7 +48,7 @@
 
 | Agent | Persona | Title | Capabilities |
 |---|---|---|---|
-| bmad-master | BMad Master | Smart Orchestrator Gateway — Point d'entrée unique | orchestration SOG, dispatch intelligent, anti-hallucination HUP, escalation QEC, validation CVTL, party mode PCE |
+| bmad-master | BMad Master | Smart Orchestrator Gateway — Point d'entrée unique | orchestration SOG, dispatch intelligent, anti-hallucination HUP, escalation QEC, validation CVTL, party mode PCE, autonomy ALS, iteration AORA, proactive PIP, confidence DCF |
 
 ### Sub-agents internes (invisibles à l'utilisateur)
 

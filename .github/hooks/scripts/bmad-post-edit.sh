@@ -1,45 +1,32 @@
 #!/usr/bin/env bash
 # bmad-post-edit.sh — PostToolUse hook
 # Après une édition de fichier Python, vérifie le lint automatiquement.
+# Optimisé : fast-path pure bash pour les cas courants.
 
 set -euo pipefail
 
 input=$(cat)
 
-tool_name=$(echo "$input" | python3 -c "
-import sys, json
-try:
-    data = json.load(sys.stdin)
-    print(data.get('toolName', ''))
-except: pass
-" 2>/dev/null || echo "")
+# Fast-path : ne traiter que les outils d'édition (grep bash sur le JSON brut)
+if [[ "$input" != *"replace_string_in_file"* && "$input" != *"create_file"* ]]; then
+  echo "{}"
+  exit 0
+fi
 
-file_path=$(echo "$input" | python3 -c "
-import sys, json
-try:
-    data = json.load(sys.stdin)
-    params = data.get('toolInput', {})
-    for key in ('filePath', 'path', 'file'):
-        if key in params:
-            print(params[key])
-            break
-except: pass
-" 2>/dev/null || echo "")
+# Extraire le filePath avec un regex bash simple (évite de spawner python)
+file_path=""
+if [[ "$input" =~ \"filePath\"[[:space:]]*:[[:space:]]*\"([^\"]+)\" ]]; then
+  file_path="${BASH_REMATCH[1]}"
+fi
 
-# Seulement pour les outils d'édition
-case "$tool_name" in
-  replace_string_in_file|multi_replace_string_in_file|create_file)
-    ;;
-  *)
-    echo "{}"
-    exit 0
-    ;;
-esac
+if [[ -z "$file_path" ]]; then
+  echo "{}"
+  exit 0
+fi
 
 # --- Python lint ---
-if [[ "$file_path" == *.py ]]; then
-  PROJECT_ROOT="$(cd "$(dirname "$0")/../../.." && pwd)"
-  if command -v python3 &>/dev/null && [[ -f "$file_path" ]]; then
+if [[ "$file_path" == *.py && -f "$file_path" ]]; then
+  if command -v python3 &>/dev/null; then
     lint_output=$(python3 -m ruff check "$file_path" --no-fix -q 2>&1 | head -5 || true)
     if [[ -n "$lint_output" ]]; then
       lint_output=$(echo "$lint_output" | sed 's/"/\\"/g' | tr '\n' ' ')
@@ -49,8 +36,7 @@ if [[ "$file_path" == *.py ]]; then
   fi
 fi
 
-# --- UDF Frontmatter validation (Point 6 — Party Review) ---
-# Valide le YAML frontmatter des artefacts UDF après création/édition
+# --- UDF Frontmatter validation ---
 if [[ "$file_path" == *.agent.md || "$file_path" == *.prompt.md || "$file_path" == *.instructions.md || "$file_path" == */SKILL.md ]]; then
   if command -v python3 &>/dev/null && [[ -f "$file_path" ]]; then
     fm_error=$(python3 -c "

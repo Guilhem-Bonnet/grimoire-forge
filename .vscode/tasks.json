@@ -5,7 +5,10 @@
   // ════════════════════════════════════════════════════════════════════
   "version": "2.0.0",
   "options": {
-    "cwd": "${workspaceFolder}/bmad-custom-kit"
+    "cwd": "${workspaceFolder}/bmad-custom-kit",
+    "env": {
+      "PYTHONDONTWRITEBYTECODE": "1"
+    }
   },
   "tasks": [
     // ── Tests ────────────────────────────────────────────────────────
@@ -146,6 +149,19 @@
       "label": "bmad: auto-doc-sync",
       "type": "shell",
       "command": "python3 framework/tools/auto-doc.py --project-root . sync",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "close": true
+      },
+      "problemMatcher": []
+    },
+    // ── Maintenance — empêcher l'accumulation d'objets git loose ─────
+    {
+      "label": "bmad: git-gc",
+      "type": "shell",
+      "command": "git gc && cd bmad-custom-kit && git gc",
+      "options": { "cwd": "${workspaceFolder}" },
       "presentation": {
         "reveal": "always",
         "panel": "shared",

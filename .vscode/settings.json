@@ -8,6 +8,11 @@
   "diffEditor.maxComputationTime": 0,
   "diffEditor.maxFileSize": 0,
 
+  // ── Git — réduire les écritures automatiques dans .git ──────────────
+  "git.autoFetch": false,
+  "git.autoRefresh": false,
+  "git.decorations.enabled": false,
+
   // ── Recherche — exclure les gros répertoires knowledge ──────────────
   // Réduit le volume que Copilot indexe → moins de timeouts réseau
   "search.exclude": {
@@ -32,6 +37,24 @@
     "**/__pycache__": true,
     "**/*.pyc": true
   },
+
+  // ── File Watcher — DÉSACTIVÉ pour éviter les crashs ban() ───────────
+  // ROOT CAUSE : ban() dans workbench.desktop.main.js évalue des regex
+  // sur CHAQUE événement fichier dans le main thread → unresponsive → crash.
+  // Ça se produit même idle avec 93 extensions + inotify events système.
+  // Solution : désactiver le watcher natif. Les modifications fichier sont
+  // détectées par polling (plus lent mais ne bloque PAS le main thread).
+  // Impact : l'explorateur met 5-10s de plus à rafraîchir. Acceptable.
+  "files.watcherExclude": {
+    "**": true
+  },
+
+  // ── GitLens — réduire l'activité en arrière-plan ──────────────────
+  "gitlens.advanced.fileHistoryFollowsRenames": false,
+  "gitlens.codeLens.enabled": false,
+  "gitlens.hovers.enabled": false,
+  "gitlens.statusBar.enabled": false,
+
   "python.testing.pytestArgs": [
     "bmad-custom-kit"
   ]
