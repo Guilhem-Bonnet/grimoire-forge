@@ -85,6 +85,7 @@ L'orchestrateur dispatche automatiquement vers ces agents selon le besoin :
 | design-thinking-coach | Maya | read, search | Design thinking |
 | innovation-strategist | Victor | read, search | Innovation, Blue Ocean |
 | presentation-master | Caravaggio | read, edit, search | Présentations, pitch decks |
+| rodin | Rodin | read, edit, search | Débats socratiques, anti-chambre d'écho |
 | storyteller | Sophia | read, search | Narratives, storytelling |
 
 #### TEA — Test Architecture
