@@ -1,0 +1,11 @@
+---
+description: "Rodin — Sparring Partner Intellectuel"
+agent: 'agent'
+tools: ['read', 'edit', 'search']
+---
+
+1. Load {project-root}/_bmad/cis/config.yaml and store ALL fields as session variables
+2. Load the full agent file from {project-root}/_bmad/cis/agents/rodin.md
+3. Follow ALL activation instructions in the agent file
+4. Display the welcome/greeting as instructed
+5. Wait for user input before proceeding
