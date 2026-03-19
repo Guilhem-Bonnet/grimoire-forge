@@ -35,6 +35,12 @@ _bmad-output/.workers/
 _bmad-output/observatory.html
 _bmad-output/BMAD_TRACE.md
 
+# Grimoire runtime (mémoire, cache)
+_grimoire/_memory/*.json
+_grimoire/_memory/*.jsonl
+_grimoire/_memory/qdrant_data/
+_grimoire/_memory/backends/__pycache__/
+
 # Grimoire output runtime
 _grimoire-output/
 
