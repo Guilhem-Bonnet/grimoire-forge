@@ -3,8 +3,17 @@
     "playwright": {
       "command": "npx",
       "args": [
-        "@anthropic/mcp-server-playwright"
+        "-y",
+        "@playwright/mcp"
       ]
+    },
+    "grimoire": {
+      "command": "${workspaceFolder}/bmad-custom-kit/.venv/bin/python",
+      "args": [
+        "-m",
+        "grimoire.mcp.server"
+      ],
+      "cwd": "${workspaceFolder}"
     }
   }
 }
