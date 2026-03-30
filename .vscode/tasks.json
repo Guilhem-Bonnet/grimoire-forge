@@ -98,7 +98,7 @@
     {
       "label": "bmad: memory-lint",
       "type": "shell",
-      "command": "python3 framework/tools/memory-lint.py --project-root ${workspaceFolder}",
+      "command": "python3 framework/tools/memory-lint.py --project-root .",
       "presentation": {
         "reveal": "always",
         "panel": "shared",
@@ -109,11 +109,24 @@
     {
       "label": "bmad: preflight",
       "type": "shell",
-      "command": "python3 framework/tools/preflight-check.py --project-root ${workspaceFolder}",
+      "command": "python3 framework/tools/preflight-check.py --project-root .",
       "presentation": {
         "reveal": "always",
         "panel": "shared",
         "close": true
+      },
+      "problemMatcher": []
+    },
+    // ── VS Code environment quickstart (DeepWiki Getting Started) ────
+    {
+      "label": "grimoire: setup-prereqs",
+      "type": "shell",
+      "command": "bash -c 'echo \"=== Grimoire — Prérequis environnement (DeepWiki Getting Started) ===\"; PLATFORM=$(uname -s); echo \"Plateforme : $PLATFORM\"; echo \"\"; if [ \"$PLATFORM\" = \"Linux\" ]; then echo \"[Node.js]\"; if command -v node >/dev/null 2>&1; then echo \"  ✅ $(node --version)\"; else echo \"  ❌ Absent — curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash - && sudo apt-get install -y nodejs\"; fi; echo \"\"; echo \"[Build tools]\"; for t in g++ make pkg-config; do command -v $t >/dev/null 2>&1 && echo \"  ✅ $t\" || echo \"  ❌ $t\"; done; echo \"\"; echo \"[Bibliothèques natives VS Code]\"; MISSING=\"\"; for pkg in libx11-dev libxkbfile-dev libsecret-1-dev libkrb5-dev; do dpkg -l $pkg 2>/dev/null | grep -q \"^ii\" && echo \"  ✅ $pkg\" || { echo \"  ❌ $pkg\"; MISSING=\"$MISSING $pkg\"; }; done; if [ -n \"$MISSING\" ]; then echo \"\"; echo \"  → sudo apt-get install build-essential g++ $MISSING\"; fi; echo \"\"; echo \"[inotify watch limit]\"; WATCHES=$(cat /proc/sys/fs/inotify/max_user_watches 2>/dev/null || echo 0); if [ \"$WATCHES\" -ge 524288 ]; then echo \"  ✅ max_user_watches=$WATCHES\"; else echo \"  ❌ max_user_watches=$WATCHES (recommandé >= 524288)\"; echo \"  → echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p\"; fi; elif [ \"$PLATFORM\" = \"Darwin\" ]; then echo \"[macOS toolchain]\"; xcode-select -p >/dev/null 2>&1 && echo \"  ✅ Xcode CLI Tools\" || echo \"  ❌ Absent — xcode-select --install\"; command -v node >/dev/null 2>&1 && echo \"  ✅ Node.js $(node --version)\" || echo \"  ❌ Node.js absent\"; fi; echo \"\"'",
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": true,
+        "close": false
       },
       "problemMatcher": []
     },
@@ -229,7 +242,7 @@
     {
       "label": "bmad: validate-skills",
       "type": "shell",
-      "command": "python3 framework/tools/skill-validator.py --project-root ${workspaceFolder}",
+      "command": "python3 framework/tools/skill-validator.py --project-root .",
       "presentation": {
         "reveal": "always",
         "panel": "shared",
