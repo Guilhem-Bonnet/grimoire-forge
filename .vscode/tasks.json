@@ -203,6 +203,18 @@
         "clear": true
       },
       "problemMatcher": []
+    },
+    // ── Skill Validator ──────────────────────────────────────────────
+    {
+      "label": "bmad: validate-skills",
+      "type": "shell",
+      "command": "python3 framework/tools/skill-validator.py --project-root ${workspaceFolder}",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "close": true
+      },
+      "problemMatcher": []
     }
   ]
 }

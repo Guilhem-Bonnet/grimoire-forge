@@ -1,72 +1,68 @@
-# grimoire — Meta-Projet
+# Grimoire Forge
 
-> Workspace dédié à **l'amélioration de grimoire-kit**, piloté par le kit lui-même.
+Moteur de création de projets agentiques, construit en dogfooding continu avec BMAD.
 
-## Modèle Dual-Workspace
+## Positionnement
 
-Ce projet utilise une architecture à **2 espaces de travail séparés** :
+Ce dépôt est le cockpit de conception du moteur.
+Le code produit reste dans [bmad-custom-kit](bmad-custom-kit/).
 
+Objectif produit : permettre de lancer, structurer et faire évoluer des projets pilotés par agents IA avec un niveau entreprise.
+
+## Nouveau nom
+
+Nom retenu pour le projet de création : Grimoire Forge.
+
+Ce nom conserve l'ADN Grimoire et clarifie la promesse : forger un projet agentique de bout en bout.
+
+## Architecture de travail
+
+```text
+bmad-custom/
+├── _bmad/                    Runtime BMAD installé dans ce workspace
+├── _bmad-output/             Artefacts produits (plans, implémentation, traces)
+├── docs/                     Cible produit, architecture, roadmap, publication
+├── bmad-custom-kit/          Produit implémenté (framework, CLI, tests)
+└── .github/                  Instructions, skills, workflows, agents
 ```
-grimoire/                 ← CE REPO — Meta-Projet (usage "client")
-├── _bmad/                  BMAD installé (instance de travail)
-├── _bmad-output/           Artefacts de planification du kit
-├── docs/                   Documentation de la roadmap du kit
-└── .github/                Instructions Copilot mode "client"
 
-grimoire-kit/             ← REPO SÉPARÉ — Le Produit (développement)
-├── framework/              Code source du framework
-├── archetypes/             Archetypes de projets
-├── tests/                  Tests du kit
-└── .github/                Instructions Copilot mode "dev"
-```
+## Ce qui est déjà capitalisé
 
-### Pourquoi 2 workspaces ?
+- Orchestrateur SOG BM-53 comme point d'entrée unique.
+- Protocoles d'autonomie ALS, AORA, PIP, DCF.
+- Unified Dynamic Factory pour créer agents, workflows, skills et instructions.
+- Tooling de robustesse : health check, antifragile, self-heal, memory audit, pre-push.
+- Boucle d'apprentissage via mémoire projet et artefacts d'exécution.
 
-1. **Séparation de contexte Copilot** — Chaque workspace a ses propres `copilot-instructions.md`. Quand on travaille ici, Copilot est en mode "utilisateur du kit". Quand on travaille dans `grimoire-kit/`, Copilot est en mode "développeur du kit".
+## Documentation structurée
 
-2. **Boucle récursive d'auto-amélioration** — Le kit s'utilise lui-même pour planifier ses propres évolutions :
-   - **Planifier** ici → PRD, stories, specs (dans `_bmad-output/`)
-   - **Implémenter** dans `grimoire-kit/`
-   - **Réinstaller** ici → `bmad-init.sh` pour tester les changements
-   - **Valider** ici → vérifier que l'amélioration fonctionne en conditions réelles
-   - **Boucler** → nouvelles frictions → nouvelles améliorations
+- Vision et périmètre : [docs/vision/objectif-moteur-agentique.md](docs/vision/objectif-moteur-agentique.md)
+- Plan d'exécution : [docs/roadmap/plan-vers-objectif.md](docs/roadmap/plan-vers-objectif.md)
+- Passage open source : [docs/governance/publication-open-source.md](docs/governance/publication-open-source.md)
+- Changelog : [CHANGELOG.md](CHANGELOG.md)
+- Hub de navigation : [docs/index.md](docs/index.md)
 
-3. **Dogfooding permanent** — Chaque utilisation du kit dans ce workspace fait remonter des améliorations vers le produit.
+## Workflow recommandé
 
-## Flux de travail
+1. Formaliser la cible et les contraintes dans la documentation.
+2. Transformer la cible en stories exploitables via BMAD.
+3. Implémenter dans [bmad-custom-kit](bmad-custom-kit/).
+4. Réinstaller dans ce workspace et valider en conditions réelles.
+5. Rejouer la boucle d'amélioration continue.
 
-### Mettre à jour l'installation BMAD depuis le kit local
+## Commandes utiles
 
 ```bash
-# Depuis la racine de ce repo
-cd /chemin/vers/grimoire
-/chemin/vers/grimoire-kit/bmad-init.sh install \
-  --name "grimoire" --user "Guilhem" --lang "Français"
+# Validation rapide
+python3 -m ruff check bmad-custom-kit/framework/tools/ bmad-custom-kit/tests/ --statistics
+python3 -m pytest bmad-custom-kit/tests/ -q --tb=short -x --ignore=bmad-custom-kit/tests/test_background_tasks.py
+
+# Santé BMAD
+python3 bmad-custom-kit/framework/tools/preflight-check.py --project-root .
+python3 bmad-custom-kit/framework/tools/memory-lint.py --project-root .
 ```
 
-### Cycle d'amélioration
+## Statut du dépôt
 
-```
-  ┌──────────────────────────────────────────────────────┐
-  │               LA BOUCLE RÉCURSIVE                    │
-  │                                                      │
-  │   ┌────────────┐   installe   ┌────────────────┐    │
-  │   │ Kit (dev)  ├─────────────►│ Meta-Projet    │    │
-  │   │ v2.X      │              │ (utilisation)  │    │
-  │   └─────▲──────┘              └───────┬────────┘    │
-  │         │                             │              │
-  │         │   PRD / stories / specs     │              │
-  │         │   générés PAR le kit        │              │
-  │         └─────────────────────────────┘              │
-  │                                                      │
-  │   Chaque amélioration rend le cycle suivant          │
-  │   PLUS EFFICACE → effet composé                      │
-  └──────────────────────────────────────────────────────┘
-```
-
-## Contenu des artefacts
-
-- `_bmad-output/planning-artifacts/` — PRD, plans d'innovation, validations
-- `_bmad-output/implementation-artifacts/` — Specs techniques, stories prêtes
-- `_bmad-output/bmb-creations/` — Agents/workflows créés via le module BMB
-- `docs/` — Roadmap, ADR, notes de design du kit
+Le dépôt doit être public pour soutenir l'objectif produit.
+Voir [docs/governance/publication-open-source.md](docs/governance/publication-open-source.md) pour la procédure et le checklist de diffusion.

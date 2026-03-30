@@ -2,10 +2,10 @@
 # Workspace dédié à la planification et l'amélioration du kit
 
 project:
-  name: "grimoire"
-  description: "Meta-projet d'auto-amélioration de grimoire-kit"
+  name: "grimoire-forge"
+  description: "Moteur de création de projets agentiques piloté par BMAD"
   type: "meta"
-  metaphor: "grimoire"                   # Le livre de sorts où l'on invoque et perfectionne les agents
+  metaphor: "forge"                      # Atelier de création et d'assemblage de projets agentiques
   stack: ["python", "yaml", "markdown"]
   repos:
     - name: "grimoire"
@@ -23,7 +23,7 @@ user:
 
 memory:
   backend: "qdrant-local"
-  collection_prefix: "bmad_meta"
+  collection_prefix: "grimoire_forge_meta"
   embedding_model: "sentence-transformers/all-MiniLM-L6-v2"
   # qdrant_data stocké dans framework/memory/qdrant_data/ par défaut
 

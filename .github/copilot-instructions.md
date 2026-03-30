@@ -141,6 +141,32 @@ L'orchestrateur peut créer dynamiquement 4 types d'artefacts quand aucun exista
 - **Score < 3** → Création éphémère via template `dynamic-*.tpl.md` (expire 7j)
 - **Nettoyage** : task `bmad: cleanup-dynamic-artifacts` nettoie tous les artefacts expirés
 
+## File-Specific Instructions
+
+Instructions auto-chargées par VS Code selon le pattern `applyTo` :
+
+| Instruction | Pattern | Contenu |
+|---|---|---|
+| `python-conventions` | `**/*.py` | Conventions Python, ruff, dataclasses, imports, tests |
+| `markdown-standards` | `**/*.md` | CommonMark strict, Mermaid v10+, pas d'estimations temporelles |
+| `bmad-framework` | `_bmad/**` | Structure BMAD, config YAML, agents, workflows, mémoire |
+
+## External Documentation References
+
+Pour la documentation approfondie des dépendances et frameworks :
+
+| Ressource | URL DeepWiki | Usage |
+|---|---|---|
+| VS Code Copilot Custom Agents | `https://deepwiki.com/microsoft/vscode-copilot-chat` | Format `.agent.md`, `.prompt.md`, skills, hooks, instructions |
+| Ruff Linter | `https://deepwiki.com/astral-sh/ruff` | Règles, configuration, per-file-ignores |
+| Pytest | `https://deepwiki.com/pytest-dev/pytest` | Fixtures, markers, plugins |
+| MkDocs Material | `https://deepwiki.com/squidfunk/mkdocs-material` | Documentation site generation |
+| Typer CLI | `https://deepwiki.com/fastapi/typer` | CLI framework utilisé par grimoire |
+| Mermaid | `https://deepwiki.com/mermaid-js/mermaid` | Syntaxe diagrammes v10+ |
+
+> **Note** : Les URLs DeepWiki sont disponibles via MCP `deepwiki` si configuré, ou via navigateur.
+> Pour consulter en session : utiliser `fetch` MCP ou demander une recherche ciblée.
+
 ## Slash Commands
 
 Type `/bmad-` in Copilot Chat to see all available BMAD workflows. L'orchestrateur est disponible dans le dropdown agents sous `bmad-master`.

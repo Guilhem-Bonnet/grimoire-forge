@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Roadmap publique
+    url: https://github.com/Guilhem-Bonnet/grimoire-forge/blob/main/docs/roadmap/plan-vers-objectif.md
+    about: Consultez la feuille de route avant d'ouvrir une issue.
+  - name: Vision produit
+    url: https://github.com/Guilhem-Bonnet/grimoire-forge/blob/main/docs/vision/objectif-moteur-agentique.md
+    about: Verifiez l'alignement de votre proposition avec l'objectif moteur.
