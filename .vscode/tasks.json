@@ -58,7 +58,7 @@
     {
       "label": "bmad: lint",
       "type": "shell",
-      "command": "python3 -m ruff check framework/tools/ tests/ --statistics",
+      "command": "bash -c 'TARGETS=\"\"; for d in framework/tools tests; do [ -e \"$d\" ] && TARGETS=\"$TARGETS $d\"; done; if [ -z \"$TARGETS\" ]; then echo \"Aucune cible lint trouvée — skip\"; exit 0; fi; python3 -m ruff check $TARGETS --statistics'",
       "group": "build",
       "presentation": {
         "reveal": "always",
@@ -71,7 +71,7 @@
     {
       "label": "bmad: lint-fix",
       "type": "shell",
-      "command": "python3 -m ruff check framework/tools/ tests/ --fix --statistics",
+      "command": "bash -c 'TARGETS=\"\"; for d in framework/tools tests; do [ -e \"$d\" ] && TARGETS=\"$TARGETS $d\"; done; if [ -z \"$TARGETS\" ]; then echo \"Aucune cible lint trouvée — skip\"; exit 0; fi; python3 -m ruff check $TARGETS --fix --statistics'",
       "group": "build",
       "presentation": {
         "reveal": "always",
@@ -81,11 +81,10 @@
       },
       "problemMatcher": []
     },
-    // ── Validation rapide ────────────────────────────────────────────
     {
       "label": "bmad: quick-check",
       "type": "shell",
-      "command": "bash -c 'echo \"=== LINT ===\" && python3 -m ruff check framework/tools/ --statistics -q 2>&1 | tail -5 && echo \"\\n=== TESTS (modifiés) ===\" && CHANGED=$(git diff --name-only --diff-filter=ACMR HEAD -- \"tests/test_*.py\" | tr \"\\n\" \" \"); if [ -z \"$CHANGED\" ]; then echo \"Aucun test modifié — skip\"; else python3 -m pytest $CHANGED -q --tb=line -x; fi'",
+      "command": "bash -c 'echo \"=== LINT ===\"; TARGETS=\"\"; for d in framework/tools tests; do [ -e \"$d\" ] && TARGETS=\"$TARGETS $d\"; done; if [ -z \"$TARGETS\" ]; then echo \"Aucune cible lint trouvée — skip\"; else python3 -m ruff check $TARGETS --statistics -q 2>&1 | tail -5; fi; echo \"\\n=== TESTS (modifiés) ===\"; CHANGED=$(git diff --name-only --diff-filter=ACMR HEAD -- \"tests/test_*.py\" | tr \"\\n\" \" \" ); if [ -z \"$CHANGED\" ]; then echo \"Aucun test modifié — skip\"; else python3 -m pytest $CHANGED -q --tb=line -x; fi'",
       "group": "build",
       "presentation": {
         "reveal": "always",
