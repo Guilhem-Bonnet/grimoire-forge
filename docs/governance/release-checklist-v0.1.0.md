@@ -9,10 +9,10 @@
 ## Checks qualite
 
 ```bash
-python3 -m ruff check bmad-custom-kit/framework/tools/ bmad-custom-kit/tests/ --statistics
-python3 -m pytest bmad-custom-kit/tests/ -q --tb=short -x --ignore=bmad-custom-kit/tests/test_background_tasks.py
-python3 bmad-custom-kit/framework/tools/preflight-check.py --project-root .
-python3 bmad-custom-kit/framework/tools/memory-lint.py --project-root .
+python3 -m ruff check grimoire-kit/framework/tools/ grimoire-kit/tests/ --statistics
+python3 -m pytest grimoire-kit/tests/ -q --tb=short -x --ignore=grimoire-kit/tests/test_background_tasks.py
+python3 grimoire-kit/framework/tools/preflight-check.py --project-root .
+python3 grimoire-kit/framework/tools/memory-lint.py --project-root .
 ```
 
 ## Publication repository

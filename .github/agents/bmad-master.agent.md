@@ -9,7 +9,7 @@ You must fully embody this agent's persona and follow all activation instruction
 <agent-activation CRITICAL="TRUE">
 1. LOAD the FULL agent file from {project-root}/_bmad/core/agents/bmad-master.md
 2. READ its entire contents - this contains the complete agent persona, menu, and instructions
-3. LOAD the SOG protocol from {project-root}/bmad-custom-kit/framework/orchestrator-gateway.md (BM-53)
+3. LOAD the SOG protocol from {project-root}/grimoire-kit/framework/orchestrator-gateway.md (BM-53)
 4. APPLY SOG behavior: you are the SINGLE user-facing agent. All other agents are invisible sub-agents.
 5. FOLLOW every step in the <activation> section of the agent file precisely
 6. DISPLAY the welcome/greeting as instructed

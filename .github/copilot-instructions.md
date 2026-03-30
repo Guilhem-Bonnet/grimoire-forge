@@ -37,14 +37,14 @@
 - Save outputs after EACH step when using the workflow engine
 - The `{project-root}` variable resolves to the workspace root at runtime
 - **Documentation charter**: Avant de créer ou modifier un fichier `.md`, charger `_bmad/_memory/tech-writer-sidecar/documentation-standards.md` et respecter la charte (CommonMark, style guide, quality checklist)
-- **Autonomy protocols**: L'orchestrateur applique ALS (Autonomy Level System), AORA (boucle d'itération autonome), PIP (initiative proactive), DCF (confiance contextuelle), Session Momentum, et Friction Budget. Voir `bmad-custom-kit/framework/agent-base.md` et `bmad-custom-kit/framework/orchestrator-gateway.md`.
+- **Autonomy protocols**: L'orchestrateur applique ALS (Autonomy Level System), AORA (boucle d'itération autonome), PIP (initiative proactive), DCF (confiance contextuelle), Session Momentum, et Friction Budget. Voir `grimoire-kit/framework/agent-base.md` et `grimoire-kit/framework/orchestrator-gateway.md`.
 - **Stability guard**: Pour éviter les crashs de l'extension host VSCode, respecter ces limites : jamais de grep_search sans `includePattern` ciblé, toujours un timeout raisonnable sur les commandes terminal. Le file watcher est configuré pour exclure `.venv`, `__pycache__`, `.pytest_cache`, `.ruff_cache` etc. (voir `.vscode/settings.json`).
 
 ## Available Agents
 
 > **Architecture SOG (BM-53)** : Un seul agent est exposé à l'utilisateur — le BMad Master Orchestrator.
 > Tous les autres agents fonctionnent comme sub-agents invisibles, dispatchés automatiquement
-> par l'orchestrateur selon l'intention détectée. Voir `bmad-custom-kit/framework/orchestrator-gateway.md`.
+> par l'orchestrateur selon l'intention détectée. Voir `grimoire-kit/framework/orchestrator-gateway.md`.
 
 | Agent | Persona | Title | Capabilities |
 |---|---|---|---|

@@ -5,7 +5,7 @@ Moteur de création de projets agentiques, construit en dogfooding continu avec 
 ## Positionnement
 
 Ce dépôt est le cockpit de conception du moteur.
-Le code produit reste dans [bmad-custom-kit](bmad-custom-kit/).
+Le code produit reste dans [grimoire-kit](grimoire-kit/).
 
 Objectif produit : permettre de lancer, structurer et faire évoluer des projets pilotés par agents IA avec un niveau entreprise.
 
@@ -22,7 +22,7 @@ bmad-custom/
 ├── _bmad/                    Runtime BMAD installé dans ce workspace
 ├── _bmad-output/             Artefacts produits (plans, implémentation, traces)
 ├── docs/                     Cible produit, architecture, roadmap, publication
-├── bmad-custom-kit/          Produit implémenté (framework, CLI, tests)
+├── grimoire-kit/             Produit implémenté (framework, CLI, tests)
 └── .github/                  Instructions, skills, workflows, agents
 ```
 
@@ -46,7 +46,7 @@ bmad-custom/
 
 1. Formaliser la cible et les contraintes dans la documentation.
 2. Transformer la cible en stories exploitables via BMAD.
-3. Implémenter dans [bmad-custom-kit](bmad-custom-kit/).
+3. Implémenter dans [grimoire-kit](grimoire-kit/).
 4. Réinstaller dans ce workspace et valider en conditions réelles.
 5. Rejouer la boucle d'amélioration continue.
 
@@ -54,12 +54,12 @@ bmad-custom/
 
 ```bash
 # Validation rapide
-python3 -m ruff check bmad-custom-kit/framework/tools/ bmad-custom-kit/tests/ --statistics
-python3 -m pytest bmad-custom-kit/tests/ -q --tb=short -x --ignore=bmad-custom-kit/tests/test_background_tasks.py
+python3 -m ruff check grimoire-kit/framework/tools/ grimoire-kit/tests/ --statistics
+python3 -m pytest grimoire-kit/tests/ -q --tb=short -x --ignore=grimoire-kit/tests/test_background_tasks.py
 
 # Santé BMAD
-python3 bmad-custom-kit/framework/tools/preflight-check.py --project-root .
-python3 bmad-custom-kit/framework/tools/memory-lint.py --project-root .
+python3 grimoire-kit/framework/tools/preflight-check.py --project-root .
+python3 grimoire-kit/framework/tools/memory-lint.py --project-root .
 ```
 
 ## Statut du dépôt

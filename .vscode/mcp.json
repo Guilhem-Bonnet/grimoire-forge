@@ -8,7 +8,7 @@
       ]
     },
     "grimoire": {
-      "command": "${workspaceFolder}/bmad-custom-kit/.venv/bin/python",
+      "command": "${workspaceFolder}/grimoire-kit/.venv/bin/python",
       "args": [
         "-m",
         "grimoire.mcp.server"

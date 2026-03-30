@@ -48,4 +48,3 @@ _grimoire-output/
 # pytest
 .pytest_cache/
 .ruff_cache/
-bmad-custom-kit/

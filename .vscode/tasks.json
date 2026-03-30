@@ -5,7 +5,7 @@
   // ════════════════════════════════════════════════════════════════════
   "version": "2.0.0",
   "options": {
-    "cwd": "${workspaceFolder}/bmad-custom-kit",
+    "cwd": "${workspaceFolder}/grimoire-kit",
     "env": {
       "PYTHONDONTWRITEBYTECODE": "1"
     }
@@ -194,7 +194,7 @@
     {
       "label": "bmad: git-gc",
       "type": "shell",
-      "command": "git gc && cd bmad-custom-kit && git gc",
+      "command": "git gc && cd grimoire-kit && git gc",
       "options": { "cwd": "${workspaceFolder}" },
       "presentation": {
         "reveal": "always",

@@ -16,7 +16,7 @@ Complete validation checklist before pushing code. Catches issues locally before
 
 ## Procedure
 
-All commands run from the `bmad-custom-kit/` directory.
+All commands run from the `grimoire-kit/` directory.
 
 ### Step 1 — Test Suite
 

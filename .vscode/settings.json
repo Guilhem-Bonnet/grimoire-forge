@@ -56,6 +56,6 @@
   "gitlens.statusBar.enabled": false,
 
   "python.testing.pytestArgs": [
-    "bmad-custom-kit"
+    "grimoire-kit"
   ]
 }

@@ -17,7 +17,7 @@ Full project health audit combining 5 diagnostic tools into a unified report.
 
 ## Procedure
 
-Run each diagnostic tool from the project root (`bmad-custom-kit/`) and aggregate the results.
+Run each diagnostic tool from the project root (`grimoire-kit/`) and aggregate the results.
 
 ### Step 1 — Preflight Check
 
@@ -89,4 +89,4 @@ Present a unified health dashboard:
 
 - All tools are stdlib-only Python, no external dependencies needed
 - Each tool supports `--json` flag for machine-readable output
-- Run from the `bmad-custom-kit/` directory (where `framework/tools/` lives)
+- Run from the `grimoire-kit/` directory (where `framework/tools/` lives)
