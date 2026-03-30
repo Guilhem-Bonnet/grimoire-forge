@@ -103,6 +103,30 @@ L'orchestrateur dispatche automatiquement vers ces agents selon le besoin :
 | bmad-post-edit | PostToolUse | Auto-lint ruff (Python) + validation frontmatter YAML (artefacts UDF) |
 | bmad-subagent-trace | SubagentStart/Stop | Tracing des transitions SOG |
 
+## Runtime Routing & Diagnostics (DeepWiki)
+
+Alignement avec les recommandations VS Code wiki (Getting Started + Performance & Diagnostics).
+
+### Politique de choix de modèle (task-aware)
+
+| Profil de tâche | Modèle prioritaire | Règle opératoire |
+|---|---|---|
+| Implémentation code, refactor, debug multi-fichiers | GPT-5.3-Codex | Priorité qualité technique + exactitude diffs/tests |
+| Commandes simples, opérations shell courtes, checks d'état | Modèle léger | Favoriser latence/coût si aucun raisonnement profond requis |
+| Revue critique/risque élevé (sécu, migration, prod) | GPT-5.3-Codex + validation croisée | Appliquer HUP + CVTL avant restitution |
+
+### Politique de parallélisme
+
+- **Toujours paralléliser** les lectures/recherches indépendantes (read/search/grep/list).
+- **Ne pas paralléliser** les commandes terminal mutables dans un shell partagé (ordre strict).
+- `runSubagent` est utile pour spécialisation/isolation de contexte; le gain principal n'est pas la vitesse brute.
+
+### Politique diagnostics VS Code (télémétrie opérationnelle)
+
+- Utiliser `code --status` pour snapshot process/perf quand un ralentissement est suspecté.
+- Compléter avec Process Explorer (`Help > Open Process Explorer`) et Running Extensions si besoin.
+- Archiver les diagnostics dans `_bmad-output/test-artifacts/` pour traçabilité.
+
 ## Unified Dynamic Factory (UDF)
 
 L'orchestrateur peut créer dynamiquement 4 types d'artefacts quand aucun existant ne couvre le besoin.

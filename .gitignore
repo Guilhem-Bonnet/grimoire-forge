@@ -34,6 +34,7 @@ _bmad-output/.router-stats.jsonl
 _bmad-output/.workers/
 _bmad-output/observatory.html
 _bmad-output/BMAD_TRACE.md
+_bmad-output/test-artifacts/
 
 # Grimoire runtime (mémoire, cache)
 _grimoire/_memory/*.json

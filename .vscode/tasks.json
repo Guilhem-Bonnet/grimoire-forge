@@ -117,6 +117,17 @@
       },
       "problemMatcher": []
     },
+    {
+      "label": "bmad: vscode-diagnostics",
+      "type": "shell",
+      "command": "bash -c 'OUT=\"${workspaceFolder}/_bmad-output/test-artifacts/vscode\"; mkdir -p \"$OUT\"; TS=$(date +%Y%m%d-%H%M%S); if command -v code >/dev/null 2>&1; then code --status > \"$OUT/code-status-$TS.txt\" 2>&1 || true; code --verbose --status > \"$OUT/code-verbose-status-$TS.txt\" 2>&1 || true; echo \"Diagnostics sauvegardes dans $OUT\"; else echo \"Commande code indisponible dans ce shell\"; fi'",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "close": true
+      },
+      "problemMatcher": []
+    },
     // ── Dynamic Artifact Cleanup ─────────────────────────────────────
     {
       "label": "bmad: cleanup-dynamic-artifacts",
