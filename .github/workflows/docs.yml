@@ -1,0 +1,48 @@
+name: Deploy Forge docs
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "docs/**"
+      - "mkdocs.yml"
+      - ".github/workflows/docs.yml"
+  workflow_dispatch:
+
+permissions:
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: "pip"
+
+      - name: Install docs dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install "mkdocs-material>=9.5" "pymdown-extensions>=10.0"
+
+      - name: Build site
+        run: mkdocs build --clean
+
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: site/
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

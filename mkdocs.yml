@@ -1,0 +1,65 @@
+site_name: Grimoire Forge
+site_description: Moteur de creation de projets agentiques, pilote en dogfooding continu.
+site_url: https://guilhem-bonnet.github.io/grimoire-forge/
+repo_url: https://github.com/Guilhem-Bonnet/grimoire-forge
+repo_name: Guilhem-Bonnet/grimoire-forge
+edit_uri: edit/main/docs/
+
+theme:
+  name: material
+  language: fr
+  palette:
+    - scheme: default
+      primary: blue grey
+      accent: teal
+  features:
+    - navigation.instant
+    - navigation.sections
+    - navigation.top
+    - search.highlight
+    - content.code.copy
+  icon:
+    repo: fontawesome/brands/github
+
+plugins:
+  - search
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - toc:
+      permalink: true
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+
+nav:
+  - Accueil: index.md
+  - Vision:
+      - Objectif moteur agentique: vision/objectif-moteur-agentique.md
+  - Exploitation:
+      - Index: exploitation/index.md
+      - Distillat source Agent OS + Game UI: exploitation/distillat-source-agent-os-game-ui.md
+      - Cadrage Agent OS: exploitation/cadrage-agent-os.md
+      - Matrice capabilities et gaps: exploitation/matrice-capabilities-agent-os-game-ui.md
+      - Gouvernance des artefacts: exploitation/gouvernance-artefacts-agent-os-game-ui.md
+      - Workflow kickoff Agent OS + Game UI: exploitation/workflow-kickoff-agent-os-game-ui.md
+      - Preparation du programme Agent OS: exploitation/preparation-programme-agent-os.md
+      - Plan maitre Agent OS + Game UI: exploitation/plan-maitre-agent-os-game-ui.md
+      - Decision landing zone runtime: exploitation/decision-landing-zone-runtime-game-ui.md
+      - Paquet execution Vague 1: exploitation/paquet-execution-vague-1-agent-os-game-ui.md
+      - Backlog brainstorm Agent OS + Game UI: exploitation/backlog-brainstorm-agent-os-game-ui.md
+  - Roadmap:
+      - Plan vers objectif: roadmap/plan-vers-objectif.md
+      - Roadmap v1 publique: roadmap/roadmap-v1-publique.md
+      - Backlog initial public: roadmap/backlog-initial.md
+  - Gouvernance:
+      - Publication open source: governance/publication-open-source.md
+      - Annonce lancement public: governance/annonce-lancement-public.md
+      - Release notes v0.1.0: governance/release-notes-v0.1.0.md
+      - Release checklist v0.1.0: governance/release-checklist-v0.1.0.md
+  - References:
+      - Agent frameworks: references/agent-frameworks.md
