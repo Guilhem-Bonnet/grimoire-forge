@@ -48,3 +48,10 @@ _grimoire-output/
 # pytest
 .pytest_cache/
 .ruff_cache/
+
+# Playwright MCP screenshots
+.playwright-mcp/
+
+# MkDocs generated site
+grimoire-kit/site/
+site/
