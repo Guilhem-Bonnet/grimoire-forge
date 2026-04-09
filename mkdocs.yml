@@ -10,16 +10,22 @@ theme:
   language: fr
   palette:
     - scheme: default
-      primary: blue grey
-      accent: teal
+      primary: teal
+      accent: amber
   features:
     - navigation.instant
+    - navigation.tabs
     - navigation.sections
     - navigation.top
+    - toc.follow
+    - content.action.edit
     - search.highlight
     - content.code.copy
   icon:
     repo: fontawesome/brands/github
+
+extra_css:
+  - stylesheets/forge-landing.css
 
 plugins:
   - search
