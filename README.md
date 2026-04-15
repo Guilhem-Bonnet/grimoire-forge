@@ -79,11 +79,15 @@ bmad-custom/
 ## Commandes utiles
 
 ```bash
-# Validation rapide
+# Pipeline qualite obligatoire (lint + tests + preflight + memory-lint)
+bash quality-pipeline.sh         # Tous les checks
+bash quality-pipeline.sh --fast  # Skip memory-lint (plus rapide)
+
+# Validation rapide (manuelle)
 python3 -m ruff check grimoire-kit/framework/tools/ grimoire-kit/tests/ --statistics
 python3 -m pytest grimoire-kit/tests/ -q --tb=short -x --ignore=grimoire-kit/tests/test_background_tasks.py
 
-# Sante BMAD
+# Sante BMAD (quand grimoire-kit existe)
 python3 grimoire-kit/framework/tools/preflight-check.py --project-root .
 python3 grimoire-kit/framework/tools/memory-lint.py --project-root .
 ```
