@@ -96,7 +96,21 @@ python3 grimoire-kit/framework/tools/memory-lint.py --project-root .
 - Changelog: [CHANGELOG.md](CHANGELOG.md)
 - Hub de navigation: [docs/index.md](docs/index.md)
 
+## Contribution
+
+Ce projet est open source et accueille les contributions de la communauté.
+
+- [Guide de contribution](CONTRIBUTING.md) : Processus de contribution et standards de qualité
+- [Code de conduite](CODE_OF_CONDUCT.md) : Standards de comportement communautaire
+- [Politique de sécurité](SECURITY.md) : Comment signaler des vulnérabilités
+
+Pour contribuer :
+
+1. Consultez d'abord la [roadmap publique](docs/roadmap/roadmap-v1-publique.md) et le [backlog](docs/roadmap/backlog-initial.md)
+2. Créez une issue en utilisant les [templates appropriés](.github/ISSUE_TEMPLATE/)
+3. Suivez le workflow décrit dans [CONTRIBUTING.md](CONTRIBUTING.md)
+
 ## Statut
 
-Le depot doit etre public pour soutenir l'objectif produit.
-Voir [docs/governance/publication-open-source.md](docs/governance/publication-open-source.md) pour la procedure et le checklist de diffusion.
+Le depot est public sous licence MIT. Voir [LICENSE](LICENSE) pour les détails.
+Voir [docs/governance/publication-open-source.md](docs/governance/publication-open-source.md) pour la procedure de publication.
