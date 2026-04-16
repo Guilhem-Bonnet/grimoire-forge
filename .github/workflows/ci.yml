@@ -69,27 +69,41 @@ jobs:
   python-quality:
     name: Python quality - grimoire-kit
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: grimoire-kit
     steps:
       - uses: actions/checkout@v4
 
+      - name: Detect grimoire-kit Python package
+        id: python_scope
+        run: |
+          if [[ -f grimoire-kit/pyproject.toml ]]; then
+            echo "run_check=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "run_check=false" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Set up Python
+        if: steps.python_scope.outputs.run_check == 'true'
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
 
       - name: Install dependencies
+        if: steps.python_scope.outputs.run_check == 'true'
         run: |
+          cd grimoire-kit
           python -m pip install --upgrade pip
           python -m pip install -e . pytest pytest-cov ruff "mcp>=1.0"
 
       - name: Run Ruff
-        run: python -m ruff check framework/tools/ tests/ --statistics
+        if: steps.python_scope.outputs.run_check == 'true'
+        run: |
+          cd grimoire-kit
+          python -m ruff check framework/tools/ tests/ --statistics
 
       - name: Run tests with coverage
+        if: steps.python_scope.outputs.run_check == 'true'
         run: |
+          cd grimoire-kit
           python -m pytest tests/ \
             --cov=src/grimoire \
             --cov-report=xml:coverage.xml \
@@ -97,12 +111,17 @@ jobs:
             --ignore=tests/test_background_tasks.py
 
       - name: Upload coverage reports to Codecov
+        if: steps.python_scope.outputs.run_check == 'true'
         uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: grimoire-kit/coverage.xml
           flags: grimoire-kit
           name: grimoire-kit-py312
+
+      - name: Skip notice
+        if: steps.python_scope.outputs.run_check != 'true'
+        run: echo "grimoire-kit absent dans ce checkout, checks Python skips."
 
   visual-evidence-governance:
     name: Visual evidence governance
@@ -148,13 +167,20 @@ jobs:
   grimoire-game-quality:
     name: Grimoire Game quality - Node.js
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: grimoire-kit/apps/grimoire-game
     steps:
       - uses: actions/checkout@v4
 
+      - name: Detect Grimoire Game package
+        id: game_scope
+        run: |
+          if [[ -f grimoire-kit/apps/grimoire-game/package-lock.json ]]; then
+            echo "run_check=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "run_check=false" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Set up Node.js
+        if: steps.game_scope.outputs.run_check == 'true'
         uses: actions/setup-node@v4
         with:
           node-version: "22"
@@ -162,27 +188,35 @@ jobs:
           cache-dependency-path: grimoire-kit/apps/grimoire-game/package-lock.json
 
       - name: Install dependencies
-        run: npm ci
+        if: steps.game_scope.outputs.run_check == 'true'
+        run: cd grimoire-kit/apps/grimoire-game && npm ci
 
       - name: Type check
-        run: npm run check
+        if: steps.game_scope.outputs.run_check == 'true'
+        run: cd grimoire-kit/apps/grimoire-game && npm run check
 
       - name: Build package
-        run: npm run build
+        if: steps.game_scope.outputs.run_check == 'true'
+        run: cd grimoire-kit/apps/grimoire-game && npm run build
 
       - name: Run tests with coverage
-        run: npm run test:coverage
+        if: steps.game_scope.outputs.run_check == 'true'
+        run: cd grimoire-kit/apps/grimoire-game && npm run test:coverage
 
       - name: Run cockpit proof
-        run: npm run cockpit:verify
+        if: steps.game_scope.outputs.run_check == 'true'
+        run: cd grimoire-kit/apps/grimoire-game && npm run cockpit:verify
 
       - name: Verify npm package payload
-        run: npm run pack:verify
+        if: steps.game_scope.outputs.run_check == 'true'
+        run: cd grimoire-kit/apps/grimoire-game && npm run pack:verify
 
       - name: Create npm package artifact
-        run: npm run pack:artifact
+        if: steps.game_scope.outputs.run_check == 'true'
+        run: cd grimoire-kit/apps/grimoire-game && npm run pack:artifact
 
       - name: Upload runtime artifacts
+        if: steps.game_scope.outputs.run_check == 'true'
         uses: actions/upload-artifact@v4
         with:
           name: grimoire-game-runtime-artifacts
@@ -192,9 +226,14 @@ jobs:
             grimoire-kit/apps/grimoire-game/.release
 
       - name: Upload coverage reports to Codecov
+        if: steps.game_scope.outputs.run_check == 'true'
         uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: grimoire-kit/apps/grimoire-game/coverage/lcov.info
           flags: grimoire-game
           name: grimoire-game-node22
+
+      - name: Skip notice
+        if: steps.game_scope.outputs.run_check != 'true'
+        run: echo "grimoire-game absent dans ce checkout, checks Node skips."
