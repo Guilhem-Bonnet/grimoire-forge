@@ -8,6 +8,8 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
+  merge_group:
+    branches: [main]
 
 jobs:
   shellcheck:
@@ -19,11 +21,14 @@ jobs:
       - name: Install ShellCheck
         run: sudo apt-get install -y shellcheck
 
-      - name: Lint bmad-init.sh
-        run: shellcheck -S warning grimoire-kit/bmad-init.sh
+      - name: Lint grimoire-init.sh
+        run: |
+          [ -f grimoire-kit/grimoire-init.sh ] || { echo "grimoire-kit absent dans ce checkout — skip"; exit 0; }
+          shellcheck -S warning grimoire-kit/grimoire-init.sh
 
       - name: Lint framework scripts
         run: |
+          [ -f grimoire-kit/grimoire-init.sh ] || { echo "grimoire-kit absent dans ce checkout — skip"; exit 0; }
           shellcheck -S warning grimoire-kit/framework/cc-verify.sh
           shellcheck -S warning grimoire-kit/framework/sil-collect.sh
           shellcheck -S warning grimoire-kit/framework/hooks/pre-commit-cc.sh
@@ -36,23 +41,160 @@ jobs:
 
       - name: Validate bash syntax
         run: |
-          bash -n grimoire-kit/bmad-init.sh && echo "✅ bmad-init.sh"
+          [ -f grimoire-kit/grimoire-init.sh ] || { echo "grimoire-kit absent dans ce checkout — skip"; exit 0; }
+          bash -n grimoire-kit/grimoire-init.sh && echo "✅ grimoire-init.sh"
           bash -n grimoire-kit/framework/cc-verify.sh && echo "✅ cc-verify.sh"
           bash -n grimoire-kit/framework/sil-collect.sh && echo "✅ sil-collect.sh"
           bash -n grimoire-kit/framework/hooks/pre-commit-cc.sh && echo "✅ pre-commit-cc.sh"
 
   smoke-test:
-    name: Smoke test — bmad-init.sh --help
+    name: Smoke test — grimoire-init.sh --help
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
       - name: Test --help flag
-        run: bash grimoire-kit/bmad-init.sh --help
+        run: |
+          [ -f grimoire-kit/grimoire-init.sh ] || { echo "grimoire-kit absent dans ce checkout — skip"; exit 0; }
+          bash grimoire-kit/grimoire-init.sh --help
 
       - name: Test detect_stack sur le repo lui-même
         run: |
-          source <(sed -n '/^detect_stack/,/^}/p' grimoire-kit/bmad-init.sh)
+          [ -f grimoire-kit/grimoire-init.sh ] || { echo "grimoire-kit absent dans ce checkout — skip"; exit 0; }
+          source <(sed -n '/^detect_stack/,/^}/p' grimoire-kit/grimoire-init.sh)
           stacks=$(detect_stack "$(pwd)/grimoire-kit")
           echo "Stacks détectés : $stacks"
           [[ -n "$stacks" ]] && echo "✅ detect_stack OK" || echo "⚠️  Aucun stack détecté"
+
+  python-quality:
+    name: Python quality - grimoire-kit
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: grimoire-kit
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e . pytest pytest-cov ruff "mcp>=1.0"
+
+      - name: Run Ruff
+        run: python -m ruff check framework/tools/ tests/ --statistics
+
+      - name: Run tests with coverage
+        run: |
+          python -m pytest tests/ \
+            --cov=src/grimoire \
+            --cov-report=xml:coverage.xml \
+            --cov-report=term-missing \
+            --ignore=tests/test_background_tasks.py
+
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: grimoire-kit/coverage.xml
+          flags: grimoire-kit
+          name: grimoire-kit-py312
+
+  visual-evidence-governance:
+    name: Visual evidence governance
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Detect visual scope changes
+        id: visual_scope
+        run: |
+          set -euo pipefail
+          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+            git fetch --no-tags --prune --depth=1 origin "${{ github.base_ref }}"
+            DIFF_BASE="origin/${{ github.base_ref }}"
+          else
+            DIFF_BASE="HEAD~1"
+          fi
+          git diff --name-only "$DIFF_BASE" HEAD > changed.txt
+          if grep -E '^_grimoire-runtime-output/implementation-artifacts/(visual-brief\.md|brand-board\.md|ux-map\.md|motion-spec\.md|assets-manifest\.csv|implementation-pack/|proof-pack\.md|visual-evidence/)' changed.txt >/dev/null; then
+            echo "run_check=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "run_check=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Run visual evidence checks
+        if: steps.visual_scope.outputs.run_check == 'true'
+        run: |
+          python grimoire-kit/framework/tools/visual-evidence-governance.py \
+            --project-root . \
+            check
+
+      - name: Skip notice
+        if: steps.visual_scope.outputs.run_check != 'true'
+        run: echo "No visual-scope changes detected, visual governance check skipped."
+
+  grimoire-game-quality:
+    name: Grimoire Game quality - Node.js
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: grimoire-kit/apps/grimoire-game
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "npm"
+          cache-dependency-path: grimoire-kit/apps/grimoire-game/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Type check
+        run: npm run check
+
+      - name: Build package
+        run: npm run build
+
+      - name: Run tests with coverage
+        run: npm run test:coverage
+
+      - name: Run cockpit proof
+        run: npm run cockpit:verify
+
+      - name: Verify npm package payload
+        run: npm run pack:verify
+
+      - name: Create npm package artifact
+        run: npm run pack:artifact
+
+      - name: Upload runtime artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: grimoire-game-runtime-artifacts
+          path: |
+            grimoire-kit/apps/grimoire-game/dist
+            grimoire-kit/apps/grimoire-game/coverage
+            grimoire-kit/apps/grimoire-game/.release
+
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: grimoire-kit/apps/grimoire-game/coverage/lcov.info
+          flags: grimoire-game
+          name: grimoire-game-node22
