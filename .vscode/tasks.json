@@ -228,6 +228,18 @@
       "problemMatcher": []
     },
     {
+      "label": "grimoire: install-git-hooks",
+      "type": "shell",
+      "command": "bash grimoire-init.sh hooks --install",
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": true,
+        "close": true
+      },
+      "problemMatcher": []
+    },
+    {
       "label": "grimoire: setup-interactive",
       "type": "shell",
       "command": "bash grimoire.sh setup",

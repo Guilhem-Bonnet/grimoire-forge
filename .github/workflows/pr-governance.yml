@@ -1,0 +1,38 @@
+name: PR Governance
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, edited, reopened, synchronize, ready_for_review]
+  merge_group:
+    branches: [main]
+
+jobs:
+  conventional-pr-title:
+    name: Conventional PR title
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate PR title
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const title = (context.payload.pull_request.title || '').trim();
+            const pattern = /^(feat|fix|docs|style|refactor|perf|test|chore|ci|build|revert)(\([A-Za-z0-9._\/-]+\))?(!)?: .+/;
+
+            if (!pattern.test(title)) {
+              core.setFailed([
+                `Titre invalide: "${title}"`,
+                'Le titre de PR doit suivre Conventional Commits.',
+                'Format attendu: type(scope): resume',
+                'Exemple: feat(governance): ajouter la gate de titre PR',
+              ].join('\n'));
+            }
+
+  conventional-pr-title-merge-group:
+    name: Conventional PR title
+    if: github.event_name == 'merge_group'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Merge group passthrough
+        run: echo "PR title already validated on pull_request; merge_group publishes the same required check context."
