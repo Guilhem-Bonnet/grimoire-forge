@@ -407,6 +407,33 @@ if [[ -x "$emit_event_script" ]]; then
     2>/dev/null || true
 fi
 
+# V4.6 anomaly burst detector : sliding-window detection of repeated subagent
+# events.  Fail-open : toute erreur (Python absent, state file corrompu) est
+# silencieuse.  Quand le detecteur signale un burst, on emet un GrimoireEvent
+# scope=anomaly via le canal canonique (single-writer guarantee preservee).
+anomaly_state_file="$HOOK_STATE_DIR/anomaly-burst-state.json"
+if [[ -n "$POLICY_PYTHON" && -x "$emit_event_script" ]]; then
+  mkdir -p "$HOOK_STATE_DIR"
+  set +e
+  anomaly_output=$("$POLICY_PYTHON" -m grimoire.tools.anomaly_burst record \
+    --agent "$agent_name" \
+    --event "$event_name" \
+    --state-file "$anomaly_state_file" 2>/dev/null)
+  anomaly_rc=$?
+  set -e
+  if [[ $anomaly_rc -eq 0 && -n "$anomaly_output" ]]; then
+    if [[ "$anomaly_output" != *'"anomaly":null'* && "$anomaly_output" == *'"anomaly":'* ]]; then
+      "$emit_event_script" \
+        --scope anomaly \
+        --phase info \
+        --source-hook "grimoire-subagent-trace.sh" \
+        --agent-json "$(printf '{"id":"%s","role":"subagent"}' "$(json_escape "$agent_name")")" \
+        --payload-json "$anomaly_output" \
+        2>/dev/null || true
+    fi
+  fi
+fi
+
 if [[ "$event_name" != "SubagentStop" ]]; then
   echo "{}"
   exit 0
