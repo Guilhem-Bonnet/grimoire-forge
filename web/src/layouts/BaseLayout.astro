@@ -1,0 +1,46 @@
+---
+// Layout partagé pour les pages Astro (non celles dans public/).
+// Reproduit la structure <head> commune (tokens + base + motion + nav).
+interface Props {
+  title: string;
+  description?: string;
+  /** Couleur thème de la barre nav (accent orange par défaut). */
+  accent?: string;
+  /** Active le CSS landing (shimmer, gradient cards). */
+  landing?: boolean;
+}
+const {
+  title,
+  description = 'Grimoire Forge orchestre agents, surfaces et artefacts dans un runtime unique. Conçu pour les builders qui exigent la trace.',
+  landing = false,
+} = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site).toString();
+---
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <link rel="canonical" href={canonical} />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={canonical} />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
+  <link rel="stylesheet" href="/styles/forge-tokens.css" />
+  <link rel="stylesheet" href="/styles/forge-base.css" />
+  <link rel="stylesheet" href="/styles/forge-motion.css" />
+  {landing && <link rel="stylesheet" href="/styles/forge-landing.css" />}
+  <slot name="head" />
+</head>
+<body>
+  <slot />
+  <script src="/scripts/forge-nav.js" is:inline defer></script>
+  <script src="/scripts/forge-motion.js" is:inline defer></script>
+</body>
+</html>

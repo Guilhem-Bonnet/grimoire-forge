@@ -11,11 +11,10 @@
     }
   },
   "tasks": [
-    // ── Tests ────────────────────────────────────────────────────────
     {
-      "label": "bmad: test-all",
+      "label": "grimoire: test-all",
       "type": "shell",
-      "command": "python3 -m pytest tests/ -q --tb=short -x --ignore=tests/test_background_tasks.py",
+      "command": "bash ${workspaceFolder}/.github/hooks/scripts/grimoire-task-flow.sh --task 'grimoire: test-all' --flow quality -- ${workspaceFolder}/grimoire-kit/.venv/bin/python -m pytest tests/ -q --tb=short -x --ignore=tests/test_background_tasks.py",
       "group": {
         "kind": "test",
         "isDefault": true
@@ -29,9 +28,9 @@
       "problemMatcher": []
     },
     {
-      "label": "bmad: test-modified",
+      "label": "grimoire: test-modified",
       "type": "shell",
-      "command": "bash -c 'CHANGED=$(git diff --name-only --diff-filter=ACMR HEAD -- \"tests/test_*.py\" | tr \"\\n\" \" \"); if [ -z \"$CHANGED\" ]; then echo \"Aucun test modifié.\"; else python3 -m pytest $CHANGED -q --tb=short -x; fi'",
+      "command": "bash ${workspaceFolder}/.github/hooks/scripts/grimoire-task-flow.sh --task 'grimoire: test-modified' --flow quality -- bash -c 'CHANGED=$( { git diff --name-only --diff-filter=ACMR HEAD -- tests; git ls-files --others --exclude-standard -- tests; } | grep \"^tests/.*test_.*\\.py$\" | sort -u | tr \"\\n\" \" \" ); if [ -z \"$CHANGED\" ]; then echo \"Aucun test modifie.\"; else ${workspaceFolder}/grimoire-kit/.venv/bin/python -m pytest $CHANGED -q --tb=short -x; fi'",
       "group": "test",
       "presentation": {
         "reveal": "always",
@@ -42,9 +41,9 @@
       "problemMatcher": []
     },
     {
-      "label": "bmad: test-file",
+      "label": "grimoire: test-file",
       "type": "shell",
-      "command": "python3 -m pytest ${relativeFile} -v --tb=short -x",
+      "command": "bash ${workspaceFolder}/.github/hooks/scripts/grimoire-task-flow.sh --task 'grimoire: test-file' --flow quality -- ${workspaceFolder}/grimoire-kit/.venv/bin/python -m pytest ${relativeFile} -v --tb=short -x",
       "group": "test",
       "presentation": {
         "reveal": "always",
@@ -56,35 +55,70 @@
     },
     // ── Lint ─────────────────────────────────────────────────────────
     {
-      "label": "bmad: lint",
+      "label": "grimoire: lint",
       "type": "shell",
-      "command": "bash -c 'TARGETS=\"\"; for d in framework/tools tests; do [ -e \"$d\" ] && TARGETS=\"$TARGETS $d\"; done; if [ -z \"$TARGETS\" ]; then echo \"Aucune cible lint trouvée — skip\"; exit 0; fi; python3 -m ruff check $TARGETS --statistics'",
+      "command": "bash ${workspaceFolder}/.github/hooks/scripts/grimoire-task-flow.sh --task 'grimoire: lint' --flow quality -- bash -c 'TARGETS=\"\"; for d in framework/tools tests; do [ -e \"$d\" ] && TARGETS=\"$TARGETS $d\"; done; if [ -z \"$TARGETS\" ]; then echo \"Aucune cible lint trouvee - skip\"; exit 0; fi; ${workspaceFolder}/grimoire-kit/.venv/bin/python -m ruff check $TARGETS --statistics'",
       "group": "build",
       "presentation": {
         "reveal": "always",
-        "panel": "shared",
+        "panel": "dedicated",
+        "clear": true,
+        "close": false
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "grimoire: lintfix",
+      "type": "shell",
+      "command": "bash ${workspaceFolder}/.github/hooks/scripts/grimoire-task-flow.sh --task 'grimoire: lintfix' --flow quality -- bash -c 'TARGETS=\"\"; for d in framework/tools tests; do [ -e \"$d\" ] && TARGETS=\"$TARGETS $d\"; done; if [ -z \"$TARGETS\" ]; then echo \"Aucune cible lint trouvee - skip\"; exit 0; fi; ${workspaceFolder}/grimoire-kit/.venv/bin/python -m ruff check $TARGETS --fix --statistics'",
+      "group": "build",
+      "presentation": {
+        "reveal": "always",
+        "panel": "new",
+        "clear": true,
+        "close": false
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "grimoire: lint-fix",
+      "dependsOn": "grimoire: lintfix",
+      "dependsOrder": "sequence"
+    },
+    {
+      "label": "grimoire: quickcheck",
+      "type": "shell",
+      "command": "bash ${workspaceFolder}/.github/hooks/scripts/grimoire-task-flow.sh --task 'grimoire: quickcheck' --flow quality -- bash -c 'cd \"${workspaceFolder}/grimoire-kit\" && framework/tools/quick-check.sh && { MANIFEST=\"${workspaceFolder}/_grimoire-runtime-output/implementation-artifacts/visual-evidence/retention-manifest.json\"; if [ -f \"$MANIFEST\" ]; then ${workspaceFolder}/grimoire-kit/.venv/bin/python framework/tools/visual-evidence-governance.py --project-root ${workspaceFolder} check; fi; }'",
+      "group": "build",
+      "presentation": {
+        "reveal": "always",
+        "panel": "new",
+        "clear": true,
+        "close": false
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "grimoire: quick-check",
+      "dependsOn": "grimoire: quickcheck",
+      "dependsOrder": "sequence"
+    },
+    {
+      "label": "grimoire: compiled-flow:catalog",
+      "type": "shell",
+      "command": "bash ${workspaceFolder}/.github/hooks/scripts/grimoire-task-flow.sh --task 'grimoire: compiled-flow:catalog' --flow quality -- ${workspaceFolder}/grimoire-kit/.venv/bin/python framework/tools/compiled-flow.py --project-root ${workspaceFolder} catalog",
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
         "clear": true,
         "close": true
       },
       "problemMatcher": []
     },
     {
-      "label": "bmad: lint-fix",
+      "label": "grimoire: compiled-flow:validate",
       "type": "shell",
-      "command": "bash -c 'TARGETS=\"\"; for d in framework/tools tests; do [ -e \"$d\" ] && TARGETS=\"$TARGETS $d\"; done; if [ -z \"$TARGETS\" ]; then echo \"Aucune cible lint trouvée — skip\"; exit 0; fi; python3 -m ruff check $TARGETS --fix --statistics'",
-      "group": "build",
-      "presentation": {
-        "reveal": "always",
-        "panel": "shared",
-        "clear": true,
-        "close": true
-      },
-      "problemMatcher": []
-    },
-    {
-      "label": "bmad: quick-check",
-      "type": "shell",
-      "command": "bash -c 'echo \"=== LINT ===\"; TARGETS=\"\"; for d in framework/tools tests; do [ -e \"$d\" ] && TARGETS=\"$TARGETS $d\"; done; if [ -z \"$TARGETS\" ]; then echo \"Aucune cible lint trouvée — skip\"; else python3 -m ruff check $TARGETS --statistics -q 2>&1 | tail -5; fi; echo \"\\n=== TESTS (modifiés) ===\"; CHANGED=$(git diff --name-only --diff-filter=ACMR HEAD -- \"tests/test_*.py\" | tr \"\\n\" \" \" ); if [ -z \"$CHANGED\" ]; then echo \"Aucun test modifié — skip\"; else python3 -m pytest $CHANGED -q --tb=line -x; fi'",
+      "command": "bash ${workspaceFolder}/.github/hooks/scripts/grimoire-task-flow.sh --task 'grimoire: compiled-flow:validate' --flow quality -- ${workspaceFolder}/grimoire-kit/.venv/bin/python framework/tools/compiled-flow.py --project-root ${workspaceFolder} validate",
       "group": "build",
       "presentation": {
         "reveal": "always",
@@ -94,11 +128,292 @@
       },
       "problemMatcher": []
     },
+    {
+      "label": "grimoire-game: check",
+      "type": "shell",
+      "command": "bash ${workspaceFolder}/.github/hooks/scripts/grimoire-task-flow.sh --task 'grimoire-game: check' --flow game -- npm run check",
+      "options": {
+        "cwd": "${workspaceFolder}/grimoire-kit/apps/grimoire-game"
+      },
+      "group": "build",
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": true,
+        "close": false
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "grimoire-game: cockpit:dev",
+      "type": "shell",
+      "command": "bash ${workspaceFolder}/.github/hooks/scripts/grimoire-task-flow.sh --task 'grimoire-game: cockpit:dev' --flow game -- npm run cockpit:dev",
+      "options": {
+        "cwd": "${workspaceFolder}/grimoire-kit/apps/grimoire-game"
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": true,
+        "close": false
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "grimoire-game: cockpit:build",
+      "type": "shell",
+      "command": "bash ${workspaceFolder}/.github/hooks/scripts/grimoire-task-flow.sh --task 'grimoire-game: cockpit:build' --flow game -- npm run cockpit:build",
+      "options": {
+        "cwd": "${workspaceFolder}/grimoire-kit/apps/grimoire-game"
+      },
+      "group": "build",
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": true,
+        "close": false
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "grimoire-game: cockpit:verify",
+      "type": "shell",
+      "command": "bash ${workspaceFolder}/.github/hooks/scripts/grimoire-task-flow.sh --task 'grimoire-game: cockpit:verify' --flow game -- npm run cockpit:verify",
+      "options": {
+        "cwd": "${workspaceFolder}/grimoire-kit/apps/grimoire-game"
+      },
+      "group": "test",
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": true,
+        "close": false
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "grimoire-game: demo:views",
+      "type": "shell",
+      "command": "bash ${workspaceFolder}/.github/hooks/scripts/grimoire-task-flow.sh --task 'grimoire-game: demo:views' --flow game -- npm run demo:views",
+      "options": {
+        "cwd": "${workspaceFolder}/grimoire-kit/apps/grimoire-game"
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": true,
+        "close": false
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "grimoire-game: demo:report",
+      "type": "shell",
+      "command": "bash ${workspaceFolder}/.github/hooks/scripts/grimoire-task-flow.sh --task 'grimoire-game: demo:report' --flow game -- npm run demo:report",
+      "options": {
+        "cwd": "${workspaceFolder}/grimoire-kit/apps/grimoire-game"
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": true,
+        "close": false
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "grimoire-game: test-runtime-views",
+      "type": "shell",
+      "command": "bash ${workspaceFolder}/.github/hooks/scripts/grimoire-task-flow.sh --task 'grimoire-game: test-runtime-views' --flow game -- npx vitest run tests/integration/power-cards-view.test.ts tests/integration/provenance-compliance-view.test.ts",
+      "options": {
+        "cwd": "${workspaceFolder}/grimoire-kit/apps/grimoire-game"
+      },
+      "group": "test",
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": true,
+        "close": false
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "grimoire: multi-llm-canary-validate",
+      "type": "shell",
+      "command": "bash ${workspaceFolder}/.github/hooks/scripts/grimoire-task-flow.sh --task 'grimoire: multi-llm-canary-validate' --flow quality -- npx -y promptfoo@latest validate --config evals/multi-llm/promptfooconfig.yaml",
+      "group": "test",
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": true,
+        "close": false
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "grimoire: multi-llm-canary",
+      "type": "shell",
+      "command": "bash ${workspaceFolder}/.github/hooks/scripts/grimoire-task-flow.sh --task 'grimoire: multi-llm-canary' --flow quality -- bash -c 'OUT=\"${workspaceFolder}/_grimoire-runtime-output/test-artifacts/multi-llm-canary\"; mkdir -p \"$OUT\"; npx -y promptfoo@latest validate --config evals/multi-llm/promptfooconfig.yaml; if [ -z \"${GITHUB_TOKEN:-}\" ] && [ -n \"${GH_MODELS_TOKEN:-}\" ]; then export GITHUB_TOKEN=\"$GH_MODELS_TOKEN\"; fi; if [ -z \"${GITHUB_TOKEN:-}\" ]; then echo \"Validation OK. GITHUB_TOKEN et GH_MODELS_TOKEN absents: eval distante skip.\"; exit 0; fi; export PROMPTFOO_CACHE_PATH=\"${workspaceFolder}/.promptfoo-cache\"; npx -y promptfoo@latest eval --config evals/multi-llm/promptfooconfig.yaml -o \"$OUT/results.json\" -o \"$OUT/report.html\"'",
+      "group": "test",
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": true,
+        "close": false
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "grimoire-game: flow-verify",
+      "dependsOn": [
+        "grimoire-game: check",
+        "grimoire-game: cockpit:verify",
+        "grimoire-game: test-runtime-views"
+      ],
+      "dependsOrder": "sequence"
+    },
+    {
+      "label": "grimoire: flow-quick",
+      "dependsOn": [
+        "grimoire: trace-audit",
+        "grimoire: hooks-smoke",
+        "grimoire: compiled-flow:validate",
+        "grimoire: lint",
+        "grimoire: test-modified",
+        "grimoire: memory-lint",
+        "grimoire: preflight"
+      ],
+      "dependsOrder": "sequence"
+    },
+    {
+      "label": "grimoire: flow-full",
+      "dependsOn": [
+        "grimoire: trace-audit-strict",
+        "grimoire: hooks-smoke",
+        "grimoire: compiled-flow:validate",
+        "grimoire: lint",
+        "grimoire: test-all",
+        "grimoire: validate-skills",
+        "grimoire: auto-doc-check",
+        "grimoire: memory-lint",
+        "grimoire: preflight",
+        "grimoire: multi-llm-canary-validate"
+      ],
+      "dependsOrder": "sequence"
+    },
+    {
+      "label": "bmad: test-all",
+      "dependsOn": "grimoire: test-all",
+      "dependsOrder": "sequence"
+    },
+    {
+      "label": "bmad: test-modified",
+      "dependsOn": "grimoire: test-modified",
+      "dependsOrder": "sequence"
+    },
+    {
+      "label": "bmad: test-file",
+      "dependsOn": "grimoire: test-file",
+      "dependsOrder": "sequence"
+    },
+    {
+      "label": "bmad: lint",
+      "dependsOn": "grimoire: lint",
+      "dependsOrder": "sequence"
+    },
+    {
+      "label": "bmad: lintfix",
+      "dependsOn": "grimoire: lintfix",
+      "dependsOrder": "sequence"
+    },
+    {
+      "label": "bmad: lint-fix",
+      "dependsOn": "grimoire: lintfix",
+      "dependsOrder": "sequence"
+    },
+    {
+      "label": "bmad: quickcheck",
+      "dependsOn": "grimoire: quickcheck",
+      "dependsOrder": "sequence"
+    },
+    {
+      "label": "bmad: quick-check",
+      "dependsOn": "grimoire: quickcheck",
+      "dependsOrder": "sequence"
+    },
+    {
+      "label": "bmad: compiled-flow:catalog",
+      "dependsOn": "grimoire: compiled-flow:catalog",
+      "dependsOrder": "sequence"
+    },
+    {
+      "label": "bmad: compiled-flow:validate",
+      "dependsOn": "grimoire: compiled-flow:validate",
+      "dependsOrder": "sequence"
+    },
+    {
+      "label": "bmad: multi-llm-canary-validate",
+      "dependsOn": "grimoire: multi-llm-canary-validate",
+      "dependsOrder": "sequence"
+    },
+    {
+      "label": "bmad: multi-llm-canary",
+      "dependsOn": "grimoire: multi-llm-canary",
+      "dependsOrder": "sequence"
+    },
+    {
+      "label": "bmad: flow-quick",
+      "dependsOn": "grimoire: flow-quick",
+      "dependsOrder": "sequence"
+    },
+    {
+      "label": "bmad: flow-full",
+      "dependsOn": "grimoire: flow-full",
+      "dependsOrder": "sequence"
+    },
     // ── Memory tools ─────────────────────────────────────────────────
     {
-      "label": "bmad: memory-lint",
+      "label": "grimoire: memory-lint",
       "type": "shell",
-      "command": "python3 framework/tools/memory-lint.py --project-root .",
+      "command": "bash ${workspaceFolder}/.github/hooks/scripts/grimoire-task-flow.sh --task 'grimoire: memory-lint' --flow memory -- ${workspaceFolder}/grimoire-kit/.venv/bin/python framework/tools/memory-lint.py --project-root .",
+      "presentation": {
+        "reveal": "always",
+        "panel": "new",
+        "clear": true,
+        "close": false
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "grimoire: preflight",
+      "type": "shell",
+      "command": "bash ${workspaceFolder}/.github/hooks/scripts/grimoire-task-flow.sh --task 'grimoire: preflight' --flow quality -- ${workspaceFolder}/grimoire-kit/.venv/bin/python framework/tools/preflight-check.py --project-root .",
+      "presentation": {
+        "reveal": "always",
+        "panel": "new",
+        "clear": true,
+        "close": false
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "bmad: memory-lint",
+      "dependsOn": "grimoire: memory-lint",
+      "dependsOrder": "sequence"
+    },
+    {
+      "label": "bmad: preflight",
+      "dependsOn": "grimoire: preflight",
+      "dependsOrder": "sequence"
+    },
+    // ── Runtime trace maintenance ───────────────────────────────────
+    {
+      "label": "grimoire: trace-audit",
+      "type": "shell",
+      "command": "bash ${workspaceFolder}/.github/hooks/scripts/grimoire-task-flow.sh --task 'grimoire: trace-audit' --flow trace -- bash ${workspaceFolder}/.github/hooks/scripts/grimoire-subagent-trace.sh --audit-only",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
       "presentation": {
         "reveal": "always",
         "panel": "shared",
@@ -107,21 +422,166 @@
       "problemMatcher": []
     },
     {
-      "label": "bmad: preflight",
+      "label": "bmad: trace-audit",
+      "dependsOn": "grimoire: trace-audit",
+      "dependsOrder": "sequence"
+    },
+    {
+      "label": "grimoire: hooks-smoke",
       "type": "shell",
-      "command": "python3 framework/tools/preflight-check.py --project-root .",
+      "command": "bash ${workspaceFolder}/.github/hooks/scripts/grimoire-task-flow.sh --task 'grimoire: hooks-smoke' --flow hooks -- bash ${workspaceFolder}/.github/hooks/scripts/grimoire-hooks-smoke.sh",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
       "presentation": {
         "reveal": "always",
         "panel": "shared",
         "close": true
       },
       "problemMatcher": []
+    },
+    {
+      "label": "grimoire: hooks-status",
+      "type": "shell",
+      "command": "bash ${workspaceFolder}/.github/hooks/scripts/grimoire-task-flow.sh --task 'grimoire: hooks-status' --flow hooks -- ${workspaceFolder}/grimoire-kit/.venv/bin/python ${workspaceFolder}/grimoire-kit/framework/tools/hook-safety-gate.py --project-root ${workspaceFolder} status",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "close": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "grimoire: hooks-promote",
+      "type": "shell",
+      "command": "bash ${workspaceFolder}/.github/hooks/scripts/grimoire-task-flow.sh --task 'grimoire: hooks-promote' --flow hooks -- ${workspaceFolder}/grimoire-kit/.venv/bin/python ${workspaceFolder}/grimoire-kit/framework/tools/hook-safety-gate.py --project-root ${workspaceFolder} promote",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "close": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "grimoire: hooks-canary",
+      "type": "shell",
+      "command": "bash ${workspaceFolder}/.github/hooks/scripts/grimoire-task-flow.sh --task 'grimoire: hooks-canary' --flow hooks -- ${workspaceFolder}/grimoire-kit/.venv/bin/python ${workspaceFolder}/grimoire-kit/framework/tools/hook-safety-gate.py --project-root ${workspaceFolder} set-mode canary",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "close": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "grimoire: hooks-shadow",
+      "type": "shell",
+      "command": "bash ${workspaceFolder}/.github/hooks/scripts/grimoire-task-flow.sh --task 'grimoire: hooks-shadow' --flow hooks -- ${workspaceFolder}/grimoire-kit/.venv/bin/python ${workspaceFolder}/grimoire-kit/framework/tools/hook-safety-gate.py --project-root ${workspaceFolder} set-mode shadow",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "close": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "bmad: hooks-smoke",
+      "dependsOn": "grimoire: hooks-smoke",
+      "dependsOrder": "sequence"
+    },
+    {
+      "label": "bmad: hooks-status",
+      "dependsOn": "grimoire: hooks-status",
+      "dependsOrder": "sequence"
+    },
+    {
+      "label": "bmad: hooks-promote",
+      "dependsOn": "grimoire: hooks-promote",
+      "dependsOrder": "sequence"
+    },
+    {
+      "label": "bmad: hooks-canary",
+      "dependsOn": "grimoire: hooks-canary",
+      "dependsOrder": "sequence"
+    },
+    {
+      "label": "bmad: hooks-shadow",
+      "dependsOn": "grimoire: hooks-shadow",
+      "dependsOrder": "sequence"
+    },
+    {
+      "label": "grimoire: trace-audit-strict",
+      "type": "shell",
+      "command": "bash ${workspaceFolder}/.github/hooks/scripts/grimoire-task-flow.sh --task 'grimoire: trace-audit-strict' --flow trace -- bash ${workspaceFolder}/.github/hooks/scripts/grimoire-subagent-trace.sh --audit-strict",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "close": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "bmad: trace-audit-strict",
+      "dependsOn": "grimoire: trace-audit-strict",
+      "dependsOrder": "sequence"
+    },
+    {
+      "label": "grimoire: trace-repair",
+      "type": "shell",
+      "command": "bash ${workspaceFolder}/.github/hooks/scripts/grimoire-task-flow.sh --task 'grimoire: trace-repair' --flow trace -- bash ${workspaceFolder}/.github/hooks/scripts/grimoire-subagent-trace.sh --repair-only",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "close": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "bmad: trace-repair",
+      "dependsOn": "grimoire: trace-repair",
+      "dependsOrder": "sequence"
+    },
+    // ── Playwright MCP bootstrap ───────────────────────────────
+    {
+      "label": "grimoire: setup-playwright-mcp",
+      "type": "shell",
+      "command": "bash ${workspaceFolder}/.github/hooks/scripts/grimoire-task-flow.sh --task 'grimoire: setup-playwright-mcp' --flow setup -- bash -c 'ROOT=\"${workspaceFolder}\"; export PLAYWRIGHT_BROWSERS_PATH=\"$ROOT/.playwright-mcp/ms-playwright\"; mkdir -p \"$PLAYWRIGHT_BROWSERS_PATH\" \"$ROOT/.playwright-mcp/output\"; npx -y @playwright/mcp@latest install-browser chromium'",
+      "presentation": {
+        "reveal": "always",
+        "panel": "new",
+        "clear": true,
+        "close": false
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "bmad: setup-playwright-mcp",
+      "dependsOn": "grimoire: setup-playwright-mcp",
+      "dependsOrder": "sequence"
     },
     // ── VS Code environment quickstart (DeepWiki Getting Started) ────
     {
       "label": "grimoire: setup-prereqs",
       "type": "shell",
-      "command": "bash -c 'echo \"=== Grimoire — Prérequis environnement (DeepWiki Getting Started) ===\"; PLATFORM=$(uname -s); echo \"Plateforme : $PLATFORM\"; echo \"\"; if [ \"$PLATFORM\" = \"Linux\" ]; then echo \"[Git]\"; command -v git >/dev/null 2>&1 && echo \"  ✅ $(git --version)\" || echo \"  ❌ git absent\"; echo \"\"; echo \"[Node.js]\"; if command -v node >/dev/null 2>&1; then NODEV=$(node --version); NODEARCH=$(node -p process.arch 2>/dev/null || echo unknown); echo \"  ✅ $NODEV ($NODEARCH)\"; [ \"$NODEARCH\" = \"x64\" ] || [ \"$NODEARCH\" = \"arm64\" ] || echo \"  ⚠️  Architecture non recommandée par VS Code (attendu: x64/arm64)\"; else echo \"  ❌ Absent — curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash - && sudo apt-get install -y nodejs\"; fi; echo \"\"; echo \"[Python (node-gyp)]\"; command -v python >/dev/null 2>&1 && echo \"  ✅ $(python --version 2>&1)\" || echo \"  ❌ commande python absente — installer python-is-python3\"; echo \"\"; echo \"[Build tools]\"; for t in g++ make pkg-config; do command -v $t >/dev/null 2>&1 && echo \"  ✅ $t\" || echo \"  ❌ $t\"; done; echo \"\"; echo \"[Bibliothèques natives VS Code]\"; if command -v dpkg >/dev/null 2>&1; then MISSING=\"\"; for pkg in libx11-dev libxkbfile-dev libsecret-1-dev libkrb5-dev; do dpkg -l $pkg 2>/dev/null | grep -q \"^ii\" && echo \"  ✅ $pkg\" || { echo \"  ❌ $pkg\"; MISSING=\"$MISSING $pkg\"; }; done; [ -n \"$MISSING\" ] && { echo \"\"; echo \"  → sudo apt-get install build-essential g++$MISSING python-is-python3\"; }; elif command -v pkg-config >/dev/null 2>&1; then MISSING=\"\"; for pc in x11 xkbfile libsecret-1 krb5; do pkg-config --exists $pc && echo \"  ✅ $pc (pkg-config)\" || { echo \"  ❌ $pc (pkg-config)\"; MISSING=\"$MISSING $pc\"; }; done; [ -n \"$MISSING\" ] && echo \"  → Installer paquets devel correspondants (ex: libX11-devel/libxkbfile-devel/libsecret-devel/krb5-devel)\"; else echo \"  ⚠️  pkg-config absent — impossible de vérifier les libs natives\"; fi; echo \"\"; echo \"[inotify watch limit]\"; WATCHES=$(cat /proc/sys/fs/inotify/max_user_watches 2>/dev/null || echo 0); if [ \"$WATCHES\" -ge 524288 ]; then echo \"  ✅ max_user_watches=$WATCHES\"; else echo \"  ❌ max_user_watches=$WATCHES (recommandé >= 524288)\"; echo \"  → echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p\"; fi; echo \"\"; echo \"[WSL]\"; if grep -qi microsoft /proc/version 2>/dev/null; then grep -qi wsl2 /proc/version 2>/dev/null && echo \"  ✅ WSL2\" || echo \"  ❌ WSL1 détecté (non supporté pour builds VS Code)\"; else echo \"  ✅ Non-WSL\"; fi; if [ -d .devcontainer ]; then echo \"\"; echo \"[Dev Container]\"; command -v docker >/dev/null 2>&1 && echo \"  ✅ docker disponible\" || echo \"  ⚠️  .devcontainer présent mais docker absent (utiliser Codespaces ou installer Docker)\"; fi; elif [ \"$PLATFORM\" = \"Darwin\" ]; then echo \"[macOS toolchain]\"; xcode-select -p >/dev/null 2>&1 && echo \"  ✅ Xcode CLI Tools\" || echo \"  ❌ Absent — xcode-select --install\"; if command -v node >/dev/null 2>&1; then NODEV=$(node --version); NODEARCH=$(node -p process.arch 2>/dev/null || echo unknown); echo \"  ✅ Node.js $NODEV ($NODEARCH)\"; [ \"$NODEARCH\" = \"x64\" ] || [ \"$NODEARCH\" = \"arm64\" ] || echo \"  ⚠️  Architecture non recommandée (attendu: x64/arm64)\"; else echo \"  ❌ Node.js absent\"; fi; command -v python >/dev/null 2>&1 && echo \"  ✅ $(python --version 2>&1)\" || echo \"  ❌ commande python absente\"; fi; echo \"\"'",
+      "command": "bash ${workspaceFolder}/.github/hooks/scripts/grimoire-task-flow.sh --task 'grimoire: setup-prereqs' --flow setup -- bash -c 'echo \"=== Grimoire — Prérequis environnement (DeepWiki Getting Started) ===\"; PLATFORM=$(uname -s); echo \"Plateforme : $PLATFORM\"; echo \"\"; if [ \"$PLATFORM\" = \"Linux\" ]; then echo \"[Git]\"; command -v git >/dev/null 2>&1 && echo \"  ✅ $(git --version)\" || echo \"  ❌ git absent\"; echo \"\"; echo \"[Node.js]\"; if command -v node >/dev/null 2>&1; then NODEV=$(node --version); NODEARCH=$(node -p process.arch 2>/dev/null || echo unknown); echo \"  ✅ $NODEV ($NODEARCH)\"; [ \"$NODEARCH\" = \"x64\" ] || [ \"$NODEARCH\" = \"arm64\" ] || echo \"  ⚠️  Architecture non recommandée par VS Code (attendu: x64/arm64)\"; else echo \"  ❌ Absent — curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash - && sudo apt-get install -y nodejs\"; fi; echo \"\"; echo \"[Python (node-gyp)]\"; command -v python >/dev/null 2>&1 && echo \"  ✅ $(python --version 2>&1)\" || echo \"  ❌ commande python absente — installer python-is-python3\"; echo \"\"; echo \"[Build tools]\"; for t in g++ make pkg-config; do command -v $t >/dev/null 2>&1 && echo \"  ✅ $t\" || echo \"  ❌ $t\"; done; echo \"\"; echo \"[Bibliothèques natives VS Code]\"; if command -v dpkg >/dev/null 2>&1; then MISSING=\"\"; for pkg in libx11-dev libxkbfile-dev libsecret-1-dev libkrb5-dev; do dpkg -l $pkg 2>/dev/null | grep -q \"^ii\" && echo \"  ✅ $pkg\" || { echo \"  ❌ $pkg\"; MISSING=\"$MISSING $pkg\"; }; done; [ -n \"$MISSING\" ] && { echo \"\"; echo \"  → sudo apt-get install build-essential g++$MISSING python-is-python3\"; }; elif command -v pkg-config >/dev/null 2>&1; then MISSING=\"\"; for pc in x11 xkbfile libsecret-1 krb5; do pkg-config --exists $pc && echo \"  ✅ $pc (pkg-config)\" || { echo \"  ❌ $pc (pkg-config)\"; MISSING=\"$MISSING $pc\"; }; done; [ -n \"$MISSING\" ] && echo \"  → Installer paquets devel correspondants (ex: libX11-devel/libxkbfile-devel/libsecret-devel/krb5-devel)\"; else echo \"  ⚠️  pkg-config absent — impossible de vérifier les libs natives\"; fi; echo \"\"; echo \"[inotify watch limit]\"; WATCHES=$(cat /proc/sys/fs/inotify/max_user_watches 2>/dev/null || echo 0); if [ \"$WATCHES\" -ge 524288 ]; then echo \"  ✅ max_user_watches=$WATCHES\"; else echo \"  ❌ max_user_watches=$WATCHES (recommandé >= 524288)\"; echo \"  → echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p\"; fi; echo \"\"; echo \"[WSL]\"; if grep -qi microsoft /proc/version 2>/dev/null; then grep -qi wsl2 /proc/version 2>/dev/null && echo \"  ✅ WSL2\" || echo \"  ❌ WSL1 détecté (non supporté pour builds VS Code)\"; else echo \"  ✅ Non-WSL\"; fi; if [ -d .devcontainer ]; then echo \"\"; echo \"[Dev Container]\"; command -v docker >/dev/null 2>&1 && echo \"  ✅ docker disponible\" || echo \"  ⚠️  .devcontainer présent mais docker absent (utiliser Codespaces ou installer Docker)\"; fi; elif [ \"$PLATFORM\" = \"Darwin\" ]; then echo \"[macOS toolchain]\"; xcode-select -p >/dev/null 2>&1 && echo \"  ✅ Xcode CLI Tools\" || echo \"  ❌ Absent — xcode-select --install\"; if command -v node >/dev/null 2>&1; then NODEV=$(node --version); NODEARCH=$(node -p process.arch 2>/dev/null || echo unknown); echo \"  ✅ Node.js $NODEV ($NODEARCH)\"; [ \"$NODEARCH\" = \"x64\" ] || [ \"$NODEARCH\" = \"arm64\" ] || echo \"  ⚠️  Architecture non recommandée (attendu: x64/arm64)\"; else echo \"  ❌ Node.js absent\"; fi; command -v python >/dev/null 2>&1 && echo \"  ✅ $(python --version 2>&1)\" || echo \"  ❌ commande python absente\"; fi; echo \"\"'",
       "presentation": {
         "reveal": "always",
         "panel": "dedicated",
@@ -133,7 +593,7 @@
     {
       "label": "grimoire: vscode-diagnostics",
       "type": "shell",
-      "command": "bash -c 'OUT=\"${workspaceFolder}/_bmad-output/test-artifacts/vscode\"; mkdir -p \"$OUT\"; TS=$(date +%Y%m%d-%H%M%S); if command -v code >/dev/null 2>&1; then code --status > \"$OUT/code-status-$TS.txt\" 2>&1 || true; code --verbose --status > \"$OUT/code-verbose-status-$TS.txt\" 2>&1 || true; echo \"Diagnostics sauvegardes dans $OUT\"; else echo \"Commande code indisponible dans ce shell\"; fi'",
+      "command": "bash ${workspaceFolder}/.github/hooks/scripts/grimoire-task-flow.sh --task 'grimoire: vscode-diagnostics' --flow runtime -- bash -c 'OUT=\"${workspaceFolder}/_grimoire-runtime-output/test-artifacts/vscode\"; mkdir -p \"$OUT\"; TS=$(date +%Y%m%d-%H%M%S); if command -v code >/dev/null 2>&1; then code --status > \"$OUT/code-status-$TS.txt\" 2>&1 || true; code --verbose --status > \"$OUT/code-verbose-status-$TS.txt\" 2>&1 || true; echo \"Diagnostics sauvegardes dans $OUT\"; else echo \"Commande code indisponible dans ce shell\"; fi'",
       "presentation": {
         "reveal": "always",
         "panel": "shared",
@@ -144,7 +604,7 @@
     {
       "label": "grimoire: vscode-performance-bundle",
       "type": "shell",
-      "command": "bash -c 'OUT=\"${workspaceFolder}/_bmad-output/test-artifacts/vscode\"; mkdir -p \"$OUT\"; TS=$(date +%Y%m%d-%H%M%S); B=\"$OUT/perf-bundle-$TS\"; mkdir -p \"$B\"; if command -v code >/dev/null 2>&1; then code --status > \"$B/code-status.txt\" 2>&1 || true; code --verbose --status > \"$B/code-verbose-status.txt\" 2>&1 || true; printf \"# VS Code Performance Bundle (%s)\\n\\n\" \"$TS\" > \"$B/README.md\"; printf \"## Captures auto\\n- code-status.txt\\n- code-verbose-status.txt\\n\\n\" >> \"$B/README.md\"; printf \"## Etapes manuelles recommandees (DeepWiki)\\n1. Help > Open Process Explorer\\n2. F1 > Developer: Show Running Extensions\\n3. F1 > Startup Performance\\n4. Help > Start Extension Bisect (si suspicion extension)\\n5. Help > Report Issue (Performance Issue)\\n\" >> \"$B/README.md\"; echo \"Bundle cree: $B\"; else echo \"Commande code indisponible dans ce shell\"; fi'",
+      "command": "bash ${workspaceFolder}/.github/hooks/scripts/grimoire-task-flow.sh --task 'grimoire: vscode-performance-bundle' --flow runtime -- bash -c 'OUT=\"${workspaceFolder}/_grimoire-runtime-output/test-artifacts/vscode\"; mkdir -p \"$OUT\"; TS=$(date +%Y%m%d-%H%M%S); B=\"$OUT/perf-bundle-$TS\"; mkdir -p \"$B\"; if command -v code >/dev/null 2>&1; then code --status > \"$B/code-status.txt\" 2>&1 || true; code --verbose --status > \"$B/code-verbose-status.txt\" 2>&1 || true; printf \"# VS Code Performance Bundle (%s)\\n\\n\" \"$TS\" > \"$B/README.md\"; printf \"## Captures auto\\n- code-status.txt\\n- code-verbose-status.txt\\n\\n\" >> \"$B/README.md\"; printf \"## Etapes manuelles recommandees (DeepWiki)\\n1. Help > Open Process Explorer\\n2. F1 > Developer: Show Running Extensions\\n3. F1 > Startup Performance\\n4. Help > Start Extension Bisect (si suspicion extension)\\n5. Help > Report Issue (Performance Issue)\\n\" >> \"$B/README.md\"; echo \"Bundle cree: $B\"; else echo \"Commande code indisponible dans ce shell\"; fi'",
       "presentation": {
         "reveal": "always",
         "panel": "shared",
@@ -152,11 +612,108 @@
       },
       "problemMatcher": []
     },
+    {
+      "label": "grimoire: vscode-stability-guard",
+      "type": "shell",
+      "command": "bash ${workspaceFolder}/.github/hooks/scripts/grimoire-task-flow.sh --task 'grimoire: vscode-stability-guard' --flow runtime -- bash -c 'PY=${workspaceFolder}/grimoire-kit/.venv/bin/python; if [ -x \"$PY\" ]; then \"$PY\" ${workspaceFolder}/grimoire-kit/framework/tools/vscode-stability-guard.py --project-root ${workspaceFolder} --apply; else python3 ${workspaceFolder}/grimoire-kit/framework/tools/vscode-stability-guard.py --project-root ${workspaceFolder} --apply; fi'",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "close": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "grimoire: vscode-disable-hw-accel",
+      "type": "shell",
+      "command": "bash ${workspaceFolder}/.github/hooks/scripts/grimoire-task-flow.sh --task 'grimoire: vscode-disable-hw-accel' --flow runtime -- bash -c 'ARG=\"$HOME/.config/Code/argv.json\"; mkdir -p \"$(dirname \"$ARG\")\"; [ -f \"$ARG\" ] && cp \"$ARG\" \"$ARG.bak.$(date +%Y%m%d-%H%M%S)\"; python3 - <<\"PY\"\nimport json\nfrom pathlib import Path\narg = Path.home() / \".config/Code/argv.json\"\nif arg.exists():\n    data = json.loads(arg.read_text(encoding=\"utf-8\"))\n    if not isinstance(data, dict):\n        data = {}\nelse:\n    data = {}\ndata[\"disable-hardware-acceleration\"] = True\narg.write_text(json.dumps(data, indent=2, ensure_ascii=False) + \"\\n\", encoding=\"utf-8\")\nprint(f\"Updated {arg}\")\nPY'",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "close": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "grimoire: vscode-agent-terminals-list",
+      "type": "shell",
+      "command": "bash ${workspaceFolder}/.github/hooks/scripts/grimoire-task-flow.sh --task 'grimoire: vscode-agent-terminals-list' --flow runtime -- bash -c 'PY=${workspaceFolder}/grimoire-kit/.venv/bin/python; if [ -x \"$PY\" ]; then \"$PY\" ${workspaceFolder}/grimoire-kit/framework/tools/vscode-terminal-prune.py --list --min-idle-seconds 1200 --max-shells 4; else python3 ${workspaceFolder}/grimoire-kit/framework/tools/vscode-terminal-prune.py --list --min-idle-seconds 1200 --max-shells 4; fi'",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "close": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "grimoire: vscode-agent-terminals-prune",
+      "type": "shell",
+      "command": "bash ${workspaceFolder}/.github/hooks/scripts/grimoire-task-flow.sh --task 'grimoire: vscode-agent-terminals-prune' --flow runtime -- bash -c 'PY=${workspaceFolder}/grimoire-kit/.venv/bin/python; if [ -x \"$PY\" ]; then \"$PY\" ${workspaceFolder}/grimoire-kit/framework/tools/vscode-terminal-prune.py --apply --min-idle-seconds 1200 --max-shells 4; else python3 ${workspaceFolder}/grimoire-kit/framework/tools/vscode-terminal-prune.py --apply --min-idle-seconds 1200 --max-shells 4; fi'",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "close": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "grimoire: vscode-agent-terminals-maintenance",
+      "type": "shell",
+      "command": "bash ${workspaceFolder}/.github/hooks/scripts/grimoire-task-flow.sh --task 'grimoire: vscode-agent-terminals-maintenance' --flow runtime -- bash -c 'OUT=${workspaceFolder}/_grimoire-runtime-output/test-artifacts/vscode; mkdir -p \"$OUT\"; TS=$(date +%Y%m%d-%H%M%S); REPORT=\"$OUT/terminal-prune-$TS.json\"; PY=${workspaceFolder}/grimoire-kit/.venv/bin/python; if [ -x \"$PY\" ]; then \"$PY\" ${workspaceFolder}/grimoire-kit/framework/tools/vscode-terminal-prune.py --apply --min-idle-seconds 1200 --max-shells 4 --report-file \"$REPORT\"; else python3 ${workspaceFolder}/grimoire-kit/framework/tools/vscode-terminal-prune.py --apply --min-idle-seconds 1200 --max-shells 4 --report-file \"$REPORT\"; fi; echo \"Report: $REPORT\"'",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "close": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "grimoire: vscode-agent-terminals-autoprune",
+      "type": "shell",
+      "command": "bash ${workspaceFolder}/.github/hooks/scripts/grimoire-task-flow.sh --task 'grimoire: vscode-agent-terminals-autoprune' --flow runtime -- bash -c 'PY=${workspaceFolder}/grimoire-kit/.venv/bin/python; if [ -x \"$PY\" ]; then \"$PY\" ${workspaceFolder}/grimoire-kit/framework/tools/vscode-terminal-prune.py --apply --min-idle-seconds 600 --max-shells 4; else python3 ${workspaceFolder}/grimoire-kit/framework/tools/vscode-terminal-prune.py --apply --min-idle-seconds 600 --max-shells 4; fi'",
+      "runOptions": {
+        "runOn": "folderOpen",
+        "instanceLimit": 1,
+        "instancePolicy": "silent"
+      },
+      "hide": true,
+      "presentation": {
+        "reveal": "never",
+        "focus": false,
+        "echo": false,
+        "showReuseMessage": false,
+        "panel": "dedicated",
+        "clear": true,
+        "close": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "bmad: vscode-agent-terminals-list",
+      "dependsOn": "grimoire: vscode-agent-terminals-list",
+      "dependsOrder": "sequence"
+    },
+    {
+      "label": "bmad: vscode-agent-terminals-prune",
+      "dependsOn": "grimoire: vscode-agent-terminals-prune",
+      "dependsOrder": "sequence"
+    },
+    {
+      "label": "bmad: vscode-agent-terminals-maintenance",
+      "dependsOn": "grimoire: vscode-agent-terminals-maintenance",
+      "dependsOrder": "sequence"
+    },
+    {
+      "label": "bmad: vscode-agent-terminals-autoprune",
+      "dependsOn": "grimoire: vscode-agent-terminals-autoprune",
+      "dependsOrder": "sequence",
+      "hide": true
+    },
     // ── Dynamic Artifact Cleanup ─────────────────────────────────────
     {
-      "label": "bmad: cleanup-dynamic-artifacts",
+      "label": "grimoire: cleanup-dynamic-artifacts",
       "type": "shell",
-      "command": "bash ${workspaceFolder}/.github/hooks/scripts/bmad-cleanup-dynamic-artifacts.sh",
+      "command": "bash ${workspaceFolder}/.github/hooks/scripts/grimoire-task-flow.sh --task 'grimoire: cleanup-dynamic-artifacts' --flow maintenance -- bash ${workspaceFolder}/.github/hooks/scripts/grimoire-cleanup-dynamic-artifacts.sh",
       "options": {
         "cwd": "${workspaceFolder}"
       },
@@ -167,11 +724,96 @@
       },
       "problemMatcher": []
     },
+    {
+      "label": "bmad: cleanup-dynamic-artifacts",
+      "type": "shell",
+      "command": "bash ${workspaceFolder}/.github/hooks/scripts/grimoire-task-flow.sh --task 'bmad: cleanup-dynamic-artifacts' --flow maintenance -- bash ${workspaceFolder}/.github/hooks/scripts/grimoire-cleanup-dynamic-artifacts.sh",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "close": true
+      },
+      "problemMatcher": []
+    },
+    // ── Visual evidence governance ───────────────────────────────────
+    {
+      "label": "grimoire: visual-evidence-check",
+      "type": "shell",
+      "command": "bash ${workspaceFolder}/.github/hooks/scripts/grimoire-task-flow.sh --task 'grimoire: visual-evidence-check' --flow quality -- ${workspaceFolder}/grimoire-kit/.venv/bin/python framework/tools/visual-evidence-governance.py --project-root ${workspaceFolder} check",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "close": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "grimoire: visual-evidence-purge",
+      "type": "shell",
+      "command": "bash ${workspaceFolder}/.github/hooks/scripts/grimoire-task-flow.sh --task 'grimoire: visual-evidence-purge' --flow maintenance -- ${workspaceFolder}/grimoire-kit/.venv/bin/python framework/tools/visual-evidence-governance.py --project-root ${workspaceFolder} purge",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "close": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "grimoire: visual-evidence-scaffold",
+      "type": "shell",
+      "command": "bash ${workspaceFolder}/.github/hooks/scripts/grimoire-task-flow.sh --task 'grimoire: visual-evidence-scaffold' --flow implementation -- ${workspaceFolder}/grimoire-kit/.venv/bin/python framework/tools/visual-evidence-governance.py --project-root ${workspaceFolder} scaffold --ticket-id VIS-YYYYMMDD-001",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "close": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "bmad: visual-evidence-check",
+      "dependsOn": "grimoire: visual-evidence-check",
+      "dependsOrder": "sequence"
+    },
+    {
+      "label": "bmad: visual-evidence-purge",
+      "dependsOn": "grimoire: visual-evidence-purge",
+      "dependsOrder": "sequence"
+    },
+    {
+      "label": "bmad: visual-evidence-scaffold",
+      "dependsOn": "grimoire: visual-evidence-scaffold",
+      "dependsOrder": "sequence"
+    },
     // ── Documentation auto-sync ──────────────────────────────────────
+    {
+      "label": "grimoire: auto-doc-check",
+      "type": "shell",
+      "command": "bash ${workspaceFolder}/.github/hooks/scripts/grimoire-task-flow.sh --task 'grimoire: auto-doc-check' --flow docs -- ${workspaceFolder}/grimoire-kit/.venv/bin/python framework/tools/auto-doc.py --project-root . check",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "close": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "grimoire: auto-doc-sync",
+      "type": "shell",
+      "command": "bash ${workspaceFolder}/.github/hooks/scripts/grimoire-task-flow.sh --task 'grimoire: auto-doc-sync' --flow docs -- ${workspaceFolder}/grimoire-kit/.venv/bin/python framework/tools/auto-doc.py --project-root . sync",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "close": true
+      },
+      "problemMatcher": []
+    },
     {
       "label": "bmad: auto-doc-check",
       "type": "shell",
-      "command": "python3 framework/tools/auto-doc.py --project-root . check",
+      "command": "bash ${workspaceFolder}/.github/hooks/scripts/grimoire-task-flow.sh --task 'bmad: auto-doc-check' --flow docs -- ${workspaceFolder}/grimoire-kit/.venv/bin/python framework/tools/auto-doc.py --project-root . check",
       "presentation": {
         "reveal": "always",
         "panel": "shared",
@@ -182,7 +824,7 @@
     {
       "label": "bmad: auto-doc-sync",
       "type": "shell",
-      "command": "python3 framework/tools/auto-doc.py --project-root . sync",
+      "command": "bash ${workspaceFolder}/.github/hooks/scripts/grimoire-task-flow.sh --task 'bmad: auto-doc-sync' --flow docs -- ${workspaceFolder}/grimoire-kit/.venv/bin/python framework/tools/auto-doc.py --project-root . sync",
       "presentation": {
         "reveal": "always",
         "panel": "shared",
@@ -190,11 +832,45 @@
       },
       "problemMatcher": []
     },
+    {
+      "label": "grimoire: doc-drift-check",
+      "type": "shell",
+      "command": "bash ${workspaceFolder}/.github/hooks/scripts/grimoire-task-flow.sh --task 'grimoire: doc-drift-check' --flow docs -- ${workspaceFolder}/grimoire-kit/.venv/bin/python framework/tools/doc-drift-detector.py --project-root . --since HEAD",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "close": false
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "grimoire: doc-drift-check-json",
+      "type": "shell",
+      "command": "${workspaceFolder}/grimoire-kit/.venv/bin/python ${workspaceFolder}/grimoire-kit/framework/tools/doc-drift-detector.py --project-root ${workspaceFolder}/grimoire-kit --since HEAD --json",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "close": false
+      },
+      "problemMatcher": []
+    },
     // ── Maintenance — empêcher l'accumulation d'objets git loose ─────
+    {
+      "label": "grimoire: git-gc",
+      "type": "shell",
+      "command": "bash ${workspaceFolder}/.github/hooks/scripts/grimoire-task-flow.sh --task 'grimoire: git-gc' --flow maintenance -- bash -c 'git gc && cd grimoire-kit && git gc'",
+      "options": { "cwd": "${workspaceFolder}" },
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "close": true
+      },
+      "problemMatcher": []
+    },
     {
       "label": "bmad: git-gc",
       "type": "shell",
-      "command": "git gc && cd grimoire-kit && git gc",
+      "command": "bash ${workspaceFolder}/.github/hooks/scripts/grimoire-task-flow.sh --task 'bmad: git-gc' --flow maintenance -- bash -c 'git gc && cd grimoire-kit && git gc'",
       "options": { "cwd": "${workspaceFolder}" },
       "presentation": {
         "reveal": "always",
@@ -207,7 +883,7 @@
     {
       "label": "grimoire: setup",
       "type": "shell",
-      "command": "bash grimoire.sh setup --sync",
+      "command": "bash ${workspaceFolder}/.github/hooks/scripts/grimoire-task-flow.sh --task 'grimoire: setup' --flow setup -- bash grimoire.sh setup --sync",
       "presentation": {
         "reveal": "always",
         "panel": "dedicated",
@@ -219,7 +895,7 @@
     {
       "label": "grimoire: setup-check",
       "type": "shell",
-      "command": "bash grimoire.sh setup --check",
+      "command": "bash ${workspaceFolder}/.github/hooks/scripts/grimoire-task-flow.sh --task 'grimoire: setup-check' --flow setup -- bash grimoire.sh setup --check",
       "presentation": {
         "reveal": "always",
         "panel": "shared",
@@ -228,9 +904,33 @@
       "problemMatcher": []
     },
     {
+      "label": "grimoire: install-git-hooks",
+      "type": "shell",
+      "command": "bash ${workspaceFolder}/.github/hooks/scripts/grimoire-task-flow.sh --task 'grimoire: install-git-hooks' --flow setup -- bash grimoire-init.sh hooks --install",
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": true,
+        "close": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "grimoire: bootstrap-venv",
+      "type": "shell",
+      "command": "bash ${workspaceFolder}/.github/hooks/scripts/grimoire-task-flow.sh --task 'grimoire: bootstrap-venv' --flow setup -- bash -c 'set -euo pipefail; if [ ! -x .venv/bin/python ] || ! .venv/bin/python -c \"import sys\" >/dev/null 2>&1; then rm -rf .venv; python3 -m venv --copies .venv; fi; .venv/bin/python -m ensurepip --upgrade; .venv/bin/python -m pip install --upgrade pip setuptools wheel; .venv/bin/python -m pip install -e \".[dev,docs,mcp]\"'",
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": true,
+        "close": true
+      },
+      "problemMatcher": []
+    },
+    {
       "label": "grimoire: setup-interactive",
       "type": "shell",
-      "command": "bash grimoire.sh setup",
+      "command": "bash ${workspaceFolder}/.github/hooks/scripts/grimoire-task-flow.sh --task 'grimoire: setup-interactive' --flow setup -- bash grimoire.sh setup",
       "presentation": {
         "reveal": "always",
         "panel": "dedicated",
@@ -238,11 +938,95 @@
       },
       "problemMatcher": []
     },
+    {
+      "label": "bmad: install-git-hooks",
+      "dependsOn": "grimoire: install-git-hooks",
+      "dependsOrder": "sequence"
+    },
+    {
+      "label": "grimoire: doc-drift-install-git-hook",
+      "type": "shell",
+      "command": "bash ${workspaceFolder}/.github/hooks/git/install.sh",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "close": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "grimoire: doc-drift-check-git-hook",
+      "type": "shell",
+      "command": "bash ${workspaceFolder}/.github/hooks/git/install.sh --check",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "close": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "grimoire: doc-drift-suggest",
+      "type": "shell",
+      "command": "cd ${workspaceFolder}/grimoire-kit && .venv/bin/python framework/tools/doc-drift-suggest.py --project-root . --since HEAD",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "close": false
+      },
+      "problemMatcher": []
+    },
     // ── Skill Validator ──────────────────────────────────────────────
+    {
+      "label": "grimoire: validate-skills",
+      "type": "shell",
+      "command": "bash ${workspaceFolder}/.github/hooks/scripts/grimoire-task-flow.sh --task 'grimoire: validate-skills' --flow quality -- ${workspaceFolder}/grimoire-kit/.venv/bin/python framework/tools/skill-validator.py --project-root ${workspaceFolder}",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "close": true
+      },
+      "problemMatcher": []
+    },
     {
       "label": "bmad: validate-skills",
       "type": "shell",
-      "command": "python3 framework/tools/skill-validator.py --project-root .",
+      "command": "bash ${workspaceFolder}/.github/hooks/scripts/grimoire-task-flow.sh --task 'bmad: validate-skills' --flow quality -- ${workspaceFolder}/grimoire-kit/.venv/bin/python framework/tools/skill-validator.py --project-root ${workspaceFolder}",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "close": true
+      },
+      "problemMatcher": []
+    },
+    // ── Ollama / qwen3-coder-next ────────────────────────────────────
+    {
+      "label": "grimoire: ollama-status",
+      "type": "shell",
+      "command": "systemctl is-active ollama && echo '---' && ollama list",
+      "presentation": { "reveal": "always", "panel": "shared", "close": false },
+      "problemMatcher": []
+    },
+    {
+      "label": "grimoire: ollama-create-grimoire-coder",
+      "type": "shell",
+      "command": "ollama create grimoire-coder -f ${workspaceFolder}/_grimoire-runtime/_config/qwen3-coder-next.Modelfile && echo '✅ grimoire-coder créé'",
+      "presentation": { "reveal": "always", "panel": "shared", "close": false },
+      "problemMatcher": []
+    },
+    {
+      "label": "grimoire: ollama-run-grimoire-coder",
+      "type": "shell",
+      "command": "ollama run grimoire-coder",
+      "presentation": { "reveal": "always", "panel": "dedicated", "close": false },
+      "problemMatcher": []
+    },
+    // ── Trace Rotation ───────────────────────────────────────────────
+    {
+      "label": "grimoire: trace-rotate",
+      "type": "shell",
+      "command": "bash ${workspaceFolder}/.github/hooks/scripts/grimoire-trace-rotate.sh ${workspaceFolder}",
+      "options": { "cwd": "${workspaceFolder}" },
       "presentation": {
         "reveal": "always",
         "panel": "shared",

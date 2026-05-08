@@ -1,0 +1,17 @@
+
+> @grimoire-kit/grimoire-game@0.0.0 test
+> vitest run tests/contracts/vscode-webview-bridge.contract.test.ts tests/contracts/runtime-web-scenarios.contract.test.ts tests/contracts/public-api-exports.contract.test.ts
+
+
+ RUN  v3.2.4 /mnt/Travail/Projets/Dev/bmad-custom/grimoire-kit/apps/grimoire-game
+
+ ✓ tests/contracts/vscode-webview-bridge.contract.test.ts (5 tests) 6ms
+ ✓ tests/contracts/public-api-exports.contract.test.ts (1 test) 2ms
+ ✓ tests/contracts/runtime-web-scenarios.contract.test.ts (1 test) 454ms
+   ✓ runtime web scenarios > ships fully populated web-facing projections for every demo scenario  454ms
+
+ Test Files  3 passed (3)
+      Tests  7 passed (7)
+   Start at  00:06:05
+   Duration  1.31s (transform 679ms, setup 0ms, collect 1.22s, tests 463ms, environment 1ms, prepare 238ms)
+

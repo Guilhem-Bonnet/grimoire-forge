@@ -1,0 +1,11 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "type": "command",
+        "command": ".github/hooks/scripts/grimoire-hook-gateway.sh --hook-id grimoire-doc-drift --event PostToolUse --control-file .github/hooks/grimoire-doc-drift.json",
+        "timeout": 10
+      }
+    ]
+  }
+}

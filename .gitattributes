@@ -1,0 +1,28 @@
+# ── Fichiers générés — pas de diff textuel ───────────────────────────
+# Évite que git calcule des diffs complexes sur des fichiers massifs/générés
+# → supprime "The diff algorithm was stopped early" sur ces fichiers
+
+# Outputs volumineux
+_grimoire-output/**                     -diff
+grimoire-kit/_grimoire-output/**        -diff
+
+# Artefacts de test
+_full_test_output.txt                   -diff
+grimoire-kit/_test_out.txt              -diff
+grimoire-kit/test_result.txt            -diff
+
+# Assets binaires — pas de diff du tout
+*.png                                   binary
+*.jpg                                   binary
+*.jpeg                                  binary
+*.gif                                   binary
+*.webp                                  binary
+
+# ── Fin de ligne — normalisation LF ─────────────────────────────────
+*.py        text eol=lf
+*.sh        text eol=lf
+*.md        text eol=lf
+*.yaml      text eol=lf
+*.yml       text eol=lf
+*.json      text eol=lf
+*.csv       text eol=lf

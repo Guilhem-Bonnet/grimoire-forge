@@ -1,0 +1,205 @@
+- main [ref=e2]:
+  - generic [ref=e3]:
+    - article [ref=e4]:
+      - generic [ref=e5]: Game UI Shell
+      - heading "Un shell web runtime complet, du cockpit au noyau forge" [level=1] [ref=e6]
+      - paragraph [ref=e7]: "Cette coque met en scene la meme causalite runtime a travers douze surfaces web et un panel VS Code hote: cockpit, noyau forge, dossier de preuve, game UI, observability, spectator, observer, workflow, expert, observatory supervise, war room tactique, host bridge generique et shell IDE."
+      - generic [ref=e8]:
+        - generic [ref=e9]:
+          - text: "Scenarios:"
+          - strong [ref=e10]: "3"
+        - generic [ref=e11]:
+          - text: "Default:"
+          - strong [ref=e12]: Guardrails bloquants
+        - generic [ref=e13]:
+          - text: "Generated:"
+          - strong [ref=e14]: 2026-04-15T00:19:14.870Z
+    - article [ref=e15]:
+      - generic [ref=e17]:
+        - heading "Architecture retenue" [level=2] [ref=e18]
+        - paragraph [ref=e19]: Un seul produit, douze surfaces runtime et un shell VS Code, aucune seconde source de verite.
+      - generic [ref=e20]:
+        - generic [ref=e21]:
+          - generic [ref=e22]: Cockpit
+          - strong [ref=e23]: Main page
+          - generic [ref=e24]: comprendre, diagnostiquer, commander
+        - generic [ref=e25]:
+          - generic [ref=e26]: Noyau Forge
+          - strong [ref=e27]: Control plane
+          - generic [ref=e28]: triade runtime, contrats, invariants
+        - generic [ref=e29]:
+          - generic [ref=e30]: Dossier de preuve
+          - strong [ref=e31]: Evidence hub
+          - generic [ref=e32]: release gate, packs, artefacts relies
+        - generic [ref=e33]:
+          - generic [ref=e34]: Game UI
+          - strong [ref=e35]: Board HUD
+          - generic [ref=e36]: rooms, agents, lanes, guardrails
+        - generic [ref=e37]:
+          - generic [ref=e38]: Observability
+          - strong [ref=e39]: Trace deck
+          - generic [ref=e40]: timeline, blockers, health, hotspots
+        - generic [ref=e41]:
+          - generic [ref=e42]: Spectator
+          - strong [ref=e43]: Shared read-only
+          - generic [ref=e44]: token, lien, lecture web et VS Code
+        - generic [ref=e45]:
+          - generic [ref=e46]: Observer
+          - strong [ref=e47]: Spatial map
+          - generic [ref=e48]: rooms, entites, handoffs
+        - generic [ref=e49]:
+          - generic [ref=e50]: Workflow
+          - strong [ref=e51]: Trace paths
+          - generic [ref=e52]: steps, decisions, audit
+        - generic [ref=e53]:
+          - generic [ref=e54]: Expert
+          - strong [ref=e55]: Deep review
+          - generic [ref=e56]: preuve, replay, inspection
+        - generic [ref=e57]:
+          - generic [ref=e58]: Observatory
+          - strong [ref=e59]: Read-only
+          - generic [ref=e60]: surface existante supervisee
+        - generic [ref=e61]:
+          - generic [ref=e62]: War Room
+          - strong [ref=e63]: Spatial
+          - generic [ref=e64]: comparer, challenger, expliquer
+        - generic [ref=e65]:
+          - generic [ref=e66]: Host Bridge
+          - strong [ref=e67]: Generic dispatch
+          - generic [ref=e68]: browser, VS Code, hotes externes
+        - generic [ref=e69]:
+          - generic [ref=e70]: VS Code
+          - strong [ref=e71]: Host shell
+          - generic [ref=e72]: webview bridge sur les memes read models
+      - paragraph [ref=e73]: "Commande de regeneration: npm run demo:report"
+  - generic [ref=e75]:
+    - generic [ref=e76]:
+      - heading "Shell de navigation" [level=2] [ref=e77]
+      - paragraph [ref=e78]: Choisir la surface active sans dupliquer les read models runtime.
+    - generic [ref=e79]:
+      - button "Cockpit" [ref=e80] [cursor=pointer]
+      - button "Noyau Forge" [ref=e81] [cursor=pointer]
+      - button "Dossier de preuve" [ref=e82] [cursor=pointer]
+      - button "Game UI" [ref=e83] [cursor=pointer]
+      - button "Observability" [ref=e84] [cursor=pointer]
+      - button "Spectator" [ref=e85] [cursor=pointer]
+      - button "Observer" [ref=e86] [cursor=pointer]
+      - button "Workflow" [ref=e87] [cursor=pointer]
+      - button "Expert" [ref=e88] [cursor=pointer]
+      - button "Observatory" [ref=e89] [cursor=pointer]
+      - button "War Room" [ref=e90] [cursor=pointer]
+      - button "Host Bridge" [ref=e91] [cursor=pointer]
+      - button "VS Code" [ref=e92] [cursor=pointer]
+  - generic [ref=e93]:
+    - generic [ref=e94]:
+      - generic [ref=e96]:
+        - heading "Catalogue de scenarios" [level=2] [ref=e97]
+        - paragraph [ref=e98]: Chaque scenario pousse les memes vues metier, mais avec des garde-fous et niveaux d hygiene differents.
+      - generic [ref=e99]:
+        - article [ref=e100]:
+          - generic [ref=e101]
+          - generic [ref=e106]
+        - article [ref=e110]:
+          - generic [ref=e111]
+          - generic [ref=e116]
+        - article [ref=e120]:
+          - generic [ref=e121]
+          - generic [ref=e126]
+    - generic [ref=e130]:
+      - generic [ref=e131]:
+        - generic [ref=e132]: Scenario
+        - generic [ref=e133]:
+          - button "Guardrails bloquants" [ref=e134] [cursor=pointer]
+          - button "Release ready" [ref=e135] [cursor=pointer]
+          - button "Drift et hygiene compliance" [ref=e136] [cursor=pointer]
+      - generic [ref=e137]:
+        - generic [ref=e138]: Visibilite
+        - generic [ref=e139]:
+          - button "Tout" [ref=e140] [cursor=pointer]
+          - button "Attention" [ref=e141] [cursor=pointer]
+          - button "Bloques" [ref=e142] [cursor=pointer]
+      - generic [ref=e143]:
+        - generic [ref=e144]: JSON
+        - generic [ref=e145]:
+          - button "powerCardsView" [ref=e146] [cursor=pointer]
+          - button "provenanceView" [ref=e147] [cursor=pointer]
+          - button "branchFinisherView" [ref=e148] [cursor=pointer]
+          - button "kernelView" [ref=e149] [cursor=pointer]
+          - button "proofDossierView" [ref=e150] [cursor=pointer]
+          - button "gameUiView" [ref=e151] [cursor=pointer]
+          - button "observabilityView" [ref=e152] [cursor=pointer]
+          - button "spectatorView" [ref=e153] [cursor=pointer]
+          - button "workflowView" [ref=e154] [cursor=pointer]
+          - button "expertView" [ref=e155] [cursor=pointer]
+          - button "genericHostBridgeView" [ref=e156] [cursor=pointer]
+          - button "vscodePanelView" [ref=e157] [cursor=pointer]
+          - button "controlPlane" [ref=e158] [cursor=pointer]
+    - generic [ref=e159]:
+      - generic [ref=e160]:
+        - article [ref=e161]:
+          - generic [ref=e162]
+          - generic [ref=e167]
+        - article [ref=e171]:
+          - generic [ref=e173]
+          - generic [ref=e176]
+        - article [ref=e193]:
+          - generic [ref=e195]
+          - generic [ref=e198]
+      - generic [ref=e214]:
+        - article [ref=e215]:
+          - generic [ref=e217]
+          - generic [ref=e220]
+        - article [ref=e245]:
+          - heading "Legende" [level=2] [ref=e248]
+          - generic [ref=e249]
+    - generic [ref=e253]:
+      - generic [ref=e255]:
+        - heading "Power Cards View" [level=2] [ref=e256]
+        - paragraph [ref=e257]: Persistance runtime/storage, policy, trust et diagnostic d activation.
+      - article [ref=e259]:
+        - generic [ref=e260]:
+          - generic [ref=e261]
+          - generic [ref=e264]: trust blocked
+        - generic [ref=e265]:
+          - generic [ref=e266]: runtime off
+          - generic [ref=e267]: storage off
+          - generic [ref=e268]: synced
+          - generic [ref=e269]: elevated
+        - list [ref=e270]:
+          - listitem [ref=e271]: POWER_CARD_ACTIVATION_REJECTED
+        - paragraph [ref=e272]: Power card Branch Guard is blocked by trust status blocked.
+    - generic [ref=e273]:
+      - generic [ref=e275]:
+        - heading "Provenance Compliance View" [level=2] [ref=e276]
+        - paragraph [ref=e277]: Conformite fail-closed sur source, licence et attribution.
+      - article [ref=e279]:
+        - generic [ref=e280]:
+          - generic [ref=e281]
+          - generic [ref=e284]: missing_attribution
+        - generic [ref=e285]:
+          - generic [ref=e286]: source asset://hero-banner/source
+          - generic [ref=e287]: licence CC-BY-4.0
+          - generic [ref=e288]: attribution required
+        - paragraph [ref=e289]: Provenance entry Hero Banner requires an attribution bundle before merge.
+    - generic [ref=e290]:
+      - generic [ref=e292]:
+        - heading "Branch Finisher View" [level=2] [ref=e293]
+        - paragraph [ref=e294]: Options finales d action et raisons bloquantes reelles.
+      - generic [ref=e295]:
+        - article [ref=e296]:
+          - generic [ref=e297]
+          - list [ref=e302]
+        - article [ref=e304]:
+          - generic [ref=e305]
+          - list [ref=e310]
+    - generic [ref=e312]:
+      - generic [ref=e314]:
+        - heading "Inspecteur JSON" [level=2] [ref=e315]
+        - paragraph [ref=e316]: Projection brute du scenario actif pour cross-check rapide.
+      - generic [ref=e317]:
+        - article [ref=e318]:
+          - heading "Ce que tu peux verifier ici" [level=3] [ref=e319]
+          - list [ref=e320]
+        - generic [ref=e324]:
+          - button "Copier JSON" [ref=e326] [cursor=pointer]
+          - generic [ref=e327]: "{ \"protocolVersion\": \"v1\", \"lastSequenceId\": 34, \"branch\": \"feature/provenance-clean\", \"testsPassed\": true, \"requiredTypedDiscardConfirmation\": \"DISCARD\", \"options\": [ { \"option\": \"merge\", \"allowed\": false, \"blockedReasons\": [ \"Provenance compliance has unresolved blocking entries.\" ], \"requiresTypedConfirmation\": false, \"requiredTypedConfirmation\": null }, { \"option\": \"pr\", \"allowed\": false, \"blockedReasons\": [ \"Provenance compliance has unresolved blocking entries.\" ], \"requiresTypedConfirmation\": false, \"requiredTypedConfirmation\": null }, { \"option\": \"keep\", \"allowed\": true, \"blockedReasons\": [], \"requiresTypedConfirmation\": false, \"requiredTypedConfirmation\": null }, { \"option\": \"discard\", \"allowed\": true, \"blockedReasons\": [], \"requiresTypedConfirmation\": true, \"requiredTypedConfirmation\": \"DISCARD\" } ], \"latestDecision\": null, \"shipBlocked\": true, \"blockingReasons\": [ \"Provenance entry Hero Banner requires an attribution bundle before merge.\" ], \"securityCards\": [], \"provenanceCompliance\": { \"entryCount\": 2, \"compliantCount\": 1, \"blockedEntryCount\": 1, \"missingSourceCount\": 0, \"missingLicenseCount\": 0, \"missingAttributionCount\": 1, \"attributionBundleCount\": 0 }, \"verification\": { \"queueCount\": 3, \"queuedCount\": 2, \"verifyingCount\": 0, \"acceptedCount\": 0, \"rejectedCount\": 1, \"needsWorkCount\": 0, \"blockingItemCount\": 1, \"blockingTaskIds\": [ \"task-power\" ], \"blockingReasons\": [ \"Task Activate power cards is rejected in verification.\" ], \"evidencePackCount\": 3, \"attestedPackCount\": 3, \"unattestedPackCount\": 0, \"missingEvidencePackCount\": 0 } }"

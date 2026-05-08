@@ -1,0 +1,30 @@
+
+> @grimoire-kit/grimoire-game@0.0.0 test
+> vitest run
+
+
+ RUN  v3.2.4 /mnt/Travail/Projets/Dev/bmad-custom/grimoire-kit/apps/grimoire-game
+
+ ✓ tests/contracts/events.test.ts (13 tests) 13ms
+ ✓ tests/integration/game-state-workflow-step.test.ts (2 tests) 6ms
+ ✓ tests/integration/game-state-tool-call.test.ts (2 tests) 8ms
+ ✓ tests/integration/auth-rbac.test.ts (9 tests) 9ms
+ ✓ tests/integration/adapter-mock.test.ts (5 tests) 11ms
+ ✓ tests/integration/idempotency-config.test.ts (4 tests) 13ms
+ ✓ tests/integration/adapter-grimoire.test.ts (19 tests) 21ms
+ ✓ tests/integration/task-view.test.ts (3 tests) 15ms
+ ✓ tests/integration/board-view.test.ts (3 tests) 19ms
+ ✓ tests/integration/collaboration-view.test.ts (3 tests) 19ms
+ ✓ tests/integration/auth-token-registry.test.ts (8 tests) 12ms
+ ✓ tests/integration/audit-view.test.ts (3 tests) 24ms
+ ✓ tests/integration/session-view.test.ts (3 tests) 24ms
+ ✓ tests/integration/verification-view.test.ts (3 tests) 21ms
+ ✓ tests/integration/runtime-source-fs.test.ts (11 tests) 42ms
+ ✓ tests/integration/reconnect-handshake.test.ts (1 test) 5ms
+ ✓ tests/integration/game-state-task-update.test.ts (2 tests) 4ms
+
+ Test Files  17 passed (17)
+      Tests  94 passed (94)
+   Start at  03:34:01
+   Duration  757ms (transform 1.06s, setup 0ms, collect 2.68s, tests 267ms, environment 6ms, prepare 1.76s)
+

@@ -1,0 +1,11 @@
+{
+  "hooks": {
+    "SubagentStart": [
+      {
+        "type": "command",
+        "command": ".github/hooks/scripts/grimoire-hook-gateway.sh --hook-id grimoire-subagent-context --event SubagentStart --control-file .github/hooks/grimoire-subagent-context.json",
+        "timeout": 5
+      }
+    ]
+  }
+}

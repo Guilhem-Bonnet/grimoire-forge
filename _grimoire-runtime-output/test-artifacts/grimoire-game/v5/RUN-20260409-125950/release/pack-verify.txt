@@ -1,0 +1,85 @@
+
+> @grimoire-kit/grimoire-game@0.0.0 pack:verify
+> npm pack --dry-run
+
+npm notice
+npm notice 📦  @grimoire-kit/grimoire-game@0.0.0
+npm notice Tarball Contents
+npm notice 3.3kB dist/bridge/adapter-grimoire.d.ts
+npm notice 25.0kB dist/bridge/adapter-grimoire.js
+npm notice 20.9kB dist/bridge/adapter-grimoire.js.map
+npm notice 1.9kB dist/bridge/agent-adapter.d.ts
+npm notice 14.7kB dist/bridge/agent-adapter.js
+npm notice 13.6kB dist/bridge/agent-adapter.js.map
+npm notice 1.4kB dist/bridge/runtime-dashboard-session.d.ts
+npm notice 1.5kB dist/bridge/runtime-dashboard-session.js
+npm notice 1.6kB dist/bridge/runtime-dashboard-session.js.map
+npm notice 1.9kB dist/bridge/runtime-source-fs.d.ts
+npm notice 23.2kB dist/bridge/runtime-source-fs.js
+npm notice 22.9kB dist/bridge/runtime-source-fs.js.map
+npm notice 15.1kB dist/contracts/events.d.ts
+npm notice 5.2kB dist/contracts/events.js
+npm notice 4.3kB dist/contracts/events.js.map
+npm notice 69.5kB dist/contracts/schemas.d.ts
+npm notice 6.2kB dist/contracts/schemas.js
+npm notice 6.2kB dist/contracts/schemas.js.map
+npm notice 1.5kB dist/index.d.ts
+npm notice 1.6kB dist/index.js
+npm notice 948B dist/index.js.map
+npm notice 1.0kB dist/server/auth/rbac.d.ts
+npm notice 1.7kB dist/server/auth/rbac.js
+npm notice 1.7kB dist/server/auth/rbac.js.map
+npm notice 1.1kB dist/server/auth/token-registry.d.ts
+npm notice 3.0kB dist/server/auth/token-registry.js
+npm notice 3.1kB dist/server/auth/token-registry.js.map
+npm notice 2.2kB dist/state/audit-view.d.ts
+npm notice 11.2kB dist/state/audit-view.js
+npm notice 12.3kB dist/state/audit-view.js.map
+npm notice 3.3kB dist/state/board-view.d.ts
+npm notice 17.4kB dist/state/board-view.js
+npm notice 18.1kB dist/state/board-view.js.map
+npm notice 1.9kB dist/state/collaboration-view.d.ts
+npm notice 13.9kB dist/state/collaboration-view.js
+npm notice 14.6kB dist/state/collaboration-view.js.map
+npm notice 1.0kB dist/state/game-state.d.ts
+npm notice 3.7kB dist/state/game-state.js
+npm notice 3.6kB dist/state/game-state.js.map
+npm notice 1.8kB dist/state/observability-panel-view.d.ts
+npm notice 5.7kB dist/state/observability-panel-view.js
+npm notice 5.5kB dist/state/observability-panel-view.js.map
+npm notice 2.3kB dist/state/observability-view.d.ts
+npm notice 6.8kB dist/state/observability-view.js
+npm notice 7.5kB dist/state/observability-view.js.map
+npm notice 1.1kB dist/state/runtime-dashboard-store.d.ts
+npm notice 1.6kB dist/state/runtime-dashboard-store.js
+npm notice 1.7kB dist/state/runtime-dashboard-store.js.map
+npm notice 2.4kB dist/state/runtime-dashboard-ui-view.d.ts
+npm notice 6.2kB dist/state/runtime-dashboard-ui-view.js
+npm notice 5.9kB dist/state/runtime-dashboard-ui-view.js.map
+npm notice 1.7kB dist/state/runtime-dashboard-view.d.ts
+npm notice 3.0kB dist/state/runtime-dashboard-view.js
+npm notice 2.7kB dist/state/runtime-dashboard-view.js.map
+npm notice 2.4kB dist/state/session-view.d.ts
+npm notice 8.6kB dist/state/session-view.js
+npm notice 9.3kB dist/state/session-view.js.map
+npm notice 1.6kB dist/state/task-view.d.ts
+npm notice 5.2kB dist/state/task-view.js
+npm notice 5.4kB dist/state/task-view.js.map
+npm notice 1.3kB dist/state/timeline-view.d.ts
+npm notice 5.9kB dist/state/timeline-view.js
+npm notice 6.7kB dist/state/timeline-view.js.map
+npm notice 1.3kB dist/state/verification-view.d.ts
+npm notice 3.8kB dist/state/verification-view.js
+npm notice 3.5kB dist/state/verification-view.js.map
+npm notice 1.1kB package.json
+npm notice Tarball Details
+npm notice name: @grimoire-kit/grimoire-game
+npm notice version: 0.0.0
+npm notice filename: grimoire-kit-grimoire-game-0.0.0.tgz
+npm notice package size: 66.1 kB
+npm notice unpacked size: 469.3 kB
+npm notice shasum: 022c8823bada4bc1ddfc37ab0566a6e8ea4bf2af
+npm notice integrity: sha512-l2W+3pG+JAK1V[...]93OuYRzK8LOlw==
+npm notice total files: 67
+npm notice
+grimoire-kit-grimoire-game-0.0.0.tgz

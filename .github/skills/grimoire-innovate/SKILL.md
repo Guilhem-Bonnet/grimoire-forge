@@ -1,6 +1,6 @@
 ---
 name: grimoire-innovate
-description: 'Run the BMAD Grimoire innovation pipeline from idea to prototype. Use when: new idea, innovation, brainstorm to code, incubator, R&D cycle, experiment, explore alternative, what-if scenario, quantum branch, parallel timelines, prototype, seed idea. Combines incubator lifecycle, R&D engine, and quantum branching.'
+description: 'Run the Grimoire innovation pipeline from idea to prototype. Use when: new idea, innovation, brainstorm to code, incubator, R&D cycle, experiment, explore alternative, what-if scenario, quantum branch, parallel timelines, prototype, seed idea. Combines incubator lifecycle, R&D engine, and quantum branching.'
 ---
 
 # Grimoire Innovate
@@ -14,6 +14,12 @@ Full innovation pipeline: submit ideas, evaluate viability, run R&D cycles, expl
 - When the user says "what if...", "let's experiment", "new idea", or "R&D"
 - Evaluating competing approaches
 - Exploring architectural alternatives safely
+
+## When NOT to Use
+
+- For a one-off divergent ideation session without R&D follow-through → `grimoire-brainstorming`.
+- To turn a chosen idea into a step-by-step implementation plan → `grimoire-writing-plans`.
+- This skill is the full pipeline (idea → incubator → R&D → prototype); skip it for narrow lookups.
 
 ## Procedure
 

@@ -1,0 +1,55 @@
+
+> @grimoire-kit/grimoire-game@0.0.0 test:coverage
+> vitest run --coverage
+
+
+ RUN  v3.2.4 /mnt/Travail/Projets/Dev/bmad-custom/grimoire-kit/apps/grimoire-game
+      Coverage enabled with v8
+
+ ✓ tests/integration/game-state-tool-call.test.ts (2 tests) 9ms
+ ✓ tests/contracts/events.test.ts (13 tests) 14ms
+ ✓ tests/integration/auth-rbac.test.ts (9 tests) 10ms
+ ✓ tests/integration/task-view.test.ts (3 tests) 15ms
+ ✓ tests/integration/idempotency-config.test.ts (3 tests) 15ms
+ ✓ tests/integration/adapter-mock.test.ts (5 tests) 13ms
+ ✓ tests/integration/adapter-grimoire.test.ts (19 tests) 22ms
+ ✓ tests/integration/board-view.test.ts (3 tests) 25ms
+ ✓ tests/integration/game-state-workflow-step.test.ts (2 tests) 7ms
+ ✓ tests/integration/verification-view.test.ts (3 tests) 18ms
+ ✓ tests/integration/collaboration-view.test.ts (3 tests) 24ms
+ ✓ tests/integration/session-view.test.ts (3 tests) 28ms
+ ✓ tests/integration/audit-view.test.ts (3 tests) 32ms
+ ✓ tests/integration/auth-token-registry.test.ts (8 tests) 13ms
+ ✓ tests/integration/runtime-source-fs.test.ts (10 tests) 33ms
+ ✓ tests/integration/reconnect-handshake.test.ts (1 test) 5ms
+ ✓ tests/integration/game-state-task-update.test.ts (2 tests) 4ms
+
+ Test Files  17 passed (17)
+      Tests  92 passed (92)
+   Start at  03:27:07
+   Duration  1.00s (transform 769ms, setup 0ms, collect 2.52s, tests 287ms, environment 5ms, prepare 2.80s)
+
+ % Coverage report from v8
+-------------------|---------|----------|---------|---------|-------------------
+File               | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+-------------------|---------|----------|---------|---------|-------------------
+All files          |    87.9 |       80 |   97.46 |    87.9 |                   
+ bridge            |   80.95 |    73.43 |   97.05 |   80.95 |                   
+  ...r-grimoire.ts |   80.36 |    74.57 |     100 |   80.36 | ...85,697-714,756 
+  agent-adapter.ts |   81.54 |    73.43 |     100 |   81.54 | ...74-375,378-385 
+  ...-source-fs.ts |   81.23 |    72.54 |   92.85 |   81.23 | ...96-705,707-716 
+ contracts         |   97.27 |    96.29 |   82.35 |   97.27 |                   
+  events.ts        |    94.7 |    96.15 |   82.35 |    94.7 | ...,94-95,267-273 
+  schemas.ts       |     100 |      100 |     100 |     100 |                   
+ server/auth       |     100 |    97.67 |     100 |     100 |                   
+  rbac.ts          |     100 |    94.44 |     100 |     100 | 69                
+  ...n-registry.ts |     100 |      100 |     100 |     100 |                   
+ state             |   91.59 |    81.57 |     100 |   91.59 |                   
+  audit-view.ts    |   94.29 |    78.83 |     100 |   94.29 | ...83-388,419-420 
+  board-view.ts    |   89.77 |    82.32 |     100 |   89.77 | ...61-662,665-666 
+  ...ation-view.ts |   88.26 |    78.81 |     100 |   88.26 | ...43-444,473-474 
+  game-state.ts    |   95.08 |    94.44 |     100 |   95.08 | 148-153           
+  session-view.ts  |   91.09 |       76 |     100 |   91.09 | ...28-229,247-252 
+  task-view.ts     |   96.18 |     88.7 |     100 |   96.18 | 169,185-189       
+  ...ation-view.ts |    94.5 |    84.61 |     100 |    94.5 | 132-137           
+-------------------|---------|----------|---------|---------|-------------------

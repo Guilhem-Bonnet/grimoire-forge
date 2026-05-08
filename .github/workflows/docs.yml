@@ -1,11 +1,14 @@
-name: Deploy Forge docs
+name: Deploy Grimoire Kit docs
 
 on:
   push:
     branches: [main]
     paths:
-      - "docs/**"
-      - "mkdocs.yml"
+      - "grimoire-kit/docs/**"
+      - "grimoire-kit/web/**"
+      - "grimoire-kit/mkdocs.yml"
+      - "grimoire-kit/mkdocs_hooks/**"
+      - "grimoire-kit/mkdocs_data/**"
       - ".github/workflows/docs.yml"
   workflow_dispatch:
 
@@ -20,10 +23,13 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: grimoire-kit
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v6
+      - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
           cache: "pip"
@@ -31,18 +37,31 @@ jobs:
       - name: Install docs dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install "mkdocs-material>=9.5" "pymdown-extensions>=10.0"
+          pip install \
+            "mkdocs-material>=9.5" \
+            "pymdown-extensions>=10.0" \
+            "mkdocstrings[python]>=0.25" \
+            "ruamel.yaml>=0.18"
 
-      - name: Build site
-        run: mkdocs build --clean
+      - name: Build docs + combine landing
+        run: |
+          mkdocs build --clean
+          cp web/index.html site/
+          cp web/kit-tokens.css site/
+          cp web/kit-base.css site/
+          cp web/kit-motion.css site/
+          cp web/kit-nav.js site/
 
-      - uses: actions/upload-pages-artifact@v4
+      - uses: actions/upload-pages-artifact@v3
         with:
-          path: site/
+          path: grimoire-kit/site/
 
   deploy:
     needs: build
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - id: deployment
         uses: actions/deploy-pages@v4

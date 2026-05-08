@@ -1,0 +1,1 @@
+788K	.release/cockpit-app

@@ -1,0 +1,56 @@
+# Grimoire — Cursor Rules
+# Ce fichier pointe vers la configuration Grimoire complète.
+# Il assure la compatibilité multi-LLM : Claude Code (CLAUDE.md), GitHub Copilot (.github/copilot-instructions.md), Cursor (.cursorrules).
+
+## Configuration du projet
+
+Voir `.github/copilot-instructions.md` pour la configuration complète du projet Grimoire.
+
+## Point d'entrée agent
+
+L'agent principal est **Grimoire Master** (SOG — Smart Orchestrator Gateway).
+- Fichier agent : `.github/agents/grimoire-master.agent.md`
+- Runtime : `_grimoire-runtime/core/agents/grimoire-master.md`
+- Configuration : `_grimoire-runtime/bmm/config.yaml`
+
+## Conventions clés
+
+- Toujours charger `_grimoire-runtime/bmm/config.yaml` avant toute activation d'agent
+- Variables de session : `{user_name}`, `{communication_language}`, `{output_folder}`, `{planning_artifacts}`
+- Langue de communication : Français
+- Niveau utilisateur : expert
+
+## Workflows disponibles
+
+Voir `_grimoire-runtime/_config/workflow-manifest.csv` pour la liste complète.
+
+### Workflow repo-analysis (anti-LLM-defects)
+
+Pour analyser un repo avec protection anti-hallucination, anti-drift et isolation contextuelle :
+
+```
+Charger : _grimoire-runtime/bmm/workflows/1-analysis/repo-analysis/workflow-repo-analysis.md
+```
+
+Scripts disponibles :
+- `grimoire-kit/framework/tools/repo-analysis-grounding.sh <repo_path>` — scan automatique de la structure
+- `grimoire-kit/framework/tools/repo-analysis-state.sh read` — état courant du workflow (self-piloting)
+- `grimoire-kit/framework/tools/code-review.py --project-root <path> review --json` — findings automatiques
+- `grimoire-kit/framework/tools/swarm-consensus.py vote --topic ... --votes ...` — consensus sur les claims divergents
+
+## Structure Grimoire Runtime
+
+```
+_grimoire-runtime/
+  bmm/agents/         — sub-agents BMM (analyst, architect, dev, pm, qa...)
+  bmm/workflows/      — workflows par phase (1-analysis, 2-plan, 3-solutioning, 4-implementation)
+  core/agents/        — grimoire-master (orchestrateur SOG)
+  _config/            — manifests, model-routing, hook-safety-registry
+  _memory/            — mémoire partagée, contextes repo, failure museum
+grimoire-kit/
+  framework/tools/    — scripts Python/bash (grounding, state, code-review, swarm-consensus...)
+.github/
+  agents/             — agent definitions
+  hooks/              — lifecycle hooks (prompt-submit, post-edit, memory-guard...)
+  instructions/       — instructions auto-chargées par pattern
+```

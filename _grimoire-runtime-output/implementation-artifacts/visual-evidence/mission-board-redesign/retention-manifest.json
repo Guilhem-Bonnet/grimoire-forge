@@ -1,0 +1,33 @@
+{
+  "artifactSet": "mission-board-redesign",
+  "surface": "mission-board",
+  "scenario": "blocked-guardrails",
+  "scope": "implementation-artifacts/visual-evidence",
+  "artifacts": [
+    {
+      "path": "mission-board-redesign-v2.png",
+      "kind": "screenshot",
+      "role": "latest-full-page"
+    },
+    {
+      "path": "mission-board-redesign.png",
+      "kind": "screenshot",
+      "role": "first-pass-full-page"
+    },
+    {
+      "path": "page-2026-04-17T00-12-37-251Z.yml",
+      "kind": "accessibility-snapshot",
+      "role": "latest-structure-snapshot"
+    },
+    {
+      "path": "page-2026-04-17T00-10-39-995Z.yml",
+      "kind": "accessibility-snapshot",
+      "role": "pre-layout-adjustment-snapshot"
+    }
+  ],
+  "retention": {
+    "keepLatest": true,
+    "keepPreviousPass": true,
+    "reviewOnNextMissionBoardRedesign": true
+  }
+}

@@ -1,11 +1,16 @@
 {
   "servers": {
+    "context7": {
+      "type": "http",
+      "url": "https://mcp.context7.com/mcp"
+    },
+    "github": {
+      "type": "http",
+      "url": "https://api.githubcopilot.com/mcp/"
+    },
     "playwright": {
-      "command": "npx",
-      "args": [
-        "-y",
-        "@playwright/mcp"
-      ]
+      "command": "${workspaceFolder}/grimoire-kit/framework/tools/playwright-mcp.sh",
+      "cwd": "${workspaceFolder}"
     },
     "grimoire": {
       "command": "${workspaceFolder}/grimoire-kit/.venv/bin/python",
@@ -13,7 +18,17 @@
         "-m",
         "grimoire.mcp.server"
       ],
-      "cwd": "${workspaceFolder}"
+      "cwd": "${workspaceFolder}/grimoire-kit",
+      "env": {
+        "PYTHONPATH": "${workspaceFolder}/grimoire-kit/src"
+      }
+    },
+    "ollama": {
+      "type": "http",
+      "url": "http://localhost:11434/v1",
+      "headers": {
+        "Authorization": "Bearer ollama"
+      }
     }
   }
 }

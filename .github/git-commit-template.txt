@@ -1,0 +1,9 @@
+# Format attendu: type(scope): resume a l'imperatif
+# Types recommandes: feat | fix | docs | refactor | perf | test | chore | ci | build | revert | style
+# Exemple: feat(governance): verrouiller les pushes directs sur main
+
+# Pourquoi:
+
+# Ce qui change:
+
+# Validation:

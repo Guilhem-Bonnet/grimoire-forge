@@ -1,0 +1,48 @@
+ide: codex
+configured_date: 2026-04-24T20:44:28-04:00
+last_updated: 2026-04-24T20:44:28-04:00
+configuration:
+  entrypoint: AGENTS.md
+  native_input: .codex/inputs/grimoire-master.md
+  shared_mcp_config: .mcp.json
+  local_mcp_wrapper: .codex/mcp/grimoire-mcp.sh
+  memory_backend:
+    backend: qdrant-server
+    qdrant_url: http://localhost:6333
+    docker_compose_file: docker-compose.qdrant.yml
+    collection: grimoire_kit
+  host_binding:
+    host_id: host-codex
+    host_type: ide
+    display_name: OpenAI Codex CLI
+    source_of_truth: secondary
+    connection_state: online
+    trust_status: trusted
+    capability_manifest_ref: manifest-codex
+  capability_manifest:
+    manifest_id: manifest-codex
+    host_id: host-codex
+    routines:
+      - code-review
+      - implementation
+      - validation
+      - repo-analysis
+    tool_providers:
+      - codex-cli
+      - grimoire-mcp
+      - context7
+      - github
+      - playwright
+    review_channels:
+      - codex_review
+      - github_pr_comment
+    context_sources:
+      - instructions
+      - memory
+      - session_context
+      - review_summary
+    permission_mode: hybrid
+    supports_streaming: true
+    supports_review_import: true
+    supports_context_import: true
+    supports_preview_commit: true

@@ -1,0 +1,24 @@
+{
+  "recommendations": [
+    "ms-python.python",
+    "ms-python.vscode-pylance",
+    "charliermarsh.ruff",
+    "github.copilot",
+    "github.copilot-chat",
+    "openai.chatgpt"
+  ],
+  "unwantedRecommendations": [
+    "ms-dotnettools.csharp",
+    "visualstudiotoolsforunity.vstuc",
+    "redhat.java",
+    "vscjava.vscode-gradle",
+    "hashicorp.terraform",
+    "docker.docker",
+    "ms-azuretools.vscode-containers",
+    "ms-python.isort",
+    "devsense.phptools-vscode",
+    "ms-vscode.cpptools",
+    "foxundermoon.shell-format",
+    "webossdk.webosstudio"
+  ]
+}

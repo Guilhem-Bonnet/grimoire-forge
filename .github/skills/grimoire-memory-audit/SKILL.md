@@ -1,11 +1,11 @@
 ---
 name: grimoire-memory-audit
-description: 'Deep audit of BMAD Grimoire memory system. Use when: memory audit, check memory, memory issues, stale memories, memory cleanup, memory health, contradictions in memory, duplicate learnings, memory freshness, session chain review. Combines memory-lint, freshness scoring, and session chain analysis.'
+description: 'Deep audit of Grimoire memory system. Use when: memory audit, check memory, memory issues, stale memories, memory cleanup, memory health, contradictions in memory, duplicate learnings, memory freshness, session chain review. Combines memory-lint, freshness scoring, and session chain analysis.'
 ---
 
 # Grimoire Memory Audit
 
-Deep audit of the BMAD memory subsystem: coherence, freshness, contradictions, and session continuity.
+Deep audit of the Grimoire memory subsystem: coherence, freshness, contradictions, and session continuity.
 
 ## When to Use
 
@@ -36,7 +36,7 @@ Checks:
 Read the session chain file to understand recent session continuity:
 
 ```bash
-cat _bmad/_memory/session-chain.jsonl 2>/dev/null | python3 -m json.tool --no-ensure-ascii 2>/dev/null | tail -100
+cat _grimoire-runtime/_memory/session-chain.jsonl 2>/dev/null | python3 -m json.tool --no-ensure-ascii 2>/dev/null | tail -100
 ```
 
 If the file exists, analyze:
@@ -48,13 +48,13 @@ If the file exists, analyze:
 ### Step 3 — Memory File Inventory
 
 ```bash
-find _bmad/_memory/ -type f -name "*.md" -o -name "*.json" -o -name "*.jsonl" | sort
+find _grimoire-runtime/_memory/ -type f -name "*.md" -o -name "*.json" -o -name "*.jsonl" | sort
 ```
 
 List all memory files with their last modification dates:
 
 ```bash
-find _bmad/_memory/ -type f \( -name "*.md" -o -name "*.json" \) -exec ls -la --time-style=long-iso {} \;
+find _grimoire-runtime/_memory/ -type f \( -name "*.md" -o -name "*.json" \) -exec ls -la --time-style=long-iso {} \;
 ```
 
 ### Step 4 — Memory Bridge Status
@@ -62,7 +62,7 @@ find _bmad/_memory/ -type f \( -name "*.md" -o -name "*.json" \) -exec ls -la --
 Check if the bridge sync is up to date:
 
 ```bash
-diff -rq _bmad/_memory/ .github/memories/repo/ 2>/dev/null || echo "Bridge not synced or target missing"
+diff -rq _grimoire-runtime/_memory/ .github/memories/repo/ 2>/dev/null || echo "Bridge not synced or target missing"
 ```
 
 ### Step 5 — Aggregate Report
@@ -100,7 +100,7 @@ diff -rq _bmad/_memory/ .github/memories/repo/ 2>/dev/null || echo "Bridge not s
 ## Memory Structure Reference
 
 ```
-_bmad/_memory/
+_grimoire-runtime/_memory/
 ├── agent-learnings/     # Per-agent learnings (dated entries)
 │   ├── dev.md
 │   ├── architect.md

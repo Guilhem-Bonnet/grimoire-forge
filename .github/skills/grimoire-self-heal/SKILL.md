@@ -1,6 +1,6 @@
 ---
 name: grimoire-self-heal
-description: 'Diagnose and repair BMAD Grimoire workflow failures. Use when: workflow failed, something broke, error diagnosis, self-healing, auto-repair, rollback, immune scan, what went wrong, fix workflow, debug failure, incident response. Combines self-healing diagnosis, immune system scan, and failure museum documentation.'
+description: 'Diagnose and repair Grimoire framework workflow failures (agent runs, framework tools, internal pipelines — NOT production code). Use when: Grimoire workflow failed, agent execution broke, framework tool error, immune scan, self-healing, failure museum entry, what went wrong in the framework. For production code regressions or build/CI breakage use grimoire-incident-response instead.'
 ---
 
 # Grimoire Self-Heal

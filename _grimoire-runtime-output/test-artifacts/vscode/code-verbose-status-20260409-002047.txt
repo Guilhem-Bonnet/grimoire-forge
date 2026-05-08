@@ -1,0 +1,173 @@
+[703624:0409/002050.536603:WARNING:ui/ozone/platform/wayland/common/wayland_object.cc:119] Binding to wl_shm version 1 but version 2 is available.
+[703624:0409/002050.537352:WARNING:ui/ozone/platform/wayland/common/wayland_object.cc:119] Binding to wl_seat version 8 but version 10 is available.
+[703624:0409/002050.537408:WARNING:ui/ozone/platform/wayland/common/wayland_object.cc:119] Binding to zwp_pointer_gestures_v1 version 1 but version 3 is available.
+[703624:0409/002050.537557:WARNING:ui/ozone/platform/wayland/common/wayland_object.cc:119] Binding to wp_cursor_shape_manager_v1 version 1 but version 2 is available.
+[703624:0409/002050.537889:WARNING:ui/ozone/platform/wayland/common/wayland_object.cc:119] Binding to org_kde_kwin_appmenu_manager version 1 but version 2 is available.
+[703624:0409/002050.539733:WARNING:ui/ozone/platform/wayland/common/wayland_object.cc:119] Binding to zwp_linux_dmabuf_v1 version 4 but version 5 is available.
+WARNING: radv is not a conformant Vulkan implementation, testing use only.
+[90m[main 2026-04-09T04:20:50.722Z][0m PolicyConfiguration#initialize
+[90m[main 2026-04-09T04:20:50.723Z][0m PolicyConfiguration#updatePolicyDefinitions [
+  'update.mode',
+  'update.channel',
+  'update.showReleaseNotes',
+  'update.statusBar',
+  'update.titleBar',
+  'http.useLocalProxyConfiguration',
+  'http.electronFetch',
+  'http.proxy',
+  'http.proxyStrictSSL',
+  'http.proxyKerberosServicePrincipal',
+  'http.noProxy',
+  'http.proxyAuthorization',
+  'http.proxySupport',
+  'http.systemCertificates',
+  'http.systemCertificatesNode',
+  'http.experimental.systemCertificatesV2',
+  'http.fetchAdditionalSupport',
+  'http.webSocketAdditionalSupport',
+  'http.experimental.networkInterfaceCheckInterval',
+  'telemetry.telemetryLevel',
+  'telemetry.feedback.enabled',
+  'telemetry.enableTelemetry',
+  'extensions.allowed'
+]
+[90m[main 2026-04-09T04:20:50.733Z][0m [File Watcher (node.js)] Request to start watching: /etc/vscode/policy.json (excludes: <none>, includes: <all>, filter: <none>, correlationId: <none>),/home/guilhem/.config/Code/User (excludes: <none>, includes: <all>, filter: <none>, correlationId: <none>),/home/guilhem/.config/Code/User/settings.json (excludes: <none>, includes: <all>, filter: <none>, correlationId: <none>)
+[90m[main 2026-04-09T04:20:50.735Z][0m PolicyConfiguration#update [
+  'update.mode',
+  'telemetry.telemetryLevel',
+  'telemetry.feedback.enabled',
+  'extensions.allowed'
+]
+[90m[main 2026-04-09T04:20:50.736Z][0m PolicyConfiguration#updatePolicyDefinitions [ 'update.enableWindowsBackgroundUpdates' ]
+[90m[main 2026-04-09T04:20:50.736Z][0m PolicyConfiguration#update []
+[90m[main 2026-04-09T04:20:50.737Z][0m [File Watcher (node.js)] ignoring a path for watching who's stat info failed to resolve: /etc/vscode/policy.json (error: Error: ENOENT: no such file or directory, stat '/etc/vscode/policy.json')
+[90m[main 2026-04-09T04:20:50.737Z][0m [File Watcher (node.js)] starting fs.watchFile() on /etc/vscode/policy.json (correlationId: undefined)
+[703730:0409/002050.739464:WARNING:sandbox/policy/linux/sandbox_linux.cc:404] InitializeSandbox() called with multiple threads in process gpu-process.
+[90m[main 2026-04-09T04:20:50.793Z][0m [File Watcher (node.js)] Started watching: '/home/guilhem/.config/Code/User'
+[90m[main 2026-04-09T04:20:50.794Z][0m [File Watcher (node.js)] Started watching: '/home/guilhem/.config/Code/User/settings.json'
+[90m[main 2026-04-09T04:20:51.538Z][0m [File Watcher (node.js)] Request to stop watching: /etc/vscode/policy.json (excludes: <none>, includes: <all>, filter: <none>, correlationId: <none>)
+[90m[main 2026-04-09T04:20:51.538Z][0m [File Watcher (node.js)] stopping file watcher (/etc/vscode/policy.json (excludes: <none>, includes: <all>, filter: <none>, correlationId: <none>))
+Version:          Code 1.114.0 (e7fb5e96c0730b9deb70b33781f98e2f35975036, 2026-04-01T09:27:11Z)
+OS Version:       Linux x64 6.19.10-200.fc43.x86_64
+CPUs:             Intel(R) Core(TM) i9-9900K CPU @ 3.60GHz (16 x 4700)
+Memory (System):  31.25GB (9.02GB free)
+Load (avg):       9, 8, 8
+VM:               0%
+Screen Reader:    no
+Process Argv:     --crash-reporter-id 5c770b7b-ba4f-4eee-8446-35d0cd4a31d6
+GPU Status:       2d_canvas:                              enabled
+                  GPU0:                                   VENDOR= 0x1002 [Google Inc. (AMD)], DEVICE=0x7550 [ANGLE (AMD, AMD Radeon RX 9070 XT (radeonsi gfx1201 LLVM 21.1.8), OpenGL ES 3.2 Mesa 25.3.6)], DRIVER_VENDOR=Mesa, DRIVER_VERSION=25.3.6 *ACTIVE*
+                  Machine model name:                     
+                  Machine model version:                  
+                  direct_rendering_display_compositor:    disabled_off_ok
+                  gpu_compositing:                        enabled
+                  multiple_raster_threads:                enabled_on
+                  opengl:                                 enabled_on
+                  rasterization:                          enabled
+                  raw_draw:                               disabled_off_ok
+                  skia_graphite:                          disabled_off
+                  trees_in_viz:                           disabled_off
+                  video_decode:                           enabled
+                  video_encode:                           disabled_software
+                  vulkan:                                 disabled_off
+                  webgl:                                  enabled
+                  webgl2:                                 enabled
+                  webgpu:                                 disabled_off
+                  webnn:                                  disabled_off
+GPU Log Messages:
+[36895:0407/211945.672660:WARNING:sandbox/policy/linux/sandbox_linux.cc:404] : InitializeSandbox() called with multiple threads in process gpu-process.
+
+[36895:0408/223503.271344:ERROR:gpu/command_buffer/service/shared_image/shared_image_manager.cc:393] : SharedImageManager::ProduceSkia: Trying to Produce a Skia representation from a non-existent mailbox.
+
+[36895:0408/223503.272331:ERROR:gpu/command_buffer/service/shared_image/shared_image_manager.cc:393] : SharedImageManager::ProduceSkia: Trying to Produce a Skia representation from a non-existent mailbox.
+
+[36895:0408/223503.272554:ERROR:gpu/command_buffer/service/shared_image/shared_image_manager.cc:393] : SharedImageManager::ProduceSkia: Trying to Produce a Skia representation from a non-existent mailbox.
+
+[36895:0408/223503.273034:ERROR:gpu/command_buffer/service/shared_image/shared_image_manager.cc:393] : SharedImageManager::ProduceSkia: Trying to Produce a Skia representation from a non-existent mailbox.
+
+
+CPU %	Mem MB	   PID	Process
+    4	257766556270	 36828	code
+    0	     0	 36832	   zygote
+    0	42961092712	 36895	     zygote
+    0	     0	 36833	   zygote
+    0	     0	 36835	     zygote
+    2	107402731779	 38410	window [2] (Welcome - Documents - Visual Studio Code)
+    9	279247102626	689781	window [22] (Preview CdC-grimoire-game.md - bmad-custom - Visual Studio Code)
+    0	42961092712	690332	       zygote
+    0	21480546356	 36904	   utility-network-service
+    0	21480546356	 37433	shared-process
+    2	32220819534	 38912	pty-host
+    0	     0	 41077	     /usr/bin/zsh
+    0	     0	 62069	     /usr/bin/zsh -i
+    0	10740273178	107733	     /usr/bin/zsh -i
+    0	     0	324587	     /usr/bin/zsh -i
+    0	     0	487888	     /usr/bin/zsh -i
+    0	     0	524040	     /usr/bin/zsh -i
+    0	     0	545486	     /usr/bin/zsh -i
+    0	     0	594995	     /usr/bin/zsh -i
+    0	     0	647601	     /usr/bin/zsh -i
+    0	     0	650484	     /usr/bin/zsh -i
+    0	     0	663764	     /usr/bin/zsh -f
+    0	     0	665694	     /usr/bin/zsh -f
+    0	     0	668453	     /usr/bin/zsh -f
+    0	     0	683423	     /usr/bin/zsh -f
+    0	     0	690874	     /usr/bin/zsh -i
+    0	     0	696350	     /usr/bin/zsh -f
+    0	     0	703581	       grep -R -n --binary-files=without-match bmad-master.agent.md /home/guilhem/.config/Code/User/settings.json /home/guilhem/.config/Code/User/workspaceStorage/97832de26b933b181c989f8cbf19793c/workspace.json /home/guilhem/.config/Code/User/workspaceStorage/97832de26b933b181c989f8cbf19793c/chatSessions /home/guilhem/.config/Code/User/workspaceStorage/97832de26b933b181c989f8cbf19793c/chatEditingSessions
+    0	     0	703582	       head -n 80
+    0	     0	696952	     /usr/bin/zsh -f
+    0	     0	698402	     /usr/bin/zsh -f
+    0	     0	699692	     /usr/bin/zsh -f
+    0	     0	699981	     /usr/bin/zsh -f
+    0	     0	703606	       sh /usr/bin/code --verbose --status
+    0	21480546356	703611	         electron-nodejs (cli.js)
+    0	53701365890	703624	           /usr/share/code/code --verbose --status
+    0	10740273178	703640	             zygote
+    0	32220819534	703730	               zygote
+    0	10740273178	703641	             zygote
+    0	     0	703643	               zygote
+    0	21480546356	703737	             utility-network-service
+    0	     0	703787	             /usr/bin/ps -ax -o pid=,ppid=,pcpu=,pmem=,command=
+    0	     0	703665	     /bin/bash /usr/share/code/resources/app/out/vs/base/node/cpuUsage.sh 696350 703581 703582
+    0	     0	703670	       sleep 1
+    0	     0	 40021	file-watcher [2]
+    0	118143004957	 40035	extension-host [2]
+    0	     0	 40228	     /usr/share/code/code /usr/share/code/resources/app/extensions/json-language-features/server/dist/node/jsonServerMain --node-ipc --clientProcessId=40035
+    0	     0	 40976	     /home/guilhem/.vscode/extensions/hashicorp.terraform-2.39.2-linux-x64/bin/terraform-ls serve
+    0	     0	 40988	     /home/guilhem/.vscode/extensions/ms-python.vscode-python-envs-1.26.0-linux-x64/python-env-tools/bin/pet server
+    0	     0	 41048	     /home/guilhem/.config/Code/User/globalStorage/eamodio.gitlens/gk mcp --host=vscode --source=gitlens --scheme=vscode
+    0	     0	 41057	       /home/guilhem/.local/share/GitKrakenCLI/gk mcp --host=vscode --source=gitlens --scheme=vscode
+    0	10740273178	 41596	     electron-nodejs (bundle.js)
+    6	472572019828	689853	extension-host [22]
+    0	21480546356	690255	     /usr/share/code/code /usr/share/code/resources/app/extensions/markdown-language-features/dist/serverWorkerMain --node-ipc --clientProcessId=689853
+    0	     0	690343	     /home/guilhem/.vscode/extensions/ms-python.vscode-python-envs-1.26.0-linux-x64/python-env-tools/bin/pet server
+    0	32220819534	690604	     electron-nodejs (languageserver.js)
+    0	21480546356	690605	     /usr/share/code/code /usr/share/code/resources/app/extensions/json-language-features/server/dist/node/jsonServerMain --node-ipc --clientProcessId=689853
+    0	32220819534	690685	     mdx-language-server
+    0	10740273178	690963	     /bin/python /home/guilhem/.vscode/extensions/ms-python.isort-2025.0.0/bundled/tool/lsp_server.py
+    0	     0	691142	     /home/guilhem/.local/bin/ruff server
+    0	128883278135	691448	     electron-nodejs (bundle.js)
+    0	21480546356	691982	     /mnt/Travail/Projets/Dev/bmad-custom/grimoire-kit/.venv/bin/python -m grimoire.mcp.server
+    0	32220819534	691983	     electron-nodejs (server-node.js)
+    0	42961092712	699567	     electron-nodejs (tsserver.js)
+    0	64441639067	699568	     electron-nodejs (tsserver.js)
+    0	32220819534	699585	       electron-nodejs (typingsInstaller.js)
+    0	32220819534	689889	file-watcher [22]
+
+Workspace Stats: 
+|  Window (Preview CdC-grimoire-game.md - bmad-custom - Visual Studio Code)
+|  Window (Welcome - Documents - Visual Studio Code)
+|    Folder (Documents): 0 files
+|      File types:
+|      Conf files:
+|    Folder (bmad-custom): more than 21852 files
+|      File types: json(11107) pyc(1710) py(1691) md(978) pyi(795) png(398)
+|                  so(244) yaml(99) c(81) txt(67)
+|      Conf files: github-prompts-dir(95) github-instructions-dir(4)
+|                  github-actions(2) copilot-instructions.md(1) mcp.json(1)
+|                  settings.json(1) tasks.json(1) devcontainer.json(1)
+|                  makefile(1)
+[90m[main 2026-04-09T04:20:52.235Z][0m Lifecycle#kill()
+[90m[main 2026-04-09T04:20:52.235Z][0m Lifecycle#onWillShutdown.fire()
+[703624:0409/002052.730777:ERROR:components/services/storage/service_worker/service_worker_storage.cc:1809] Failed to delete the database: Database IO error

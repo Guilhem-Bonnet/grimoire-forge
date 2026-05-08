@@ -1,0 +1,124 @@
+---
+import fs from 'node:fs';
+import path from 'node:path';
+import { marked } from 'marked';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const repoRoot = path.resolve(process.cwd(), '..');
+const changelogPath = path.join(repoRoot, 'CHANGELOG.md');
+const raw = fs.existsSync(changelogPath)
+  ? fs.readFileSync(changelogPath, 'utf-8')
+  : '# Changelog\n\n_Fichier CHANGELOG.md introuvable._';
+
+const html = marked.parse(raw, { async: false }) as string;
+---
+<BaseLayout title="Changelog — Grimoire Forge" description="Historique des évolutions publiques de Grimoire Forge.">
+  <nav class="forge-nav" data-forge-nav>
+    <div class="nav-inner">
+      <a href="/" class="nav-brand">
+        <span class="nav-brand-mark">⚒</span>
+        <span class="nav-brand-text">Grimoire Forge</span>
+      </a>
+      <div class="nav-links">
+        <a href="/anatomy/">Anatomie</a>
+        <a href="/demo/">Démo</a>
+        <a href="/observability/">Observatory</a>
+        <a href="/agents/">Agents</a>
+        <a href="/changelog/" aria-current="page">Changelog</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="changelog-page">
+    <header class="changelog-header">
+      <span class="eyebrow">Release notes</span>
+      <h1 class="grad-text">Changelog</h1>
+      <p class="lead">Chaque changement public, tracé. Format <a href="https://keepachangelog.com/fr/" target="_blank" rel="noopener">Keep a Changelog</a>.</p>
+    </header>
+    <article class="changelog-content" set:html={html}></article>
+  </main>
+
+  <style is:global>
+    .changelog-page {
+      max-width: 840px;
+      margin: 0 auto;
+      padding: 140px 32px 120px;
+    }
+    .changelog-header {
+      margin-bottom: 56px;
+      padding-bottom: 40px;
+      border-bottom: 1px solid var(--line);
+    }
+    .changelog-header .eyebrow {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 0.66rem;
+      letter-spacing: 0.14em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .changelog-header h1 {
+      font-size: clamp(2.5rem, 4vw, 3.4rem);
+      margin: 0 0 14px;
+      line-height: 1.05;
+    }
+    .changelog-header .lead {
+      color: var(--ink-soft);
+      font-size: 1.05rem;
+      line-height: 1.6;
+      max-width: 560px;
+    }
+    .changelog-content h2 {
+      font-size: 1.6rem;
+      margin: 56px 0 20px;
+      padding-top: 40px;
+      border-top: 1px solid var(--line);
+      color: var(--ink);
+    }
+    .changelog-content h2:first-child { padding-top: 0; border-top: 0; margin-top: 0; }
+    .changelog-content h3 {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin: 32px 0 14px;
+    }
+    .changelog-content ul {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 24px;
+    }
+    .changelog-content li {
+      position: relative;
+      padding: 8px 0 8px 22px;
+      color: var(--ink-soft);
+      line-height: 1.6;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+    .changelog-content li:last-child { border-bottom: 0; }
+    .changelog-content li::before {
+      content: '›';
+      position: absolute;
+      left: 4px;
+      top: 8px;
+      color: var(--accent);
+      font-family: var(--font-mono);
+    }
+    .changelog-content p {
+      color: var(--ink-soft);
+      line-height: 1.7;
+    }
+    .changelog-content a { color: var(--accent); text-decoration: none; border-bottom: 1px dotted var(--accent-dim); }
+    .changelog-content a:hover { border-bottom-style: solid; }
+    .changelog-content code {
+      font-family: var(--font-mono);
+      font-size: 0.85em;
+      background: var(--elev-2);
+      padding: 2px 6px;
+      border-radius: 3px;
+      color: var(--ink);
+    }
+  </style>
+</BaseLayout>

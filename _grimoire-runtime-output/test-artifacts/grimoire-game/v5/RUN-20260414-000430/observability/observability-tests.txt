@@ -1,0 +1,17 @@
+
+> @grimoire-kit/grimoire-game@0.0.0 test
+> vitest run tests/integration/observability-panel-view.test.ts tests/integration/observability-view.test.ts tests/integration/runtime-observability-surface-view.test.ts
+
+
+ RUN  v3.2.4 /mnt/Travail/Projets/Dev/bmad-custom/grimoire-kit/apps/grimoire-game
+
+ ✓ tests/integration/observability-panel-view.test.ts (5 tests) 76ms
+ ✓ tests/integration/observability-view.test.ts (7 tests) 91ms
+ ✓ tests/integration/runtime-observability-surface-view.test.ts (1 test) 497ms
+   ✓ runtime-observability-surface-view > projects observability metrics, blockers and connection issues from the dashboard  496ms
+
+ Test Files  3 passed (3)
+      Tests  13 passed (13)
+   Start at  00:06:09
+   Duration  1.32s (transform 583ms, setup 0ms, collect 1.34s, tests 665ms, environment 1ms, prepare 231ms)
+

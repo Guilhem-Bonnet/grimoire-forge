@@ -1,0 +1,135 @@
+# Model Routing — Source de vérité pour le choix de LLM par agent
+# Architecture : SOG pur + Auto-first.
+#                Les agents ne déclarent PAS de model: dans leur frontmatter.
+#                Le routing est géré entièrement par le SOG (grimoire-master).
+# Utilisé par : SOG (grimoire-master), documentation
+# Version: 3.0 — 2026-04-05
+# Base de décision :
+# - https://docs.github.com/en/copilot/reference/ai-models/supported-models
+# - https://docs.github.com/en/copilot/reference/ai-models/model-comparison
+
+# ─── Politique de sélection ───────────────────────────────────────────────────
+selection_policy:
+  default_mode: auto
+  availability_note: "La dispo varie selon plan Copilot, client, région, et peut changer sans préavis"
+  resolution_order:
+    - user_override
+    - task_override_profile
+    - routing_default_profile
+    - auto
+  last_verified: "2026-04-05"
+
+# ─── Profils de modèles (fallback dynamique) ─────────────────────────────────
+# Le SOG choisit le premier modèle disponible dans preferred_models.
+# Si aucun n'est disponible, fallback automatique vers mode Auto.
+profiles:
+  deep_reasoning:
+    primary: auto
+    preferred_models: [gpt-5.4, gpt-5.3-codex, claude-opus-4.6, gemini-3.1-pro, gemini-2.5-pro]
+    reason: "Décisions complexes, debug multi-fichiers, arbitrages architecture"
+
+  general_code:
+    primary: auto
+    preferred_models: [gpt-5.3-codex, gpt-5-mini, claude-sonnet-4.6, gemini-2.5-pro]
+    reason: "Implémentation quotidienne, tests, refactors standards"
+
+  writing_structured:
+    primary: auto
+    preferred_models: [gpt-5-mini, claude-sonnet-4.6, gemini-3-flash]
+    reason: "PRD, docs, prompts, YAML structuré"
+
+  fast_iter:
+    primary: auto
+    preferred_models: [gpt-5.4-mini, gpt-5-mini, claude-haiku-4.5, gemini-3-flash]
+    reason: "Checks rapides, shell/status, tâches courtes"
+
+# ─── Affectations par défaut (agent -> profil) ───────────────────────────────
+routing_defaults:
+  grimoire-master: deep_reasoning
+  rodin: deep_reasoning
+  architect: deep_reasoning
+
+  dev: general_code
+  quick-flow-solo-dev: general_code
+  qa: general_code
+  tea: general_code
+  creative-problem-solver: deep_reasoning
+  innovation-strategist: deep_reasoning
+
+  pm: writing_structured
+  analyst: writing_structured
+  sm: writing_structured
+  tech-writer: writing_structured
+  ux-designer: writing_structured
+  storyteller: writing_structured
+  presentation-master: writing_structured
+  workflow-builder: writing_structured
+  agent-builder: writing_structured
+  module-builder: writing_structured
+  brainstorming-coach: fast_iter
+  design-thinking-coach: fast_iter
+
+# ─── Overrides task-aware (appliqués par l'orchestrateur) ────────────────────
+task_overrides:
+  - tasks: [cross-validation, CVTL, second-opinion, adverse-critique, nuanced-decision]
+    profile: deep_reasoning
+    applies_to: any
+    reason: "Exige un raisonnement critique de haut niveau"
+
+  - tasks: [repo-analysis, codebase-audit, multi-repo-review, repo-review]
+    profile: deep_reasoning
+    applies_to: any
+    reason: "Analyse de repos — raisonnement profond obligatoire"
+    cvtl_required: true
+    grounding_required: true
+    adversarial_gate: true
+
+  - tasks: [complex-refactor, multi-file-debug, architecture-decision, high-risk-code, large-codebase]
+    profile: deep_reasoning
+    applies_to: any
+    reason: "Besoin d'analyse technique profonde et de contexte large"
+
+  - tasks: [long-context, whole-codebase, 1000-lines-plus]
+    profile: deep_reasoning
+    applies_to: any
+    reason: "Contexte large + multi-étapes"
+
+  - tasks: [prompt-engineering, workflow-creation, instruction-writing, yaml-authoring]
+    profile: writing_structured
+    applies_to: any
+    reason: "Sortie structurée et rédaction de qualité"
+
+  - tasks: [simple-check, shell-command, status-query, quick-grep, trivial-task]
+    profile: fast_iter
+    applies_to: any
+    reason: "Latence/cout optimisés"
+
+# ─── Profil local (Ollama) ────────────────────────────────────────────────────
+# Pour activer : /set-model dev qwen3-coder-next
+# Requiert : Ollama actif sur localhost:11434
+local_coder:
+  primary: qwen3-coder
+  preferred_models: [qwen3-coder:30b, qwen3-coder-next]
+  provider: ollama
+  base_url: "http://localhost:11434"
+  context_window: 256000
+  reason: "Modèle local agentic coding — offline, privé, 256K context, ROCm AMD GPU"
+  hardware_note: "RX 9070 XT (16 Go VRAM) + 31 Go RAM — qwen3-coder:30b (18 Go Q4_K_M) recommandé; qwen3-coder-next (80B, 51 Go) requiert ~53 Go combinés"
+
+# ─── Garde-fous retraite modèles ──────────────────────────────────────────────
+retirement_guard:
+  disallowed_models: [o3, o3-mini, o4-mini, gemini-2.0-flash]
+  action: "Reject + fallback to Auto"
+
+# ─── Commande override utilisateur ────────────────────────────────────────────
+user_override:
+  command: "/set-model"
+  syntax: "/set-model <agent|all|reset> <model-id|auto>"
+  examples:
+    - "/set-model dev gpt-5.3-codex"
+    - "/set-model all auto"
+    - "/set-model workflow-builder gpt-5-mini"
+    - "/set-model reset"
+  scope: session_only
+  stored_as: "session var {model_override_<agent>} or {model_override_all}"
+  confirmation: "✓ Modèle <model> activé pour <agent> pour cette session."

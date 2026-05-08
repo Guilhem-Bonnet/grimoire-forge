@@ -1,0 +1,1211 @@
+[
+  {
+    "id": "@grimoire-kit/grimoire-game@0.0.0",
+    "name": "@grimoire-kit/grimoire-game",
+    "version": "0.0.0",
+    "size": 394368,
+    "unpackedSize": 2712292,
+    "shasum": "7d1d0e4b7fa2084520a86ae86e55cb0a96d75c59",
+    "integrity": "sha512-7i6szpn5nRjZ5UkGR0DohqGphpT3YOPxk6SZrXveQpFpDeFT7QkDuKT5eEF6U/l+2tQzgwp6cZQzPJCJhnEraA==",
+    "filename": "grimoire-kit-grimoire-game-0.0.0.tgz",
+    "files": [
+      {
+        "path": "README.md",
+        "size": 6864,
+        "mode": 420
+      },
+      {
+        "path": "dist/bridge/adapter-grimoire.d.ts",
+        "size": 4715,
+        "mode": 420
+      },
+      {
+        "path": "dist/bridge/adapter-grimoire.js",
+        "size": 29823,
+        "mode": 420
+      },
+      {
+        "path": "dist/bridge/adapter-grimoire.js.map",
+        "size": 24335,
+        "mode": 420
+      },
+      {
+        "path": "dist/bridge/agent-adapter.d.ts",
+        "size": 2211,
+        "mode": 420
+      },
+      {
+        "path": "dist/bridge/agent-adapter.js",
+        "size": 23736,
+        "mode": 420
+      },
+      {
+        "path": "dist/bridge/agent-adapter.js.map",
+        "size": 20916,
+        "mode": 420
+      },
+      {
+        "path": "dist/bridge/agent-connection-health.d.ts",
+        "size": 1379,
+        "mode": 420
+      },
+      {
+        "path": "dist/bridge/agent-connection-health.js",
+        "size": 4092,
+        "mode": 420
+      },
+      {
+        "path": "dist/bridge/agent-connection-health.js.map",
+        "size": 3994,
+        "mode": 420
+      },
+      {
+        "path": "dist/bridge/host-invocation-policy.d.ts",
+        "size": 616,
+        "mode": 420
+      },
+      {
+        "path": "dist/bridge/host-invocation-policy.js",
+        "size": 6370,
+        "mode": 420
+      },
+      {
+        "path": "dist/bridge/host-invocation-policy.js.map",
+        "size": 5255,
+        "mode": 420
+      },
+      {
+        "path": "dist/bridge/idempotency-cache.d.ts",
+        "size": 305,
+        "mode": 420
+      },
+      {
+        "path": "dist/bridge/idempotency-cache.js",
+        "size": 902,
+        "mode": 420
+      },
+      {
+        "path": "dist/bridge/idempotency-cache.js.map",
+        "size": 981,
+        "mode": 420
+      },
+      {
+        "path": "dist/bridge/mammouth-host-adapter.d.ts",
+        "size": 1470,
+        "mode": 420
+      },
+      {
+        "path": "dist/bridge/mammouth-host-adapter.js",
+        "size": 8933,
+        "mode": 420
+      },
+      {
+        "path": "dist/bridge/mammouth-host-adapter.js.map",
+        "size": 8014,
+        "mode": 420
+      },
+      {
+        "path": "dist/bridge/runtime-dashboard-session.d.ts",
+        "size": 1554,
+        "mode": 420
+      },
+      {
+        "path": "dist/bridge/runtime-dashboard-session.js",
+        "size": 1764,
+        "mode": 420
+      },
+      {
+        "path": "dist/bridge/runtime-dashboard-session.js.map",
+        "size": 1814,
+        "mode": 420
+      },
+      {
+        "path": "dist/bridge/runtime-mutation-guards.d.ts",
+        "size": 656,
+        "mode": 420
+      },
+      {
+        "path": "dist/bridge/runtime-mutation-guards.js",
+        "size": 2197,
+        "mode": 420
+      },
+      {
+        "path": "dist/bridge/runtime-mutation-guards.js.map",
+        "size": 1956,
+        "mode": 420
+      },
+      {
+        "path": "dist/bridge/runtime-source-fs.d.ts",
+        "size": 2824,
+        "mode": 420
+      },
+      {
+        "path": "dist/bridge/runtime-source-fs.js",
+        "size": 40121,
+        "mode": 420
+      },
+      {
+        "path": "dist/bridge/runtime-source-fs.js.map",
+        "size": 36160,
+        "mode": 420
+      },
+      {
+        "path": "dist/bridge/vscode-webview-bridge.d.ts",
+        "size": 11794,
+        "mode": 420
+      },
+      {
+        "path": "dist/bridge/vscode-webview-bridge.js",
+        "size": 4335,
+        "mode": 420
+      },
+      {
+        "path": "dist/bridge/vscode-webview-bridge.js.map",
+        "size": 3777,
+        "mode": 420
+      },
+      {
+        "path": "dist/contracts/events.d.ts",
+        "size": 57704,
+        "mode": 420
+      },
+      {
+        "path": "dist/contracts/events.js",
+        "size": 19688,
+        "mode": 420
+      },
+      {
+        "path": "dist/contracts/events.js.map",
+        "size": 16292,
+        "mode": 420
+      },
+      {
+        "path": "dist/contracts/mammouth-host.d.ts",
+        "size": 32474,
+        "mode": 420
+      },
+      {
+        "path": "dist/contracts/mammouth-host.js",
+        "size": 2668,
+        "mode": 420
+      },
+      {
+        "path": "dist/contracts/mammouth-host.js.map",
+        "size": 2457,
+        "mode": 420
+      },
+      {
+        "path": "dist/contracts/schemas.d.ts",
+        "size": 417023,
+        "mode": 420
+      },
+      {
+        "path": "dist/contracts/schemas.js",
+        "size": 30735,
+        "mode": 420
+      },
+      {
+        "path": "dist/contracts/schemas.js.map",
+        "size": 28978,
+        "mode": 420
+      },
+      {
+        "path": "dist/index.d.ts",
+        "size": 4836,
+        "mode": 420
+      },
+      {
+        "path": "dist/index.js",
+        "size": 4869,
+        "mode": 420
+      },
+      {
+        "path": "dist/index.js.map",
+        "size": 2593,
+        "mode": 420
+      },
+      {
+        "path": "dist/server/auth/rbac.d.ts",
+        "size": 1970,
+        "mode": 420
+      },
+      {
+        "path": "dist/server/auth/rbac.js",
+        "size": 11489,
+        "mode": 420
+      },
+      {
+        "path": "dist/server/auth/rbac.js.map",
+        "size": 9732,
+        "mode": 420
+      },
+      {
+        "path": "dist/server/auth/token-registry.d.ts",
+        "size": 1362,
+        "mode": 420
+      },
+      {
+        "path": "dist/server/auth/token-registry.js",
+        "size": 3547,
+        "mode": 420
+      },
+      {
+        "path": "dist/server/auth/token-registry.js.map",
+        "size": 3542,
+        "mode": 420
+      },
+      {
+        "path": "dist/server/control-plane/command-gateway.d.ts",
+        "size": 2821,
+        "mode": 420
+      },
+      {
+        "path": "dist/server/control-plane/command-gateway.js",
+        "size": 7998,
+        "mode": 420
+      },
+      {
+        "path": "dist/server/control-plane/command-gateway.js.map",
+        "size": 6861,
+        "mode": 420
+      },
+      {
+        "path": "dist/server/control-plane/lease-store.d.ts",
+        "size": 1816,
+        "mode": 420
+      },
+      {
+        "path": "dist/server/control-plane/lease-store.js",
+        "size": 17032,
+        "mode": 420
+      },
+      {
+        "path": "dist/server/control-plane/lease-store.js.map",
+        "size": 16434,
+        "mode": 420
+      },
+      {
+        "path": "dist/server/control-plane/node-registry.d.ts",
+        "size": 942,
+        "mode": 420
+      },
+      {
+        "path": "dist/server/control-plane/node-registry.js",
+        "size": 11085,
+        "mode": 420
+      },
+      {
+        "path": "dist/server/control-plane/node-registry.js.map",
+        "size": 10656,
+        "mode": 420
+      },
+      {
+        "path": "dist/server/control-plane/project-registry.d.ts",
+        "size": 610,
+        "mode": 420
+      },
+      {
+        "path": "dist/server/control-plane/project-registry.js",
+        "size": 5399,
+        "mode": 420
+      },
+      {
+        "path": "dist/server/control-plane/project-registry.js.map",
+        "size": 5204,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/agent-factory-view.d.ts",
+        "size": 2696,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/agent-factory-view.js",
+        "size": 12196,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/agent-factory-view.js.map",
+        "size": 11500,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/audio-room-view.d.ts",
+        "size": 1356,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/audio-room-view.js",
+        "size": 6606,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/audio-room-view.js.map",
+        "size": 6663,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/audit-view.d.ts",
+        "size": 2303,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/audit-view.js",
+        "size": 23724,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/audit-view.js.map",
+        "size": 23975,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/board-view.d.ts",
+        "size": 4118,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/board-view.js",
+        "size": 22202,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/board-view.js.map",
+        "size": 22706,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/branch-finisher-view.d.ts",
+        "size": 4968,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/branch-finisher-view.js",
+        "size": 26134,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/branch-finisher-view.js.map",
+        "size": 22679,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/canonical-envelope-pilot.d.ts",
+        "size": 5052,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/canonical-envelope-pilot.js",
+        "size": 16757,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/canonical-envelope-pilot.js.map",
+        "size": 17051,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/challenge-room-view.d.ts",
+        "size": 5832,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/challenge-room-view.js",
+        "size": 35251,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/challenge-room-view.js.map",
+        "size": 32265,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/collaboration-view.d.ts",
+        "size": 1881,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/collaboration-view.js",
+        "size": 13901,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/collaboration-view.js.map",
+        "size": 14577,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/communication-view.d.ts",
+        "size": 2899,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/communication-view.js",
+        "size": 17090,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/communication-view.js.map",
+        "size": 17485,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/configuration-skill-tree-view.d.ts",
+        "size": 2266,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/configuration-skill-tree-view.js",
+        "size": 13498,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/configuration-skill-tree-view.js.map",
+        "size": 12209,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/counter-review-view.d.ts",
+        "size": 1933,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/counter-review-view.js",
+        "size": 7417,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/counter-review-view.js.map",
+        "size": 6413,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/coverage-slots-view.d.ts",
+        "size": 4401,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/coverage-slots-view.js",
+        "size": 28460,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/coverage-slots-view.js.map",
+        "size": 27980,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/decision-card-view.d.ts",
+        "size": 1452,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/decision-card-view.js",
+        "size": 3564,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/decision-card-view.js.map",
+        "size": 3496,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/deep-inspection-view.d.ts",
+        "size": 3436,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/deep-inspection-view.js",
+        "size": 12400,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/deep-inspection-view.js.map",
+        "size": 11723,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/experiment-view.d.ts",
+        "size": 2388,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/experiment-view.js",
+        "size": 10375,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/experiment-view.js.map",
+        "size": 10334,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/expert-cockpit-view.d.ts",
+        "size": 3399,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/expert-cockpit-view.js",
+        "size": 10550,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/expert-cockpit-view.js.map",
+        "size": 10252,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/finops-view.d.ts",
+        "size": 3343,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/finops-view.js",
+        "size": 22105,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/finops-view.js.map",
+        "size": 21539,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/game-state.d.ts",
+        "size": 1476,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/game-state.js",
+        "size": 8331,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/game-state.js.map",
+        "size": 7363,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/generic-host-bridge-view.d.ts",
+        "size": 3548,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/generic-host-bridge-view.js",
+        "size": 9907,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/generic-host-bridge-view.js.map",
+        "size": 8340,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/governance-drift-view.d.ts",
+        "size": 2814,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/governance-drift-view.js",
+        "size": 23346,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/governance-drift-view.js.map",
+        "size": 21432,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/host-bridge-view.d.ts",
+        "size": 2148,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/host-bridge-view.js",
+        "size": 4300,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/host-bridge-view.js.map",
+        "size": 3808,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/host-handoff-view.d.ts",
+        "size": 2444,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/host-handoff-view.js",
+        "size": 11956,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/host-handoff-view.js.map",
+        "size": 12090,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/incident-recovery-view.d.ts",
+        "size": 2784,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/incident-recovery-view.js",
+        "size": 13628,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/incident-recovery-view.js.map",
+        "size": 12486,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/investigation-lab-view.d.ts",
+        "size": 2269,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/investigation-lab-view.js",
+        "size": 12706,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/investigation-lab-view.js.map",
+        "size": 11497,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/kanban-view.d.ts",
+        "size": 3354,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/kanban-view.js",
+        "size": 13225,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/kanban-view.js.map",
+        "size": 11004,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/lease-view.d.ts",
+        "size": 1292,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/lease-view.js",
+        "size": 4502,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/lease-view.js.map",
+        "size": 4248,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/library-memory-view.d.ts",
+        "size": 3836,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/library-memory-view.js",
+        "size": 27652,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/library-memory-view.js.map",
+        "size": 27252,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/library-view.d.ts",
+        "size": 3366,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/library-view.js",
+        "size": 12677,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/library-view.js.map",
+        "size": 13229,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/memory-recall-view.d.ts",
+        "size": 3638,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/memory-recall-view.js",
+        "size": 14074,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/memory-recall-view.js.map",
+        "size": 13750,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/mission-ledger-view.d.ts",
+        "size": 6154,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/mission-ledger-view.js",
+        "size": 28035,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/mission-ledger-view.js.map",
+        "size": 25564,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/mission-pack.d.ts",
+        "size": 640,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/mission-pack.js",
+        "size": 4475,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/mission-pack.js.map",
+        "size": 4189,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/node-fleet-view.d.ts",
+        "size": 1109,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/node-fleet-view.js",
+        "size": 2090,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/node-fleet-view.js.map",
+        "size": 1896,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/observability-panel-view.d.ts",
+        "size": 1865,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/observability-panel-view.js",
+        "size": 9785,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/observability-panel-view.js.map",
+        "size": 8621,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/observability-view.d.ts",
+        "size": 4135,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/observability-view.js",
+        "size": 16589,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/observability-view.js.map",
+        "size": 16268,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/onboarding-view.d.ts",
+        "size": 1612,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/onboarding-view.js",
+        "size": 5324,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/onboarding-view.js.map",
+        "size": 4772,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/power-cards-view.d.ts",
+        "size": 2051,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/power-cards-view.js",
+        "size": 12079,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/power-cards-view.js.map",
+        "size": 10600,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/progression-view.d.ts",
+        "size": 1474,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/progression-view.js",
+        "size": 8118,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/progression-view.js.map",
+        "size": 8091,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/provenance-compliance-view.d.ts",
+        "size": 1371,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/provenance-compliance-view.js",
+        "size": 4753,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/provenance-compliance-view.js.map",
+        "size": 4649,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/retro-room-view.d.ts",
+        "size": 5629,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/retro-room-view.js",
+        "size": 32552,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/retro-room-view.js.map",
+        "size": 30433,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/runtime-cockpit-view.d.ts",
+        "size": 1865,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/runtime-cockpit-view.js",
+        "size": 4615,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/runtime-cockpit-view.js.map",
+        "size": 4728,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/runtime-dashboard-store.d.ts",
+        "size": 1682,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/runtime-dashboard-store.js",
+        "size": 3577,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/runtime-dashboard-store.js.map",
+        "size": 3253,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/runtime-dashboard-ui-view.d.ts",
+        "size": 6039,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/runtime-dashboard-ui-view.js",
+        "size": 19073,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/runtime-dashboard-ui-view.js.map",
+        "size": 17495,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/runtime-dashboard-view.d.ts",
+        "size": 5005,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/runtime-dashboard-view.js",
+        "size": 8578,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/runtime-dashboard-view.js.map",
+        "size": 6436,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/runtime-game-ui-view.d.ts",
+        "size": 3042,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/runtime-game-ui-view.js",
+        "size": 6234,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/runtime-game-ui-view.js.map",
+        "size": 6374,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/runtime-observability-surface-view.d.ts",
+        "size": 2362,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/runtime-observability-surface-view.js",
+        "size": 4639,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/runtime-observability-surface-view.js.map",
+        "size": 4056,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/runtime-observer-view.d.ts",
+        "size": 2050,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/runtime-observer-view.js",
+        "size": 6469,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/runtime-observer-view.js.map",
+        "size": 7534,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/session-lineage-view.d.ts",
+        "size": 2445,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/session-lineage-view.js",
+        "size": 12064,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/session-lineage-view.js.map",
+        "size": 12399,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/session-view.d.ts",
+        "size": 2565,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/session-view.js",
+        "size": 29213,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/session-view.js.map",
+        "size": 28550,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/spectator-surface-view.d.ts",
+        "size": 2182,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/spectator-surface-view.js",
+        "size": 4989,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/spectator-surface-view.js.map",
+        "size": 4329,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/supervision-view.d.ts",
+        "size": 2541,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/supervision-view.js",
+        "size": 6730,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/supervision-view.js.map",
+        "size": 5989,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/surface-governance-view.d.ts",
+        "size": 2880,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/surface-governance-view.js",
+        "size": 15762,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/surface-governance-view.js.map",
+        "size": 13427,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/task-view.d.ts",
+        "size": 1604,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/task-view.js",
+        "size": 5192,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/task-view.js.map",
+        "size": 5412,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/timeline-view.d.ts",
+        "size": 1270,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/timeline-view.js",
+        "size": 5873,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/timeline-view.js.map",
+        "size": 6677,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/verification-evidence-pack-view.d.ts",
+        "size": 2915,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/verification-evidence-pack-view.js",
+        "size": 13588,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/verification-evidence-pack-view.js.map",
+        "size": 12779,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/verification-queue-view.d.ts",
+        "size": 1737,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/verification-queue-view.js",
+        "size": 5583,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/verification-queue-view.js.map",
+        "size": 4819,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/verification-view.d.ts",
+        "size": 3675,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/verification-view.js",
+        "size": 42886,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/verification-view.js.map",
+        "size": 35302,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/vscode-panel-view.d.ts",
+        "size": 1826,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/vscode-panel-view.js",
+        "size": 3994,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/vscode-panel-view.js.map",
+        "size": 3153,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/workflow-visualization-view.d.ts",
+        "size": 3051,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/workflow-visualization-view.js",
+        "size": 10107,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/workflow-visualization-view.js.map",
+        "size": 10650,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/worktree-room-view.d.ts",
+        "size": 3626,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/worktree-room-view.js",
+        "size": 21671,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/worktree-room-view.js.map",
+        "size": 19866,
+        "mode": 420
+      },
+      {
+        "path": "package.json",
+        "size": 1690,
+        "mode": 420
+      }
+    ],
+    "entryCount": 239,
+    "bundled": []
+  }
+]

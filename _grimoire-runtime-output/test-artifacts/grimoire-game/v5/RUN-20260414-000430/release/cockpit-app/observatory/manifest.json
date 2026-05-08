@@ -1,0 +1,19 @@
+{
+  "generatedAt": "2026-04-14T04:06:13.990Z",
+  "sources": [
+    {
+      "id": "runtime-output-observatory",
+      "label": "Observatory runtime",
+      "scope": "_grimoire-runtime-output",
+      "available": true,
+      "browserPath": "./observatory/runtime-output-observatory.html"
+    },
+    {
+      "id": "product-output-observatory",
+      "label": "Observatory produit",
+      "scope": "_grimoire-output",
+      "available": true,
+      "browserPath": "./observatory/product-output-observatory.html"
+    }
+  ]
+}

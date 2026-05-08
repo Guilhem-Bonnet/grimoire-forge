@@ -1,0 +1,1 @@
+{"task":"grimoire: validate-skills","flow":"quality","kind":"task","status":"failed","event":"task-finish","exitCode":2,"durationSeconds":0,"startedAt":"2026-04-14T22:44:58Z","finishedAt":"2026-04-14T22:44:58Z","cwd":"/mnt/Travail/Projets/Dev/bmad-custom","command":"./grimoire-kit/.venv/bin/python framework/tools/skill-validator.py --project-root ."}

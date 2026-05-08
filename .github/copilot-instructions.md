@@ -1,60 +1,67 @@
-<!-- BMAD:START -->
-# BMAD Method — Project Instructions
+<!-- Grimoire:START -->
+# Grimoire — Project Instructions
 
 ## Project Configuration
 
-- **Project**: grimoire
+- **Project**: grimoire-forge
 - **User**: Guilhem
 - **Communication Language**: Français
 - **Document Output Language**: Français
 - **User Skill Level**: expert
-- **Output Folder**: {project-root}/_bmad-output
-- **Planning Artifacts**: {project-root}/_bmad-output/planning-artifacts
-- **Implementation Artifacts**: {project-root}/_bmad-output/implementation-artifacts
+- **Output Folder**: {project-root}/_grimoire-runtime-output
+- **Planning Artifacts**: {project-root}/_grimoire-runtime-output/planning-artifacts
+- **Implementation Artifacts**: {project-root}/_grimoire-runtime-output/implementation-artifacts
 - **Project Knowledge**: {project-root}/docs
 
-## BMAD Runtime Structure
+## Grimoire Runtime Structure
 
-- **Agent definitions**: `_bmad/bmm/agents/` (BMM module) and `_bmad/core/agents/` (core)
-- **Workflow definitions**: `_bmad/bmm/workflows/` (organized by phase)
-- **Core tasks**: `_bmad/core/tasks/` (help, editorial review, indexing, sharding, adversarial review)
-- **Core workflows**: `_bmad/core/workflows/` (brainstorming, party-mode, advanced-elicitation)
-- **Workflow engine**: `_bmad/core/tasks/workflow.xml` (executes YAML-based workflows)
-- **Module configuration**: `_bmad/bmm/config.yaml`
-- **Core configuration**: `_bmad/core/config.yaml`
-- **Agent manifest**: `_bmad/_config/agent-manifest.csv`
-- **Workflow manifest**: `_bmad/_config/workflow-manifest.csv`
-- **Help manifest**: `_bmad/_config/bmad-help.csv`
-- **Agent memory**: `_bmad/_memory/`
+- **Agent definitions**: `_grimoire-runtime/bmm/agents/` (BMM module) and `_grimoire-runtime/core/agents/` (core)
+- **Workflow definitions**: `_grimoire-runtime/bmm/workflows/` (organized by phase)
+- **Core tasks**: `_grimoire-runtime/core/tasks/` (help, editorial review, indexing, sharding, adversarial review)
+- **Core workflows**: `_grimoire-runtime/core/workflows/` (brainstorming, party-mode, advanced-elicitation)
+- **Workflow engine**: `_grimoire-runtime/core/tasks/workflow.xml` (executes YAML-based workflows)
+- **Module configuration**: `_grimoire-runtime/bmm/config.yaml`
+- **Core configuration**: `_grimoire-runtime/core/config.yaml`
+- **Agent manifest**: `_grimoire-runtime/_config/agent-manifest.csv`
+- **Workflow manifest**: `_grimoire-runtime/_config/workflow-manifest.csv`
+- **Help manifest**: `_grimoire-runtime/_config/grimoire-help.csv`
+- **Agent memory**: `_grimoire-runtime/_memory/`
 
 ## Key Conventions
 
-- Always load `_bmad/bmm/config.yaml` before any agent activation or workflow execution
+- Always load `_grimoire-runtime/bmm/config.yaml` before any agent activation or workflow execution
 - Store all config fields as session variables: `{user_name}`, `{communication_language}`, `{output_folder}`, `{planning_artifacts}`, `{implementation_artifacts}`, `{project_knowledge}`
 - MD-based workflows execute directly — load and follow the `.md` file
 - YAML-based workflows require the workflow engine — load `workflow.xml` first, then pass the `.yaml` config
 - Follow step-based workflow execution: load steps JIT, never multiple at once
 - Save outputs after EACH step when using the workflow engine
 - The `{project-root}` variable resolves to the workspace root at runtime
-- **Documentation charter**: Avant de créer ou modifier un fichier `.md`, charger `_bmad/_memory/tech-writer-sidecar/documentation-standards.md` et respecter la charte (CommonMark, style guide, quality checklist)
+- **Documentation charter**: Avant de créer ou modifier un fichier `.md`, charger `_grimoire-runtime/_memory/tech-writer-sidecar/documentation-standards.md` et respecter la charte (CommonMark, style guide, quality checklist)
+- **Documentation companions**: Tout package de livrable sous `_grimoire-runtime-output/planning-artifacts/` doit inclure une `DOC-TECHNIQUE-<slug>.md` et une `GUIDE-utilisation-<slug>.md`; toute modification de package doit revalider ces deux compagnons avant cloture.
 - **Autonomy protocols**: L'orchestrateur applique ALS (Autonomy Level System), AORA (boucle d'itération autonome), PIP (initiative proactive), DCF (confiance contextuelle), Session Momentum, et Friction Budget. Voir `grimoire-kit/framework/agent-base.md` et `grimoire-kit/framework/orchestrator-gateway.md`.
+- **Completion discipline**: Si une tâche révèle une suite logique alignée avec l'objectif courant et restant en risque L1/L2, l'agent doit l'exécuter dans le même tour. Ne proposer des prochaines étapes qu'en cas de blocage, de changement d'objectif, ou pour du travail optionnel, exploratoire, ou L3+.
+- **Activation SOG**: Si le premier message utilisateur contient déjà une demande actionable, le master ne doit pas afficher le menu ni attendre une sélection; il doit traiter la demande directement. Le menu n'est montré que lors d'une activation sans tâche explicite.
 - **Stability guard**: Pour éviter les crashs de l'extension host VSCode, respecter ces limites : jamais de grep_search sans `includePattern` ciblé, toujours un timeout raisonnable sur les commandes terminal. Le file watcher est configuré pour exclure `.venv`, `__pycache__`, `.pytest_cache`, `.ruff_cache` etc. (voir `.vscode/settings.json`).
+- **Terminal lifecycle guard**: Pour chaque commande terminal en background, conserver l'ID, suivre son état via `await_terminal` ou `get_terminal_output`, puis appeler `kill_terminal` dès que le process n'est plus utile. Ne jamais garder plusieurs terminaux background pour le même objectif.
+- **Terminal recovery guard**: Si un shell `/usr/bin/zsh` se termine avec code 1 sans diagnostic exploitable, relancer une fois dans un shell propre (`zsh -f`) avant d'escalader.
+- **Hooks vs tasks**: Les hooks natifs VS Code/Copilot couvrent le cycle agent (`SessionStart`, `UserPromptSubmit`, `PreToolUse`, `PostToolUse`, `PreCompact`, `Subagent*`, `Stop`) mais pas `tasks.json`; l'orchestration et la preuve task-level restent deleguees a `.github/hooks/scripts/grimoire-task-flow.sh` et `.vscode/tasks.json`.
+- **Hook promotion guard**: Les hooks workspace et agent passent par `.github/hooks/scripts/grimoire-hook-gateway.sh` avec registre `_grimoire-runtime/_config/hook-safety-registry.json`; si le script cible ou sa surface de controle change apres validation, le hook est degrade en mode non bloquant (`shadow` ou `canary`) jusqu'a `grimoire: hooks-promote`. Les bascules manuelles passent par `hook-safety-gate.py set-mode ...` ou les tasks `grimoire: hooks-shadow` / `grimoire: hooks-canary`. Tout hook nouveau doit etre branche via le gateway et declare dans le registre, sinon `hooks-status` et `grimoire-hooks-smoke.sh` echouent.
 
 ## Available Agents
 
-> **Architecture SOG (BM-53)** : Un seul agent est exposé à l'utilisateur — le BMad Master Orchestrator.
+> **Architecture SOG (BM-53)** : Un seul agent est exposé à l'utilisateur — le Grimoire Master Orchestrator.
 > Tous les autres agents fonctionnent comme sub-agents invisibles, dispatchés automatiquement
 > par l'orchestrateur selon l'intention détectée. Voir `grimoire-kit/framework/orchestrator-gateway.md`.
 
 | Agent | Persona | Title | Capabilities |
 |---|---|---|---|
-| bmad-master | BMad Master | Smart Orchestrator Gateway — Point d'entrée unique | orchestration SOG, dispatch intelligent, anti-hallucination HUP, escalation QEC, validation CVTL, party mode PCE, autonomy ALS, iteration AORA, proactive PIP, confidence DCF |
+| grimoire-master | Grimoire Master | Smart Orchestrator Gateway — Point d'entrée unique | orchestration SOG, dispatch intelligent, anti-hallucination HUP, escalation QEC, validation CVTL, party mode PCE, autonomy ALS, iteration AORA, proactive PIP, confidence DCF |
 
 ### Sub-agents internes (invisibles à l'utilisateur)
 
 L'orchestrateur dispatche automatiquement vers ces agents selon le besoin :
 
-#### BMM — Méthode BMAD
+#### BMM — Méthode Grimoire
 
 | Sub-agent | Persona | Outils | Handoffs | Spécialité |
 |---|---|---|---|---|
@@ -72,7 +79,7 @@ L'orchestrateur dispatche automatiquement vers ces agents selon le besoin :
 
 | Sub-agent | Persona | Outils | Spécialité |
 |---|---|---|---|
-| agent-builder | Bond | read, edit, search | Création d'agents BMAD |
+| agent-builder | Bond | read, edit, search | Création d'agents Grimoire |
 | module-builder | Morgan | read, edit, search | Création de modules |
 | workflow-builder | Wendy | read, edit, search | Création de workflows |
 
@@ -83,6 +90,7 @@ L'orchestrateur dispatche automatiquement vers ces agents selon le besoin :
 | brainstorming-coach | Carson | read, search | Brainstorming, idéation |
 | creative-problem-solver | Dr. Quinn | read, search | TRIZ, problem solving |
 | design-thinking-coach | Maya | read, search | Design thinking |
+| art-director | Iris | read, edit, search | Direction artistique pixel, hero FX, room kits, review de style |
 | innovation-strategist | Victor | read, search | Innovation, Blue Ocean |
 | presentation-master | Caravaggio | read, edit, search | Présentations, pitch decks |
 | rodin | Rodin | read, edit, search | Débats socratiques, anti-chambre d'écho |
@@ -98,10 +106,15 @@ L'orchestrateur dispatche automatiquement vers ces agents selon le besoin :
 
 | Hook | Événement | Action |
 |---|---|---|
-| bmad-session-start | SessionStart | Injection automatique du contexte BMAD |
-| bmad-memory-guard | PreToolUse | Protection mémoire `_bmad/_memory/` |
-| bmad-post-edit | PostToolUse | Auto-lint ruff (Python) + validation frontmatter YAML (artefacts UDF) |
-| bmad-subagent-trace | SubagentStart/Stop | Tracing des transitions SOG |
+| grimoire-session-start | SessionStart | Injection d'un contexte Grimoire court via `additionalContext` |
+| grimoire-prompt-submit | UserPromptSubmit | Audit du prompt, references hooks/task-flow, contraintes de session |
+| grimoire-memory-guard | PreToolUse | Protection mémoire `_grimoire-runtime/_memory/` |
+| grimoire-control-surface-guard | PreToolUse | Garde-fous sur surfaces de controle agentiques et patterns destructifs |
+| grimoire-post-edit | PostToolUse | Validation locale deterministe (`ruff`, `bash -n`, JSON hooks, frontmatter YAML) |
+| grimoire-subagent-context | SubagentStart | Injection d'un contexte concis aux sub-agents |
+| grimoire-subagent-trace | SubagentStart/Stop | Tracing des transitions SOG |
+| grimoire-pre-compact | PreCompact | Capsule de contexte avant compaction/summarization |
+| grimoire-master-stop-hook | Stop (agent scope) | Empeche une cloture seche et force une relance utilisateur concise |
 
 ## Runtime Routing & Diagnostics (DeepWiki)
 
@@ -109,11 +122,32 @@ Alignement avec les recommandations VS Code wiki (Getting Started + Performance 
 
 ### Politique de choix de modèle (task-aware)
 
-| Profil de tâche | Modèle prioritaire | Règle opératoire |
+**Architecture SOG pur + Auto-first** — les agents n'ont pas de `model:` dans leur frontmatter. Le routing est géré entièrement par le SOG, avec fallback dynamique.
+Source de vérité complète : `_grimoire-runtime/_config/model-routing.yaml`
+Base de décision :
+- `https://docs.github.com/en/copilot/reference/ai-models/supported-models`
+- `https://docs.github.com/en/copilot/reference/ai-models/model-comparison`
+Commande override session : `/set-model <agent|all|reset> <model-id|auto>` — ex: `/set-model dev gpt-5.3-codex`
+
+| Profil de routing | Primary | Preferred (ordre de fallback) | Agents par défaut |
+|---|---|---|---|
+| **deep_reasoning** | `auto` | `gpt-5.4`, `gpt-5.3-codex`, `claude-opus-4.6`, `gemini-3.1-pro`, `gemini-2.5-pro` | `grimoire-master`, `rodin`, `architect`, `creative-problem-solver`, `innovation-strategist` |
+| **general_code** | `auto` | `gpt-5.3-codex`, `gpt-5-mini`, `claude-sonnet-4.6`, `gemini-2.5-pro` | `dev`, `quick-flow-solo-dev`, `qa`, `tea` |
+| **writing_structured** | `auto` | `gpt-5-mini`, `claude-sonnet-4.6`, `gemini-3-flash` | `pm`, `analyst`, `sm`, `tech-writer`, `ux-designer`, `art-director`, `storyteller`, `presentation-master`, `workflow-builder`, `agent-builder`, `module-builder` |
+| **fast_iter** | `auto` | `gpt-5.4-mini`, `gpt-5-mini`, `claude-haiku-4.5`, `gemini-3-flash` | `brainstorming-coach`, `design-thinking-coach` |
+| **local_coder** | `qwen3-coder` | Ollama `localhost:11434` — 256K ctx, AMD ROCm | usage offline/privé via `/set-model dev qwen3-coder` |
+
+**Overrides task-aware (orchestrateur) :**
+
+| Profil de tâche | Override vers | Raison |
 |---|---|---|
-| Implémentation code, refactor, debug multi-fichiers | GPT-5.3-Codex | Priorité qualité technique + exactitude diffs/tests |
-| Commandes simples, opérations shell courtes, checks d'état | Modèle léger | Favoriser latence/coût si aucun raisonnement profond requis |
-| Revue critique/risque élevé (sécu, migration, prod) | GPT-5.3-Codex + validation croisée | Appliquer HUP + CVTL avant restitution |
+| Cross-validation CVTL, second opinion critique, décision nuancée | `deep_reasoning` | Raisonnement indépendant et profondeur argumentative |
+| Refactoring complexe, debug multi-fichiers, large codebase, ADR | `deep_reasoning` | Analyse technique profonde + contexte large |
+| Contexte long (1000+ lignes, codebase entière) | `deep_reasoning` | Besoin multi-étapes à forte mémoire de contexte |
+| Prompt engineering, création workflow/instruction, YAML | `writing_structured` | Sortie structurée, stabilité rédactionnelle |
+| Tâches simples, checks d'état, opérations shell | `fast_iter` | Latence/coût optimisés |
+
+Note: la disponibilité des modèles varie selon plan Copilot, client IDE et région; le fallback vers `auto` est obligatoire si un modèle explicite n'est pas disponible.
 
 ### Politique de parallélisme
 
@@ -125,22 +159,25 @@ Alignement avec les recommandations VS Code wiki (Getting Started + Performance 
 
 - Utiliser `code --status` pour snapshot process/perf quand un ralentissement est suspecté.
 - Compléter avec Process Explorer (`Help > Open Process Explorer`) et Running Extensions si besoin.
-- Archiver les diagnostics dans `_bmad-output/test-artifacts/` pour traçabilité.
+- Archiver les diagnostics dans `_grimoire-runtime-output/test-artifacts/` pour traçabilité.
 
 ## Unified Dynamic Factory (UDF)
 
 L'orchestrateur peut créer dynamiquement 4 types d'artefacts quand aucun existant ne couvre le besoin.
 
-**Registre centralisé** : `_bmad/_config/udf-registry.yaml` — source de vérité pour les conventions (paths, templates, seuils) de chaque type d'artefact.
+**Registre centralisé** : `_grimoire-runtime/_config/udf-registry.yaml` — source de vérité pour les conventions (paths, templates, seuils) de chaque type d'artefact.
 
 ### Types d'artefacts
 
 | Type | Builder | Éphémère | Permanent | Emplacement |
 |---|---|---|---|---|
 | Agent | agent-builder | `_dyn-*.agent.md` | `{slug}.agent.md` | `.github/agents/` |
-| Workflow | workflow-builder | `_dyn-*.prompt.md` | `{slug}.prompt.md` | `.github/prompts/` |
-| Skill | workflow-builder + dev | `_dyn-*/SKILL.md` | `{slug}/SKILL.md` | `.github/skills/` |
+| Workflow prompt | workflow-builder | `_dyn-*.prompt.md` | `{slug}.prompt.md` | `.github/prompts/` |
+| Skill | grimoire-skill-forge (gated by grimoire-skill-analyzer) | `_dyn-*/SKILL.md` | `{slug}/SKILL.md` | `.github/skills/` |
+| Hook | grimoire-skill-forge (gated by grimoire-skill-analyzer) | — (toujours `shadow`) | `{hook-id}.json` + script | `.github/hooks/` |
 | Instruction | tech-writer | `_dyn-*.instructions.md` | `{slug}.instructions.md` | `.github/instructions/` |
+
+Par defaut, une capacite multi-etapes recurrente devient un skill. Le type `Workflow prompt` est reserve aux mission packs user-facing, manuels, avec un contrat de sortie explicite. La création de skills et de hooks passe obligatoirement par `grimoire-skill-forge`, qui invoque `grimoire-skill-analyzer` comme gate qualité bloquant (score minimum 75/100, ≥90 en mode strict). Les hooks démarrent toujours en `mode: shadow` dans `hook-safety-registry.json`.
 
 ### Processus
 
@@ -163,7 +200,7 @@ L'orchestrateur peut créer dynamiquement 4 types d'artefacts quand aucun exista
 
 - **Score ≥ 3** → Création permanente via template `permanent-*.tpl.md`
 - **Score < 3** → Création éphémère via template `dynamic-*.tpl.md` (expire 7j)
-- **Nettoyage** : task `bmad: cleanup-dynamic-artifacts` nettoie tous les artefacts expirés
+- **Nettoyage** : task `grimoire: cleanup-dynamic-artifacts` nettoie tous les artefacts expirés
 
 ## File-Specific Instructions
 
@@ -173,15 +210,20 @@ Instructions auto-chargées par VS Code selon le pattern `applyTo` :
 |---|---|---|
 | `python-conventions` | `**/*.py` | Conventions Python, ruff, dataclasses, imports, tests |
 | `markdown-standards` | `**/*.md` | CommonMark strict, Mermaid v10+, pas d'estimations temporelles |
-| `bmad-framework` | `_bmad/**` | Structure BMAD, config YAML, agents, workflows, mémoire |
+| `artefact-governance` | `.github/**/*.md` | Statut, compatibilite, preuve et choix du plus petit artefact suffisant |
+| `grimoire-runtime` | `_grimoire-runtime/**` | Structure Grimoire, config YAML, agents, workflows, mémoire |
 
 ## External Documentation References
 
 Pour la documentation approfondie des dépendances et frameworks :
 
-| Ressource | URL DeepWiki | Usage |
+| Ressource | URL | Usage |
 |---|---|---|
-| VS Code Copilot Custom Agents | `https://deepwiki.com/microsoft/vscode-copilot-chat` | Format `.agent.md`, `.prompt.md`, skills, hooks, instructions |
+| VS Code Copilot Hooks (official) | `https://code.visualstudio.com/docs/copilot/customization/hooks` | Contrat JSON stdin/stdout, evenements, `permissionDecision`, `decision: block`, securite |
+| VS Code Copilot Chat System | `https://deepwiki.com/microsoft/vscode-copilot-chat` | Vue d'ensemble custom agents, prompts, skills, hooks, instructions |
+| VS Code Copilot Tool Calling Loop | `https://deepwiki.com/microsoft/vscode-copilot-chat/5.4-tool-calling-loop-and-execution` | Ordre d'execution des hooks, accumulation de `additionalHookContext`, boucle autopilot |
+| VS Code Copilot Chat Hooks | `https://deepwiki.com/microsoft/vscode-copilot-chat/5.5-chat-hooks-and-extensibility` | Execution source-level des hooks, result processing, telemetry, output channel |
+| VS Code Copilot Conversation Summarization | `https://deepwiki.com/microsoft/vscode-copilot-chat/5.6-conversation-summarization` | Integration `PreCompact`, compaction et preservation du contexte |
 | Ruff Linter | `https://deepwiki.com/astral-sh/ruff` | Règles, configuration, per-file-ignores |
 | Pytest | `https://deepwiki.com/pytest-dev/pytest` | Fixtures, markers, plugins |
 | MkDocs Material | `https://deepwiki.com/squidfunk/mkdocs-material` | Documentation site generation |
@@ -193,5 +235,5 @@ Pour la documentation approfondie des dépendances et frameworks :
 
 ## Slash Commands
 
-Type `/bmad-` in Copilot Chat to see all available BMAD workflows. L'orchestrateur est disponible dans le dropdown agents sous `bmad-master`.
-<!-- BMAD:END -->
+Type `/grimoire-` in Copilot Chat to see all available Grimoire workflows. L'orchestrateur est disponible dans le dropdown agents sous `grimoire-master`.
+<!-- Grimoire:END -->

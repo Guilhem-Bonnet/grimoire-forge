@@ -1,0 +1,913 @@
+# Architecture Diagram Generation Guide
+
+> Reference for generating the 4 standard architecture diagrams in `docs/03-architecture-layers.md`.
+> Each diagram serves a different audience and zoom level. Generate all 4 when creating or updating architecture documentation.
+> Diagrams adapt their grouping, naming, and color conventions to the detected architecture type.
+
+---
+
+## Overview
+
+| # | Diagram | Format | Audience | Shows |
+|---|---------|--------|----------|-------|
+| 1 | Logical View | ASCII art | Executives, architects | Layers/tiers/groups as horizontal bands with components inside, arrows between groups only |
+| 2 | C4 Level 1 — System Context | Mermaid `graph TB` | Non-technical stakeholders | The system as a single box, external actors, external systems |
+| 3 | C4 Level 2 — Container | Mermaid `C4Container` | Development teams | All containers inside the system boundary, grouped by C4 category (apps, stores, brokers), with protocols |
+| 4 | Detailed View | Mermaid `graph TB` | Architects, SREs | Full component wiring with topic names, queue names, all async/sync flows |
+
+**Ordering in the file**: Always place diagrams in this order (1→2→3→4) under a `## Architecture Diagrams` heading.
+
+**Architecture type detection**: Read the `<!-- ARCHITECTURE_TYPE: ... -->` comment in `docs/03-architecture-layers.md` to determine the active type. All 4 diagrams adapt to this type.
+
+---
+
+## Architecture Type Adaptation
+
+Diagrams 1 (Logical View) and 4 (Detailed View) use architecture-specific grouping. Diagrams 2 (C4 L1) and 3 (C4 L2) use pure C4 conventions — they do NOT group by architecture layers/tiers.
+
+| Architecture Type | Grouping Strategy | Group Naming Pattern | Layer/Group Source |
+|-------------------|-------------------|---------------------|--------------------|
+| META | 6 layers: Channels → UX → Business Scenarios → Business → Domain → Core | `LAYER N — NAME` | `docs/03-architecture-layers.md` layer summary table |
+| BIAN | 5 layers matching BIAN V12.0 service landscape | `LAYER N — NAME` | `docs/03-architecture-layers.md` layer summary table |
+| 3-TIER | 3 tiers: Presentation → Logic → Data | `TIER N — NAME` | `docs/03-architecture-layers.md` tier definitions |
+| N-LAYER | Layers from architecture doc (varies: Domain, Application, Infrastructure, etc.) | `LAYER — NAME` | `docs/03-architecture-layers.md` layer definitions |
+| MICROSERVICES | Functional groups: API Gateway, Services, Data Stores, Message Brokers | `GROUP — NAME` | `docs/03-architecture-layers.md` component groupings |
+
+---
+
+## Diagram 1 — Logical View (ASCII)
+
+**Purpose**: High-level logical view showing the architecture structure. Each layer/tier/group is a visual band containing its components. Arrows flow between groups only — no internal wiring.
+
+**Format**: ASCII art inside a fenced code block (no language tag). Never use Mermaid for this diagram — ASCII guarantees rendering on all platforms and Mermaid versions.
+
+**When to use**: All architecture types. For MICROSERVICES without layers, use functional groups (Gateway, Services, Stores, Brokers) as the horizontal bands.
+
+### Structure Rules
+
+1. **Outer box per group**: Full-width rectangle using `┌─┐│└─┘` box-drawing characters
+2. **Group title**: Centered, uppercase, format per type (see Architecture Type Adaptation table)
+3. **Component boxes inside**: Smaller rectangles nested inside the group box
+4. **Inter-group arrows**: Centered between group boxes, using `│` and `▼` with protocol label
+5. **Conceptual links**: Use `· · ·` (dotted) for non-runtime relationships (e.g., "implements")
+6. **Legend**: Always include at the bottom
+
+### Layout Pattern
+
+```
+┌─────────────────────────────────────────────────────────────────────────────────────────┐
+│                              GROUP TITLE (per type naming)                               │
+│                                                                                         │
+│   [optional sub-group label]:                                                           │
+│   ┌───────────────────────┐ ┌───────────────────────┐ ┌───────────────────────────┐    │
+│   │  Component Name       │ │  Component Name       │ │  Component Name           │    │
+│   │  [C4 Type]            │ │  [C4 Type]            │ │  [C4 Type]                │    │
+│   │  Responsibility 1     │ │  Responsibility 1     │ │  Responsibility 1         │    │
+│   │  Responsibility 2     │ │  Responsibility 2     │ │  Responsibility 2         │    │
+│   └───────────────────────┘ └───────────────────────┘ └───────────────────────────┘    │
+│                                                                                         │
+└─────────────────────────────────────────────────────────────────────────────────────────┘
+                                          │
+                                          ▼  Protocol label
+┌─────────────────────────────────────────────────────────────────────────────────────────┐
+│                              NEXT GROUP TITLE                                           │
+│  ...                                                                                    │
+└─────────────────────────────────────────────────────────────────────────────────────────┘
+```
+
+### Component Box Content
+
+Each component box contains exactly these lines:
+1. **Line 1**: Component name (display name or technical name)
+2. **Line 2**: `[C4 Type]` or `[C4 Type · Technology]` — from the component's `**Type:**` field
+3. **Lines 3+**: 1–3 key responsibilities (short phrases, not sentences)
+
+### Inter-Group Arrow Format
+
+```
+                                          │
+                                          ▼  PROTOCOL (network context)
+```
+
+- `▼` for synchronous calls (solid arrow down)
+- `· · ·` for conceptual/non-runtime links (e.g., domain model alignment)
+- Protocol label on the same line as `▼`, after two spaces
+- Examples: `HTTPS + OAuth2`, `HTTP (AKS internal)`, `REST (private network)`, `gRPC/mTLS`
+
+### Sizing Rules
+
+- **Outer box width**: 89 characters (fits 90-column terminals)
+- **Inner component boxes**: Size to fit content, arranged horizontally within the group
+- **Spacing**: 1 space between adjacent component boxes
+- **Groups with many components**: Split into labeled sub-groups (e.g., "Applications:" and "Support Stores:")
+
+### Legend (always include)
+
+```
+Legend:
+  ▼  = Synchronous call (request flows top → down)
+  · · · = Conceptual alignment (not a runtime call)
+  [Type] = C4 L2 container type
+  All [technology] services: [Framework] on [Platform] (min N replicas)
+  Response path: implicit — bottom → up via [mechanism]
+```
+
+### Data Sources
+
+| Element | Source File | Field |
+|---------|-----------|-------|
+| Group names (layers/tiers) | `docs/03-architecture-layers.md` | Layer/tier summary table |
+| Components per group | `docs/03-architecture-layers.md` | Each group section → `**Components:**` |
+| Component types | `docs/components/**/*.md` | `**Type:**` field |
+| Component responsibilities | `docs/components/**/*.md` | `## Responsibilities` section (pick top 2–3) |
+| Protocols between groups | `docs/03-architecture-layers.md` | `**Communication Patterns:**` per group |
+| C4 types | `docs/components/README.md` | Type column |
+
+---
+
+## Diagram 2 — C4 Level 1 System Context (Mermaid C4)
+
+**Purpose**: Highest zoom level. Shows the system as a single box, who uses it, and what external systems it depends on.
+
+**Format**: Mermaid `C4Context` — native C4 diagram type.
+
+### Structure Rules
+
+1. **3–7 elements max**: 1 internal system, 1–3 external actors, 1–3 external systems
+2. **No internal details**: The system is a single opaque box — no containers, no layers
+3. **Actor labels**: Use `Person()` or `Person_Ext()` with role description in third parameter
+4. **Relationship labels**: Use `Rel()` with description and protocol — e.g., `Rel(actor, system, "Submits payments", "HTTPS + OAuth2")`
+5. **Phase 2 systems**: Add "(Phase 2)" suffix in the description parameter
+
+### Template
+
+```mermaid
+C4Context
+    title System Context Diagram — [System Name]
+
+    Person(actor1, "Actor Name", "Role — What they do")
+
+    System(system, "System Name", "One-line description — Key technologies")
+
+    System_Ext(ext1, "External System", "What it does — Technology")
+
+    Rel(actor1, system, "What flows (via <transit hop if any>, sync/async)", "<PROTOCOL>/<STYLE> [Action Type]")
+    Rel(system, ext1,   "What flows (via <transit hop if any>, sync/async)", "<PROTOCOL>/<STYLE> [Action Type]")
+```
+
+The 3rd parameter (description) carries human prose: verb, data subject, via-hop, sync/async flag. The 4th parameter (protocol) follows the canonical normal form — see "Connection Naming Rule (L1 + L2)" in Diagram 3 below for the full rule, action-type vocabulary, and protocol/style table.
+
+### Infrastructure-as-via Rule (L1)
+
+At C4 L1 the system is a single opaque box. Infrastructure that **only forwards traffic** between an actor/system and the system boundary is NOT a separate `System_Ext()` — it collapses into the **3rd `Rel()` parameter (description)** as a `(via <hop>)` annotation. The 4th parameter remains the canonical `<PROTOCOL>/<STYLE> [Action Type]` normal form.
+
+**Collapse to (via …) in description** (do NOT declare as `System_Ext()`):
+
+- Edge gateways and APIM placed in front of the system (Apigee, Kong, AWS API Gateway, Azure APIM, Cloudflare API Gateway)
+- iPaaS / ESB / integration platforms used purely for transit (Mulesoft, Boomi, Workato)
+- Edge CDNs used for routing (Cloudflare, CloudFront, Akamai)
+- Service mesh, load balancers, reverse proxies — always invisible at L1
+
+**Keep as `System_Ext()`**:
+
+- Any external system that owns business logic or persistent state — Stripe, SAP, Core Banking, SWIFT, Salesforce, vendor SaaS that the business depends on for an outcome
+- Authoritative data sources / systems of record outside the boundary
+
+**Edge encoding** (description in 3rd parameter, normal form in 4th parameter):
+
+```
+Rel(actor,  system, "Submits payments (via Apigee)",                "HTTPS/JSON [Data]")
+Rel(system, stripe, "Processes payments (via Mulesoft)",            "HTTPS/JSON [Data]")
+Rel(actor,  system, "Mobile API (via CloudFront → AWS APIGW)",      "HTTPS/JSON [Data]")
+```
+
+If two transit hops chain (CDN → APIM), join them with `→` inside the description's `(via …)` clause.
+
+### Color Conventions (C4 standard — built-in)
+
+Native Mermaid C4 diagrams apply C4 color conventions automatically:
+
+| Element | Function | Built-in Color |
+|---------|----------|---------------|
+| Person/Actor | `Person()` / `Person_Ext()` | Dark blue |
+| Internal System | `System()` | Blue |
+| External System | `System_Ext()` | Gray |
+
+No `classDef` or manual styling is needed — the Mermaid C4 renderer handles colors.
+
+### Architecture Type → C4 L1 Translation
+
+| Architecture Type | What collapses into `System()` | What becomes `Person()` / `System_Ext()` |
+|-------------------|----------------------------------------|-----------------------------------|
+| META | Layers 2–5 (UX through Domain) | Layer 1 actors → `Person()`; Layer 6 core/legacy → `System_Ext()` |
+| BIAN | All BIAN service domains | External channels → `Person()`; Core banking/legacy → `System_Ext()` |
+| 3-TIER | All 3 tiers (Presentation + Logic + Data) | External users → `Person()`; External integrations → `System_Ext()` |
+| N-LAYER | All internal layers (UI through Infrastructure) | External users → `Person()`; External systems → `System_Ext()` |
+| MICROSERVICES | All services + stores + brokers | External users/clients → `Person()`; External APIs/systems → `System_Ext()` |
+
+### Data Sources
+
+| Element | Source File |
+|---------|-----------|
+| System name + description | `ARCHITECTURE.md` top-level description |
+| External actors | `docs/01-system-overview.md` → `**External Actor:**` or user/actor references |
+| External systems | `docs/01-system-overview.md` → `**Internal Dependencies:**` (items marked external) |
+| Protocols | `docs/05-integration-points.md` → external integrations section |
+
+---
+
+## Diagram 3 — C4 Level 2 Container (Mermaid C4)
+
+**Purpose**: Zooms into the system boundary. Shows all deployable containers grouped by C4 category (apps/services, data stores, message brokers), with protocols on every arrow. This diagram uses pure C4 conventions — architecture-specific layers belong in Diagrams 1 and 4.
+
+**Format**: Mermaid `C4Container` — native C4 diagram type.
+
+### Structure Rules
+
+1. **System boundary**: Use `Container_Boundary()` to wrap all internal containers
+2. **Pure C4 grouping**: Group containers by C4 element type — `Container()` for apps/services, `ContainerDb()` for databases. The element function itself provides visual differentiation (box vs cylinder). Do NOT group by architecture-specific layers/tiers — that belongs in Diagrams 1 and 4. **Transit infrastructure (APIM, brokers, topics, queues, service mesh, load balancers, iPaaS) collapses into edge labels — see "Infrastructure-as-via Rule (L2)" below.** `ContainerQueue()` is reserved for the rare case where an owned/custom broker IS the architectural unit (e.g. an in-house event store)
+3. **External actor outside**: Declared before the boundary
+4. **External systems outside**: Declared after the boundary
+5. **Every relationship has a normalized protocol label**: The 4th parameter of `Rel()` MUST follow the canonical form `<PROTOCOL>/<STYLE> [Action Type]` — see "Connection Naming Rule (L1 + L2)" below. Examples: `"HTTPS/JSON [Data]"`, `"gRPC/PROTOBUF [Internal]"`, `"TLS/AVRO [Event]"`, `"JDBC/SQL [Query]"`. Do NOT put `via <hop>`, topic names, queue names, or sync/async flags in this field — they belong in the 3rd parameter (description).
+6. **Sync vs async, via/topic context**: Place in the 3rd parameter — e.g., `"Publishes order events (Kafka topic: order-events, async)"`, `"Calls (via Kong)"`, `"Reads order (sync)"`. The 3rd parameter is human-prose; the 4th parameter is machine-readable transport.
+
+### Template
+
+```mermaid
+C4Container
+    title Container Diagram — [System Name]
+
+    Person(actor, "Actor Name", "Role")
+
+    Container_Boundary(sys, "System Name") {
+
+        Container(c1, "component-name", "Technology", "Responsibility")
+        Container(c2, "component-name", "Technology", "Responsibility")
+
+        ContainerDb(s1, "store-name", "Technology", "Purpose")
+
+    }
+
+    System_Ext(ext, "External System", "Technology")
+
+    Rel(actor, c1, "Uses (via Apigee)",                                       "HTTPS/JSON [Data]")
+    Rel(c1, c2,    "Publishes order events (Kafka topic: order-events, async)", "TLS/AVRO [Event]")
+    Rel(c2, s1,    "Reads/Writes order rows",                                  "JDBC/SQL [Write]")
+    Rel(c2, ext,   "Calls payment API",                                        "HTTPS/JSON [Data]")
+```
+
+### Infrastructure-as-via Rule (L2)
+
+At C4 L2 the diagram answers "which deployable units talk to which". **Transit infrastructure** — components that forward a request or route a message without owning business state or logic — is collapsed into the edge label rather than declared as a node.
+
+**Collapse to edge label** (do NOT declare as `Container()` or `ContainerQueue()`):
+
+- API Gateway / APIM (Kong, Apigee, AWS API Gateway, Azure APIM, Tyk)
+- Message brokers, topics, queues (Apache Kafka, RabbitMQ, AWS SQS, AWS SNS, AWS EventBridge, Azure Service Bus, ActiveMQ, NATS, Redis Streams used as a transport)
+- Service mesh (Istio, Linkerd, Consul Connect, AWS App Mesh)
+- Load balancers, reverse proxies, edge CDNs (NGINX-as-LB, HAProxy, ELB/ALB, CloudFront)
+- iPaaS / ESB used purely for transit (Mulesoft, Boomi, Workato, MuleSoft Anypoint)
+
+**Keep as nodes**:
+
+- All `ContainerDb()` — databases and caches own state, never collapse them
+- Application containers with business logic — BFFs, services, orchestrators, workers, schedulers
+- External systems with their own logic/state — `System_Ext()`
+- An owned/custom broker that IS the architectural unit (in-house event store, custom router) — exceptional use of `ContainerQueue()`
+
+**Edge label encoding**: the 3rd `Rel()` parameter (description) carries the via-hop / topic / queue / async context for human readers; the 4th parameter (protocol) carries the canonical `<PROTOCOL>/<STYLE> [Action Type]` normal form (see "Connection Naming Rule (L1 + L2)" below).
+
+| Pattern | Example |
+|---------|---------|
+| Sync via gateway | `Rel(client, service, "Calls (via Kong)", "HTTPS/JSON [Data]")` |
+| Async via topic | `Rel(producer, consumer, "Publishes order events (Kafka topic: order-events, async)", "TLS/AVRO [Event]")` |
+| Async via queue | `Rel(producer, consumer, "Settlement requests (RabbitMQ queue: settlements, async)", "AMQP/JSON [Event]")` |
+| Multi-hop transit | `Rel(client, service, "Submits payment (via Apigee → AWS APIGW)", "HTTPS/JSON [Data]")` |
+
+**Pub/sub fan-out**: draw one `Rel()` per producer-consumer pair. The topic name lives in the description (3rd parameter); the 4th parameter is the canonical normal form. Do not emit a broker node even when N consumers share a topic — the topic name on each edge is the join key.
+
+```
+Rel(orderSvc, paymentSvc,      "Order placed (Kafka topic: order-events, async)", "TLS/AVRO [Event]")
+Rel(orderSvc, notificationSvc, "Order placed (Kafka topic: order-events, async)", "TLS/AVRO [Event]")
+Rel(orderSvc, analyticsSvc,    "Order placed (Kafka topic: order-events, async)", "TLS/AVRO [Event]")
+```
+
+**Subscriber with no in-scope producer**: model the upstream as `System_Ext("event-source", "...")` and keep the topic on the edge label. Do NOT fall back to a broker node.
+
+**Why**: at L2 the audience asks "what talks to what" — every transit hop on the page costs them attention. Operational fidelity (every topic, queue, partition) lives in **Diagram 4 (Detailed View)** below, where brokers and topics ARE first-class nodes per Rule 3.
+
+### Connection Naming Rule (L1 + L2)
+
+The 4th parameter of every `Rel()` MUST follow this strict normal form:
+
+```
+<PROTOCOL>/<STYLE> [Action Type]
+```
+
+- **PROTOCOL** — transport in uppercase: `HTTPS`, `HTTP`, `TLS`, `gRPC`, `WSS` / `WS`, `AMQP`, `MQTT`, `Kafka`, `JDBC`, `MQ/JMS`, `TCP`, `UDP`
+- **STYLE** — payload format or API/serialization style in uppercase: `JSON`, `GRAPHQL`, `REST`, `SOAP`, `XML`, `AVRO`, `BINARY`, `PROTOBUF`, `MSGPACK`, `SQL`, `RESP`, `FORM`, `MULTIPART`, `PLAIN`, `CBOR`
+- **[Action Type]** — closed vocabulary, exactly one of `[Data]`, `[Internal]`, `[Event]`, `[Auth]`, `[Cache]`, `[Stream]`, `[Query]`, `[Write]`, `[Storage]`, `[Telemetry]`
+
+The 3rd parameter (description) carries human prose: the verb, the data subject, the via-hop, the topic / queue name, and the sync/async flag.
+
+#### Scope (ENFORCED — read before applying)
+
+This rule applies to, and ONLY to:
+
+- **Diagram 2 — C4 L1 System Context** (`C4Context` block) — every `Rel()` 4th parameter
+- **Diagram 3 — C4 L2 Container** (`C4Container` block) — every `Rel()` 4th parameter
+- **Diagram 4 — Detailed View** (`graph TB` block) — every labeled edge (`A -- "..." --> B`, `A -. "..." .-> B`)
+
+This rule does **NOT** apply to:
+
+- **Diagram 1 — Logical View (ASCII)** — labels are free prose; ASCII rendering does not have a parameter slot for a normal form
+- **Data Flow / Sequence Diagrams** (`sequenceDiagram` blocks in `docs/04-data-flow-patterns.md`) — message labels (`A->>B: ...`, `A-->>B: ...`, `A-)B: ...`) are **free prose** describing what flows step-by-step. Do NOT append `[Action Type]` tags, do NOT enforce `<PROTOCOL>/<STYLE>` casing, do NOT reject a label because it lacks the normal form. Sequence-diagram labels are scoped by Pre-Write Validation only (no `<br/>` / HTML tags, no `;` in message text, no emoji)
+- **Notation inside element labels** — `Container("name", "technology", "description")` is element metadata, not a connection — Connection Naming Rule does not apply
+
+When generating, auditing, or reviewing diagrams, check the diagram **type** first; apply the rule only if the diagram is L1, L2, or Diagram 4. A sequence-diagram message reading `Frontend->>BFF: GET /orders` is correct as-is — do not rewrite it to `Frontend->>BFF: GET /orders [Data]` or `Frontend->>BFF: HTTPS/JSON [Data]`.
+
+#### Action-Type Vocabulary (closed set — reject anything outside this list)
+
+| Tag | Meaning | Typical pairings |
+|---|---|---|
+| `[Data]` | Business data request/response across a trust boundary | front-end → BFF, partner API, public API, external client → service |
+| `[Internal]` | Internal service-to-service call within the system boundary | microservice → microservice, BFF → backend service, orchestrator → domain service |
+| `[Event]` | Async pub/sub event (one-way fire-and-forget or fan-out) | Kafka topic publish, RabbitMQ exchange, SNS topic, EventBridge bus |
+| `[Auth]` | Authentication / authorization / token validation | OIDC introspect, JWT signing-key fetch, IAM attribute query, mTLS handshake |
+| `[Cache]` | Cache read or write | Redis GET/SET, Memcached, distributed in-memory cache |
+| `[Stream]` | Long-lived streaming connection | WebSocket, SSE, gRPC server/bidirectional streaming, Kafka consumer poll loop |
+| `[Query]` | Database / search-index read | SQL SELECT, Elasticsearch query, document-store get, Cypher MATCH |
+| `[Write]` | Database / search-index write (use when distinguishing from `[Query]` in CQRS contexts) | SQL INSERT/UPDATE/DELETE, ES index, document-store put |
+| `[Storage]` | Blob / object storage I/O | S3 PUT/GET, GCS, Azure Blob, MinIO |
+| `[Telemetry]` | Observability emission (logs, metrics, traces) | OTLP, Loki push, Prometheus remote-write, Jaeger span export |
+
+In contexts that don't separate read/write paths, collapse `[Query]` + `[Write]` into `[Internal]` if both are infrastructure-backing calls. Use the granular tags only when the diagram shows separate read/write models (CQRS, read replicas).
+
+#### Protocol / Style Common Pairings
+
+The most common combinations. Architects pick from this when authoring; novel pairings are allowed if they follow `UPPERCASE/UPPERCASE` casing.
+
+| Protocol | Common Styles | Notes |
+|---|---|---|
+| `HTTPS` | `JSON`, `GRAPHQL`, `REST`, `SOAP`, `XML`, `FORM`, `MULTIPART`, `BINARY` | Default external API transport |
+| `HTTP` | `JSON`, `REST`, `FORM`, `PLAIN` | Internal-only or legacy; prefer HTTPS |
+| `TLS` | `AVRO`, `BINARY`, `PROTOBUF`, `MSGPACK` | Encrypted byte stream over TCP without HTTP framing — Kafka with TLS, custom binary protocols |
+| `gRPC` | `PROTOBUF` | Default for service-to-service Protobuf RPC |
+| `WSS` / `WS` | `JSON`, `BINARY`, `MSGPACK` | WebSocket; use `WSS` for production |
+| `AMQP` | `JSON`, `AVRO`, `PROTOBUF` | RabbitMQ classic, Service Bus |
+| `MQTT` | `JSON`, `BINARY`, `CBOR` | IoT / telemetry |
+| `Kafka` | `AVRO`, `JSON`, `PROTOBUF` | When showing Kafka explicitly without TLS framing context |
+| `JDBC` | `SQL` | Almost always paired |
+| `MQ/JMS` | `XML`, `JSON`, `BINARY` | IBM MQ, ActiveMQ |
+| `TCP` | `RESP`, `BINARY`, `PLAIN` | Redis (RESP), custom binary |
+| `UDP` | `BINARY`, `PLAIN` | DNS, syslog, custom telemetry |
+
+#### Worked Examples
+
+```
+Rel(client,    service,  "Calls (via Kong)",                                   "HTTPS/JSON [Data]")
+Rel(web,       bff,      "Submits orders",                                     "HTTPS/GRAPHQL [Data]")
+Rel(svc_a,     svc_b,    "Internal call",                                      "HTTP/REST [Internal]")
+Rel(svc_a,     svc_b,    "Service-to-service",                                 "gRPC/PROTOBUF [Internal]")
+Rel(prod,      cons,     "Order events (Kafka topic: orders, async)",          "TLS/AVRO [Event]")
+Rel(svc,       redis,    "Session lookup",                                     "TCP/RESP [Cache]")
+Rel(svc,       db,       "Order read",                                         "JDBC/SQL [Query]")
+Rel(svc,       s3,       "Document upload",                                    "HTTPS/BINARY [Storage]")
+Rel(bff,       iam,      "Token validation",                                   "HTTPS/JSON [Auth]")
+Rel(client,    ws_svc,   "Live updates",                                       "WSS/JSON [Stream]")
+Rel(svc,       otel,     "Span export",                                        "gRPC/PROTOBUF [Telemetry]")
+```
+
+**Diagram 4 (Detailed View, `graph TB`)** uses the same `<PROTOCOL>/<STYLE> [Action Type]` form on its arrow labels for consistency, modulo Mermaid `graph TB` syntax (no parameter slots — the entire label is one string after `--`):
+
+```
+SVC_A -- "HTTPS/JSON [Data]" --> SVC_B
+PROD -. "TLS/AVRO [Event]" .-> CONS
+```
+
+Anti-patterns the rule rejects:
+
+- `"REST/HTTPS"` — wrong order; protocol is HTTPS, style is REST → `"HTTPS/REST [Data]"` or `"HTTPS/REST [Internal]"`
+- `"Kafka async"` — missing style and action → `"TLS/AVRO [Event]"` (with topic + async in description)
+- `"HTTPS via Kong"` — via belongs in description → 3rd param `"... (via Kong)"`, 4th param `"HTTPS/JSON [Data]"`
+- `"Kafka topic: order-events"` — topic belongs in description → 3rd param `"... (Kafka topic: order-events, async)"`, 4th param `"TLS/AVRO [Event]"`
+- `"HTTPS"` — no style, no action → `"HTTPS/JSON [Data]"` (or whatever fits)
+- `"HTTPS/json [data]"` — wrong casing → uppercase protocol/style, PascalCase action
+
+### Color Conventions (C4 standard — built-in)
+
+Native Mermaid C4 diagrams apply consistent styling automatically:
+
+| Element | Function | Built-in Appearance |
+|---------|----------|-------------------|
+| External actor | `Person()` | Dark blue box with person icon |
+| Application containers | `Container()` | Blue box |
+| Database containers | `ContainerDb()` | Blue cylinder |
+| Queue/broker containers | `ContainerQueue()` | Blue queue shape — exceptional use only (owned/custom broker that IS the architectural unit). Default: collapse brokers/topics/queues to edge labels per Infrastructure-as-via Rule (L2). |
+| External systems | `System_Ext()` | Gray box |
+| System boundary | `Container_Boundary()` | Dashed border |
+
+**Custom styling** (optional): Use `UpdateElementStyle()` to differentiate container categories by color if needed — e.g., green for stores, gray for gateways.
+
+### Data Sources
+
+| Element | Source File |
+|---------|-----------|
+| All containers | `docs/components/README.md` → 5-column table |
+| Container details | `docs/components/**/*.md` → Type, Technology, Purpose, APIs |
+| Protocols | `docs/05-integration-points.md` → all integration entries |
+| Async topics/queues | `docs/05-integration-points.md` → internal integrations section |
+| Group structure | `docs/03-architecture-layers.md` → layer/tier summary table |
+
+---
+
+## Diagram 4 — Detailed View (Mermaid)
+
+**Purpose**: Full wiring diagram showing every component, topic name, queue name, and flow. The most detailed diagram — used by architects and SREs for operational understanding.
+
+**Format**: Mermaid `graph TB`.
+
+### Structure Rules
+
+1. **One subgraph per architectural group**: Named per Architecture Type Adaptation table (layer, tier, or functional group)
+2. **Every component inside its group subgraph**: Using full technical names
+3. **Message broker topics as separate nodes**: Show actual topic/queue names
+4. **Solid arrows** for sync, **dashed arrows** for async
+5. **Arrow labels**: Include protocol AND purpose (e.g., `"Publish validated\nISO 20022 XML"`)
+6. **Domain alignment** (if applicable): Dotted lines from domain model to implementing containers
+7. **Standalone data stores**: If a data store serves multiple groups, place it outside subgraphs
+
+### Template
+
+```mermaid
+graph TB
+    subgraph Group1["Group 1: Name"]
+        ACTOR["Actor\n(Role)"]
+    end
+
+    subgraph Group2["Group 2: Name"]
+        GATEWAY["gateway-component-name\n(Technology)\nResponsibility"]
+    end
+
+    subgraph Group3["Group 3: Name"]
+        SVC1["service-name\n[Role]\n(Technology)\nResponsibilities"]
+        TOPIC_REQ["topic_name_req\n(broker-type)"]
+        TOPIC_RESP["topic_name_resp\n(broker-type)"]
+        CACHE["cache-name\n(Purpose)"]
+        SVC2["service-name\n[Role]\n(Technology)\nResponsibilities"]
+    end
+
+    subgraph Group4["Group 4: Name"]
+        EXEC["executor-name\n(Technology)\nRouting description"]
+    end
+
+    subgraph GroupN["Group N: Name"]
+        CORE["core-system\n(Type)"]
+    end
+
+    DATA_STORE["data-store\n(Purpose)"]
+
+    %% Full wiring with protocols and purpose on every arrow
+    ACTOR -->|"Protocol + Auth\nEndpoint"| GATEWAY
+    GATEWAY -->|"Protocol\nPurpose"| SVC1
+    SVC1 <-->|"Purpose"| CACHE
+    SVC1 -.->|"Purpose"| TOPIC_REQ
+    TOPIC_REQ -.->|"Consume"| SVC2
+    SVC2 -->|"Protocol"| EXEC
+    EXEC -->|"Protocol"| CORE
+    SVC2 -.->|"Purpose"| TOPIC_RESP
+    TOPIC_RESP -.->|"Purpose"| SVC1
+    SVC1 -->|"Response"| GATEWAY
+    GATEWAY -->|"Response"| ACTOR
+
+    %% Styling — adapt classDef names and colors to architecture type
+    %% See "Color Conventions by Architecture Type" below
+```
+
+### Color Conventions by Architecture Type
+
+#### META / BIAN
+
+| Group Role | Fill | classDef name |
+|-----------|------|--------------|
+| Channel (L1) | `#4A90E2` blue | `channel` |
+| User Experience (L2) | `#9B9B9B` gray | `ux` |
+| Business Scenarios (L3) | `#F5A623` orange | `scenario` |
+| Business (L4) | `#7ED321` green | `business` |
+| Domain (L5) | `#50E3C2` teal | `domain` |
+| Core (L6) | `#D0021B` red | `core` |
+| Messaging (brokers/topics) | `#BD10E0` purple | `messaging` |
+| Data stores | `#417505` dark green | `datastore` |
+
+#### 3-TIER
+
+| Group Role | Fill | classDef name |
+|-----------|------|--------------|
+| Presentation (Tier 1) | `#4A90E2` blue | `presentation` |
+| Logic (Tier 2) | `#F5A623` orange | `logic` |
+| Data (Tier 3) | `#417505` dark green | `data` |
+| Messaging (brokers/topics) | `#BD10E0` purple | `messaging` |
+| Data stores | `#417505` dark green | `datastore` |
+
+#### N-LAYER
+
+| Group Role | Fill | classDef name |
+|-----------|------|--------------|
+| UI / Presentation | `#4A90E2` blue | `ui` |
+| Application / Service | `#F5A623` orange | `application` |
+| Domain / Business | `#7ED321` green | `domain` |
+| Infrastructure / Persistence | `#9B9B9B` gray | `infrastructure` |
+| Messaging (brokers/topics) | `#BD10E0` purple | `messaging` |
+| Data stores | `#417505` dark green | `datastore` |
+
+#### MICROSERVICES
+
+| Group Role | Fill | classDef name |
+|-----------|------|--------------|
+| API Gateway | `#9B9B9B` gray | `gateway` |
+| Application Services | `#438DD5` medium blue | `service` |
+| Workers / Consumers | `#F5A623` orange | `worker` |
+| Messaging (brokers/topics) | `#BD10E0` purple | `messaging` |
+| Data stores | `#417505` dark green | `datastore` |
+| External systems | `#999999` gray | `external` |
+
+#### Dark Theme Palettes (all architecture types)
+
+When `<!-- DIAGRAM_THEME: dark -->` is active, replace the light-mode `classDef` declarations with these dark-mode variants. The classDef **names** remain identical — only the color values change. Dark fills are ~15-20% lighter than light-mode counterparts. Strokes are lighter than fills to remain visible against dark backgrounds. Text color flips to `#000` on lighter fills for WCAG AA contrast.
+
+**META / BIAN dark classDef**:
+
+| Group Role | Dark Fill | Dark Stroke | Text | classDef name |
+|-----------|-----------|-------------|------|--------------|
+| Channel (L1) | `#5BA0F2` | `#7DB8FF` | `#fff` | `channel` |
+| User Experience (L2) | `#B0B0B0` | `#D0D0D0` | `#000` | `ux` |
+| Business Scenarios (L3) | `#FFB83D` | `#FFCE6D` | `#000` | `scenario` |
+| Business (L4) | `#8FE432` | `#A8F060` | `#000` | `business` |
+| Domain (L5) | `#60F3D2` | `#80FFE6` | `#000` | `domain` |
+| Core (L6) | `#F03050` | `#FF6080` | `#fff` | `core` |
+| Messaging | `#D040F0` | `#E070FF` | `#fff` | `messaging` |
+| Data stores | `#5CAE20` | `#78D040` | `#000` | `datastore` |
+
+**3-TIER dark classDef**:
+
+| Group Role | Dark Fill | Dark Stroke | Text | classDef name |
+|-----------|-----------|-------------|------|--------------|
+| Presentation (Tier 1) | `#5BA0F2` | `#7DB8FF` | `#fff` | `presentation` |
+| Logic (Tier 2) | `#FFB83D` | `#FFCE6D` | `#000` | `logic` |
+| Data (Tier 3) | `#5CAE20` | `#78D040` | `#000` | `data` |
+| Messaging | `#D040F0` | `#E070FF` | `#fff` | `messaging` |
+| Data stores | `#5CAE20` | `#78D040` | `#000` | `datastore` |
+
+**N-LAYER dark classDef**:
+
+| Group Role | Dark Fill | Dark Stroke | Text | classDef name |
+|-----------|-----------|-------------|------|--------------|
+| UI / Presentation | `#5BA0F2` | `#7DB8FF` | `#fff` | `ui` |
+| Application / Service | `#FFB83D` | `#FFCE6D` | `#000` | `application` |
+| Domain / Business | `#8FE432` | `#A8F060` | `#000` | `domain` |
+| Infrastructure | `#B0B0B0` | `#D0D0D0` | `#000` | `infrastructure` |
+| Messaging | `#D040F0` | `#E070FF` | `#fff` | `messaging` |
+| Data stores | `#5CAE20` | `#78D040` | `#000` | `datastore` |
+
+**MICROSERVICES dark classDef**:
+
+| Group Role | Dark Fill | Dark Stroke | Text | classDef name |
+|-----------|-----------|-------------|------|--------------|
+| API Gateway | `#B0B0B0` | `#D0D0D0` | `#000` | `gateway` |
+| Application Services | `#5A9DE5` | `#7DB8FF` | `#fff` | `service` |
+| Workers / Consumers | `#FFB83D` | `#FFCE6D` | `#000` | `worker` |
+| Messaging | `#D040F0` | `#E070FF` | `#fff` | `messaging` |
+| Data stores | `#5CAE20` | `#78D040` | `#000` | `datastore` |
+| External systems | `#AAAAAA` | `#CCCCCC` | `#000` | `external` |
+
+### Data Sources
+
+| Element | Source File |
+|---------|-----------|
+| All components + types | `docs/components/README.md` |
+| Component responsibilities | `docs/components/**/*.md` → Responsibilities, Purpose |
+| Topic/queue names | `docs/05-integration-points.md` → internal integrations section |
+| Full flow wiring | `docs/04-data-flow-patterns.md` → all flow sections |
+| Domain model (if applicable) | `docs/03-architecture-layers.md` → Domain layer/section |
+| Protocols per integration | `docs/05-integration-points.md` |
+
+---
+
+## Data Flow Diagrams — Sequence Diagrams
+
+**Purpose**: Per-flow sequence diagrams showing step-by-step interactions between components for each documented data flow. One diagram per H3 flow subsection in `docs/04-data-flow-patterns.md`.
+
+**Format**: Mermaid `sequenceDiagram`.
+
+```mermaid
+sequenceDiagram
+    participant A as Component A
+    A->>B: request
+```
+
+**Placement**: Insert each diagram **immediately after its corresponding H3 subsection** in `docs/04-data-flow-patterns.md`, with heading `#### Diagram: [Flow Name] Sequence`.
+
+### Syntax Reference
+
+#### Message Types
+
+| Type | Syntax | Use For |
+|------|--------|---------|
+| Sync request | `A->>B: description` | REST, gRPC, JDBC calls (solid arrow) |
+| Sync response | `B-->>A: description` | Return values, acknowledgements (dashed arrow) |
+| Async (fire-and-forget) | `A-)B: description` | Kafka publish, queue push, event emit (open arrow) |
+| Participant declaration | `participant Alias as Full Name` | Declare and alias participants |
+| Activation | `activate A` / `deactivate A` | Show processing scope (or use `+`/`-` on arrows) |
+| Note | `Note over A,B: text` | Protocol annotations, context notes |
+| Note (single) | `Note right of A: text` | Side annotations for a single participant |
+
+#### Control Flow
+
+| Construct | Syntax | Use For |
+|-----------|--------|---------|
+| Conditional | `alt condition` ... `else condition` ... `end` | Branching logic (success/failure paths) |
+| Optional | `opt condition` ... `end` | Optional execution path |
+| Loop | `loop condition` ... `end` | Retry loops, polling, batch processing |
+| Parallel | `par description` ... `and description` ... `end` | Concurrent operations (fan-out) |
+| Critical | `critical description` ... `option fallback` ... `end` | Critical sections with fallback |
+| Break | `break condition` ... `end` | Early exit from a flow |
+
+### Architecture Conventions
+
+1. **Participant naming**: Use component technical names from `docs/components/README.md` with aliases for readability — e.g., `participant APIGW as API Gateway`, `participant PS as PaymentService`
+2. **Sync calls with protocols**: Use `Note over` to annotate protocol context:
+   ```
+   Note over Client,APIGW: HTTPS + OAuth2
+   Client->>+APIGW: POST /payments
+   APIGW->>+AuthService: validateToken()
+   AuthService-->>-APIGW: token valid
+   ```
+3. **Async events**: Use open-arrow syntax with topic/queue name:
+   ```
+   PS-)Kafka: payment.completed.v1
+   Kafka-)NS: consume(payment.completed.v1)
+   ```
+4. **Error paths**: Use `alt` for success/failure branching:
+   ```
+   alt success
+       PS-->>APIGW: 200 OK {payment_id}
+   else failure
+       PS-)DLQ: payment.failed
+       PS-->>APIGW: 500 Error
+   end
+   ```
+5. **Parallel processing**: Use `par` for concurrent fan-out:
+   ```
+   par Send email
+       NS->>EmailService: sendEmail()
+   and Send SMS
+       NS->>SMSService: sendSMS()
+   end
+   ```
+6. **Activation bars**: Use `+`/`-` on arrows to show processing scope:
+   ```
+   Client->>+APIGW: submitPayment()
+   APIGW->>+PS: process()
+   PS->>+Bank: transfer()
+   Bank-->>-PS: status
+   PS-->>-APIGW: result
+   APIGW-->>-Client: response
+   ```
+
+### Template
+
+```mermaid
+sequenceDiagram
+    participant Client
+    participant APIGW as API Gateway
+    participant BizSvc as BusinessService
+    participant Store as DataStore
+    participant MQ as MessageBroker
+    participant DLQ
+
+    Note over Client,APIGW: HTTPS + OAuth2
+    Client->>+APIGW: [action description]
+
+    Note over APIGW,BizSvc: gRPC/mTLS
+    APIGW->>+BizSvc: process(request)
+
+    Note over BizSvc,Store: JDBC/TLS
+    BizSvc->>+Store: save(data)
+    Store-->>-BizSvc: saved
+
+    BizSvc-)MQ: event.name.v1
+
+    BizSvc-->>-APIGW: result
+
+    alt success
+        APIGW-->>-Client: 200 OK response
+    else failure
+        APIGW-)DLQ: request.failed
+        APIGW-->>Client: error response
+    end
+```
+
+### Data Sources
+
+| Element | Source File |
+|---------|-----------|
+| Flow steps | `docs/04-data-flow-patterns.md` → each `### [Flow Name] Flow` H3 subsection |
+| Participant names | `docs/components/README.md` → Component column |
+| Protocols | `docs/05-integration-points.md` → integration entries |
+| Topic/queue names | `docs/05-integration-points.md` → internal integrations section |
+| Error handling | `docs/04-data-flow-patterns.md` → `**Error Handling:**` per flow |
+| Performance constraints | `docs/04-data-flow-patterns.md` → `**Performance:**` per flow |
+
+---
+
+## Mermaid Compatibility Rules
+
+### Target Version
+
+All generated Mermaid diagrams target **Mermaid v11.4.1** (Mermaid Chart VS Code extension 2.1.0+).
+
+### Topology Diagrams — Diagrams 1 and 4 (graph TB)
+
+Applies to: Diagram 1 (ASCII Logical View) and Diagram 4 (Detailed View) — these use `graph TB`.
+
+### DO
+
+- Use `graph TB` (or `flowchart TB` — both supported in v11)
+- Use `subgraph NAME["Label"]` for grouping
+- Use `-->` for solid arrows, `-.->` for dashed arrows, `-.-` for dotted lines (no arrow)
+- Use `|"label"| ` for edge labels (quoted)
+- Use `\n` for line breaks inside node labels
+- Use `classDef` + `class` for styling
+- Use `direction LR` inside subgraphs when horizontal layout aids readability
+
+### DO NOT
+
+- Do not use HTML tags in labels — including `<br/>`, `<br>`, `<b>`, `<i>`, `<sup>`, `<span>`, or any `<...>` element. Mermaid renders labels as plain text; HTML breaks the parser. Use `\n` for line breaks in node labels.
+- Do not use emoji characters in node labels (rendering varies)
+- Do not use `|` pipe characters inside node label text (breaks parsing) — use `/` instead
+- Do not use `;` (semicolons) in node labels or edge labels — semicolons terminate statements and cause parse errors. Use `,` (comma) instead
+- Do not connect subgraph IDs as link endpoints (`L1 --> L2` fails) — connect nodes only
+
+### C4 Diagrams — Diagrams 2 and 3 (C4Context / C4Container)
+
+Applies to: Diagram 2 (C4 L1 System Context) uses `C4Context`; Diagram 3 (C4 L2 Container) uses `C4Container`.
+
+**DO:**
+- Use `C4Context` or `C4Container` as the first line inside the Mermaid fence block
+- Use `Person()`, `System()`, `System_Ext()` for C4 L1 elements
+- Use `Container()`, `ContainerDb()`, `Container_Boundary()` for C4 L2 elements
+- Use `Rel(from, to, "description", "protocol")` for all relationships
+- The 4th `Rel()` parameter MUST follow the canonical normal form `<PROTOCOL>/<STYLE> [Action Type]` per the Connection Naming Rule (Diagram 3 § "Connection Naming Rule (L1 + L2)") — examples: `"HTTPS/JSON [Data]"`, `"gRPC/PROTOBUF [Internal]"`, `"TLS/AVRO [Event]"`, `"JDBC/SQL [Query]"`. Reject any 4th-parameter string that does not match this form (no `"REST/HTTPS"`, no `"Kafka async"`, no bare `"HTTPS"`, no `"HTTPS via Kong"`)
+- The 3rd `Rel()` parameter (description) carries human prose — verb, data subject, transit-hop `(via Kong)`, topic / queue name `(Kafka topic: X, async)`, sync/async flag — per the Infrastructure-as-via Rule (Diagram 2 § "L1" / Diagram 3 § "L2"). Do NOT declare transit infra as `Container()`/`ContainerQueue()`/`System_Ext()` nodes
+- Use `title` for diagram titles
+- Use `UpdateElementStyle()` for custom colors when needed
+
+`ContainerQueue()` is reserved for the rare case where an owned/custom broker IS the architectural unit (in-house event store, custom router).
+
+**DO NOT:**
+- Do not mix `graph TB` syntax (`-->`, `subgraph`, `classDef`) with C4 diagram types
+- Do not use `\n` in labels — use the function parameters for multi-line information
+- Do not use HTML tags in element labels
+- Do not put `via <hop>`, topic / queue names, or `async` flags in the 4th `Rel()` parameter — those belong in the 3rd parameter (description)
+- Do not invent new `[Action Type]` tags — the closed vocabulary is `[Data] [Internal] [Event] [Auth] [Cache] [Stream] [Query] [Write] [Storage] [Telemetry]`
+
+### Data Flow Diagrams (Sequence Diagrams)
+
+**DO:**
+- Use `sequenceDiagram` as the first line inside the Mermaid fence block
+- Use `participant Alias as Full Name` for declaring participants
+- Use `->>` for sync requests (solid arrow), `-->>` for sync responses (dashed arrow)
+- Use `-)` for async fire-and-forget messages (open arrow)
+- Use `+`/`-` on arrows for activation bars (e.g., `->>+` to activate, `-->>-` to deactivate)
+- Use `alt/else/end` for branching, `opt/end` for optional paths, `loop/end` for retries
+- Use `par/and/end` for concurrent fan-out
+- Use `critical/option/end` for critical sections with fallback
+- Use `break/end` for early exit from a flow
+- Use `Note over A,B: text` for protocol annotations
+- **Write message labels as free prose**, describing what flows step-by-step (e.g., `Frontend->>BFF: GET /orders`, `BFF->>OrderSvc: CreateOrder(items, customerId)`, `OrderSvc-)EventBus: OrderPlaced event`). Free prose is the rule for sequence diagrams — readability of the flow narrative dominates
+
+**DO NOT:**
+- Do not use `graph TB` or `flowchart` syntax inside sequence diagrams
+- Do not use HTML tags in participant names or messages — including `<br/>`, `<br>`, `<b>`, `<i>`, `<sup>`, or any `<...>` element. Use `\n` for multi-line messages.
+- Do not use emoji characters in labels (rendering varies)
+- **Do NOT apply the Connection Naming Rule (`<PROTOCOL>/<STYLE> [Action Type]`) to sequence-diagram message labels.** That rule is scoped to C4 L1, C4 L2, and Diagram 4 only — see "Connection Naming Rule (L1 + L2)" → Scope. Sequence-diagram messages are free prose; appending `[Data]` / `[Event]` / `[Internal]` to a `->>` label is a rule violation in the opposite direction (over-application). Reviewers and audit gates: when the diagram's first line is `sequenceDiagram`, skip Connection-Naming-Rule checks entirely
+- Do not use `;` (semicolons) anywhere after the `:` in **message labels** (`A->>B: ...`) **or Note text** (`Note over A,B: ...`, `Note left of A: ...`, `Note right of A: ...`), **including inside parenthetical sub-clauses**. Mermaid's sequence tokenizer treats `;` as a statement terminator and stops reading the label there, then chokes on the trailing characters and the next line's arrow. Replace with `,` (comma), `—` (em dash), or `.` (period).
+  - **Wrong**: `GW->>Pay: existing payment path (sync; ORQPagos2002 stateless)` → parse error: *"Expecting SOLID_ARROW … got NEWLINE"* on the next line.
+  - **Right**: `GW->>Pay: existing payment path (sync, ORQPagos2002 stateless)`
+  - **Wrong**: `Note over BS: omn-bs returns failure response; flow ends here.`
+  - **Right**: `Note over BS: omn-bs returns failure response, flow ends here.`
+- Do not nest `alt` blocks more than 2 levels deep (readability degrades)
+
+---
+
+## Theme Preference Detection
+
+Mermaid diagrams render differently on light vs. dark backgrounds. Before generating diagrams, detect the user's preferred theme to apply appropriate colors.
+
+### Detection Step
+
+**When**: Run once per session, before generating any diagrams. Reuse the result for all diagrams in the same session.
+
+**How**: Check `docs/03-architecture-layers.md` for `<!-- DIAGRAM_THEME: light|dark -->`. If present, use that value. **If absent, you MUST ask the user — do NOT default silently:**
+
+```
+Do you use a light or dark theme in your editor/viewer?
+  1. Light (white/light background)
+  2. Dark (dark/black background)
+```
+
+Wait for user response. Store the answer as `<!-- DIAGRAM_THEME: light -->` or `<!-- DIAGRAM_THEME: dark -->` in `docs/03-architecture-layers.md`, immediately after the `<!-- ARCHITECTURE_TYPE: ... -->` comment. Do NOT proceed to diagram generation until the user has answered.
+
+### Theme Application by Diagram Type
+
+| Diagram | Light Theme | Dark Theme |
+|---------|------------|------------|
+| Diagram 1 (ASCII Logical View) | No change needed | No change needed — plain text works on both |
+| Diagram 2 (C4 L1 System Context) | No init block (Mermaid default) | Add `%%{init: {'theme': 'dark'}}%%` as first line |
+| Diagram 3 (C4 L2 Container) | No init block (Mermaid default) | Add `%%{init: {'theme': 'dark'}}%%` as first line |
+| Diagram 4 (Detailed View) | Light classDef palette | Dark classDef palette (see "Dark Theme Palettes" above) |
+| Sequence Diagrams | No init block (Mermaid default) | Add `%%{init: {'theme': 'dark'}}%%` as first line |
+
+### Dark Theme Init Block
+
+When dark theme is active, prepend this directive as the **very first line** inside the Mermaid code fence, before `C4Context`, `C4Container`, or `sequenceDiagram`:
+
+```
+%%{init: {'theme': 'dark'}}%%
+```
+
+**Example — C4 L1 (dark)**:
+````
+```mermaid
+%%{init: {'theme': 'dark'}}%%
+C4Context
+    title System Context Diagram — [System Name]
+    ...
+```
+````
+
+**Example — Sequence diagram (dark)**:
+````
+```mermaid
+%%{init: {'theme': 'dark'}}%%
+sequenceDiagram
+    participant A as Component A
+    ...
+```
+````
+
+---
+
+## Generation Workflow
+
+When generating or updating diagrams:
+
+1. **Read** `docs/03-architecture-layers.md` for group structure (layers/tiers) and component placement
+2. **Read** `docs/components/README.md` for the component index (names, types, technologies)
+3. **Read** `docs/05-integration-points.md` for protocols and topic/queue names
+4. **Read** `docs/04-data-flow-patterns.md` for flow wiring between components
+5. **Detect** architecture type from `<!-- ARCHITECTURE_TYPE: ... -->` comment in `docs/03-architecture-layers.md`
+5.5. **Detect** theme preference from `<!-- DIAGRAM_THEME: ... -->` comment in `docs/03-architecture-layers.md` — if absent, ask user and persist (see "Theme Preference Detection" section above)
+6. **Select** grouping strategy, naming pattern, and color conventions from the Architecture Type Adaptation table and Diagram 4 color conventions — use light or dark palette per detected theme
+7. **Generate** all 4 topology diagrams in order (ASCII logical → C4 L1 → C4 L2 → Detailed)
+8. **Place** all 4 topology diagrams under `## Architecture Diagrams` in `docs/03-architecture-layers.md`
+9. **Include** a `**Reading the diagram:**` section after the ASCII logical view with bullet points explaining the arrow conventions
+10. **Generate** sequence diagrams — one per H3 flow subsection in `docs/04-data-flow-patterns.md`
+10.5. **Validate** all generated Mermaid/ZenUML blocks against the Pre-Write Validation checklist (see next section) — fix any forbidden patterns before proceeding
+11. **Place** each sequence diagram immediately after its H3 subsection with heading `#### Diagram: [Flow Name] Sequence`
+
+---
+
+## Pre-Write Validation
+
+**CRITICAL**: Before writing any generated Mermaid/ZenUML block to a file, scan the generated code for the following forbidden patterns. If any are found, **fix them before writing** — do NOT write broken diagrams that will fail at render time.
+
+### Forbidden Patterns Checklist
+
+Run this check on every generated Mermaid block:
+
+| Pattern | What to look for | Fix |
+|---------|------------------|-----|
+| HTML tags | `<br/>`, `<br>`, `<b>`, `<i>`, `<sup>`, `<span>`, any `<...>` | Replace `<br/>` with `\n` (sequence/C4) or remove entirely (topology node labels can use `\n`) |
+| Semicolons in labels | `;` anywhere after `:` on a line that starts with a sequence message (`A->>B:`), a Note (`Note over …:`, `Note left of …:`, `Note right of …:`), a flowchart node label (`[...]`, `(...)`, `{...}`), or an edge label (`-- text -->`, `--> text`). **Includes occurrences inside parenthetical sub-clauses.** Suggested scan regex (sequence diagrams): `^\s*(\S+\s*-+>>?\+?-?\s*\S+\s*:|Note (over\|left of\|right of) [^:]+:).*;` | Replace with `,` (comma), `—` (em dash), or `.` (period). |
+| Emoji in labels | Any Unicode emoji characters (`🔴`, `✅`, etc.) | Remove — rendering varies by platform |
+| Pipe in node text | `\|` inside node label text (not as edge delimiter) | Replace with `/` |
+| Unescaped double quotes | `"` inside `"..."` labels | Replace inner quotes with `'` (single quotes) |
+| Subgraph ID arrows | `L1 --> L2` where L1/L2 are subgraph IDs | Connect to nodes inside the subgraph instead |
+
+### Validation Procedure
+
+1. **Scan** each generated Mermaid/ZenUML code block with the forbidden pattern list above. For sequence diagrams, the scan must cover **both** message labels (`A->>B: ...`) **and** Note bodies (`Note over A,B: ...`, `Note left of A: ...`, `Note right of A: ...`); a `;` anywhere between the `:` and end-of-line is a violation, including inside parentheses.
+2. **For each violation found**, report which pattern and which line
+3. **Rewrite** the diagram with the fix applied
+4. **Re-scan** the fixed diagram to confirm no violations remain
+5. **Only then write** the diagram to its destination file
+
+If a pattern cannot be safely fixed (e.g., the content genuinely requires the forbidden character), escalate to the user — do NOT write a broken diagram.
+
+---
+
+### Update vs. Create
+
+- **Create**: Generate all 4 topology diagrams + all sequence diagrams from scratch using source files
+- **Update**: When components change (add/remove/rename), update all 4 topology diagrams to match. Check that every component in `docs/components/README.md` appears in Diagrams 1, 3, and 4. Diagram 2 (C4 L1) only shows system-level boxes — individual components do not appear. Also update sequence diagrams if affected participants or flows changed.

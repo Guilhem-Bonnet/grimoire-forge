@@ -1,0 +1,106 @@
+Version:          Code 1.115.0 (41dd792b5e652393e7787322889ed5fdc58bd75b, 2026-04-07T22:04:57Z)
+OS Version:       Linux x64 6.19.11-200.fc43.x86_64
+CPUs:             Intel(R) Core(TM) i9-9900K CPU @ 3.60GHz (16 x 4700)
+Memory (System):  31.25GB (7.40GB free)
+Load (avg):       3, 3, 4
+VM:               0%
+Screen Reader:    no
+Process Argv:     --crash-reporter-id 5c770b7b-ba4f-4eee-8446-35d0cd4a31d6
+GPU Status:       2d_canvas:                              enabled
+                  GPU0:                                   VENDOR= 0x1002 [Google Inc. (AMD)], DEVICE=0x7550 [ANGLE (AMD, AMD Radeon RX 9070 XT (radeonsi gfx1201 LLVM 21.1.8), OpenGL ES 3.2 Mesa 25.3.6)], DRIVER_VENDOR=Mesa, DRIVER_VERSION=25.3.6 *ACTIVE*
+                  Machine model name:                     
+                  Machine model version:                  
+                  direct_rendering_display_compositor:    disabled_off_ok
+                  gpu_compositing:                        enabled
+                  multiple_raster_threads:                enabled_on
+                  opengl:                                 enabled_on
+                  rasterization:                          enabled
+                  raw_draw:                               disabled_off_ok
+                  skia_graphite:                          disabled_off
+                  trees_in_viz:                           disabled_off
+                  video_decode:                           enabled
+                  video_encode:                           disabled_software
+                  vulkan:                                 disabled_off
+                  webgl:                                  enabled
+                  webgl2:                                 enabled
+                  webgpu:                                 disabled_off
+                  webnn:                                  disabled_off
+GPU Log Messages:
+[1024890:0413/112510.976891:WARNING:sandbox/policy/linux/sandbox_linux.cc:404] : InitializeSandbox() called with multiple threads in process gpu-process.
+
+
+CPU %	Mem MB	   PID	Process
+    0	128883215212	1024823	code
+    0	     0	1024826	   zygote
+    0	32220803803	1024890	     zygote
+    0	     0	1024827	   zygote
+    0	     0	1024829	     zygote
+    1	1063286525499	1024957	window [1] (Chat Customizations - bmad-custom - Visual Studio Code)
+    0	150363751081	1024972	window [2] (Chat Customizations - Terraform-HouseServer - Visual Studio Code)
+    0	10740267934	1024898	   utility-network-service
+    0	171844286949	1025475	extension-host [2]
+    0	     0	1026070	     /home/guilhem/.vscode/extensions/ms-python.python-2026.4.0-linux-x64/python-env-tools/bin/pet server
+    0	     0	1026071	     /usr/share/code/code /usr/share/code/resources/app/extensions/markdown-language-features/dist/serverWorkerMain --node-ipc --clientProcessId=1025475
+    0	     0	1026114	     /home/guilhem/.vscode/extensions/openai.chatgpt-26.409.20454-linux-x64/bin/linux-x86_64/codex app-server --analytics-default-enabled
+    0	     0	1026578	     /usr/share/code/code /usr/share/code/resources/app/extensions/json-language-features/server/dist/node/jsonServerMain --node-ipc --clientProcessId=1025475
+    0	21480535869	1026633	     electron-nodejs (languageserver.js)
+    0	     0	1026634	     /home/guilhem/.vscode/extensions/hashicorp.terraform-2.39.2-linux-x64/bin/terraform-ls serve
+    0	     0	1027232	     electron-nodejs (server.js)
+    0	     0	1027233	     electron-nodejs (server.js)
+    0	     0	1027247	     /home/guilhem/.vscode/extensions/docker.docker-0.18.0-linux-x64/bin/docker-language-server-linux-amd64 start --stdio
+    0	     0	1027261	       /home/guilhem/.vscode/extensions/docker.docker-0.18.0-linux-x64/bin/docker-language-server-linux-amd64 start --stdio
+    0	     0	1027916	     electron-nodejs (server-node.js)
+    0	1288832152120	1025476	extension-host [1]
+    0	     0	1027770	     /home/guilhem/.vscode/extensions/ms-python.python-2026.4.0-linux-x64/python-env-tools/bin/pet server
+    0	     0	1027771	     /home/guilhem/.vscode/extensions/openai.chatgpt-26.409.20454-linux-x64/bin/linux-x86_64/codex app-server --analytics-default-enabled
+    0	10740267934	1027795	     /usr/share/code/code /usr/share/code/resources/app/extensions/markdown-language-features/dist/serverWorkerMain --node-ipc --clientProcessId=1025476
+    0	10740267934	1028011	     /usr/share/code/code /usr/share/code/resources/app/extensions/json-language-features/server/dist/node/jsonServerMain --node-ipc --clientProcessId=1025476
+    0	21480535869	1029681	     electron-nodejs (tsserver.js)
+    0	96662411409	1029682	     electron-nodejs (tsserver.js)
+    0	     0	1030171	     /home/guilhem/.vscode/extensions/ms-python.vscode-python-envs-1.26.0-linux-x64/python-env-tools/bin/pet server
+    0	10740267934	1030184	     /home/guilhem/.local/bin/ruff server
+    0	10740267934	1030522	     /bin/python /home/guilhem/.vscode/extensions/ms-python.isort-2025.0.0/bundled/tool/lsp_server.py
+    0	10740267934	1031097	     electron-nodejs (languageserver.js)
+    0	10740267934	1031236	     mdx-language-server
+    0	128883215212	1031540	     electron-nodejs (bundle.js)
+    0	     0	1031625	     /usr/share/code/code /usr/share/code/resources/app/extensions/css-language-features/server/dist/node/cssServerMain --node-ipc --clientProcessId=1025476
+    0	32220803803	1032019	     /usr/lib/jvm/java-25-openjdk/bin/java -XX:+ExitOnOutOfMemoryError -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/home/guilhem/.config/Code/User/globalStorage/redhat.vscode-xml -Xmx64M -cp /home/guilhem/.vscode/extensions/redhat.vscode-xml-0.29.0-linux-x64/server/org.eclipse.lemminx-0.31.0-uber.jar org.eclipse.lemminx.XMLServerLauncher
+    0	10740267934	1032169	     /usr/share/code/code /usr/share/code/resources/app/extensions/html-language-features/server/dist/node/htmlServerMain --node-ipc --clientProcessId=1025476
+    0	10740267934	1032717	     electron-nodejs (server-node.js)
+    0	32220803803	1025477	shared-process
+    0	10740267934	1025478	file-watcher [1]
+    0	     0	1025479	file-watcher [2]
+    0	21480535869	1026649	pty-host
+    0	     0	1026694	     /usr/bin/zsh -i
+    0	     0	1029223	     /usr/bin/zsh -i
+    0	     0	1085918	     /usr/bin/zsh -f
+    0	     0	1093511	     /usr/bin/zsh -f
+    0	     0	1476469	     /usr/bin/zsh -i
+    0	     0	1934558	     /usr/bin/zsh -f
+    0	     0	1936508	     bash /mnt/Travail/Projets/Dev/bmad-custom/.github/hooks/scripts/grimoire-task-flow.sh --task grimoire: vscode-diagnostics --flow runtime -- bash -c OUT="/mnt/Travail/Projets/Dev/bmad-custom/_grimoire-runtime-output/test-artifacts/vscode"; mkdir -p "$OUT"; TS=$(date +%Y%m%d-%H%M%S); if command -v code >/dev/null 2>&1; then code --status > "$OUT/code-status-$TS.txt" 2>&1 || true; code --verbose --status > "$OUT/code-verbose-status-$TS.txt" 2>&1 || true; echo "Diagnostics sauvegardes dans $OUT"; else echo "Commande code indisponible dans ce shell"; fi
+    0	     0	1936551	       bash -c OUT="/mnt/Travail/Projets/Dev/bmad-custom/_grimoire-runtime-output/test-artifacts/vscode"; mkdir -p "$OUT"; TS=$(date +%Y%m%d-%H%M%S); if command -v code >/dev/null 2>&1; then code --status > "$OUT/code-status-$TS.txt" 2>&1 || true; code --verbose --status > "$OUT/code-verbose-status-$TS.txt" 2>&1 || true; echo "Diagnostics sauvegardes dans $OUT"; else echo "Commande code indisponible dans ce shell"; fi
+    0	     0	1936554	         sh /usr/bin/code --status
+    0	21480535869	1936559	           electron-nodejs (cli.js)
+    0	53701339672	1936572	             /usr/share/code/code --status
+    0	10740267934	1936575	               zygote
+    0	32220803803	1936628	                 zygote
+    0	10740267934	1936576	               zygote
+    0	     0	1936578	                 zygote
+    0	21480535869	1936634	               utility-network-service
+    0	     0	1936701	               /usr/bin/ps -ax -o pid=,ppid=,pcpu=,pmem=,command=
+
+Workspace Stats: 
+|  Window (Chat Customizations - Terraform-HouseServer - Visual Studio Code)
+|  Window (Chat Customizations - bmad-custom - Visual Studio Code)
+|    Folder (Terraform-HouseServer): more than 20722 files
+|      File types: pyc(7668) py(7640) pyi(301) so(218) txt(118) mat(110)
+|                  gz(99) pyx(69) typed(68) h(65)
+|      Conf files:
+|    Folder (bmad-custom): more than 21810 files
+|      File types: json(11205) md(1087) dat(1087) py(978) pyc(913) png(458)
+|                  pak(446) html(365) txt(191) yml(109)
+|      Conf files: github-prompts-dir(98) github-instructions-dir(6)
+|                  github-actions(3) claude.md(2) claude-settings-local(1)
+|                  copilot-instructions.md(1) mcp.json(1) settings.json(1)
+|                  tasks.json(1) agents.md(1) devcontainer.json(1)
+|                  makefile(1) jsconfig.json(1)

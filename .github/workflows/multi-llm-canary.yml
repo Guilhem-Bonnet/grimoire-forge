@@ -1,0 +1,52 @@
+name: Multi-LLM Canary
+
+on:
+  workflow_dispatch:
+    inputs:
+      run_eval:
+        description: Run the remote Promptfoo evaluation after config validation
+        required: false
+        default: false
+        type: boolean
+
+jobs:
+  validate-canary:
+    name: Validate multi-LLM canary
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      models: read
+    defaults:
+      run:
+        working-directory: grimoire-kit
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Validate Promptfoo config
+        run: npx -y promptfoo@latest validate --config evals/multi-llm/promptfooconfig.yaml
+
+      - name: Run multi-LLM canary
+        if: ${{ inputs.run_eval }}
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          PROMPTFOO_CACHE_PATH: ~/.cache/promptfoo
+        run: |
+          mkdir -p ../_grimoire-runtime-output/test-artifacts/multi-llm-canary
+          npx -y promptfoo@latest eval \
+            --config evals/multi-llm/promptfooconfig.yaml \
+            -o ../_grimoire-runtime-output/test-artifacts/multi-llm-canary/results.json \
+            -o ../_grimoire-runtime-output/test-artifacts/multi-llm-canary/report.html
+
+      - name: Upload canary artifacts
+        if: ${{ always() && inputs.run_eval }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: multi-llm-canary
+          path: |
+            _grimoire-runtime-output/test-artifacts/multi-llm-canary/results.json
+            _grimoire-runtime-output/test-artifacts/multi-llm-canary/report.html

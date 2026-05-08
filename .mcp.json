@@ -1,0 +1,26 @@
+{
+  "mcpServers": {
+    "context7": {
+      "type": "streamable-http",
+      "url": "https://mcp.context7.com/mcp"
+    },
+    "github": {
+      "type": "streamable-http",
+      "url": "https://api.githubcopilot.com/mcp/"
+    },
+    "playwright": {
+      "type": "stdio",
+      "command": "/mnt/Travail/Projets/Dev/Grimoire-Forge/grimoire-kit/framework/tools/playwright-mcp.sh",
+      "cwd": "/mnt/Travail/Projets/Dev/Grimoire-Forge"
+    },
+    "grimoire": {
+      "type": "stdio",
+      "command": "/mnt/Travail/Projets/Dev/Grimoire-Forge/.codex/mcp/grimoire-mcp.sh",
+      "cwd": "/mnt/Travail/Projets/Dev/Grimoire-Forge",
+      "env": {
+        "PYTHONPATH": "/mnt/Travail/Projets/Dev/Grimoire-Forge/grimoire-kit/src",
+        "GRIMOIRE_QDRANT_URL": "http://localhost:6333"
+      }
+    }
+  }
+}

@@ -1,0 +1,4 @@
+Total messages: 2 (Errors: 2, Warnings: 0)
+
+[ERROR] Not allowed to load local resource: file:///mnt/Travail/Projets/Dev/bmad-custom/_grimoire-runtime-output/observatory.html @ http://127.0.0.1:8877/grimoire-kit/apps/grimoire-game/.release/runtime-views-report-client.js:1108
+[ERROR] Not allowed to load local resource: file:///mnt/Travail/Projets/Dev/bmad-custom/_grimoire-runtime-output/observatory.html @ http://127.0.0.1:8877/grimoire-kit/apps/grimoire-game/.release/runtime-views-report-client.js:2543

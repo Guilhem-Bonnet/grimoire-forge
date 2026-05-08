@@ -154,6 +154,82 @@ PY
   fi
 fi
 
+# Inject repo-analysis workflow context when the prompt indicates codebase analysis work.
+if [[ -f "$latest_file" ]]; then
+  if repo_analysis_context=$(printf '%s' "$input" | "$policy_python" - "$latest_file" <<'PY'
+import json
+import sys
+
+latest_file = sys.argv[1]
+raw = sys.stdin.read()
+
+prompt_chunks = []
+
+try:
+  payload = json.loads(raw)
+except Exception:
+  payload = {}
+
+if isinstance(payload, dict):
+  for key in ("prompt", "text", "message", "promptPreview"):
+    value = payload.get(key)
+    if isinstance(value, str) and value.strip():
+      prompt_chunks.append(value.strip())
+
+try:
+  with open(latest_file, "r", encoding="utf-8") as handle:
+    latest_payload = json.load(handle)
+except Exception:
+  latest_payload = {}
+
+if isinstance(latest_payload, dict):
+  preview = latest_payload.get("promptPreview")
+  if isinstance(preview, str) and preview.strip():
+    prompt_chunks.append(preview.strip())
+
+full_prompt = " ".join(prompt_chunks).lower()
+
+keywords = [
+  "analyse",
+  "analyser",
+  "analyze",
+  "audit",
+  "codebase",
+  "diagnostic",
+  "diagnosti",
+  "review ce repo",
+  "review this repo",
+  "évalue ce repo",
+  "evalue ce repo",
+  "inspecte ce repo",
+  "inspect this repo",
+  "deep-dive",
+]
+
+if not any(token in full_prompt for token in keywords):
+  print("")
+  raise SystemExit(0)
+
+context = (
+  "REPO_ANALYSIS_WORKFLOW_AVAILABLE: workflow repo-analysis is registered for this request. "
+  "Load _grimoire-runtime/bmm/workflows/1-analysis/repo-analysis/workflow-repo-analysis.md "
+  "to start a structured analysis with anti-hallucination grounding, context isolation, "
+  "CVTL cross-validation, and adversarial review gates. "
+  "Script tools available: grimoire-kit/framework/tools/repo-analysis-grounding.sh (structure scan), "
+  "grimoire-kit/framework/tools/repo-analysis-state.sh (self-piloting state), "
+  "grimoire-kit/framework/tools/code-review.py (automated findings), "
+  "grimoire-kit/framework/tools/swarm-consensus.py (claim consensus)."
+)
+
+print(context)
+PY
+  ); then
+  if [[ -n "${repo_analysis_context:-}" ]]; then
+    output=$(merge_additional_context "$output" "$repo_analysis_context")
+  fi
+  fi
+fi
+
 if transcript_guard_output=$(GRIMOIRE_PROMPT_INPUT="$input" "$policy_python" - "$project_root" <<'PY'
 import json
 import os

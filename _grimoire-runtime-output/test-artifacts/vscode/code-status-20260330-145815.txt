@@ -1,0 +1,167 @@
+Version:          Code 1.113.0 (cfbea10c5ffb233ea9177d34726e6056e89913dc, 2026-03-24T15:07:18+01:00)
+OS Version:       Linux x64 6.17.0-19-generic
+CPUs:             Intel(R) Core(TM) i9-9900K CPU @ 3.60GHz (16 x 4699)
+Memory (System):  31.27GB (7.42GB free)
+Load (avg):       5, 6, 6
+VM:               0%
+Screen Reader:    no
+Process Argv:     --crash-reporter-id 652a7ba5-73db-4fdd-b9c7-dfc5d6e979e2
+GPU Status:       2d_canvas:                              enabled
+                  GPU0:                                   VENDOR= 0x1002 [Google Inc. (AMD)], DEVICE=0x7550 [ANGLE (AMD, AMD Radeon RX 9070 XT (radeonsi gfx1201 ACO), OpenGL ES 3.2 Mesa 25.0.0-devel)], DRIVER_VENDOR=Mesa, DRIVER_VERSION=25.0.0 *ACTIVE*
+                  Machine model name:                     
+                  Machine model version:                  
+                  direct_rendering_display_compositor:    disabled_off_ok
+                  gpu_compositing:                        enabled
+                  multiple_raster_threads:                enabled_on
+                  opengl:                                 enabled_on
+                  rasterization:                          enabled
+                  raw_draw:                               disabled_off_ok
+                  skia_graphite:                          disabled_off
+                  trees_in_viz:                           disabled_off
+                  video_decode:                           enabled
+                  video_encode:                           disabled_software
+                  vulkan:                                 disabled_off
+                  webgl:                                  enabled
+                  webgl2:                                 enabled
+                  webgpu:                                 disabled_off
+                  webnn:                                  disabled_off
+GPU Log Messages:
+[7812:0326/154800.568026:WARNING:sandbox/policy/linux/sandbox_linux.cc:404] : InitializeSandbox() called with multiple threads in process gpu-process.
+
+[7812:0327/101313.835449:ERROR:components/viz/service/display/display.cc:277] : Frame latency is negative: -1.329 ms
+
+
+CPU %	Mem MB	   PID	Process
+    0	53742496514	  7757	code
+    0	     0	  7762	   zygote
+    0	10748499303	  7812	     zygote
+    0	     0	  7763	   zygote
+    0	     0	  7765	     zygote
+    0	64490995817	  7864	window [1] (Modèles de langage - PC - Visual Studio Code)
+    0	311706479784	  7872	window [2] (bmad-custom - Visual Studio Code)
+    0	365448976298	  7885	window [3] (kustomization.yaml - Terraform-HouseServer - Visual Studio Code)
+    0	128981991635	  7894	window [4] (freecad-modeler.agent.md - Creation_Meubles - Visual Studio Code)
+    0	32245497909	  9009	       zygote
+    0	10748499303	  7818	   utility-network-service
+    0	10748499303	  8426	shared-process
+    0	10748499303	  8427	file-watcher [2]
+    0	225718485361	  8428	extension-host [1]
+    0	     0	  9609	     /home/guilhem/.vscode/extensions/openai.chatgpt-26.324.21329-linux-x64/bin/linux-x86_64/codex app-server --analytics-default-enabled
+    0	     0	 11004	     /usr/share/code/code /usr/share/code/resources/app/extensions/json-language-features/server/dist/node/jsonServerMain --node-ipc --clientProcessId=8428
+    0	     0	 11563	     /home/guilhem/.vscode/extensions/ms-python.python-2026.4.0-linux-x64/python-env-tools/bin/pet server
+    0	     0	 11803	     /usr/share/code/code /usr/share/code/resources/app/extensions/markdown-language-features/dist/serverWorkerMain --node-ipc --clientProcessId=8428
+    0	     0	 12408	     /home/guilhem/.local/bin/ruff server
+    0	     0	 13349	     /home/guilhem/.vscode/extensions/ms-python.vscode-python-envs-1.24.0-linux-x64/python-env-tools/bin/pet server
+    0	     0	 13768	     electron-nodejs (bundle.js)
+    0	     0	 14960	     electron-nodejs (server-node.js)
+    0	10748499303	  8450	file-watcher [3]
+    0	1128592426804	  8492	extension-host [2]
+    0	     0	  9801	     /home/guilhem/.vscode/extensions/openai.chatgpt-26.324.21329-linux-x64/bin/linux-x86_64/codex app-server --analytics-default-enabled
+    0	     0	 11558	     /home/guilhem/.vscode/extensions/ms-python.python-2026.4.0-linux-x64/python-env-tools/bin/pet server
+    0	10748499303	 11780	     /usr/share/code/code /usr/share/code/resources/app/extensions/json-language-features/server/dist/node/jsonServerMain --node-ipc --clientProcessId=8492
+    0	10748499303	 12142	     /usr/share/code/code /usr/share/code/resources/app/extensions/markdown-language-features/dist/serverWorkerMain --node-ipc --clientProcessId=8492
+    0	     0	 13076	     /home/guilhem/.local/bin/ruff server
+    0	     0	 13606	     /home/guilhem/.vscode/extensions/ms-python.vscode-python-envs-1.24.0-linux-x64/python-env-tools/bin/pet server
+    0	150478990240	 14088	     electron-nodejs (bundle.js)
+    0	10748499303	 16099	     electron-nodejs (server-node.js)
+    0	10748499303	1065712	     electron-nodejs (languageserver.js)
+    0	     0	1167313	     npm exec @modelcontextprotocol/server-filesystem /mnt/Travail/Projets/Dev/OPS/Terraform-HouseServer /home/guilhem
+    0	     0	1167375	       sh -c "mcp-server-filesystem" /mnt/Travail/Projets/Dev/OPS/Terraform-HouseServer /home/guilhem
+    0	     0	1167376	         node /home/guilhem/.npm/_npx/a3241bba59c344f5/node_modules/.bin/mcp-server-filesystem /mnt/Travail/Projets/Dev/OPS/Terraform-HouseServer /home/guilhem
+    0	     0	1975529	     npm exec @playwright/mcp
+    0	     0	1975590	       sh -c "playwright-mcp"
+    0	     0	1975591	         node /home/guilhem/.npm/_npx/86170c4cd1c5da32/node_modules/.bin/playwright-mcp
+    0	10748499303	1980402	     electron-nodejs (server.js)
+    0	10748499303	1980408	     electron-nodejs (server.js)
+    0	     0	1980577	     /home/guilhem/go/bin/gopls
+    0	     0	1980601	       /home/guilhem/go/bin/gopls ** telemetry **
+    0	     0	1980627	     /home/guilhem/.vscode/extensions/devsense.phptools-vscode-1.69.18673-linux-x64/out/server/devsense.php.ls --vscode
+    0	     0	1980720	     /home/guilhem/.vscode/extensions/ms-vscode.cpptools-1.31.3-linux-x64/bin/cpptools
+    0	21496998606	1981185	     /home/guilhem/.vscode/extensions/ms-dotnettools.csharp-2.130.5-linux-x64/.roslyn/Microsoft.CodeAnalysis.LanguageServer --logLevel Information --sourceGeneratorExecutionPreference Balanced --razorSourceGenerator /home/guilhem/.vscode/extensions/ms-dotnettools.csharp-2.130.5-linux-x64/.razorExtension/Microsoft.CodeAnalysis.Razor.Compiler.dll --razorDesignTimePath /home/guilhem/.vscode/extensions/ms-dotnettools.csharp-2.130.5-linux-x64/.razorExtension/Targets/Microsoft.NET.Sdk.Razor.DesignTime.targets --devKitDependencyPath /home/guilhem/.vscode/extensions/ms-dotnettools.csharp-2.130.5-linux-x64/.roslynDevKit/Microsoft.VisualStudio.LanguageServices.DevKit.dll --sessionId a84aa349-6ab0-4da5-ae11-ff7401830c2f1774554481051 --extension /home/guilhem/.vscode/extensions/visualstudiotoolsforunity.vstuc-1.2.1/CodeAnalysis/UnityCodeAnalysis.dll --extension /home/guilhem/.vscode/extensions/ms-dotnettools.csharp-2.130.5-linux-x64/.razorExtension/Microsoft.VisualStudioCode.RazorExtension.dll --extension /home/guilhem/.vscode/extensions/ms-dotnettools.csharp-2.130.5-linux-x64/.xamlTools/Microsoft.VisualStudio.DesignTools.CodeAnalysis.dll --extension /home/guilhem/.vscode/extensions/ms-dotnettools.csharp-2.130.5-linux-x64/.xamlTools/Microsoft.VisualStudio.DesignTools.CodeAnalysis.Diagnostics.dll --extension /home/guilhem/.vscode/extensions/ms-dotnettools.csharp-2.130.5-linux-x64/.roslynCopilot/Microsoft.VisualStudio.Copilot.Roslyn.LanguageServer.dll --telemetryLevel all --extensionLogDirectory /home/guilhem/.config/Code/logs/20260326T154800/window2/exthost/ms-dotnettools.csharp --clientProcessId=8492 --pipe=/run/user/1000/lsp-8c4be913be4da4a39cf86b155fce1261.sock
+    0	     0	1981642	     /bin/sh -c "/home/guilhem/.vscode/extensions/vscjava.vscode-gradle-3.17.2/lib/gradle-server" "--port=33551" "--startBuildServer=true" "--languageServerPipePath=/run/user/1000/734159aee2b253594bc538c9d1cdfe39.sock" "--pipeName=/run/user/1000/a1cb117fc10b4c66362a70743c1a65c2.sock" "--bundleDir=/home/guilhem/.vscode/extensions/vscjava.vscode-gradle-3.17.2/server"
+    0	     0	1981643	       /home/guilhem/.vscode/extensions/redhat.java-1.53.0-linux-x64/jre/21.0.10-linux-x86_64/bin/java -Dfile.encoding=UTF-8 --add-opens=java.base/java.util=ALL-UNNAMED --add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.base/java.lang.invoke=ALL-UNNAMED --add-opens=java.prefs/java.util.prefs=ALL-UNNAMED --add-opens=java.base/java.nio.charset=ALL-UNNAMED --add-opens=java.base/java.net=ALL-UNNAMED --add-opens=java.base/java.util.concurrent.atomic=ALL-UNNAMED -classpath /home/guilhem/.vscode/extensions/vscjava.vscode-gradle-3.17.2/lib/gradle-server.jar com.github.badsyntax.gradle.GradleServer --port=33551 --startBuildServer=true --languageServerPipePath=/run/user/1000/734159aee2b253594bc538c9d1cdfe39.sock --pipeName=/run/user/1000/a1cb117fc10b4c66362a70743c1a65c2.sock --bundleDir=/home/guilhem/.vscode/extensions/vscjava.vscode-gradle-3.17.2/server
+    0	     0	1981847	     /home/guilhem/.vscode/extensions/redhat.java-1.53.0-linux-x64/jre/21.0.10-linux-x86_64/bin/java --add-modules=ALL-SYSTEM --add-opens java.base/java.util=ALL-UNNAMED --add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.base/sun.nio.fs=ALL-UNNAMED -Declipse.application=org.eclipse.jdt.ls.core.id1 -Dosgi.bundles.defaultStartLevel=4 -Declipse.product=org.eclipse.jdt.ls.core.product -Djava.import.generatesMetadataFilesAtProjectRoot=false -DDetectVMInstallationsJob.disabled=true -Dfile.encoding=utf8 -XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx2G -Xms100m -Xlog:disable -javaagent:/home/guilhem/.vscode/extensions/redhat.java-1.53.0-linux-x64/lombok/lombok-1.18.39-4050.jar -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/home/guilhem/.config/Code/User/workspaceStorage/0c3f12920df36eb38b920f6e8dcce3a0/redhat.java -Daether.dependencyCollector.impl=bf -jar /home/guilhem/.vscode/extensions/redhat.java-1.53.0-linux-x64/server/plugins/org.eclipse.equinox.launcher_1.7.100.v20251111-0406.jar -configuration /home/guilhem/.config/Code/User/globalStorage/redhat.java/1.53.0/config_linux -data /home/guilhem/.config/Code/User/workspaceStorage/0c3f12920df36eb38b920f6e8dcce3a0/redhat.java/jdt_ws --pipe=/run/user/1000/lsp-6d9d7fea5c7ccd6e18d1a148a16d7f42.sock
+    0	     0	1985041	     /usr/bin/python3 /home/guilhem/.vscode/extensions/ms-python.isort-2025.0.0/bundled/tool/lsp_server.py
+    0	     0	3818334	     /home/guilhem/.vscode/extensions/docker.docker-0.18.0-linux-x64/bin/docker-language-server-linux-amd64 start --stdio
+    0	     0	3818351	       /home/guilhem/.vscode/extensions/docker.docker-0.18.0-linux-x64/bin/docker-language-server-linux-amd64 start --stdio
+    0	591167461659	  8534	extension-host [4]
+    0	     0	  9841	     /home/guilhem/.vscode/extensions/openai.chatgpt-26.324.21329-linux-x64/bin/linux-x86_64/codex app-server --analytics-default-enabled
+    0	     0	 11003	     /home/guilhem/.vscode/extensions/ms-python.python-2026.4.0-linux-x64/python-env-tools/bin/pet server
+    0	     0	 11073	     /usr/share/code/code /usr/share/code/resources/app/extensions/markdown-language-features/dist/serverWorkerMain --node-ipc --clientProcessId=8534
+    0	     0	 11549	     /usr/share/code/code /usr/share/code/resources/app/extensions/json-language-features/server/dist/node/jsonServerMain --node-ipc --clientProcessId=8534
+    0	     0	 14414	     /home/guilhem/.local/bin/ruff server
+    0	     0	 14672	     /home/guilhem/.vscode/extensions/ms-python.vscode-python-envs-1.24.0-linux-x64/python-env-tools/bin/pet server
+    0	10748499303	 15146	     electron-nodejs (bundle.js)
+    0	     0	1982634	     /mnt/Travail/Projets/Dev/Creation_Meubles/.venv/bin/python /home/guilhem/.vscode/extensions/ms-python.isort-2025.0.0/bundled/tool/lsp_server.py
+    0	10748499303	1982635	     electron-nodejs (languageserver.js)
+    0	     0	2694945	     npm exec @modelcontextprotocol/server-filesystem /mnt/Travail/Projets/Dev/OPS/Terraform-HouseServer /home/guilhem
+    0	     0	2695053	       sh -c "mcp-server-filesystem" /mnt/Travail/Projets/Dev/OPS/Terraform-HouseServer /home/guilhem
+    0	     0	2695054	         node /home/guilhem/.npm/_npx/a3241bba59c344f5/node_modules/.bin/mcp-server-filesystem /mnt/Travail/Projets/Dev/OPS/Terraform-HouseServer /home/guilhem
+    0	10748499303	  8569	file-watcher [4]
+    0	408442973510	  8606	extension-host [3]
+    0	     0	 11036	     /home/guilhem/.vscode/extensions/openai.chatgpt-26.324.21329-linux-x64/bin/linux-x86_64/codex app-server --analytics-default-enabled
+    0	     0	 11564	     /home/guilhem/.vscode/extensions/ms-python.python-2026.4.0-linux-x64/python-env-tools/bin/pet server
+    0	118233492332	 12861	     /home/guilhem/.vscode/extensions/hashicorp.terraform-2.39.2-linux-x64/bin/terraform-ls serve
+    0	     0	 13077	     /usr/share/code/code /usr/share/code/resources/app/extensions/json-language-features/server/dist/node/jsonServerMain --node-ipc --clientProcessId=8606
+    0	     0	 13094	     /usr/share/code/code /usr/share/code/resources/app/extensions/markdown-language-features/dist/serverWorkerMain --node-ipc --clientProcessId=8606
+    0	     0	 14230	     /home/guilhem/.vscode/extensions/ms-python.vscode-python-envs-1.24.0-linux-x64/python-env-tools/bin/pet server
+    0	     0	 14261	     /mnt/Travail/Projets/Dev/OPS/Terraform-HouseServer/.venv/bin/python /home/guilhem/.vscode/extensions/ms-python.isort-2025.0.0/bundled/tool/lsp_server.py
+    0	     0	 14273	     electron-nodejs (languageserver.js)
+    0	     0	 15145	     electron-nodejs (bundle.js)
+    0	     0	 16654	     electron-nodejs (server-node.js)
+    0	     0	1049351	     npm exec mcp-server-kubernetes@3.3.0
+    0	     0	1050064	       sh -c "mcp-server-kubernetes"
+    0	     0	1050065	         node /home/guilhem/.npm/_npx/c54c01ebfe361e5f/node_modules/.bin/mcp-server-kubernetes
+    0	     0	2340989	     electron-nodejs (tsserver.js)
+    0	10748499303	2340990	     electron-nodejs (tsserver.js)
+    0	     0	2341016	       electron-nodejs (typingsInstaller.js)
+    0	     0	2341124	     electron-nodejs (server.js)
+    0	     0	2341125	     electron-nodejs (server.js)
+    0	     0	2341158	     mdx-language-server
+    0	     0	2341216	     /home/guilhem/.vscode/extensions/docker.docker-0.18.0-linux-x64/bin/docker-language-server-linux-amd64 start --stdio
+    0	     0	2341248	       /home/guilhem/.vscode/extensions/docker.docker-0.18.0-linux-x64/bin/docker-language-server-linux-amd64 start --stdio
+    0	     0	2377624	     node /home/guilhem/.nvm/versions/node/v20.19.4/bin/hostinger-api-mcp
+    0	21496998606	  9017	pty-host
+    0	     0	 11851	     /usr/bin/zsh
+    0	     0	 11927	     /usr/bin/zsh
+    0	     0	 12758	     /usr/bin/zsh
+    0	     0	 13393	     /usr/bin/zsh
+    0	     0	108407	     bash -c OUT="/mnt/Travail/Projets/Dev/bmad-custom/_bmad-output/test-artifacts/vscode"; mkdir -p "$OUT"; TS=$(date +%Y%m%d-%H%M%S); if command -v code >/dev/null 2>&1; then code --status > "$OUT/code-status-$TS.txt" 2>&1 || true; code --verbose --status > "$OUT/code-verbose-status-$TS.txt" 2>&1 || true; echo "Diagnostics sauvegardes dans $OUT"; else echo "Commande code indisponible dans ce shell"; fi
+    0	     0	108411	       sh /usr/bin/code --status
+    0	21496998606	108416	         electron-nodejs (cli.js)
+    0	53742496514	108451	           /usr/share/code/code --status
+    0	10748499303	108454	             zygote
+    0	21496998606	108505	               zygote
+    0	10748499303	108455	             zygote
+    0	     0	108457	               zygote
+    0	10748499303	108510	             utility-network-service
+    0	     0	108532	             /bin/sh -c /usr/bin/ps -ax -o pid=,ppid=,pcpu=,pmem=,command=
+    0	     0	4194299	     /usr/bin/zsh -l
+    0	     0	  9019	file-watcher [1]
+
+Workspace Stats: 
+|  Window (freecad-modeler.agent.md - Creation_Meubles - Visual Studio Code)
+|  Window (kustomization.yaml - Terraform-HouseServer - Visual Studio Code)
+|  Window (bmad-custom - Visual Studio Code)
+|  Window (Modèles de langage - PC - Visual Studio Code)
+|    Folder (Creation_Meubles): 1272 files
+|      File types: py(424) pyc(410) md(114) typed(14) txt(12) FCStd(12)
+|                  png(12) yaml(9) sh(7) FCBak(7)
+|      Conf files: github-prompts-dir(6) copilot-instructions.md(1)
+|                  mcp.json(1)
+|    Folder (PC): 17956 files
+|      File types: o(2465) bc(2062) spv(1293) json(1021) timestamp(1005)
+|                  d(977) rmeta(761) md(665) rlib(567) cu(528)
+|      Conf files: cmake(143) makefile(17) package.json(4) settings.json(1)
+|                  claude.md(1) dockerfile(1)
+|    Folder (bmad-custom): more than 22226 files
+|      File types: json(11067) pyc(1977) py(1947) md(863) pyi(680) so(183)
+|                  txt(107) yaml(89) typed(43) cpp(42)
+|      Conf files: github-prompts-dir(93) github-instructions-dir(3)
+|                  copilot-instructions.md(1) github-actions(1) mcp.json(1)
+|                  settings.json(1) tasks.json(1) devcontainer.json(1)
+|                  makefile(1)
+|    Folder (Terraform-HouseServer): more than 20714 files
+|      File types: pyc(7668) py(7640) pyi(301) so(218) txt(118) mat(110)
+|                  gz(99) pyx(69) typed(68) h(65)
+|      Conf files:

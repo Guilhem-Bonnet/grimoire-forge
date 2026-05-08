@@ -1,6 +1,6 @@
 ---
 name: grimoire-session-bootstrap
-description: 'Bootstrap a new BMAD Grimoire session with full context. Use when: start session, new session, session bootstrap, load context, resume work, what happened last time, session recap, catch me up, continue where we left off. Loads session chain, checks project health, restores working context.'
+description: 'Bootstrap a new Grimoire session with full context. Use when: start session, new session, session bootstrap, load context, resume work, what happened last time, session recap, catch me up, continue where we left off. Loads session chain, checks project health, restores working context.'
 ---
 
 # Grimoire Session Bootstrap
@@ -21,7 +21,7 @@ Initialize a new working session by loading historical context and checking proj
 Read the session chain to understand recent history:
 
 ```bash
-cat _bmad/_memory/session-chain.jsonl 2>/dev/null | tail -5
+cat _grimoire-runtime/_memory/session-chain.jsonl 2>/dev/null | tail -5
 ```
 
 If it exists, parse the last 3-5 entries and summarize:
@@ -35,7 +35,7 @@ If it doesn't exist, note that this is the first tracked session.
 ### Step 2 — Check Shared Context
 
 ```bash
-cat _bmad/_memory/shared-context.md 2>/dev/null | head -50
+cat _grimoire-runtime/_memory/shared-context.md 2>/dev/null | head -50
 ```
 
 Load cross-agent shared knowledge to understand current project state.
@@ -63,7 +63,7 @@ Understand:
 ### Step 5 — Check Active Planning Artifacts
 
 ```bash
-ls -la _bmad-output/planning-artifacts/ 2>/dev/null | tail -10
+ls -la _grimoire-runtime-output/planning-artifacts/ 2>/dev/null | tail -10
 ```
 
 Identify active planning documents (PRD, epics, brainstorms) to understand current project phase.

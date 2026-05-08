@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "grimoire/mission-board/board-card-projection.schema.json",
+  "title": "BoardCardProjection",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["cardId", "taskId", "column", "title", "lifecycle", "verification", "supervision", "counts", "badges", "lastEventAt"],
+  "properties": {
+    "cardId": { "type": "string", "minLength": 1 },
+    "taskId": { "type": "string", "minLength": 1 },
+    "column": { "enum": ["Intake", "Qualified", "Assigned", "Running", "Review", "Verified", "Blocked", "Done"] },
+    "title": { "type": "string", "minLength": 1 },
+    "subtitle": { "type": "string", "minLength": 1 },
+    "lane": { "type": "string", "minLength": 1 },
+    "lifecycle": { "enum": ["backlog", "ready", "in_progress", "review", "blocked", "done", "cancelled"] },
+    "verification": { "enum": ["none", "queued", "verifying", "accepted", "rejected", "needs_work"] },
+    "supervision": { "enum": ["healthy", "stale", "escalated", "quarantined"] },
+    "counts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["dependencies", "criteria", "evidence"],
+      "properties": {
+        "dependencies": { "type": "integer", "minimum": 0 },
+        "criteria": { "type": "integer", "minimum": 0 },
+        "evidence": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "badges": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["kind", "label"],
+        "properties": {
+          "kind": { "type": "string", "minLength": 1 },
+          "label": { "type": "string", "minLength": 1 },
+          "tone": { "enum": ["ink", "paper", "storm", "verdigris", "brass", "ember", "memory", "leaf"] }
+        }
+      },
+      "default": []
+    },
+    "lastEventAt": { "type": "string", "minLength": 1 },
+    "primaryAction": { "type": "string", "minLength": 1 }
+  }
+}

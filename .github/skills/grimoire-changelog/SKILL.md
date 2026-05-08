@@ -53,7 +53,7 @@ Group by conventional commit prefix:
 ### Step 3 — Enrich with Session Chain
 
 ```bash
-cat _bmad/_memory/session-chain.jsonl 2>/dev/null | tail -10
+cat _grimoire-runtime/_memory/session-chain.jsonl 2>/dev/null | tail -10
 ```
 
 Cross-reference session summaries with commits to add context:

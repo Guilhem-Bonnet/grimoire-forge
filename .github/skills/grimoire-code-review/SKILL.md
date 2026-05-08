@@ -14,6 +14,12 @@ Review de code adversariale multi-couches avec triage structuré en catégories 
 - Review de PR, branch diff, staged changes, ou diff fourni
 - En complément ou remplacement de `review-adversarial-general`
 
+## Quand NE PAS utiliser
+
+- Pour traquer des edge cases méthodiquement par énumération de paths → `grimoire-edge-case-hunter` (orthogonal, method-driven plutôt qu'attitude-driven).
+- Comme gate finale avant push/commit → `grimoire-verification` puis `grimoire-pre-push`.
+- Pour un audit sécurité ciblé OWASP/secrets/injections → `grimoire-security-review`.
+
 ## Procédure
 
 ### Step 1 — Collecter le contexte
@@ -73,7 +79,7 @@ Lancer les 3 couches de review. Si les subagents ne sont pas disponibles, exécu
 Invoquer le skill `grimoire-edge-case-hunter` n'est PAS suffisant — utiliser la task adversariale.
 **Input** : diff uniquement. Aucun contexte, aucune spec, aucun accès projet.
 
-> Correspond à `_bmad/core/tasks/review-adversarial-general.xml` — review cynique à l'aveugle.
+> Correspond à `_grimoire-runtime/core/tasks/review-adversarial-general.xml` — review cynique à l'aveugle.
 
 #### Couche 2 : Edge Case Hunter
 

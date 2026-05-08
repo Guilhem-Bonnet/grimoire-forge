@@ -1,0 +1,15 @@
+- generic [active] [ref=e1]:
+  - link "Aller au contenu" [ref=e2] [cursor=pointer]:
+    - /url: http://127.0.0.1:8765/presentation-decouverte/#grimoire-kit
+  - banner [ref=e3]:
+    - navigation "En-tête" [ref=e4]:
+      - generic [ref=e6]
+      - generic [ref=e9]
+      - img [ref=e14] [cursor=pointer]
+      - dialog
+  - generic [ref=e22]:
+    - main [ref=e23]:
+      - article [ref=e26]
+      - button "Retour en haut de la page"
+    - contentinfo [ref=e303]:
+      - generic [ref=e306]
