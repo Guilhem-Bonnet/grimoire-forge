@@ -9,7 +9,7 @@ TASK_ID="${TASK_ID:-bootstrap}"
 
 usage() {
   cat <<'USAGE'
-Usage: scripts/setup-agentic-standard.sh [--project-root PATH] [--profile ID] [--task-id ID] [--force] [--dry-run] [--verify-only] [--audit-only] [--markdown]
+Usage: scripts/setup-agentic-standard.sh [--project-root PATH] [--profile ID] [--task-id ID] [--provider ID] [--providers LIST] [--provider-policy POLICY] [--force] [--dry-run] [--verify-only] [--audit-only] [--detect-providers] [--markdown]
 
 Environment overrides:
   PROJECT_ROOT   Target project root (default: repository root)
@@ -20,8 +20,10 @@ USAGE
 
 FORCE=()
 DRY_RUN=()
+PROVIDER_ARGS=()
 VERIFY_ONLY=false
 AUDIT_ONLY=false
+DETECT_PROVIDERS=false
 MARKDOWN=()
 
 while [[ $# -gt 0 ]]; do
@@ -38,6 +40,18 @@ while [[ $# -gt 0 ]]; do
       TASK_ID="$2"
       shift 2
       ;;
+    --provider)
+      PROVIDER_ARGS+=(--provider "$2")
+      shift 2
+      ;;
+    --providers)
+      PROVIDER_ARGS+=(--providers "$2")
+      shift 2
+      ;;
+    --provider-policy)
+      PROVIDER_ARGS+=(--provider-policy "$2")
+      shift 2
+      ;;
     --force)
       FORCE=(--force)
       shift
@@ -52,6 +66,10 @@ while [[ $# -gt 0 ]]; do
       ;;
     --audit-only)
       AUDIT_ONLY=true
+      shift
+      ;;
+    --detect-providers)
+      DETECT_PROVIDERS=true
       shift
       ;;
     --markdown)
@@ -79,8 +97,13 @@ if [[ "${AUDIT_ONLY}" == "true" ]]; then
   exit 0
 fi
 
+if [[ "${DETECT_PROVIDERS}" == "true" ]]; then
+  run_grimoire standard detect-providers
+  exit 0
+fi
+
 if [[ "${VERIFY_ONLY}" != "true" ]]; then
-  run_grimoire standard init "${PROJECT_ROOT}" --profile "${PROFILE}" --task-id "${TASK_ID}" "${FORCE[@]}" "${DRY_RUN[@]}"
+  run_grimoire standard init "${PROJECT_ROOT}" --profile "${PROFILE}" --task-id "${TASK_ID}" "${PROVIDER_ARGS[@]}" "${FORCE[@]}" "${DRY_RUN[@]}"
 fi
 
 if [[ ${#DRY_RUN[@]} -eq 0 ]]; then

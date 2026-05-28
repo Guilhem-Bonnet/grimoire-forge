@@ -10,6 +10,7 @@
     "standard:init": "bash scripts/setup-agentic-standard.sh",
     "standard:verify": "bash scripts/setup-agentic-standard.sh --verify-only",
     "standard:audit": "bash scripts/setup-agentic-standard.sh --audit-only --markdown",
+    "standard:providers": "bash scripts/setup-agentic-standard.sh --detect-providers",
     "pages:rebuild": "npm --prefix web run pages:rebuild",
     "cockpit:copy": "npm --prefix web run cockpit:copy",
     "install:web": "npm --prefix web install"

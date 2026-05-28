@@ -22,7 +22,7 @@
 
 | Knowledge source | Query or index | Trust level | Used as source of truth? | Notes |
 |---|---|---|---:|---|
-| agentic-standard-corpus | `../processus-developpement-agentique` | authoritative | yes | Upstream standard remains external and normative. |
+| agentic-standard-corpus | `Guilhem-Bonnet/processus-developpement-agentique` | authoritative | yes | Upstream standard remains external and normative. |
 | grimoire-forge-runtime | `.` | high | yes | Project-specific generated artifacts and wrappers. |
 | grimoire-kit-framework | `grimoire-kit/framework/agentic-standard` | high | yes | Template/profile bridge consumed by Forge. |
 
