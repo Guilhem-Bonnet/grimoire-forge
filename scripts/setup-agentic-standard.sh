@@ -92,6 +92,12 @@ run_grimoire() {
   PYTHONPATH="${KIT_DIR}/src:${PYTHONPATH:-}" python3 -c 'from grimoire.cli.app import cli; cli()' "$@"
 }
 
+if [[ ! "${TASK_ID}" =~ ^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$ ]]; then
+  echo "Invalid task id: ${TASK_ID}" >&2
+  echo "Use 1-128 letters, numbers, dots, underscores, or hyphens, starting with a letter or number." >&2
+  exit 2
+fi
+
 if [[ "${AUDIT_ONLY}" == "true" ]]; then
   run_grimoire standard audit "${PROJECT_ROOT}" --profile "${PROFILE}" --task-id "${TASK_ID}" "${MARKDOWN[@]}"
   exit 0
