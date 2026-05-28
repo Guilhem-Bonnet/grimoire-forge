@@ -94,7 +94,10 @@ Le dépôt Forge peut maintenant initialiser et vérifier le pont norme → kit 
 
 ```bash
 # Générer les artefacts standard-aware dans ce workspace
-npm run standard:init -- --profile orchestrated --force
+npm run standard:init -- --profile orchestrated --provider github-copilot --force
+
+# Détecter les signaux provider non secrets disponibles localement
+npm run standard:providers
 
 # Vérifier que les artefacts requis du profil sont présents
 npm run standard:verify -- --profile orchestrated
@@ -103,7 +106,7 @@ npm run standard:verify -- --profile orchestrated
 npm run standard:audit -- --profile orchestrated
 ```
 
-Le script racine [`scripts/setup-agentic-standard.sh`](scripts/setup-agentic-standard.sh) appelle la CLI du kit (`grimoire standard init/verify`) avec `grimoire-kit/src` en `PYTHONPATH`. Les artefacts générés vivent dans `_grimoire/standard/` et `_grimoire-output/evidence/{task-id}/`.
+Le script racine [`scripts/setup-agentic-standard.sh`](scripts/setup-agentic-standard.sh) appelle la CLI du kit (`grimoire standard init/verify/audit/detect-providers`) avec `grimoire-kit/src` en `PYTHONPATH`. Les artefacts générés vivent dans `_grimoire/standard/` et `_grimoire-output/evidence/{task-id}/`. Le choix provider reste explicite : la détection ne lit pas les secrets et ne remplace pas une décision d'activation.
 
 ## Demo locale du cockpit V5
 
