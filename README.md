@@ -121,6 +121,9 @@ npm run standard:init -- --profile orchestrated --force
 
 # Vérifier que les artefacts requis du profil sont présents
 npm run standard:verify -- --profile orchestrated
+
+# Produire un rapport d'audit markdown
+npm run standard:audit -- --profile orchestrated
 ```
 
 Le script racine [`scripts/setup-agentic-standard.sh`](scripts/setup-agentic-standard.sh) appelle la CLI du kit (`grimoire standard init/verify`) avec `grimoire-kit/src` en `PYTHONPATH`. Les artefacts générés vivent dans `_grimoire/standard/` et `_grimoire-output/evidence/{task-id}/`.
