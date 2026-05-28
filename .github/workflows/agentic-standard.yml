@@ -30,7 +30,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: Guilhem-Bonnet/Grimoire-kit
-          ref: feat/agentic-standard-bridge
+          ref: ae495582a1d570c109cdd08f1c6e182e25d526be
           path: grimoire-kit
 
       - uses: actions/setup-python@v5
