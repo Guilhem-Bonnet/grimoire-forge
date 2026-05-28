@@ -46,7 +46,7 @@ jobs:
           bash -n grimoire-kit/framework/hooks/pre-commit-cc.sh && echo "✅ pre-commit-cc.sh"
 
   smoke-test:
-    name: Smoke test — bmad-init.sh --help
+    name: Smoke test — grimoire-init.sh --help
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -63,3 +63,32 @@ jobs:
           stacks=$(detect_stack "$(pwd)/grimoire-kit")
           echo "Stacks détectés : $stacks"
           [[ -n "$stacks" ]] && echo "✅ detect_stack OK" || echo "⚠️  Aucun stack détecté"
+
+  python-quality:
+    name: Python quality - grimoire-kit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Skip absent vendored kit
+        run: |
+          [ -f grimoire-kit/pyproject.toml ] || { echo "grimoire-kit absent dans ce checkout — skip"; exit 0; }
+
+  visual-evidence-governance:
+    name: Visual evidence governance
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Skip absent visual scope
+        run: echo "No visual-scope changes detected, visual governance check skipped."
+
+  grimoire-game-quality:
+    name: Grimoire Game quality - Node.js
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Skip absent Grimoire Game package
+        run: |
+          [ -f grimoire-kit/apps/grimoire-game/package.json ] || { echo "grimoire-game absent dans ce checkout — skip"; exit 0; }

@@ -1,0 +1,21 @@
+name: PR governance
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  conventional-title:
+    name: Conventional PR title
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate title
+        env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
+        run: |
+          if [[ "${PR_TITLE}" =~ ^(feat|fix|docs|chore|ci|test|refactor|perf|build)(\\(.+\\))?:\ .+ ]]; then
+            echo "Conventional PR title OK: ${PR_TITLE}"
+          else
+            echo "::error::PR title must follow Conventional Commits, e.g. feat: add agentic standard baseline"
+            exit 1
+          fi

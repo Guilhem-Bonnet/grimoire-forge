@@ -46,5 +46,5 @@
 
 | Deviation | Reason | Expiry or review trigger |
 |---|---|---|
-| CI enforcement not enabled yet | Branch and publication strategy is not settled. | Before remote publication or PR creation. |
+| Release gate enforcement remains path-limited | PR CI now runs standard verification/audit for standard artifacts; broader release-branch policy is still separate. | Before moving from `orchestrated` to `governed`. |
 | Automated knowledge indexing not enabled yet | Current milestone establishes registry and auditability first. | Before moving from `orchestrated` to `governed`. |

@@ -32,7 +32,7 @@
 
 | Control family | Applied? | Evidence | Gap |
 |---|---:|---|---|
-| Governance | yes | `_grimoire/standard/compliance-declaration.md` | CI enforcement not enabled yet. |
+| Governance | yes | `_grimoire/standard/compliance-declaration.md`, `.github/workflows/agentic-standard.yml` | PR CI enforcement is enabled; runtime release-gate enforcement remains future work. |
 | Quality | yes | Targeted pytest, mypy, ruff validation listed above | Full repository lint still has pre-existing unrelated failures. |
 | Runtime | partial | `scripts/setup-agentic-standard.sh`, `package.json` npm scripts | Runtime workflow is local wrapper only; no release gate yet. |
 | Knowledge | yes | `_grimoire/standard/knowledge-source-registry.yaml` | Automated indexing/doc-to-graph pipeline not enabled yet. |

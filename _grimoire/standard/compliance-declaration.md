@@ -14,7 +14,7 @@
 |---|---|---|---|
 | Workflow State Engine | partial | `_grimoire-output/evidence/bootstrap/task-envelope.md` | State is documented per task; runtime FSM enforcement remains future work. |
 | Advanced Context Orchestrator | partial | `_grimoire-output/evidence/bootstrap/task-envelope.md`, `_grimoire/standard/knowledge-source-registry.yaml` | Context selection is documented; automatic ranking/budget enforcement is not implemented yet. |
-| Evidence-Gated Workflow FSM | partial | `_grimoire-output/evidence/bootstrap/evidence-pack.md`, `npm run standard:verify` | Evidence is auditable; hard fail gates are not wired into CI yet. |
+| Evidence-Gated Workflow FSM | partial | `_grimoire-output/evidence/bootstrap/evidence-pack.md`, `npm run standard:verify`, `.github/workflows/agentic-standard.yml` | Evidence is auditable in PR CI; runtime FSM release gates remain future work. |
 | Agent Telemetry Plane | deferred | `_grimoire-output/task-flow/events.jsonl` | Existing runtime events are present but not normalized into a standard telemetry plane. |
 | Tool Blast-Radius Limiter | partial | `_grimoire-output/evidence/bootstrap/task-envelope.md` | Tool scopes are declared; enforcement is currently procedural. |
 | Knowledge Base Indexer | partial | `_grimoire/standard/knowledge-source-registry.yaml` | Sources are declared; automated indexing/doc-to-graph pipeline is not active yet. |
@@ -34,7 +34,7 @@
 
 | Item | Severity | Remediation | Owner |
 |---|---|---|---|
-| CI release gate not enabled for `standard:verify` | medium | Add standard verification to CI once branch publication strategy is settled. | Grimoire maintainers |
+| Runtime release gate not enabled for `standard:verify` | medium | Extend standard verification beyond PR CI into the future release workflow. | Grimoire maintainers |
 | Automated knowledge indexing not enabled | medium | Implement doc-to-graph or index-manifest generation from declared sources. | Grimoire maintainers |
 | Provider failover is declared but not runtime-enforced | low | Bind registry routing to future runtime provider contract. | Grimoire maintainers |
 

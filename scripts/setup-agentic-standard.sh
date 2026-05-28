@@ -26,29 +26,44 @@ AUDIT_ONLY=false
 DETECT_PROVIDERS=false
 MARKDOWN=()
 
+require_value() {
+  local option="$1"
+  if [[ $# -lt 2 || -z "${2:-}" || "${2:-}" == --* ]]; then
+    echo "Missing value for ${option}" >&2
+    usage >&2
+    exit 2
+  fi
+}
+
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --project-root)
+      require_value "$@"
       PROJECT_ROOT="$2"
       shift 2
       ;;
     --profile)
+      require_value "$@"
       PROFILE="$2"
       shift 2
       ;;
     --task-id)
+      require_value "$@"
       TASK_ID="$2"
       shift 2
       ;;
     --provider)
+      require_value "$@"
       PROVIDER_ARGS+=(--provider "$2")
       shift 2
       ;;
     --providers)
+      require_value "$@"
       PROVIDER_ARGS+=(--providers "$2")
       shift 2
       ;;
     --provider-policy)
+      require_value "$@"
       PROVIDER_ARGS+=(--provider-policy "$2")
       shift 2
       ;;
