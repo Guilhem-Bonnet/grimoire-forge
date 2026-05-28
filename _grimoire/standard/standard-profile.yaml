@@ -1,0 +1,40 @@
+$schema: grimoire-agentic-standard-profile/v1
+artifacts:
+- path: _grimoire/standard/mission-brief.md
+  type: mission_brief
+- path: _grimoire-output/evidence/bootstrap/task-envelope.md
+  type: task_envelope
+- path: _grimoire-output/evidence/bootstrap/evidence-pack.md
+  type: evidence_pack
+- path: _grimoire/standard/knowledge-source-registry.yaml
+  type: knowledge_source_registry
+- path: _grimoire/standard/llm-provider-registry.yaml
+  type: llm_provider_registry
+- path: _grimoire/standard/compliance-declaration.md
+  type: compliance_declaration
+display_name: Orchestrated
+generated_at: '2026-05-28T05:18:49.781994+00:00'
+mapped_capabilities:
+- advanced-context-orchestrator
+- knowledge-base-indexer
+- memory-integrity-validator
+- runtime-provider-contract
+- trajectory-logging
+minimum_evidence:
+- Context selections cite their source, freshness, and reason for inclusion.
+- Knowledge sources have indexing mode, trust level, and refresh policy.
+- Memory and knowledge base writes are separated.
+profile: orchestrated
+project: Grimoire-Forge
+required_artifacts:
+- mission_brief
+- task_envelope
+- evidence_pack
+- knowledge_source_registry
+- llm_provider_registry
+- compliance_declaration
+task_id: bootstrap
+upstream_standard:
+  entrypoint: docs/norme-structure-agentique.md
+  matrix: docs/matrice-normative-maitresse.md
+  repository: processus-developpement-agentique
