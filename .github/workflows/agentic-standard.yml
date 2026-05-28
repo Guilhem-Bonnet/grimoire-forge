@@ -24,7 +24,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       # Pinned for supply-chain safety. Update after a reviewed grimoire-kit standard bridge commit is pushed.
-      GRIMOIRE_KIT_STANDARD_REF: f61009ebcb29db60d956444f112a707f0883449f
+      GRIMOIRE_KIT_STANDARD_REF: 631393b99815e1126a0e248463185f182f499f52
     steps:
       - name: Checkout Forge
         uses: actions/checkout@v4
