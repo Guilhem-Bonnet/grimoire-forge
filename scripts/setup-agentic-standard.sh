@@ -9,7 +9,7 @@ TASK_ID="${TASK_ID:-bootstrap}"
 
 usage() {
   cat <<'USAGE'
-Usage: scripts/setup-agentic-standard.sh [--project-root PATH] [--profile ID] [--task-id ID] [--force] [--dry-run] [--verify-only]
+Usage: scripts/setup-agentic-standard.sh [--project-root PATH] [--profile ID] [--task-id ID] [--force] [--dry-run] [--verify-only] [--audit-only] [--markdown]
 
 Environment overrides:
   PROJECT_ROOT   Target project root (default: repository root)
@@ -21,6 +21,8 @@ USAGE
 FORCE=()
 DRY_RUN=()
 VERIFY_ONLY=false
+AUDIT_ONLY=false
+MARKDOWN=()
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
@@ -48,6 +50,14 @@ while [[ $# -gt 0 ]]; do
       VERIFY_ONLY=true
       shift
       ;;
+    --audit-only)
+      AUDIT_ONLY=true
+      shift
+      ;;
+    --markdown)
+      MARKDOWN=(--markdown)
+      shift
+      ;;
     --help|-h)
       usage
       exit 0
@@ -63,6 +73,11 @@ done
 run_grimoire() {
   PYTHONPATH="${KIT_DIR}/src:${PYTHONPATH:-}" python3 -c 'from grimoire.cli.app import cli; cli()' "$@"
 }
+
+if [[ "${AUDIT_ONLY}" == "true" ]]; then
+  run_grimoire standard audit "${PROJECT_ROOT}" --profile "${PROFILE}" --task-id "${TASK_ID}" "${MARKDOWN[@]}"
+  exit 0
+fi
 
 if [[ "${VERIFY_ONLY}" != "true" ]]; then
   run_grimoire standard init "${PROJECT_ROOT}" --profile "${PROFILE}" --task-id "${TASK_ID}" "${FORCE[@]}" "${DRY_RUN[@]}"
