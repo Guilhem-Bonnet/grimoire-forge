@@ -98,6 +98,12 @@ if [[ ! "${TASK_ID}" =~ ^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$ ]]; then
   exit 2
 fi
 
+if [[ ! -d "${KIT_DIR}/src/grimoire" ]]; then
+  echo "Missing grimoire-kit checkout at ${KIT_DIR}" >&2
+  echo "Clone or checkout Grimoire-kit into ./grimoire-kit before running standard commands." >&2
+  exit 2
+fi
+
 if [[ "${AUDIT_ONLY}" == "true" ]]; then
   run_grimoire standard audit "${PROJECT_ROOT}" --profile "${PROFILE}" --task-id "${TASK_ID}" "${MARKDOWN[@]}"
   exit 0
