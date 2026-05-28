@@ -88,6 +88,62 @@ python3 grimoire-kit/framework/tools/preflight-check.py --project-root .
 python3 grimoire-kit/framework/tools/memory-lint.py --project-root .
 ```
 
+## Standard agentique
+
+Le dépôt Forge peut maintenant initialiser et vérifier le pont norme → kit → projet cible sans modifier le corpus normatif externe.
+
+```bash
+# Générer les artefacts standard-aware dans ce workspace
+npm run standard:init -- --profile orchestrated --force
+
+# Vérifier que les artefacts requis du profil sont présents
+npm run standard:verify -- --profile orchestrated
+```
+
+Le script racine [`scripts/setup-agentic-standard.sh`](scripts/setup-agentic-standard.sh) appelle la CLI du kit (`grimoire standard init/verify`) avec `grimoire-kit/src` en `PYTHONPATH`. Les artefacts générés vivent dans `_grimoire/standard/` et `_grimoire-output/evidence/{task-id}/`.
+
+## Demo locale du cockpit V5
+
+Le shell local du cockpit vit dans `grimoire-kit/apps/grimoire-game/` et permet de rejouer visuellement les read models runtime deja prouves a travers `Cockpit`, `Spectator`, `Observer`, `Workflow`, `Expert`, `Observatory`, `War Room`, `Host Bridge` et `VS Code Panel`.
+
+```bash
+cd grimoire-kit/apps/grimoire-game
+npm run check
+npm run demo:views
+npm run demo:report
+npm run release:verify
+```
+
+Le rapport HTML genere atterrit dans `grimoire-kit/apps/grimoire-game/.release/runtime-views-report.html`.
+
+Voir aussi : [grimoire-kit/apps/grimoire-game/README.md](grimoire-kit/apps/grimoire-game/README.md) et le site public `/observability/` / `/demo/` (voir section **Site public** ci-dessous).
+
+## Site public
+
+Le site public Grimoire Forge est desormais un projet [Astro](https://astro.build) autonome dans [`web/`](web/), construit sur un socle HTML/CSS/JS premium (dark control plane + FX layer futuriste). Il remplace l'ancien site MkDocs.
+
+```bash
+cd web
+npm install     # une seule fois
+npm run dev     # http://localhost:4321
+npm run build   # dist/ statique
+```
+
+| Route | Contenu |
+|---|---|
+| `/` | Landing principale (ChatOrchestrator demo, surfaces, anatomie) |
+| `/forge/` | Landing alternative long-scroll |
+| `/anatomy/` | Anatomie du runtime |
+| `/demo/` | Demonstration |
+| `/observability/` | Observatory |
+| `/game-ui/` | Game UI |
+| `/agents/` | Catalogue genere depuis `_grimoire-runtime/_config/agent-manifest.csv` |
+| `/changelog/` | Genere depuis [`CHANGELOG.md`](CHANGELOG.md) |
+| `/cockpit/` | SPA cockpit live (copiee depuis `grimoire-kit/apps/grimoire-game/.release/`) |
+| `/runtime-views-report.html` | Rapport de surfaces runtime |
+
+Details dans [web/README.md](web/README.md).
+
 ## Documentation
 
 - Vision et perimetre: [docs/vision/objectif-moteur-agentique.md](docs/vision/objectif-moteur-agentique.md)
