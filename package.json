@@ -7,6 +7,8 @@
     "build": "npm --prefix web run build",
     "preview": "npm --prefix web run preview",
     "check": "npm --prefix web run check",
+    "standard:init": "bash scripts/setup-agentic-standard.sh",
+    "standard:verify": "bash scripts/setup-agentic-standard.sh --verify-only",
     "pages:rebuild": "npm --prefix web run pages:rebuild",
     "cockpit:copy": "npm --prefix web run cockpit:copy",
     "install:web": "npm --prefix web install"

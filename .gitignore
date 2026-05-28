@@ -33,7 +33,9 @@ _grimoire/_memory/qdrant_data/
 _grimoire/_memory/backends/__pycache__/
 
 # Grimoire output runtime
-_grimoire-output/
+_grimoire-output/*
+!_grimoire-output/evidence/
+!_grimoire-output/evidence/**
 
 # pytest
 .pytest_cache/
