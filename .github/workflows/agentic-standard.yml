@@ -30,7 +30,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: Guilhem-Bonnet/Grimoire-kit
-          ref: ae495582a1d570c109cdd08f1c6e182e25d526be
+          ref: 97ab318d83f75362bef6330c60747b5574985e3c
           path: grimoire-kit
 
       - uses: actions/setup-python@v5
