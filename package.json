@@ -1,0 +1,11 @@
+{
+  "name": "grimoire-forge",
+  "description": "Grimoire Forge agentic standard workspace.",
+  "private": true,
+  "scripts": {
+    "standard:init": "bash scripts/setup-agentic-standard.sh",
+    "standard:verify": "bash scripts/setup-agentic-standard.sh --verify-only",
+    "standard:audit": "bash scripts/setup-agentic-standard.sh --audit-only --markdown",
+    "standard:providers": "bash scripts/setup-agentic-standard.sh --detect-providers"
+  }
+}

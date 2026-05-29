@@ -1,0 +1,49 @@
+name: Agentic standard
+
+on:
+  pull_request:
+    paths:
+      - "_grimoire/standard/**"
+      - "_grimoire-output/evidence/bootstrap/**"
+      - "scripts/setup-agentic-standard.sh"
+      - "package.json"
+      - "README.md"
+      - ".github/workflows/agentic-standard.yml"
+  push:
+    branches: [wip/snapshot-20260508-0127, feat/agentic-standard-baseline]
+    paths:
+      - "_grimoire/standard/**"
+      - "_grimoire-output/evidence/bootstrap/**"
+      - "scripts/setup-agentic-standard.sh"
+      - "package.json"
+      - "README.md"
+      - ".github/workflows/agentic-standard.yml"
+
+jobs:
+  standard:
+    runs-on: ubuntu-latest
+    env:
+      # Pinned for supply-chain safety. Update after a reviewed grimoire-kit standard bridge commit is pushed.
+      GRIMOIRE_KIT_STANDARD_REF: 631393b99815e1126a0e248463185f182f499f52
+    steps:
+      - name: Checkout Forge
+        uses: actions/checkout@v4
+
+      - name: Checkout grimoire-kit standard bridge
+        uses: actions/checkout@v4
+        with:
+          repository: Guilhem-Bonnet/Grimoire-kit
+          ref: ${{ env.GRIMOIRE_KIT_STANDARD_REF }}
+          path: grimoire-kit
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install grimoire-kit dependencies
+        run: python -m pip install ./grimoire-kit
+
+      - name: Verify agentic standard baseline
+        run: |
+          npm run standard:verify -- --profile orchestrated
+          npm run standard:audit -- --profile orchestrated

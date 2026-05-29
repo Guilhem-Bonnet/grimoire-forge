@@ -1,0 +1,85 @@
+$schema: "grimoire-knowledge-source-registry/v1"
+
+metadata:
+  project: "Grimoire-Forge"
+  owner: "Grimoire maintainers"
+  purpose: "External indexed knowledge base for agentic flows."
+
+rules:
+  knowledge_is_not_memory: true
+  knowledge_is_not_session_context: true
+  explicit_source_of_truth_required: true
+  stale_source_must_be_disclosed: true
+
+sources:
+  - id: "agentic-standard-corpus"
+    type: "git_repository"
+    locator: "Guilhem-Bonnet/processus-developpement-agentique"
+    enabled: true
+    indexing:
+      mode: "manual"
+      cadence: "before standard profile or capability changes"
+      parser: "markdown"
+      chunking_policy: "section-aware markdown chunks preserving normative headings"
+      embedding_profile: "provider-neutral-text-embedding"
+    trust:
+      level: "authoritative"
+      source_of_truth: true
+      owner: "standard maintainers"
+      freshness_sla: "refresh before each release or normative mapping update"
+    access:
+      allowed_agents: ["orchestrator", "documentation-agent", "audit-agent"]
+      forbidden_data_classes: ["secrets", "credentials", "personal-data"]
+      network_required: false
+    evidence:
+      last_indexed_at: "manual-bootstrap"
+      index_manifest: "_grimoire/standard/standard-profile.yaml"
+      known_gaps: ["No automated doc-to-graph pipeline yet."]
+
+  - id: "grimoire-forge-runtime"
+    type: "folder"
+    locator: "."
+    enabled: true
+    indexing:
+      mode: "on_demand"
+      cadence: "per implementation session"
+      parser: "markdown"
+      chunking_policy: "artifact-level chunks for README, _grimoire, scripts, and runtime planning artifacts"
+      embedding_profile: "provider-neutral-text-embedding"
+    trust:
+      level: "high"
+      source_of_truth: true
+      owner: "Grimoire maintainers"
+      freshness_sla: "same session as generated artifacts"
+    access:
+      allowed_agents: ["orchestrator", "implementation-agent", "audit-agent"]
+      forbidden_data_classes: ["secrets", "credentials", "personal-data"]
+      network_required: false
+    evidence:
+      last_indexed_at: "manual-bootstrap"
+      index_manifest: "_grimoire/standard/standard-profile.yaml"
+      known_gaps: ["Runtime output contains work-in-progress artifacts and must be filtered before reuse."]
+
+  - id: "grimoire-kit-framework"
+    type: "folder"
+    locator: "grimoire-kit/framework/agentic-standard"
+    enabled: true
+    indexing:
+      mode: "on_demand"
+      cadence: "after grimoire-kit standard bridge changes"
+      parser: "markdown"
+      chunking_policy: "template and profile-map chunks with source path metadata"
+      embedding_profile: "provider-neutral-text-embedding"
+    trust:
+      level: "high"
+      source_of_truth: true
+      owner: "grimoire-kit maintainers"
+      freshness_sla: "same commit as standard CLI changes"
+    access:
+      allowed_agents: ["orchestrator", "implementation-agent", "audit-agent"]
+      forbidden_data_classes: ["secrets", "credentials", "personal-data"]
+      network_required: false
+    evidence:
+      last_indexed_at: "manual-bootstrap"
+      index_manifest: "grimoire-kit/framework/agentic-standard/profile-map.yaml"
+      known_gaps: ["Generated project files are not automatically re-indexed yet."]
