@@ -2,6 +2,8 @@ $schema: grimoire-agentic-standard-profile/v1
 artifacts:
 - path: _grimoire/standard/mission-brief.md
   type: mission_brief
+- path: _grimoire/standard/task-board.yaml
+  type: task_board
 - path: _grimoire-output/evidence/bootstrap/task-envelope.md
   type: task_envelope
 - path: _grimoire-output/evidence/bootstrap/evidence-pack.md
@@ -12,6 +14,22 @@ artifacts:
   type: llm_provider_registry
 - path: _grimoire/standard/compliance-declaration.md
   type: compliance_declaration
+- path: _grimoire/standard/memory-policy.yaml
+  type: memory_policy
+- path: _grimoire/standard/context-contract.yaml
+  type: context_contract
+- path: _grimoire/standard/decision-graph.yaml
+  type: decision_graph
+- path: _grimoire/standard/rule-packs.yaml
+  type: rule_packs
+- path: _grimoire/standard/hook-registry.yaml
+  type: hook_registry
+- path: _grimoire/standard/orchestration-policy.yaml
+  type: orchestration_policy
+- path: _grimoire/standard/evidence-gates.yaml
+  type: evidence_gates
+- path: _grimoire/standard/pattern-catalog.yaml
+  type: pattern_catalog
 display_name: Orchestrated
 generated_at: '2026-05-28T05:18:49.781994+00:00'
 mapped_capabilities:
@@ -28,11 +46,20 @@ profile: orchestrated
 project: Grimoire-Forge
 required_artifacts:
 - mission_brief
+- task_board
 - task_envelope
 - evidence_pack
 - knowledge_source_registry
 - llm_provider_registry
 - compliance_declaration
+- memory_policy
+- context_contract
+- decision_graph
+- rule_packs
+- hook_registry
+- orchestration_policy
+- evidence_gates
+- pattern_catalog
 task_id: bootstrap
 upstream_standard:
   entrypoint: docs/norme-structure-agentique.md
