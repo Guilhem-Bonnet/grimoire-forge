@@ -1,5 +1,6 @@
-# CI — Grimoire Kit
-# Valide les scripts bash du framework à chaque push/PR sur main.
+# CI — Grimoire Forge
+# Valide Forge et garde les anciens contrôles grimoire-kit seulement si le kit
+# embarqué est réellement présent dans le checkout versionné.
 
 name: CI
 
@@ -69,26 +70,39 @@ jobs:
   python-quality:
     name: Python quality - grimoire-kit
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: grimoire-kit
     steps:
       - uses: actions/checkout@v4
 
+      - name: Detect embedded grimoire-kit
+        id: kit_scope
+        run: |
+          if [ -f grimoire-kit/pyproject.toml ]; then
+            echo "present=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "present=false" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Set up Python
+        if: steps.kit_scope.outputs.present == 'true'
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
 
       - name: Install dependencies
+        if: steps.kit_scope.outputs.present == 'true'
+        working-directory: grimoire-kit
         run: |
           python -m pip install --upgrade pip
           python -m pip install -e . pytest pytest-cov ruff "mcp>=1.0"
 
       - name: Run Ruff
+        if: steps.kit_scope.outputs.present == 'true'
+        working-directory: grimoire-kit
         run: python -m ruff check framework/tools/ tests/ --statistics
 
       - name: Run tests with coverage
+        if: steps.kit_scope.outputs.present == 'true'
+        working-directory: grimoire-kit
         run: |
           python -m pytest tests/ \
             --cov=src/grimoire \
@@ -97,12 +111,17 @@ jobs:
             --ignore=tests/test_background_tasks.py
 
       - name: Upload coverage reports to Codecov
+        if: steps.kit_scope.outputs.present == 'true'
         uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: grimoire-kit/coverage.xml
           flags: grimoire-kit
           name: grimoire-kit-py312
+
+      - name: Skip notice
+        if: steps.kit_scope.outputs.present != 'true'
+        run: echo "Embedded grimoire-kit is not versioned in Forge; Python quality check skipped."
 
   visual-evidence-governance:
     name: Visual evidence governance
@@ -137,6 +156,8 @@ jobs:
       - name: Run visual evidence checks
         if: steps.visual_scope.outputs.run_check == 'true'
         run: |
+          [ -f grimoire-kit/framework/tools/visual-evidence-governance.py ] \
+            || { echo "visual-evidence-governance absent in this Forge checkout — skip legacy visual gate"; exit 0; }
           python grimoire-kit/framework/tools/visual-evidence-governance.py \
             --project-root . \
             check
@@ -214,13 +235,20 @@ jobs:
   grimoire-game-quality:
     name: Grimoire Game quality - Node.js
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: grimoire-kit/apps/grimoire-game
     steps:
       - uses: actions/checkout@v4
 
+      - name: Detect embedded Grimoire Game app
+        id: game_scope
+        run: |
+          if [ -f grimoire-kit/apps/grimoire-game/package-lock.json ]; then
+            echo "present=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "present=false" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Set up Node.js
+        if: steps.game_scope.outputs.present == 'true'
         uses: actions/setup-node@v4
         with:
           node-version: "22"
@@ -228,27 +256,42 @@ jobs:
           cache-dependency-path: grimoire-kit/apps/grimoire-game/package-lock.json
 
       - name: Install dependencies
+        if: steps.game_scope.outputs.present == 'true'
+        working-directory: grimoire-kit/apps/grimoire-game
         run: npm ci
 
       - name: Type check
+        if: steps.game_scope.outputs.present == 'true'
+        working-directory: grimoire-kit/apps/grimoire-game
         run: npm run check
 
       - name: Build package
+        if: steps.game_scope.outputs.present == 'true'
+        working-directory: grimoire-kit/apps/grimoire-game
         run: npm run build
 
       - name: Run tests with coverage
+        if: steps.game_scope.outputs.present == 'true'
+        working-directory: grimoire-kit/apps/grimoire-game
         run: npm run test:coverage
 
       - name: Run cockpit proof
+        if: steps.game_scope.outputs.present == 'true'
+        working-directory: grimoire-kit/apps/grimoire-game
         run: npm run cockpit:verify
 
       - name: Verify npm package payload
+        if: steps.game_scope.outputs.present == 'true'
+        working-directory: grimoire-kit/apps/grimoire-game
         run: npm run pack:verify
 
       - name: Create npm package artifact
+        if: steps.game_scope.outputs.present == 'true'
+        working-directory: grimoire-kit/apps/grimoire-game
         run: npm run pack:artifact
 
       - name: Upload runtime artifacts
+        if: steps.game_scope.outputs.present == 'true'
         uses: actions/upload-artifact@v4
         with:
           name: grimoire-game-runtime-artifacts
@@ -258,9 +301,14 @@ jobs:
             grimoire-kit/apps/grimoire-game/.release
 
       - name: Upload coverage reports to Codecov
+        if: steps.game_scope.outputs.present == 'true'
         uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: grimoire-kit/apps/grimoire-game/coverage/lcov.info
           flags: grimoire-game
           name: grimoire-game-node22
+
+      - name: Skip notice
+        if: steps.game_scope.outputs.present != 'true'
+        run: echo "Embedded Grimoire Game app is not versioned in Forge; Node.js quality check skipped."
