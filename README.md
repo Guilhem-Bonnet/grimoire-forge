@@ -11,6 +11,8 @@ Moteur de creation de projets agentiques, construit en dogfooding continu avec B
 - [Actifs deja capitalises](#actifs-deja-capitalises)
 - [Workflow recommande](#workflow-recommande)
 - [Commandes utiles](#commandes-utiles)
+- [Standard agentique](#standard-agentique)
+- [Memoire](#memoire)
 - [Documentation](#documentation)
 - [Statut](#statut)
 
@@ -113,20 +115,30 @@ python3 grimoire-kit/framework/tools/memory-lint.py --project-root .
 
 ## Standard agentique
 
-Le dépôt Forge peut maintenant initialiser et vérifier le pont norme → kit → projet cible sans modifier le corpus normatif externe.
+Forge cible maintenant le profil `governed` du Grimoire Kit canonique. Les artefacts standard vivent dans `_grimoire/standard/` et les preuves dans `_grimoire-output/evidence/{task-id}/`.
 
 ```bash
-# Générer les artefacts standard-aware dans ce workspace
-npm run standard:init -- --profile orchestrated --force
+# Verifier que tous les artefacts gouvernes sont presents et coherents
+grimoire-kit/.venv/bin/grimoire standard verify
 
-# Vérifier que les artefacts requis du profil sont présents
-npm run standard:verify -- --profile orchestrated
+# Produire un score de conformite
+grimoire-kit/.venv/bin/grimoire standard score
 
-# Produire un rapport d'audit markdown
-npm run standard:audit -- --profile orchestrated
+# Generer le bundle de contexte standard
+grimoire-kit/.venv/bin/grimoire standard context
 ```
 
-Le script racine [`scripts/setup-agentic-standard.sh`](scripts/setup-agentic-standard.sh) appelle la CLI du kit (`grimoire standard init/verify`) avec `grimoire-kit/src` en `PYTHONPATH`. Les artefacts générés vivent dans `_grimoire/standard/` et `_grimoire-output/evidence/{task-id}/`.
+Le script racine [`scripts/setup-agentic-standard.sh`](scripts/setup-agentic-standard.sh) appelle la CLI du kit canonique via `grimoire-kit/.venv/bin/grimoire`.
+
+## Memoire
+
+Le contrat Memory OS est declare dans `_grimoire/standard/memory-policy.yaml` avec les couches suivantes :
+
+- Redis : memoire chaude, TTL, leases, streams et pub/sub (adapter planifie R8).
+- Weaviate : memoire semantique durable.
+- Neo4j : graphe type durable.
+- SQLite : sidecar local et fallback.
+- Qdrant : source legacy de migration/rollback.
 
 ## Demo locale du cockpit V5
 
@@ -173,6 +185,7 @@ Details dans [web/README.md](web/README.md).
 ## Documentation
 
 - Changelog: [CHANGELOG.md](CHANGELOG.md)
+- Documentation standard MkDocs: [docs/](docs/)
 - Site public: [web/README.md](web/README.md)
 - Runtime Grimoire (agents, workflows, config): [_grimoire-runtime/](_grimoire-runtime/)
 - Kit implementation: [grimoire-kit/](grimoire-kit/)

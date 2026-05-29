@@ -1,0 +1,65 @@
+name: Agentic standard
+
+on:
+  pull_request:
+    paths:
+      - "_grimoire/standard/**"
+      - "_grimoire-output/context/bootstrap/**"
+      - "_grimoire-output/decisions/bootstrap/**"
+      - "_grimoire-output/evidence/bootstrap/**"
+      - "_grimoire-output/knowledge/bootstrap/**"
+      - "scripts/setup-agentic-standard.sh"
+      - "package.json"
+      - "README.md"
+      - ".github/workflows/agentic-standard.yml"
+  push:
+    branches: [wip/snapshot-20260508-0127, feat/agentic-standard-baseline]
+    paths:
+      - "_grimoire/standard/**"
+      - "_grimoire-output/context/bootstrap/**"
+      - "_grimoire-output/decisions/bootstrap/**"
+      - "_grimoire-output/evidence/bootstrap/**"
+      - "_grimoire-output/knowledge/bootstrap/**"
+      - "scripts/setup-agentic-standard.sh"
+      - "package.json"
+      - "README.md"
+      - ".github/workflows/agentic-standard.yml"
+
+jobs:
+  standard:
+    runs-on: ubuntu-latest
+    env:
+      # Pinned for supply-chain safety. Update after a reviewed grimoire-kit standard bridge commit is pushed.
+      GRIMOIRE_KIT_STANDARD_REF: aba01c00c5ccd0c6b444b6cd47862b2025ee9143
+    steps:
+      - name: Checkout Forge
+        uses: actions/checkout@v4
+
+      - name: Checkout grimoire-kit standard bridge
+        uses: actions/checkout@v4
+        with:
+          repository: Guilhem-Bonnet/Grimoire-kit
+          ref: ${{ env.GRIMOIRE_KIT_STANDARD_REF }}
+          path: grimoire-kit
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install grimoire-kit dependencies
+        run: python -m pip install ./grimoire-kit
+
+      - name: Verify agentic standard baseline
+        run: |
+          npm run standard:verify -- --profile orchestrated
+          npm run standard:audit -- --profile orchestrated
+
+      - name: Smoke agentic standard runtime
+        run: |
+          grimoire -o json standard context build . --profile orchestrated
+          grimoire -o json standard decision trace . --profile orchestrated
+          grimoire -o json standard knowledge index . --profile orchestrated
+          grimoire -o json standard hooks simulate . --phase pre_context_build --profile orchestrated
+          grimoire -o json standard gate check . --target-state review --profile orchestrated
+          grimoire -o json standard events audit .
+          grimoire -o json standard score . --profile orchestrated

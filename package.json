@@ -1,17 +1,10 @@
 {
-  "name": "grimoire-forge",
-  "description": "Monorepo root — délègue les scripts du site public vers web/.",
-  "private": true,
+  "devDependencies": {
+    "@playwright/test": "^1.57.0",
+    "playwright": "^1.57.0"
+  },
   "scripts": {
-    "dev": "npm --prefix web run dev",
-    "build": "npm --prefix web run build",
-    "preview": "npm --prefix web run preview",
-    "check": "npm --prefix web run check",
-    "standard:init": "bash scripts/setup-agentic-standard.sh",
-    "standard:verify": "bash scripts/setup-agentic-standard.sh --verify-only",
-    "standard:audit": "bash scripts/setup-agentic-standard.sh --audit-only --markdown",
-    "pages:rebuild": "npm --prefix web run pages:rebuild",
-    "cockpit:copy": "npm --prefix web run cockpit:copy",
-    "install:web": "npm --prefix web install"
+    "check:standard": "grimoire-kit/.venv/bin/grimoire standard verify",
+    "docs:build": "mkdocs build --strict"
   }
 }
