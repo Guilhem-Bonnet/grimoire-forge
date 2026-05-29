@@ -12,27 +12,51 @@ artifacts:
   type: llm_provider_registry
 - path: _grimoire/standard/compliance-declaration.md
   type: compliance_declaration
-display_name: Orchestrated
-generated_at: '2026-05-28T05:18:49.781994+00:00'
+- path: _grimoire/standard/memory-policy.yaml
+  type: memory_policy
+- path: _grimoire/standard/context-contract.yaml
+  type: context_contract
+- path: _grimoire/standard/task-board.yaml
+  type: task_board
+display_name: Governed
+generated_at: '2026-05-29T21:56:00.000000+00:00'
 mapped_capabilities:
 - advanced-context-orchestrator
 - knowledge-base-indexer
 - memory-integrity-validator
+- memory-os-contract
 - runtime-provider-contract
 - trajectory-logging
+- evidence-gated-workflow
+- task-board-governance
 minimum_evidence:
 - Context selections cite their source, freshness, and reason for inclusion.
 - Knowledge sources have indexing mode, trust level, and refresh policy.
 - Memory and knowledge base writes are separated.
-profile: orchestrated
+- Memory OS contract declared with target backends and promotion gates.
+- Task board tracks acceptance criteria and evidence refs per task.
+profile: governed
 project: Grimoire-Forge
 required_artifacts:
 - mission_brief
+- task_board
 - task_envelope
 - evidence_pack
 - knowledge_source_registry
 - llm_provider_registry
 - compliance_declaration
+- memory_policy
+- context_contract
+- decision_graph
+- rule_packs
+- hook_registry
+- orchestration_policy
+- evidence_gates
+- pattern_catalog
+- compliance_score
+- remediation_plan
+- accepted_risks
+- waivers
 task_id: bootstrap
 upstream_standard:
   entrypoint: docs/norme-structure-agentique.md

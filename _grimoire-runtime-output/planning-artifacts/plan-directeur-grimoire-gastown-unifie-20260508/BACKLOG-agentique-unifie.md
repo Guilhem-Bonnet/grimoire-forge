@@ -25,6 +25,35 @@ Prefixe unique : `GAO`.
 | `GAO-J` | Observabilite, evals, red team |
 | `GAO-K` | Distribution, docs, ecosysteme |
 
+## Todo List Active
+
+Verdict : la cible finale n'est pas atteinte. Le socle Weaviate + Neo4j est
+opérationnel, le hook Memory OS est enforced et les liens task/evidence/code
+existent, mais la cible Agent OS complète reste ouverte.
+
+| ID | Statut | Titre | Surface | Evidence | Gate |
+| --- | --- | --- | --- | --- | --- |
+| `GAO-G011` | À faire | Ajouter scénarios d'évaluation du recall Memory OS | evals, memory | cas task similaire, fichier impacté, incident récurrent | eval harness avec baseline |
+| `GAO-G012` | À faire | Ajouter mémoire courte Redis optionnelle | memory | TTL, namespace, lease, fallback local | Redis absent ne casse rien |
+| `GAO-G013` | À faire | Étendre extraction task-code depuis diff/git/runtime | Neo4j, codegraph, traces | liens vers fichiers réellement modifiés et symboles impactés | graph verify + fixture diff |
+| `GAO-H006` | À faire | Construire cockpit Memory OS connecté | grimoire-game, SDK | vues graph, vector neighborhood, freshness, task overlays | UI projection contract |
+| `GAO-J006` | À faire | Ajouter métriques Memory OS et export observabilité | traces, evals | counts, latence, recall quality, drift events | trace export sans secret |
+| `GAO-K006` | À faire | Mettre à jour le guide d'enseignement Agent OS depuis l'implémentation réelle | docs | doc pédagogique alignée avec runtime | doc drift + commandes prouvées |
+
+## Fait Depuis La Migration Weaviate + Neo4j
+
+| ID | Statut | Résultat | Preuve |
+| --- | --- | --- | --- |
+| `GAO-G001` | Fait | Memory OS lié à Weaviate + Neo4j | `grimoire memory status`, `3700` entrées Weaviate |
+| `GAO-G003` | Fait partiel | Code graph Python AST + Neo4j | `14456` `CodeNode`, `45575` `CODE_EDGE` |
+| `GAO-G004` | Fait partiel | Projections vectorielles code/task | `2746` chunks code + `886` documents task-memory |
+| `GAO-G007` | Fait | `grimoire-memory-gate` promu en enforced | digest `7770c61dc4e4`, gateway OK |
+| `GAO-G008` | Fait | Chunks symbole, méthode, test et contrat | `2746` projections code Weaviate |
+| `GAO-G009` | Fait | `MissionLedger` alimenté depuis task-flow réel | `336` événements task-flow, ledger porté à `38` tâches |
+| `GAO-G010` | Fait | Liens tasks/evidence/code/décisions | `1` `TOUCHES_CODE`, `1` `COVERS_CODE`, `1` décision, gate strict vert |
+| `GAO-E001` | Fait | Gate Memory OS branchée aux hooks | `grimoire-memory-gate` en `enforced`, hook gateway OK |
+| `GAO-K001` | Fait partiel | Documentation Memory OS mise à jour | `memory-system.md`, `memory-os-roadmap.md`, artefact migration |
+
 ## Vague A - Unifier et rendre executable
 
 | ID | Titre | Surface | Dep | Evidence | Hooks/gates |

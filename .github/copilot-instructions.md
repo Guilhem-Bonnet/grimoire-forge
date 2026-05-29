@@ -111,6 +111,7 @@ L'orchestrateur dispatche automatiquement vers ces agents selon le besoin :
 | grimoire-memory-guard | PreToolUse | Protection mémoire `_grimoire-runtime/_memory/` |
 | grimoire-control-surface-guard | PreToolUse | Garde-fous sur surfaces de controle agentiques et patterns destructifs |
 | grimoire-post-edit | PostToolUse | Validation locale deterministe (`ruff`, `bash -n`, JSON hooks, frontmatter YAML) |
+| grimoire-memory-gate | PostToolUse | Gate enforced Memory OS pour bloquer les drifts Weaviate/Neo4j/code graph quand l'environnement est disponible |
 | grimoire-subagent-context | SubagentStart | Injection d'un contexte concis aux sub-agents |
 | grimoire-subagent-trace | SubagentStart/Stop | Tracing des transitions SOG |
 | grimoire-pre-compact | PreCompact | Capsule de contexte avant compaction/summarization |

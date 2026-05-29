@@ -4,9 +4,9 @@
 
 - Project: Grimoire-Forge
 - Owner: Grimoire maintainers
-- Selected profile: `orchestrated`
+- Selected profile: `governed`
 - Upstream standard reference: processus-developpement-agentique/docs/norme-structure-agentique.md
-- Date: 2026-05-28
+- Date: 2026-05-29
 
 ## Scope
 

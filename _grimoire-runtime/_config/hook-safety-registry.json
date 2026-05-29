@@ -149,6 +149,23 @@
       "validatedDigest": "c21ce2c8e99df8d8d1612aac7844c10471e1a49a27b1664acbac87653392e09e",
       "validatedAt": "2026-04-22T18:07:58Z"
     },
+    "grimoire-memory-gate": {
+      "event": "PostToolUse",
+      "target": ".github/hooks/scripts/grimoire-memory-gate.sh",
+      "controlFiles": [
+        ".github/hooks/grimoire-memory-gate.json",
+        ".github/hooks/scripts/grimoire-hook-gateway.sh",
+        ".github/hooks/scripts/grimoire-memory-gate.sh",
+        "grimoire-kit/src/grimoire/cli/cmd_memory.py",
+        "grimoire-kit/src/grimoire/memory/manager.py",
+        "grimoire-kit/src/grimoire/memory/projections.py",
+        "grimoire-kit/src/grimoire/memory/backends/weaviate.py",
+        "grimoire-kit/src/grimoire/memory/neo4j_graph.py"
+      ],
+      "mode": "enforced",
+      "validatedDigest": "7770c61dc4e4c9e8359a254d7e882b46d856f6e01373e4216743e0bac69f6e3d",
+      "validatedAt": "2026-05-27T12:57:56Z"
+    },
     "grimoire-terminal-guard": {
       "event": "PreToolUse",
       "target": ".github/hooks/scripts/grimoire-terminal-guard.sh",

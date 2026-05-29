@@ -1,0 +1,93 @@
+$schema: "grimoire-agentic-standard-task-board/v1"
+metadata:
+  project: "Grimoire-Forge"
+  generated_by: "grimoire standard init"
+  purpose: "Governed kanban for agentic work."
+states:
+  - proposed
+  - ready
+  - in_progress
+  - blocked
+  - review
+  - accepted
+  - released
+  - archived
+transitions:
+  proposed_to_ready:
+    requires:
+      - acceptance_criteria
+      - owner_or_agent_role
+  ready_to_in_progress:
+    requires:
+      - context_bundle
+      - provider_policy
+  in_progress_to_review:
+    requires:
+      - evidence_pack
+      - decision_trace
+  review_to_accepted:
+    requires:
+      - review_gate
+      - evidence_gate
+  accepted_to_released:
+    requires:
+      - compliance_score
+      - release_authorization
+  any_to_blocked:
+    requires:
+      - blocker_reason
+      - remediation_plan
+tasks:
+  - task_id: "r7-forge-kit-adoption"
+    title: "R7 — Forge adopts canonical grimoire-kit"
+    status: "in_progress"
+    priority: "high"
+    owner: "grimoire-maintainers"
+    agent_roles:
+      - orchestrator
+      - implementation-agent
+    acceptance_criteria:
+      - "grimoire-kit/.venv installs canonical Kit (v3.4.4+) via editable path."
+      - "grimoire standard verify passes from Forge root."
+      - "Forge standard artifacts aligned with Memory OS contract."
+    blockers: []
+    context_bundle_ref: "_grimoire-output/context/r7-forge-kit-adoption/context-bundle.yaml"
+    decision_trace_ref: "_grimoire-output/decisions/r7-forge-kit-adoption/decision-trace.yaml"
+    evidence_pack_ref: "_grimoire-output/evidence/r7-forge-kit-adoption/evidence-pack.md"
+    remediation_ref: "_grimoire/standard/remediation-plan.yaml"
+  - task_id: "r8-redis-adapter"
+    title: "R8 — Redis hot memory adapter"
+    status: "proposed"
+    priority: "high"
+    owner: "grimoire-maintainers"
+    agent_roles:
+      - implementation-agent
+    acceptance_criteria:
+      - "Redis adapter implemented with TTL, leases, streams, promotion gates."
+      - "MemoryManager routes short-term ops to Redis."
+      - "Standard memory_os.short_term layer reports active."
+    blockers: []
+    evidence_pack_ref: "_grimoire-output/evidence/r8-redis-adapter/evidence-pack.md"
+  - task_id: "r9-hooks-skills"
+    title: "R9 — Normalize hooks/rules/skills/agents taxonomy"
+    status: "proposed"
+    priority: "medium"
+    owner: "grimoire-maintainers"
+    agent_roles:
+      - implementation-agent
+    acceptance_criteria:
+      - "ISO-classified pattern folders with executable contracts."
+      - "hook-registry.yaml and rule-packs.yaml pass standard verify."
+    blockers: []
+    evidence_pack_ref: "_grimoire-output/evidence/r9-hooks-skills/evidence-pack.md"
+  - task_id: "r10-cockpit"
+    title: "R10 — Cockpit/observability"
+    status: "proposed"
+    priority: "medium"
+    owner: "grimoire-maintainers"
+    agent_roles:
+      - implementation-agent
+    acceptance_criteria:
+      - "Memory OS health, graph/vector stats, drift, agentic decisions, live kanban visible."
+    blockers: []
+    evidence_pack_ref: "_grimoire-output/evidence/r10-cockpit/evidence-pack.md"

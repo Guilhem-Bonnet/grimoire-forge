@@ -104,6 +104,122 @@
       "dependsOrder": "sequence"
     },
     {
+      "label": "grimoire: memory-stack:up",
+      "type": "shell",
+      "command": "bash ${workspaceFolder}/.github/hooks/scripts/grimoire-task-flow.sh --task 'grimoire: memory-stack:up' --flow memory -- bash -lc '\"${workspaceFolder}/.github/hooks/scripts/grimoire-docker.sh\" compose -f \"${workspaceFolder}/docker-compose.memory-target.yml\" up -d'",
+      "group": "build",
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": true,
+        "close": false
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "grimoire: memory:verify",
+      "type": "shell",
+      "command": "bash ${workspaceFolder}/.github/hooks/scripts/grimoire-task-flow.sh --task 'grimoire: memory:verify' --flow memory -- bash -lc 'cd \"${workspaceFolder}/grimoire-kit\" && GRIMOIRE_NEO4J_PASSWORD=\"${GRIMOIRE_NEO4J_PASSWORD:-grimoire-dev-password}\" uv run --extra weaviate --extra neo4j grimoire memory migrate verify --bundle _grimoire/_memory/migration/weaviate-neo4j'",
+      "group": "test",
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": true,
+        "close": false
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "grimoire: memory:status",
+      "type": "shell",
+      "command": "bash ${workspaceFolder}/.github/hooks/scripts/grimoire-task-flow.sh --task 'grimoire: memory:status' --flow memory -- bash -lc 'cd \"${workspaceFolder}/grimoire-kit\" && GRIMOIRE_NEO4J_PASSWORD=\"${GRIMOIRE_NEO4J_PASSWORD:-grimoire-dev-password}\" uv run --extra weaviate --extra neo4j grimoire memory status'",
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": true,
+        "close": false
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "grimoire: memory:graph-sync",
+      "type": "shell",
+      "command": "bash ${workspaceFolder}/.github/hooks/scripts/grimoire-task-flow.sh --task 'grimoire: memory:graph-sync' --flow memory -- bash -lc 'cd \"${workspaceFolder}/grimoire-kit\" && GRIMOIRE_NEO4J_PASSWORD=\"${GRIMOIRE_NEO4J_PASSWORD:-grimoire-dev-password}\" uv run --extra neo4j grimoire memory graph sync-code && GRIMOIRE_NEO4J_PASSWORD=\"${GRIMOIRE_NEO4J_PASSWORD:-grimoire-dev-password}\" uv run --extra neo4j grimoire memory graph sync-tasks'",
+      "group": "build",
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": true,
+        "close": false
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "grimoire: memory:graph-verify",
+      "type": "shell",
+      "command": "bash ${workspaceFolder}/.github/hooks/scripts/grimoire-task-flow.sh --task 'grimoire: memory:graph-verify' --flow memory -- bash -lc 'cd \"${workspaceFolder}/grimoire-kit\" && GRIMOIRE_NEO4J_PASSWORD=\"${GRIMOIRE_NEO4J_PASSWORD:-grimoire-dev-password}\" uv run --extra neo4j grimoire memory graph verify'",
+      "group": "test",
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": true,
+        "close": false
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "grimoire: memory:vector-sync",
+      "type": "shell",
+      "command": "bash ${workspaceFolder}/.github/hooks/scripts/grimoire-task-flow.sh --task 'grimoire: memory:vector-sync' --flow memory -- bash -lc 'cd \"${workspaceFolder}/grimoire-kit\" && GRIMOIRE_NEO4J_PASSWORD=\"${GRIMOIRE_NEO4J_PASSWORD:-grimoire-dev-password}\" uv run --extra weaviate --extra neo4j grimoire memory vector sync-code --paths src,tests && GRIMOIRE_NEO4J_PASSWORD=\"${GRIMOIRE_NEO4J_PASSWORD:-grimoire-dev-password}\" uv run --extra weaviate --extra neo4j grimoire memory vector sync-tasks'",
+      "group": "build",
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": true,
+        "close": false
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "grimoire: memory:vector-verify",
+      "type": "shell",
+      "command": "bash ${workspaceFolder}/.github/hooks/scripts/grimoire-task-flow.sh --task 'grimoire: memory:vector-verify' --flow memory -- bash -lc 'cd \"${workspaceFolder}/grimoire-kit\" && GRIMOIRE_NEO4J_PASSWORD=\"${GRIMOIRE_NEO4J_PASSWORD:-grimoire-dev-password}\" uv run --extra weaviate --extra neo4j grimoire memory vector verify --paths src,tests'",
+      "group": "test",
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": true,
+        "close": false
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "grimoire: memory:gate-shadow",
+      "type": "shell",
+      "command": "bash ${workspaceFolder}/.github/hooks/scripts/grimoire-task-flow.sh --task 'grimoire: memory:gate-shadow' --flow memory -- bash -lc 'cd \"${workspaceFolder}/grimoire-kit\" && GRIMOIRE_NEO4J_PASSWORD=\"${GRIMOIRE_NEO4J_PASSWORD:-grimoire-dev-password}\" uv run --extra weaviate --extra neo4j grimoire memory gate --soft --skip-vectors'",
+      "group": "test",
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": true,
+        "close": false
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "grimoire: memory:gate",
+      "type": "shell",
+      "command": "bash ${workspaceFolder}/.github/hooks/scripts/grimoire-task-flow.sh --task 'grimoire: memory:gate' --flow memory -- bash -lc 'cd \"${workspaceFolder}/grimoire-kit\" && GRIMOIRE_NEO4J_PASSWORD=\"${GRIMOIRE_NEO4J_PASSWORD:-grimoire-dev-password}\" uv run --extra weaviate --extra neo4j grimoire memory gate'",
+      "group": "test",
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": true,
+        "close": false
+      },
+      "problemMatcher": []
+    },
+    {
       "label": "grimoire: compiled-flow:catalog",
       "type": "shell",
       "command": "bash ${workspaceFolder}/.github/hooks/scripts/grimoire-task-flow.sh --task 'grimoire: compiled-flow:catalog' --flow quality -- ${workspaceFolder}/grimoire-kit/.venv/bin/python framework/tools/compiled-flow.py --project-root ${workspaceFolder} catalog",
@@ -281,6 +397,7 @@
         "grimoire: lint",
         "grimoire: test-modified",
         "grimoire: memory-lint",
+        "grimoire: memory:gate-shadow",
         "grimoire: preflight"
       ],
       "dependsOrder": "sequence"
@@ -296,6 +413,9 @@
         "grimoire: validate-skills",
         "grimoire: auto-doc-check",
         "grimoire: memory-lint",
+        "grimoire: memory:vector-sync",
+        "grimoire: memory:vector-verify",
+        "grimoire: memory:gate-shadow",
         "grimoire: preflight",
         "grimoire: multi-llm-canary-validate"
       ],

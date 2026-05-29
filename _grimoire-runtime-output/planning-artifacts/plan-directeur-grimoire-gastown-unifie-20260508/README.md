@@ -15,6 +15,7 @@ Il corrige un manque du rapport precedent : Gastownhall n'est plus traite seulem
 
 | Document | Role |
 | --- | --- |
+| [../cahier-des-charges-projet-cible-grimoire-agent-os-20260508/README.md](../cahier-des-charges-projet-cible-grimoire-agent-os-20260508/README.md) | Cahier des charges cible ideal, architecture, schemas, exigences et lots d'execution agents. |
 | [DOC-TECHNIQUE-plan-directeur-grimoire-gastown-unifie.md](./DOC-TECHNIQUE-plan-directeur-grimoire-gastown-unifie.md) | Sources, diagnostic, comparaison Grimoire x Gastownhall x references externes. |
 | [GUIDE-utilisation-plan-directeur-grimoire-gastown-unifie.md](./GUIDE-utilisation-plan-directeur-grimoire-gastown-unifie.md) | Comment utiliser ce plan comme source de verite pour agents et humains. |
 | [PLAN-DIRECTEUR-nouveau-projet-grimoire-agent-os.md](./PLAN-DIRECTEUR-nouveau-projet-grimoire-agent-os.md) | Grand plan unifie pour Grimoire Forge et grimoire-kit. |

@@ -1,0 +1,11 @@
+project:
+  name: "Grimoire-Forge"
+  description: "Grimoire R&D forge — agentic runtime, memory OS, and standard adoption workspace."
+  type: "library"
+
+memory:
+  knowledge_graph: "neo4j"
+  semantic_memory: "weaviate-server"
+  memory_graph: "neo4j"
+  code_graph: "neo4j"
+  task_memory: "neo4j"

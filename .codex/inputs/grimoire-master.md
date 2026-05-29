@@ -45,13 +45,30 @@ not authenticated.
 
 ## Memory Backend
 
-- Runtime memory backend: `qdrant-server`
+- Current runtime memory backend: `weaviate-server`
+- Runtime graph projection: `neo4j`
+- Rollback/source memory backend: `qdrant-server`
 - Qdrant endpoint: `http://localhost:6333`
 - Docker compose file: `docker-compose.qdrant.yml`
 - Collection: `grimoire_kit`
+- Weaviate endpoint: `http://localhost:8080`
+- Weaviate collection: `GrimoireKitMemory`
+- Neo4j endpoint: `bolt://localhost:7687`
+- Target Docker compose file: `docker-compose.memory-target.yml`
+- Migration bundle path: `_grimoire/_memory/migration/weaviate-neo4j`
+- Code graph sync: `grimoire memory graph sync-code`
+- Task memory sync: `grimoire memory graph sync-tasks`
+- Code vector sync: `grimoire memory vector sync-code`
+- Task vector sync: `grimoire memory vector sync-tasks`
+- Vector gate: `grimoire memory vector verify`
+- Graph gate: `grimoire memory graph verify`
+- Unified Memory OS gate: `grimoire memory gate`
 
+Qdrant remains available as migration source and rollback while recurring
+verification keeps Weaviate objects, Neo4j nodes, and bundle source ids aligned.
 The `grimoire` MCP wrapper exports `GRIMOIRE_QDRANT_URL` so Codex and the
-Grimoire runtime resolve the same Docker-backed Qdrant service.
+Grimoire runtime resolve the same Docker-backed Qdrant service during rollback
+or re-export operations.
 
 ## Execution Contract
 

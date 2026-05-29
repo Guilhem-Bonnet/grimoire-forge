@@ -1,0 +1,11 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "type": "command",
+        "command": ".github/hooks/scripts/grimoire-hook-gateway.sh --hook-id grimoire-memory-gate --event PostToolUse --control-file .github/hooks/grimoire-memory-gate.json",
+        "timeout": 25
+      }
+    ]
+  }
+}
