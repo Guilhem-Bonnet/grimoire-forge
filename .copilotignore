@@ -1,0 +1,25 @@
+# Copilot context exclusions
+# Empêche Copilot d'envoyer ces fichiers/dossiers à l'API comme contexte
+
+# Assets binaires (sprites pixel art, images générées)
+_bmad-output/assets/
+
+# Site MkDocs généré
+grimoire-kit/site/
+
+# Screenshots Playwright MCP
+.playwright-mcp/
+
+# Données volumineuses / index
+grimoire-kit/_grimoire/
+grimoire-kit/_grimoire-output/
+_bmad/tea/testarch/knowledge/
+_grimoire/
+_grimoire-output/
+
+# Artefacts Python
+**/__pycache__/
+**/*.pyc
+**/.pytest_cache/
+**/.ruff_cache/
+**/.venv/

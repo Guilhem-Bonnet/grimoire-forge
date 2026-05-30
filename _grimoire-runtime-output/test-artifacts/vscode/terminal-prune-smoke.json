@@ -1,0 +1,11 @@
+{
+  "version": "1.1.0",
+  "mode": "list",
+  "pty_host_count": 0,
+  "zsh_safe_total": 9,
+  "zsh_safe_attached_to_pty": 0,
+  "idle_candidates": [],
+  "planned_prune_count": 0,
+  "killed_pids": [],
+  "failures": []
+}

@@ -1,0 +1,1 @@
+-rw-r--r--. 1 guilhem guilhem 386K 14 avril 00:06 .release/grimoire-kit-grimoire-game-0.0.0.tgz

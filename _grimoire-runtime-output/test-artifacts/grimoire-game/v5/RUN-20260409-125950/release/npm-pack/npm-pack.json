@@ -1,0 +1,351 @@
+[
+  {
+    "id": "@grimoire-kit/grimoire-game@0.0.0",
+    "name": "@grimoire-kit/grimoire-game",
+    "version": "0.0.0",
+    "size": 66135,
+    "unpackedSize": 469327,
+    "shasum": "022c8823bada4bc1ddfc37ab0566a6e8ea4bf2af",
+    "integrity": "sha512-l2W+3pG+JAK1VUJCQzqsdlFLsBBeBB9kRpZy4P4lsM0Qmtl/2SVL5J2Th0+Bh+g/8UeNotg7V93OuYRzK8LOlw==",
+    "filename": "grimoire-kit-grimoire-game-0.0.0.tgz",
+    "files": [
+      {
+        "path": "dist/bridge/adapter-grimoire.d.ts",
+        "size": 3342,
+        "mode": 420
+      },
+      {
+        "path": "dist/bridge/adapter-grimoire.js",
+        "size": 25038,
+        "mode": 420
+      },
+      {
+        "path": "dist/bridge/adapter-grimoire.js.map",
+        "size": 20899,
+        "mode": 420
+      },
+      {
+        "path": "dist/bridge/agent-adapter.d.ts",
+        "size": 1892,
+        "mode": 420
+      },
+      {
+        "path": "dist/bridge/agent-adapter.js",
+        "size": 14730,
+        "mode": 420
+      },
+      {
+        "path": "dist/bridge/agent-adapter.js.map",
+        "size": 13579,
+        "mode": 420
+      },
+      {
+        "path": "dist/bridge/runtime-dashboard-session.d.ts",
+        "size": 1435,
+        "mode": 420
+      },
+      {
+        "path": "dist/bridge/runtime-dashboard-session.js",
+        "size": 1497,
+        "mode": 420
+      },
+      {
+        "path": "dist/bridge/runtime-dashboard-session.js.map",
+        "size": 1601,
+        "mode": 420
+      },
+      {
+        "path": "dist/bridge/runtime-source-fs.d.ts",
+        "size": 1856,
+        "mode": 420
+      },
+      {
+        "path": "dist/bridge/runtime-source-fs.js",
+        "size": 23223,
+        "mode": 420
+      },
+      {
+        "path": "dist/bridge/runtime-source-fs.js.map",
+        "size": 22865,
+        "mode": 420
+      },
+      {
+        "path": "dist/contracts/events.d.ts",
+        "size": 15073,
+        "mode": 420
+      },
+      {
+        "path": "dist/contracts/events.js",
+        "size": 5219,
+        "mode": 420
+      },
+      {
+        "path": "dist/contracts/events.js.map",
+        "size": 4294,
+        "mode": 420
+      },
+      {
+        "path": "dist/contracts/schemas.d.ts",
+        "size": 69549,
+        "mode": 420
+      },
+      {
+        "path": "dist/contracts/schemas.js",
+        "size": 6229,
+        "mode": 420
+      },
+      {
+        "path": "dist/contracts/schemas.js.map",
+        "size": 6219,
+        "mode": 420
+      },
+      {
+        "path": "dist/index.d.ts",
+        "size": 1521,
+        "mode": 420
+      },
+      {
+        "path": "dist/index.js",
+        "size": 1554,
+        "mode": 420
+      },
+      {
+        "path": "dist/index.js.map",
+        "size": 948,
+        "mode": 420
+      },
+      {
+        "path": "dist/server/auth/rbac.d.ts",
+        "size": 1010,
+        "mode": 420
+      },
+      {
+        "path": "dist/server/auth/rbac.js",
+        "size": 1692,
+        "mode": 420
+      },
+      {
+        "path": "dist/server/auth/rbac.js.map",
+        "size": 1741,
+        "mode": 420
+      },
+      {
+        "path": "dist/server/auth/token-registry.d.ts",
+        "size": 1121,
+        "mode": 420
+      },
+      {
+        "path": "dist/server/auth/token-registry.js",
+        "size": 2976,
+        "mode": 420
+      },
+      {
+        "path": "dist/server/auth/token-registry.js.map",
+        "size": 3058,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/audit-view.d.ts",
+        "size": 2221,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/audit-view.js",
+        "size": 11203,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/audit-view.js.map",
+        "size": 12277,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/board-view.d.ts",
+        "size": 3336,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/board-view.js",
+        "size": 17407,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/board-view.js.map",
+        "size": 18114,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/collaboration-view.d.ts",
+        "size": 1881,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/collaboration-view.js",
+        "size": 13901,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/collaboration-view.js.map",
+        "size": 14577,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/game-state.d.ts",
+        "size": 1017,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/game-state.js",
+        "size": 3726,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/game-state.js.map",
+        "size": 3578,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/observability-panel-view.d.ts",
+        "size": 1776,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/observability-panel-view.js",
+        "size": 5663,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/observability-panel-view.js.map",
+        "size": 5516,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/observability-view.d.ts",
+        "size": 2294,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/observability-view.js",
+        "size": 6786,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/observability-view.js.map",
+        "size": 7542,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/runtime-dashboard-store.d.ts",
+        "size": 1088,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/runtime-dashboard-store.js",
+        "size": 1612,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/runtime-dashboard-store.js.map",
+        "size": 1666,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/runtime-dashboard-ui-view.d.ts",
+        "size": 2358,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/runtime-dashboard-ui-view.js",
+        "size": 6248,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/runtime-dashboard-ui-view.js.map",
+        "size": 5947,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/runtime-dashboard-view.d.ts",
+        "size": 1662,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/runtime-dashboard-view.js",
+        "size": 2953,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/runtime-dashboard-view.js.map",
+        "size": 2694,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/session-view.d.ts",
+        "size": 2403,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/session-view.js",
+        "size": 8616,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/session-view.js.map",
+        "size": 9326,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/task-view.d.ts",
+        "size": 1604,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/task-view.js",
+        "size": 5192,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/task-view.js.map",
+        "size": 5412,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/timeline-view.d.ts",
+        "size": 1270,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/timeline-view.js",
+        "size": 5873,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/timeline-view.js.map",
+        "size": 6677,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/verification-view.d.ts",
+        "size": 1314,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/verification-view.js",
+        "size": 3815,
+        "mode": 420
+      },
+      {
+        "path": "dist/state/verification-view.js.map",
+        "size": 3549,
+        "mode": 420
+      },
+      {
+        "path": "package.json",
+        "size": 1072,
+        "mode": 420
+      }
+    ],
+    "entryCount": 67,
+    "bundled": []
+  }
+]

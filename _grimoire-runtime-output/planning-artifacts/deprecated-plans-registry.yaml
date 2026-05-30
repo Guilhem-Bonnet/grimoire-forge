@@ -1,0 +1,287 @@
+---
+# Registre des plans — statuts et mappings vers le plan cible
+# Statuts: active | absorbed | archive | incubator
+# absorbed_by: chemin relatif depuis planning-artifacts/
+# updated: 2026-05-08
+
+schema_version: "grimoire.plans-registry.v1"
+target_plan: "cahier-des-charges-projet-cible-grimoire-agent-os-20260508"
+unified_backlog: "cahier-des-charges-projet-cible-grimoire-agent-os-20260508/DOSSIER-EXECUTION-AGENTS.md"
+
+plans:
+
+  # ── Plans actifs ────────────────────────────────────────────────────────────
+
+  - id: cahier-des-charges-agent-os-20260508
+    path: "cahier-des-charges-projet-cible-grimoire-agent-os-20260508"
+    title: "Cahier des charges — Grimoire Agent OS (2026-05-08)"
+    status: active
+    note: "Plan cible unifié. Source de vérité pour tous les lots A-M."
+
+  - id: plan-directeur-gastown-unifie-20260508
+    path: "plan-directeur-grimoire-gastown-unifie-20260508"
+    title: "Plan directeur Grimoire Gastown unifié (2026-05-08)"
+    status: active
+    note: "Directeur de haut niveau. Complémentaire au cahier des charges."
+
+  # ── Plans absorbés dans le cahier des charges Agent OS ─────────────────────
+
+  - id: plan-adaptation-gastownhall
+    path: "PLAN-adaptation-gastownhall-grimoire.md"
+    title: "Plan adaptation Gastownhall → Grimoire"
+    status: absorbed
+    absorbed_by: "cahier-des-charges-projet-cible-grimoire-agent-os-20260508"
+    absorbed_lots: ["LOT-M1"]
+    note: "Mapping Gastownhall → Grimoire intégré en LOT-M1."
+
+  - id: plan-implementation-mission-board
+    path: "PLAN-implementation-mission-board-grimoire.md"
+    title: "Plan implémentation Mission Board"
+    status: absorbed
+    absorbed_by: "cahier-des-charges-projet-cible-grimoire-agent-os-20260508"
+    absorbed_lots: ["LOT-B", "LOT-I"]
+    note: "Mission Ledger et Cockpit couvrent ce périmètre."
+
+  - id: spec-mission-board
+    path: "SPEC-mission-board-grimoire.md"
+    title: "Spec Mission Board Grimoire"
+    status: absorbed
+    absorbed_by: "cahier-des-charges-projet-cible-grimoire-agent-os-20260508"
+    absorbed_lots: ["LOT-B1", "LOT-B2", "LOT-I1"]
+
+  - id: motion-spec-mission-board
+    path: "MOTION-SPEC-mission-board-grimoire.md"
+    title: "Motion spec Mission Board"
+    status: absorbed
+    absorbed_by: "cahier-des-charges-projet-cible-grimoire-agent-os-20260508"
+    absorbed_lots: ["LOT-B", "LOT-C"]
+
+  - id: contrat-mission-board
+    path: "CONTRAT-mission-board-grimoire.md"
+    title: "Contrat Mission Board Grimoire"
+    status: absorbed
+    absorbed_by: "cahier-des-charges-projet-cible-grimoire-agent-os-20260508"
+    absorbed_lots: ["LOT-B1", "LOT-E"]
+
+  - id: plan-a-plus-grimoire-kit-2026-04-11
+    path: "PLAN-A-PLUS-GRIMOIRE-KIT-2026-04-11.md"
+    title: "Plan A+ Grimoire Kit (2026-04-11)"
+    status: absorbed
+    absorbed_by: "cahier-des-charges-projet-cible-grimoire-agent-os-20260508"
+    absorbed_lots: ["LOT-K", "LOT-L"]
+
+  - id: plan-hooks-vague-suivante
+    path: "PLAN-hooks-vague-suivante-grimoire-kit-2026-04-13.md"
+    title: "Plan hooks vague suivante (2026-04-13)"
+    status: absorbed
+    absorbed_by: "cahier-des-charges-projet-cible-grimoire-agent-os-20260508"
+    absorbed_lots: ["LOT-E"]
+
+  - id: prd-grimoire-v4-universal
+    path: "PRD-grimoire-v4-universal.md"
+    title: "PRD Grimoire V4 Universal"
+    status: absorbed
+    absorbed_by: "cahier-des-charges-projet-cible-grimoire-agent-os-20260508"
+    absorbed_lots: ["LOT-A", "LOT-G", "LOT-H"]
+
+  - id: prd-bmad-kit-v3-platform
+    path: "PRD-bmad-kit-v3-platform.md"
+    title: "PRD Bmad Kit V3 Platform"
+    status: absorbed
+    absorbed_by: "cahier-des-charges-projet-cible-grimoire-agent-os-20260508"
+    absorbed_lots: ["LOT-L"]
+
+  - id: prd-bmad-intelligence-layer
+    path: "PRD-bmad-intelligence-layer.md"
+    title: "PRD Bmad Intelligence Layer"
+    status: absorbed
+    absorbed_by: "cahier-des-charges-projet-cible-grimoire-agent-os-20260508"
+    absorbed_lots: ["LOT-G", "LOT-H"]
+
+  - id: prd-bmad-custom-kit-v2
+    path: "PRD-bmad-custom-kit-v2.md"
+    title: "PRD Bmad Custom Kit V2"
+    status: absorbed
+    absorbed_by: "cahier-des-charges-projet-cible-grimoire-agent-os-20260508"
+    absorbed_lots: ["LOT-L1", "LOT-L2"]
+
+  - id: epics-anti-hallucination-orchestrator
+    path: "EPICS-anti-hallucination-orchestrator.md"
+    title: "Epics anti-hallucination orchestrator"
+    status: absorbed
+    absorbed_by: "cahier-des-charges-projet-cible-grimoire-agent-os-20260508"
+    absorbed_lots: ["LOT-C3", "LOT-E"]
+
+  - id: phase1-implementation-plan
+    path: "PHASE1-IMPLEMENTATION-PLAN.md"
+    title: "Phase 1 Implementation Plan"
+    status: absorbed
+    absorbed_by: "cahier-des-charges-projet-cible-grimoire-agent-os-20260508"
+    absorbed_lots: ["LOT-B", "LOT-C", "LOT-D"]
+
+  - id: plan-resserre-post-challenge-2026-04-11
+    path: "plan-resserre-post-challenge-agentique-2026-04-11.md"
+    title: "Plan resserré post-challenge agentique (2026-04-11)"
+    status: absorbed
+    absorbed_by: "cahier-des-charges-projet-cible-grimoire-agent-os-20260508"
+    absorbed_lots: ["LOT-E", "LOT-K"]
+
+  - id: plan-execution-post-audit-2026-04-10
+    path: "plan-execution-post-audit-agentique-2026-04-10.md"
+    title: "Plan exécution post-audit agentique (2026-04-10)"
+    status: absorbed
+    absorbed_by: "cahier-des-charges-projet-cible-grimoire-agent-os-20260508"
+    absorbed_lots: ["LOT-E", "LOT-G"]
+
+  - id: innovation-plan-final
+    path: "INNOVATION-PLAN-FINAL.md"
+    title: "Innovation Plan Final"
+    status: absorbed
+    absorbed_by: "cahier-des-charges-projet-cible-grimoire-agent-os-20260508"
+    absorbed_lots: ["LOT-A", "LOT-M"]
+
+  # ── Archives (rapports, analyses, audits) ───────────────────────────────────
+
+  - id: audit-agentique-2026-04-10
+    path: "audit-agentique-2026-04-10.md"
+    title: "Audit agentique (2026-04-10)"
+    status: archive
+    note: "Audit de référence. Conserver pour traçabilité."
+
+  - id: benchmark-dimensionnel-2026-04-10
+    path: "benchmark-dimensionnel-agentique-2026-04-10.md"
+    title: "Benchmark dimensionnel agentique (2026-04-10)"
+    status: archive
+
+  - id: analyse-pilotage-agentique-2026-04-25
+    path: "analyse-pilotage-agentique-2026-04-25"
+    title: "Analyse pilotage agentique (2026-04-25)"
+    status: archive
+
+  - id: adr-002-quinn-murat-evaluation
+    path: "ADR-002-quinn-murat-evaluation.md"
+    title: "ADR-002 Quinn/Murat evaluation"
+    status: archive
+    note: "ADR consommée. Décision intégrée dans l'architecture SOG."
+
+  - id: adr-003-agent-debugger-reality-first
+    path: "ADR-003-agent-debugger-reality-first.md"
+    title: "ADR-003 Agent debugger reality-first"
+    status: archive
+
+  - id: adr-004-init-portage-python
+    path: "ADR-004-init-portage-python.md"
+    title: "ADR-004 Init portage Python"
+    status: archive
+
+  - id: adr-005-lifecycle-hooks
+    path: "ADR-005-lifecycle-hooks.md"
+    title: "ADR-005 Lifecycle hooks"
+    status: archive
+
+  - id: adr-006-progressive-disclosure
+    path: "ADR-006-progressive-disclosure.md"
+    title: "ADR-006 Progressive disclosure"
+    status: archive
+
+  - id: adr-007-mission-board-control-plane-causal
+    path: "ADR-007-mission-board-control-plane-causal.md"
+    title: "ADR-007 Mission board control plane causal"
+    status: archive
+
+  - id: livrable-final-mission-board
+    path: "LIVRABLE-FINAL-mission-board-grimoire.md"
+    title: "Livrable final Mission Board"
+    status: archive
+
+  - id: matrice-verification-mission-board
+    path: "MATRICE-verification-mission-board-grimoire.md"
+    title: "Matrice vérification Mission Board"
+    status: archive
+
+  - id: suite-tests-mission-board
+    path: "SUITE-tests-mission-board-grimoire.md"
+    title: "Suite tests Mission Board"
+    status: archive
+
+  - id: ux-map-mission-board
+    path: "UX-MAP-mission-board-grimoire.md"
+    title: "UX Map Mission Board"
+    status: archive
+
+  - id: wireframes-mission-board
+    path: "WIREFRAMES-mission-board-grimoire.md"
+    title: "Wireframes Mission Board"
+    status: archive
+
+  - id: visual-brief-mission-board
+    path: "VISUAL-BRIEF-mission-board-grimoire.md"
+    title: "Visual Brief Mission Board"
+    status: archive
+
+  - id: tickets-adaptation-gastownhall
+    path: "TICKETS-adaptation-gastownhall-grimoire.md"
+    title: "Tickets adaptation Gastownhall"
+    status: archive
+
+  - id: doc-technique-adaptation-gastownhall
+    path: "DOC-TECHNIQUE-adaptation-gastownhall-grimoire.md"
+    title: "Doc technique adaptation Gastownhall"
+    status: archive
+
+  - id: doc-technique-mission-board
+    path: "DOC-TECHNIQUE-mission-board-grimoire.md"
+    title: "Doc technique Mission Board"
+    status: archive
+
+  - id: audit-ux-da-site-vitrine
+    path: "AUDIT-UX-DA-site-vitrine-agentique.md"
+    title: "Audit UX DA site vitrine agentique"
+    status: archive
+
+  # ── Incubateur (idées non engagées) ─────────────────────────────────────────
+
+  - id: brainstorm-grimoire-v4-universal
+    path: "BRAINSTORM-GRIMOIRE-V4-UNIVERSAL.md"
+    title: "Brainstorm Grimoire V4 Universal"
+    status: incubator
+    note: "Idées non priorisées. Candidat LOT-M ou roadmap Q3."
+
+  - id: brainstorm-meta-evolution-v3
+    path: "BRAINSTORM-META-EVOLUTION-V3.md"
+    title: "Brainstorm méta-évolution V3"
+    status: incubator
+
+  - id: brainstorm-pixel-observatory-v2
+    path: "BRAINSTORM-PIXEL-OBSERVATORY-V2.md"
+    title: "Brainstorm Pixel Observatory V2"
+    status: incubator
+    note: "Projet Pixel Observatory — séparé de l'Agent OS."
+
+  - id: party-brainstorm-v3-platform
+    path: "PARTY-BRAINSTORM-V3-PLATFORM.md"
+    title: "Party Brainstorm V3 Platform"
+    status: incubator
+
+  - id: plan-multi-llm-multi-source
+    path: "PLAN-multi-llm-multi-source.md"
+    title: "Plan multi-LLM multi-source"
+    status: incubator
+    note: "Candidat intégration dans LOT-G routing avancé."
+
+  - id: plan-flow-agentique-visuel-ultra
+    path: "plan-flow-agentique-visuel-ultra.md"
+    title: "Plan flow agentique visuel ultra"
+    status: incubator
+
+  - id: plan-pixel-observatory-v2
+    path: "PLAN-PIXEL-OBSERVATORY-V2.md"
+    title: "Plan Pixel Observatory V2"
+    status: incubator
+    note: "Projet Pixel Observatory — séparé de l'Agent OS."
+
+  - id: prd-grimoire-init-onboarding
+    path: "PRD-grimoire-init-onboarding.md"
+    title: "PRD Grimoire Init Onboarding"
+    status: incubator
+    note: "Candidat LOT-L1 CLI refinement."

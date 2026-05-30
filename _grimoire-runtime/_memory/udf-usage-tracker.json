@@ -1,0 +1,4 @@
+{
+  "_comment": "UDF Usage Tracker — Compteur d'utilisation des artefacts dynamiques. Le SOG incrémente le compteur à chaque invocation d'un artefact _dyn-*. Quand count >= 3, l'artefact est éligible à la promotion en permanent.",
+  "artifacts": {}
+}

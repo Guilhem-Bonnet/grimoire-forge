@@ -1,17 +1,23 @@
 ---
 name: grimoire-test-scaffold
-description: 'Generate test scaffolding for a BMAD Grimoire tool. Use when: generate tests, create tests, scaffold tests, write tests for tool, test a tool, add test coverage, new tests needed. Inspects the tool, identifies testable functions, and generates test skeleton following project conventions.'
+description: 'Generate test scaffolding for a Grimoire tool. Use when: generate tests, create tests, scaffold tests, write tests for tool, test a tool, add test coverage, new tests needed. Inspects the tool, identifies testable functions, and generates test skeleton following project conventions.'
 ---
 
 # Grimoire Test Scaffold
 
-Generate a comprehensive test file for a BMAD Grimoire tool, following established project conventions.
+Generate a comprehensive test file for a Grimoire tool, following established project conventions.
 
 ## When to Use
 
 - A new tool has been created and needs tests
 - Test coverage needs to be improved for an existing tool
 - When the user says "generate tests for X", "scaffold tests", or "add test coverage"
+
+## When NOT to Use
+
+- For test-first feature development (write the test before the code) → `grimoire-tdd`.
+- For test strategy, fixture architecture, NFR/CI gates → `grimoire-test-architecture` (TEA).
+- This skill produces a starting skeleton — assertions and fixtures still need a human pass.
 
 ## Procedure
 

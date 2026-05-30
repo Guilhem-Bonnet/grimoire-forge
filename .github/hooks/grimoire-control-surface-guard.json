@@ -1,0 +1,11 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "type": "command",
+        "command": ".github/hooks/scripts/grimoire-hook-gateway.sh --hook-id grimoire-control-surface-guard --event PreToolUse --control-file .github/hooks/grimoire-control-surface-guard.json",
+        "timeout": 5
+      }
+    ]
+  }
+}

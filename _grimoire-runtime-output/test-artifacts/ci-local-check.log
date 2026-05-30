@@ -1,0 +1,16 @@
+[syntax]
+bash: grimoire-kit/bmad-init.sh: Aucun fichier ou dossier de ce nom
+bmad-init rc=127
+cc-verify rc=0
+sil-collect rc=0
+pre-commit-cc rc=0
+[shellcheck]
+grimoire-kit/bmad-init.sh: grimoire-kit/bmad-init.sh: openBinaryFile: does not exist (No such file or directory)
+bmad-init sc_rc=2
+cc-verify sc_rc=0
+sil-collect sc_rc=0
+pre-commit-cc sc_rc=0
+[smoke]
+bash: grimoire-kit/bmad-init.sh: Aucun fichier ou dossier de ce nom
+help rc=127
+stacks=

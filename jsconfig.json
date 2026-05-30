@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "checkJs": false
+  },
+  "exclude": [
+    "node_modules",
+    "**/node_modules/**",
+    ".playwright-mcp/**",
+    "site/**",
+    "grimoire-kit/site/**",
+    "_grimoire-output/**",
+    "_grimoire-runtime-output/**",
+    "**/.venv/**",
+    "**/.venv-release/**",
+    "grimoire-kit/apps/grimoire-game/coverage/**",
+    "grimoire-kit/apps/grimoire-game/dist/**",
+    "grimoire-kit/apps/grimoire-game/.release/**"
+  ]
+}

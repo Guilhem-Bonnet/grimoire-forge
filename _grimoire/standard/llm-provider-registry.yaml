@@ -1,146 +1,83 @@
-$schema: grimoire-llm-provider-registry/v1
+$schema: "grimoire-llm-provider-registry/v1"
+
 metadata:
-  owner: Grimoire maintainers
-  policy: No provider/model call outside this registry.
-  project: Grimoire-Forge
+  project: "Grimoire-Forge"
+  owner: "Grimoire maintainers"
+  policy: "No provider/model call outside this registry."
+
 providers:
-- allowed_capabilities:
-  - chat
-  - code
-  - review
-  audit:
-    log_metadata: true
-    log_prompts: false
-  data_policy:
-    allowed_data_classes:
-    - public-docs
-    - project-source
-    - generated-artifacts
-    - non-secret-metadata
-    forbidden_data_classes:
-    - secrets
-    - credentials
-    - personal-data
-    - regulated-data
-    retention_notes: Hosted provider use requires project-approved credentials and data policy approval.
-  default_models:
-  - copilot-integrated-models
-  enabled: true
-  fallback_order: []
-  id: github-copilot
-  provider_type: hosted
-- allowed_capabilities:
-  - chat
-  - code
-  - reasoning
-  - embeddings
-  audit:
-    log_metadata: true
-    log_prompts: false
-  data_policy:
-    allowed_data_classes:
-    - public-docs
-    - project-source
-    - generated-artifacts
-    - non-secret-metadata
-    forbidden_data_classes:
-    - secrets
-    - credentials
-    - personal-data
-    - regulated-data
-    retention_notes: Hosted provider use requires project-approved credentials and data policy approval.
-  default_models:
-  - gpt-5.5
-  - gpt-5.4
-  - gpt-5.3-codex
-  enabled: false
-  fallback_order:
-  - github-copilot
-  id: openai
-  provider_type: hosted
-- allowed_capabilities:
-  - chat
-  - code
-  - reasoning
-  audit:
-    log_metadata: true
-    log_prompts: false
-  data_policy:
-    allowed_data_classes:
-    - public-docs
-    - project-source
-    - generated-artifacts
-    - non-secret-metadata
-    forbidden_data_classes:
-    - secrets
-    - credentials
-    - personal-data
-    - regulated-data
-    retention_notes: Hosted provider use requires project-approved credentials and data policy approval.
-  default_models:
-  - claude-sonnet-4.6
-  - claude-opus-4.7
-  - claude-haiku-4.5
-  enabled: false
-  fallback_order:
-  - github-copilot
-  id: anthropic
-  provider_type: hosted
-- allowed_capabilities:
-  - chat
-  - code
-  - multimodal
-  - reasoning
-  audit:
-    log_metadata: true
-    log_prompts: false
-  data_policy:
-    allowed_data_classes:
-    - public-docs
-    - project-source
-    - generated-artifacts
-    - non-secret-metadata
-    forbidden_data_classes:
-    - secrets
-    - credentials
-    - personal-data
-    - regulated-data
-    retention_notes: Hosted provider use requires project-approved credentials and data policy approval.
-  default_models:
-  - gemini-family
-  enabled: false
-  fallback_order:
-  - github-copilot
-  id: google-gemini
-  provider_type: hosted
-- allowed_capabilities:
-  - chat
-  - code
-  - embeddings
-  audit:
-    log_metadata: true
-    log_prompts: false
-  data_policy:
-    allowed_data_classes:
-    - public-docs
-    - project-source
-    - generated-artifacts
-    - non-secret-metadata
-    - sensitive-local-only
-    forbidden_data_classes:
-    - secrets-without-redaction
-    - regulated-data-without-approval
-    retention_notes: Local execution still requires explicit data classification.
-  default_models:
-  - local-open-weight
-  enabled: false
-  fallback_order:
-  - github-copilot
-  id: local
-  provider_type: local
+  - id: "github-copilot"
+    enabled: true
+    provider_type: "hosted"
+    allowed_capabilities: ["chat", "code", "review"]
+    default_models: ["copilot-integrated-models"]
+    data_policy:
+      allowed_data_classes: ["public-docs", "project-source", "generated-artifacts", "non-secret-metadata"]
+      forbidden_data_classes: ["secrets", "credentials", "personal-data", "regulated-data"]
+      retention_notes: "Use through the GitHub Copilot CLI runtime with prompt metadata logging only."
+    fallback_order: ["anthropic", "openai", "google-gemini", "local"]
+    audit:
+      log_prompts: false
+      log_metadata: true
+
+  - id: "openai"
+    enabled: false
+    provider_type: "hosted"
+    allowed_capabilities: ["chat", "code", "reasoning", "embeddings"]
+    default_models: ["gpt-5.5", "gpt-5.4", "gpt-5.3-codex"]
+    data_policy:
+      allowed_data_classes: ["public-docs", "project-source", "generated-artifacts", "non-secret-metadata"]
+      forbidden_data_classes: ["secrets", "credentials", "personal-data", "regulated-data"]
+      retention_notes: "Disabled by default until project credentials and data policy approval are configured."
+    fallback_order: ["anthropic", "github-copilot", "local"]
+    audit:
+      log_prompts: false
+      log_metadata: true
+
+  - id: "anthropic"
+    enabled: false
+    provider_type: "hosted"
+    allowed_capabilities: ["chat", "code", "reasoning"]
+    default_models: ["claude-sonnet-4.6", "claude-opus-4.7", "claude-haiku-4.5"]
+    data_policy:
+      allowed_data_classes: ["public-docs", "project-source", "generated-artifacts", "non-secret-metadata"]
+      forbidden_data_classes: ["secrets", "credentials", "personal-data", "regulated-data"]
+      retention_notes: "Disabled by default until project credentials and data policy approval are configured."
+    fallback_order: ["github-copilot", "openai", "local"]
+    audit:
+      log_prompts: false
+      log_metadata: true
+
+  - id: "google-gemini"
+    enabled: false
+    provider_type: "hosted"
+    allowed_capabilities: ["chat", "code", "multimodal", "reasoning"]
+    default_models: ["gemini-family"]
+    data_policy:
+      allowed_data_classes: ["public-docs", "project-source", "generated-artifacts", "non-secret-metadata"]
+      forbidden_data_classes: ["secrets", "credentials", "personal-data", "regulated-data"]
+      retention_notes: "Disabled by default until project credentials and data policy approval are configured."
+    fallback_order: ["github-copilot", "anthropic", "openai", "local"]
+    audit:
+      log_prompts: false
+      log_metadata: true
+
+  - id: "local"
+    enabled: false
+    provider_type: "local"
+    allowed_capabilities: ["chat", "code", "embeddings"]
+    default_models: ["local-open-weight"]
+    data_policy:
+      allowed_data_classes: ["public-docs", "project-source", "generated-artifacts", "non-secret-metadata", "sensitive-local-only"]
+      forbidden_data_classes: ["secrets-without-redaction", "regulated-data-without-approval"]
+      retention_notes: "Local execution still requires explicit data classification."
+    fallback_order: ["github-copilot"]
+    audit:
+      log_prompts: false
+      log_metadata: true
+
 routing:
-  default_fallback_chain:
-  - github-copilot
-  default_provider: github-copilot
+  default_provider: "github-copilot"
+  default_fallback_chain: ["github-copilot", "anthropic", "openai", "google-gemini", "local"]
   require_capability_match: true
   require_data_policy_match: true

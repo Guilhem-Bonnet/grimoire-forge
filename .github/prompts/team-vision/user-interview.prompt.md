@@ -63,4 +63,4 @@ Identifier la frustration réelle.
 [1 phrase — ce qu'on fait/ne fait pas suite à cet interview]
 ```
 
-Sauvegarder dans `_bmad-output/team-vision/user-interviews/interview-{{persona_slug}}-{{date}}.md`
+Sauvegarder dans `_grimoire-runtime-output/team-vision/user-interviews/interview-{{persona_slug}}-{{date}}.md`

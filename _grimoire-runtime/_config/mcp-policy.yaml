@@ -1,0 +1,7 @@
+trusted_remote_hosts:
+  - api.githubcopilot.com
+  - mcp.context7.com
+trusted_workspace_servers:
+  - grimoire
+  - playwright
+fail_closed_remote_hosts: true

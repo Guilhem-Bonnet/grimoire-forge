@@ -62,4 +62,4 @@ Pour chaque feature proposée, poser : **"Le MVP peut-il être testé sans cette
 **Décision** : ✅ Scope validé / 🔴 Trop large — couper [F2]
 ```
 
-Sauvegarder dans `_bmad-output/team-vision/mvp-scope-{{project_slug}}-{{date}}.md`
+Sauvegarder dans `_grimoire-runtime-output/team-vision/mvp-scope-{{project_slug}}-{{date}}.md`

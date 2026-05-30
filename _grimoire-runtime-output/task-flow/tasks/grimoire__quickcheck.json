@@ -1,0 +1,1 @@
+{"task":"grimoire: quickcheck","flow":"quality","kind":"task","status":"failed","event":"task-finish","exitCode":1,"durationSeconds":0,"startedAt":"2026-04-22T15:20:33Z","finishedAt":"2026-04-22T15:20:33Z","cwd":"/mnt/Travail/Projets/Dev/Grimoire-Forge/grimoire-kit","command":"bash framework/tools/quick-check.sh"}

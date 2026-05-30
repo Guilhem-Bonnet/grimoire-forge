@@ -1,0 +1,4 @@
+
+> @grimoire-kit/grimoire-game@0.0.0 clean
+> rm -rf dist coverage .release .generated
+

@@ -4,9 +4,9 @@
 
 - Project: Grimoire-Forge
 - Owner: Grimoire maintainers
-- Selected profile: `orchestrated`
+- Selected profile: `governed`
 - Upstream standard reference: processus-developpement-agentique/docs/norme-structure-agentique.md
-- Date: 2026-05-28
+- Date: 2026-05-29
 
 ## Scope
 
@@ -46,5 +46,5 @@
 
 | Deviation | Reason | Expiry or review trigger |
 |---|---|---|
-| Release gate enforcement remains path-limited | PR CI now runs standard verification/audit for standard artifacts; broader release-branch policy is still separate. | Before moving from `orchestrated` to `governed`. |
+| CI enforcement not enabled yet | Branch and publication strategy is not settled. | Before remote publication or PR creation. |
 | Automated knowledge indexing not enabled yet | Current milestone establishes registry and auditability first. | Before moving from `orchestrated` to `governed`. |

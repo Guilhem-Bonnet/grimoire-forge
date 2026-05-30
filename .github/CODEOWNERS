@@ -1,0 +1,9 @@
+# Owner par defaut du depot.
+# Activer ensuite GitHub branch protection + "Require review from Code Owners".
+
+* @Guilhem-Bonnet
+
+/.github/ @Guilhem-Bonnet
+/docs/ @Guilhem-Bonnet
+/grimoire-game-assets/ @Guilhem-Bonnet
+/grimoire-kit/ @Guilhem-Bonnet

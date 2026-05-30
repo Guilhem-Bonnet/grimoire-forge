@@ -1,0 +1,7 @@
+{"event_type": "session", "timestamp": "2026-04-14T21:37:18Z", "outcome": "completed", "message": "objectif=Le projet ne regarde pas assez les references, sa memoire, ni des sources plus fiables sur Internet ou le web. Je veux a", "metadata": {"source": "stop-hook", "stopHookActive": false}}
+{"event_type": "tool", "timestamp": "2026-04-14T21:58:51Z", "outcome": "success", "skill": "dev", "tool": "evaluator", "message": "agent=dev grade=D score=0.64"}
+{"event_type": "skill", "timestamp": "2026-04-14T21:58:51Z", "outcome": "success", "skill": "dev", "message": "SubagentStop grade=D task=Ameliore le grounding avec memoire et docs", "metadata": {"source": "vscode-hook", "taskType": "documentation", "grade": "D"}}
+{"event_type": "session", "timestamp": "2026-04-14T21:58:51Z", "outcome": "completed", "message": "objectif=Renforce le grounding", "metadata": {"source": "stop-hook", "stopHookActive": true}}
+{"event_type": "session", "timestamp": "2026-04-14T21:58:51Z", "outcome": "completed", "message": "objectif=Ameliore le grounding avec memoire et docs | subagent=dev:D", "metadata": {"source": "stop-hook", "stopHookActive": true}}
+{"event_type": "skill", "timestamp": "2026-04-19T06:53:10Z", "outcome": "success", "skill": "grimoire-health-check", "duration_s": 3.0}
+{"event_type": "session", "timestamp": "2026-04-22T15:20:33Z", "outcome": "completed", "message": "objectif=test | task=grimoire: vscode-agent-terminals-autoprune:success", "metadata": {"source": "stop-hook", "stopHookActive": false}}

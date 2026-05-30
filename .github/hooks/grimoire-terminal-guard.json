@@ -1,0 +1,11 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "type": "command",
+        "command": ".github/hooks/scripts/grimoire-hook-gateway.sh --hook-id grimoire-terminal-guard --event PreToolUse --control-file .github/hooks/grimoire-terminal-guard.json",
+        "timeout": 5
+      }
+    ]
+  }
+}

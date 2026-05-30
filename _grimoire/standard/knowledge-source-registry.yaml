@@ -14,8 +14,8 @@ rules:
 sources:
   - id: "agentic-standard-corpus"
     type: "git_repository"
-    locator: "Guilhem-Bonnet/processus-developpement-agentique"
-    enabled: true
+    locator: "external:processus-developpement-agentique"
+    enabled: false
     indexing:
       mode: "manual"
       cadence: "before standard profile or capability changes"

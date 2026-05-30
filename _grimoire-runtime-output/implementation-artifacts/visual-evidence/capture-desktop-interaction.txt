@@ -1,0 +1,5 @@
+Visual capture placeholder
+Ticket: VIS-20260414-003
+Viewport: desktop
+State: interaction
+Objective: Open state validation for navigation and focus indicator.

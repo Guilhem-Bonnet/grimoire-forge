@@ -1,11 +1,10 @@
 {
-  "name": "grimoire-forge",
-  "description": "Grimoire Forge agentic standard workspace.",
-  "private": true,
+  "devDependencies": {
+    "@playwright/test": "^1.57.0",
+    "playwright": "^1.57.0"
+  },
   "scripts": {
-    "standard:init": "bash scripts/setup-agentic-standard.sh",
-    "standard:verify": "bash scripts/setup-agentic-standard.sh --verify-only",
-    "standard:audit": "bash scripts/setup-agentic-standard.sh --audit-only --markdown",
-    "standard:providers": "bash scripts/setup-agentic-standard.sh --detect-providers"
+    "check:standard": "grimoire-kit/.venv/bin/grimoire standard verify",
+    "docs:build": "mkdocs build --strict"
   }
 }

@@ -1,0 +1,4 @@
+
+> @grimoire-kit/grimoire-game@0.0.0 check /mnt/Travail/Projets/Dev/bmad-custom/grimoire-kit/apps/grimoire-game
+> tsc --noEmit -p tsconfig.json
+

@@ -1,0 +1,481 @@
+---
+name: architecture-docs
+description: "TRIGGERS for Workflow 10 (Release Architecture Version) — invoke this skill FIRST, do not plan or ask clarifying questions, when user says any of: 'release my architecture', 'release architecture', 'release architecture version', 'publish architecture', 'ship architecture', 'tag architecture version', 'freeze architecture', 'bump architecture version', 'finalize architecture' — these route here, NOT to architecture-docs-export (which only produces Word .docx files). Also use this skill for: creating/updating/maintaining ARCHITECTURE.md, generating Mermaid / C4 diagrams (Workflow 8), migrating to docs/ multi-file layout (Workflow 9), validating/auditing architecture (BIAN, META, standards), answering questions about documented components, data structures, integrations, security, performance, deployment, technology stack, or architectural decisions."
+---
+
+# Architecture Documentation Skill
+
+This skill provides comprehensive guidelines for creating and maintaining ARCHITECTURE.md files using the standardized template from ARCHITECTURE_DOCUMENTATION_GUIDE.md. It enforces consistency across all documentation sections through the **Foundational Context Anchor Protocol** — a dependency-aware editing workflow that loads required upstream context before any downstream section edit, requires source attribution for derived claims, and detects downstream impact when any section changes.
+
+### CRITICAL: Section Number vs File Prefix Disambiguation
+
+Internal section numbers (S1-S12) and file prefix numbers (01-10) are **independent** and do NOT align.
+
+| Internal Section | Name | File |
+|---|---|---|
+| S1+S2 | Executive Summary + System Overview | `docs/01-system-overview.md` |
+| S3 | Architecture Principles | `docs/02-architecture-principles.md` |
+| S4 | Architecture Layers | `docs/03-architecture-layers.md` |
+| S5 | Component Details | `docs/components/` |
+| S6 | Data Flow Patterns | `docs/04-data-flow-patterns.md` |
+| S7 | Integration Points | `docs/05-integration-points.md` |
+| S8 | Technology Stack | `docs/06-technology-stack.md` |
+| S9 | Security Architecture | `docs/07-security-architecture.md` |
+| S10 | Scalability & Performance | `docs/08-scalability-and-performance.md` |
+| S11 | Operational Considerations | `docs/09-operational-considerations.md` |
+| S12 | ADRs | `adr/` directory |
+
+**Rules:**
+- When a user says "update Section 9" → resolve to **S9** = `docs/07-security-architecture.md`, NOT `docs/09-*`
+- `docs/09-operational-considerations.md` = **S11**, not Section 9
+- Always use S-prefix (S1-S12) to identify sections, file paths to identify files
+- NEVER assume file prefix `NN` equals section number `N`
+
+## When This Skill is Invoked
+
+Automatically activate when:
+- User asks to create architecture documentation
+- User asks to update or edit ARCHITECTURE.md
+- User mentions documenting system architecture
+- User requests architecture review, audit, or analysis (triggers Design Drivers calculation prompt)
+- User explicitly asks to "calculate design drivers" or "update design drivers"
+- User asks about architecture documentation structure or best practices
+- User edits Section 1 Executive Summary Key Metrics (triggers metric consistency check)
+- User edits any downstream section (S4–S11) → triggers Context Anchor load
+- User requests metric consistency check, verify metrics, or audit metrics
+- **User asks informational questions about the documented architecture** (if ARCHITECTURE.md exists)
+  - "What is our [authentication/scaling/data flow/etc.] approach?"
+  - "How does [component/system/integration] work?"
+  - "What technologies do we use for [purpose]?"
+  - "Tell me about the architecture of [system]"
+- **User asks to generate, create, add, or update diagrams in architecture documentation** (triggers Workflow 8)
+  - "Generate my architecture diagrams"
+  - "Create Mermaid diagrams from ARCHITECTURE.md"
+  - "Add diagrams to my architecture"
+  - "Update my architecture diagrams"
+  - "Refresh / regenerate diagrams to reflect recent changes"
+- **User asks to release, freeze, or tag an architecture version** (triggers Workflow 10)
+  - "Release architecture version"
+  - "Bump architecture to v1.2.0"
+  - "Freeze architecture baseline"
+  - "Tag architecture version"
+
+### Version Drift Detection (informational, every invocation)
+
+On any invocation of this skill, if `ARCHITECTURE.md` contains a `<!-- ARCHITECTURE_VERSION: -->` comment AND the project is under git:
+
+1. Read the doc version from the comment
+2. Run `git tag -l 'architecture-v*' --sort=-version:refname | head -1` to get the latest `architecture-v*` tag
+3. If doc version > latest tag: emit `ℹ️ Architecture v{doc} is not tagged in git. Run Workflow 10 (Release Architecture Version) to publish a tag.`
+4. If doc version < latest tag: emit `⚠️ Architecture tag architecture-v{tag} exists in git but the doc shows v{doc}. Possible regression — verify before committing.`
+5. If doc version == latest tag: silent (no message)
+
+Drift detection is **informational only** — it does not block other workflows. See `RELEASE_WORKFLOW.md` → "Drift Detection" for full details.
+
+### Query Pattern Triggers
+
+This skill automatically activates when users ask questions about documented architecture, including:
+
+**Reference Patterns**:
+- "According to my architecture documentation..."
+- "Based on the architecture..."
+- "What does the architecture use/require/implement for..."
+- "My architecture documentation shows/says..."
+- "The architecture specifies/defines..."
+- "Check/Validate/Verify the architecture [aspect]..."
+- "Audit the [architecture component/pattern]..."
+
+**Technical Query Keywords**:
+- **Components**: "components", "services", "modules", "microservices", "systems"
+- **Data**: "data structures", "data flow", "database", "schema", "models", "entities"
+- **Integration**: "APIs", "integrations", "external systems", "endpoints", "interfaces"
+- **Security**: "authentication", "authorization", "encryption", "security", "compliance"
+- **Performance**: "scaling", "performance", "SLA", "capacity", "throughput", "latency"
+- **Deployment**: "deployment", "cloud provider", "infrastructure", "environments", "regions"
+- **Technology**: "tech stack", "languages", "frameworks", "tools", "libraries", "versions"
+- **Decisions**: "why choose", "decision", "trade-offs", "alternatives", "ADR", "rationale"
+- **Validation**: "check", "validate", "verify", "audit", "alignment", "BIAN", "META", "service domain", "layer", "standards", "compliance check"
+
+**Multi-section Queries**:
+- Questions requiring synthesis across multiple sections
+- Cross-cutting concerns (e.g., "How does authentication work with external systems?")
+- Implementation details spanning components, data, and deployment
+
+**Do NOT activate for** (redirect to the correct skill):
+- Requirements deviation checks, requirements traceability, or PO Spec coverage analysis → use `architecture-traceability` skill
+- Component migration to C4, component index sync, add/remove/update components → use `architecture-component-guardian` skill
+- Peer review or architecture quality assessment → use `architecture-peer-review` skill
+- Compliance contract generation → use `architecture-compliance` skill
+
+**Component Operations Delegation Rule**:
+All structural operations on `docs/components/` MUST delegate to `architecture-component-guardian`:
+- Creating, renaming, or deleting component files → delegate to guardian
+- Creating or updating `docs/components/README.md` → delegate to guardian (`sync` action)
+- Migrating flat components to C4 multi-system structure → delegate to guardian (`migrate` action)
+- Adding C4 metadata (Type, C4 Level, system folders) → delegate to guardian
+This skill may **read** component files for context (editing sections, propagation checks) but must NOT directly create, restructure, or modify the component index.
+
+---
+
+## 🎯 AUTOMATIC WORKFLOW DETECTION
+
+**IMPORTANT**: Immediately upon skill invocation, analyze the user's request to detect their intent and route directly to the matching workflow without asking.
+
+**Quick routing table** (full trigger patterns + scope notes in [WORKFLOW_AUTODETECT.md](WORKFLOW_AUTODETECT.md)):
+
+| Intent | Trigger keywords | Route to |
+|---|---|---|
+| Diagram generation / audit | "generate/create/add/update diagram(s)", "Mermaid", "diagram coverage", "reconcile diagrams" | Workflow 8 |
+| Migrate to multi-file `docs/` | "migrate/restructure/split/reorganize architecture", "too large", "too long" | Workflow 9 |
+| Release architecture version | "release/publish/ship/freeze/tag architecture", "bump architecture", semver | Workflow 10 |
+| New architecture (first creation) | "create architecture", "design system architecture", PO Spec present | Workflow 1 (Step 0) |
+| Review / audit existing architecture | "review architecture", "audit", "BIAN/META check", "validate principles" | Review/Audit workflow |
+
+**Critical scope notes** (read [WORKFLOW_AUTODETECT.md](WORKFLOW_AUTODETECT.md) before routing):
+
+- Workflow 8 is for **existing** ARCHITECTURE.md only. New architectures auto-generate their first diagrams in Workflow 1 Step 7 (BLOCKING DIAGRAMS_GATE). Route new-architecture diagram requests to Workflow 1, not 8.
+- Workflow 1 always ends with Step 7 (Mandatory Diagram Generation: 4 standard diagrams + mode-aware sequence diagrams) and Step 7.3 (DIAGRAMS_GATE — no `SKIP DIAGRAMS` override).
+
+**If no pattern matches**: acknowledge the skill invocation, ask which workflow the user wants, and present the available workflows briefly.
+
+---
+
+## Lazy-Load Contract — Workflow-Gated Reference Guides
+
+This skill ships with several large reference guides that are loaded **only when the matching workflow fires**, never speculatively. Each guide is 350–2,000 lines; loading one outside its trigger consumes Opus context unnecessarily and invalidates downstream prompt-cache prefixes when the user later switches workflows.
+
+| Guide | Size (lines) | Triggering workflow / signal |
+|---|---|---|
+| `ARCHITECTURE_DOCUMENTATION_GUIDE.md` | ~2,009 | Workflow 1 (new ARCHITECTURE.md), section editing requiring template structure |
+| `ARCHITECTURE_TYPE_SELECTION_WORKFLOW.md` | ~1,105 | Workflow 1 Step 0 — PO Spec gate + type selection |
+| `MERMAID_DIAGRAMS_GUIDE.md` | ~1,024 | Workflow 8 (diagram generation) |
+| `references/DIAGRAM-GENERATION-GUIDE.md` | ~743 | Workflow 8 (diagram generation) |
+| `RELEASE_WORKFLOW.md` | ~687 | Workflow 10 (release) — also for the drift-detection text deep-dive |
+| `QUERY_SECTION_MAPPING.md` | ~650 | Workflow 7 (informational query) when section mapping is needed |
+| `DESIGN_DRIVER_CALCULATIONS.md` | ~593 | "calculate / update design drivers", "architecture review" Design Drivers branch |
+| `PRINCIPLE_VALIDATION.md` | ~474 | Section 3 Enforcement Gate — every write to `docs/02-architecture-principles.md` |
+| `METRIC_CALCULATIONS.md` | ~350 | Section 1 Key Metrics edits, "verify metrics", "audit metrics" |
+| `RESTRUCTURING_GUIDE.md` | ~146 | Workflow 9 (multi-file migration) |
+| `references/{TYPE}-ARCHITECTURE.md` + `{TYPE}-TO-C4-TRANSLATION.md` | ~400–1,000 each | Workflow 1 type selection (load only the chosen type's pair) |
+
+**Rules**:
+- Do NOT pre-load any of the guides above "to be ready" — wait for the trigger.
+- When a workflow fires, load only its row's guide(s); do not chain into other workflows' guides.
+- For type-specific references (`MICROSERVICES`, `BIAN`, `META`, `3-TIER`, `N-LAYER`), load only the pair that matches the architecture's `<!-- ARCHITECTURE_TYPE: -->` value — never load all five.
+- Workflow detection (the AUTOMATIC WORKFLOW DETECTION section above) is what selects the trigger; once selected, no other workflow's guides are loaded.
+- The Section 3 Enforcement Gate's `PRINCIPLE_VALIDATION.md` is the only large guide loaded mid-edit (Layer 1); the Layer 2 sub-agent loads the foundational architecture files separately and is invoked via the Agent tool, so its reads do not pollute the orchestrator's context.
+
+This contract is what keeps the orchestrator's main-session context narrow enough that SKILL.md + the active workflow's guides fit in cache; speculative pre-loads would burst the working set and force prefix re-evaluation on every tool call.
+
+---
+
+## File Naming Convention
+
+**IMPORTANT**: All architecture documentation uses the multi-file `docs/` structure.
+
+- **`ARCHITECTURE.md`** at the project root is the **navigation index only** (~130 lines)
+- All section content lives under **`docs/`** as numbered Markdown files
+- Component details (Section 5) live under **`docs/components/`** — one file per component
+
+**File naming pattern**: `NN-kebab-case-name.md` — lowercase, hyphens only, no spaces, no uppercase, no underscores.
+- Section files: `docs/01-system-overview.md`, `docs/06-technology-stack.md`
+- Component files: `docs/components/01-api-gateway.md`, `docs/components/02-payment-service.md`
+
+See **RESTRUCTURING_GUIDE.md** for the full directory structure and naming conventions.
+
+### Location
+- `ARCHITECTURE.md` — always at the **project root**
+- `docs/` — always at the **project root** (sibling to `ARCHITECTURE.md`)
+- `docs/components/` — inside `docs/`
+- For multi-project repositories, each project subdirectory gets its own `ARCHITECTURE.md` + `docs/`
+
+---
+
+## Working with Architecture Documentation — Context Optimization
+
+**IMPORTANT**: The multi-file structure makes context loading simple — individual `docs/` files are 50–400 lines each (full file fits in context). No line-offset tricks needed.
+
+### Context-Efficient Workflow
+
+1. **Find the target section**
+   - Read `ARCHITECTURE.md` navigation table to identify which `docs/NN-name.md` file contains the target section
+   - Example: "Edit security architecture" → navigate to `docs/07-security-architecture.md`
+
+2. **Load Context Anchor** *(REQUIRED for downstream sections)*
+   - **Section 3 Enforcement Gate** (BLOCKING — runs on every write to `docs/02-architecture-principles.md`):
+     1. **Layer 1 — Prescriptive checklist**. Read `skills/architecture-docs/PRINCIPLE_VALIDATION.md` and execute every rule in order. Each rule's report MUST quote its grep output verbatim — a finding without quoted output is treated as FAIL (anti-self-attestation). Emit the `PRINCIPLE_VALIDATION_REPORT` block at the end. If any BLOCKING finding, regenerate `docs/02-architecture-principles.md` per the recommendations and re-run from rule 1. Increment round counter.
+     2. **Layer 2 — Semantic review**. Invoke `agents/reviewers/principle-quality-reviewer.md` with the appropriate `mode` (`first-write` for new docs; `edit-delta` for edits). Pass `principles_file`, `arch_type` (read from `<!-- ARCHITECTURE_TYPE: -->` in `docs/03-architecture-layers.md`), `system_overview_file`, `arch_layers_file`, `tech_stack_file`, `adr_index_glob`, `round`. If `status: FAIL` with BLOCKING findings, regenerate per recommendations and re-run from Layer 1.
+     3. **Round-3 escalation**. After 3 failed rounds across both layers (counted together), STOP. Show the user all 3 rounds' reports side by side and ask: "Three revision rounds have not produced a passing principles document. Pick: (a) edit further manually, (b) accept the current version with the listed findings (explicit override), or (c) abort the workflow." Do NOT silently accept.
+     4. **Fail-open clauses**:
+        - If Layer 2 sub-agent returns empty / errors / times out: treat as PASS-with-warning ("manual review required"). Do not block forever on tool failure.
+        - If Layer 1 grep tools are unavailable (`grep: command not found`): treat as fail-closed → escalate immediately. The user fixes the environment or overrides.
+   - **SKIP** the Context Anchor load below when editing `docs/01-system-overview.md` only, or for typo/formatting-only fixes
+   - For edits to `docs/02-architecture-principles.md`: load `docs/01-system-overview.md`, `docs/03-architecture-layers.md`, `docs/06-technology-stack.md`, and the ADR index BEFORE editing — the Section 3 Enforcement Gate above runs after the edit
+   - **REQUIRED** when editing any file from `docs/03-architecture-layers.md` through `docs/09-operational-considerations.md`, or any `docs/components/*.md` file
+   - **Universal Foundation**: Always load `docs/01-system-overview.md` + `docs/02-architecture-principles.md`
+   - **Relevant ADRs**: Match ADR titles from `ARCHITECTURE.md` navigation table against target section keywords; load matched ADRs
+   - **Section-Specific Parents**: Load parent sections per the Foundational Context Anchor Protocol dependency table (see below)
+   - Example for S9 (Security): load S1+2 (foundation) + S5/README (components) + S7 (integrations) + S8 (tech stack) + relevant ADRs
+   - Context budget: 250–850 lines depending on section tier
+
+3. **Read the entire target file**
+   - Individual `docs/` files are small enough to read in full
+   - `Read(file_path="docs/07-security-architecture.md")`  — no offset/limit needed
+
+4. **Edit the target file directly**
+   - Use the Edit tool on the specific `docs/NN-name.md` file
+   - **Do NOT edit ARCHITECTURE.md** unless you are adding a new section/file to the navigation table
+   - **Source Attribution** *(during editing)*: When writing derived content in downstream sections, insert cross-reference links to the source:
+     - **Metrics**: When repeating a metric from S1 Key Metrics → `(see [Key Metrics](01-system-overview.md#key-metrics))`
+     - **ADR decisions**: When content implements an ADR → `per [ADR-NNN](../adr/ADR-NNN-title.md)`
+     - **Principles**: When invoking an S3 principle → `per [Principle Name](02-architecture-principles.md#anchor)`
+     - **Parent section references**: When referencing components, layers, integrations, or tech → link to the specific file
+     - **Unverifiable claims**: If a specific claim (metric, decision, constraint) cannot be traced to an existing section, user input, or ADR → insert `<!-- TODO: Add source reference -->` marker
+
+5. **Post-Write Alignment & Traceability Audit**
+   - **Check A — Principle traceability**: Written content does not contradict Section 3 principles
+   - **Check B — Metric consistency**: Numeric values match Section 1 Key Metrics
+   - **Check C — ADR alignment**: Content does not contradict loaded ADR decisions
+   - **Check D — Parent section alignment**: Content references valid components (S5), integrations (S7), tech (S8) as loaded
+   - **Check E — Source citation audit**: Scan the written content for:
+     - Numeric values (TPS, latency, SLO, %) → must link to S1 Key Metrics or be marked as section-local
+     - Technology names matching S8 → should link to tech stack or governing ADR
+     - Architecture pattern references → should link to S3 or S4
+     - `<!-- TODO: Add source reference -->` markers → count and report
+   - **Silent pass** if no issues found; display alignment report **only when misalignment or missing citations are detected**
+
+5.5. **Downstream Documentation Propagation**
+
+   **Quick summary**: After the Post-Write Alignment Audit passes, detect downstream files whose content may be stale due to the edit and offer to update them in tier order. Pipeline: Trigger Gate → Reverse Dependency Lookup → Phase 1 (Impact Discovery) → Phase 1.5 (Principle Alignment Audit, S3 only, with token-set pruning + cache-warm sub-agent fan-out) → Phase 2 (User Checklist) → Phase 3 (Execute) → Phase 4 (Report) → Phase 5 (Asset Regeneration Advisory).
+
+   **When to invoke the full procedure**: load `DOWNSTREAM_PROPAGATION.md` immediately after a Post-Write Alignment Audit passes for an edit that changed substantive content (metrics, tech names, component names, patterns, constraints, requirements, interface definitions). Skip silently for cosmetic-only edits (whitespace, punctuation, link reformatting). Anti-recursion: Phase 3 edits do NOT re-trigger Step 5.5.
+
+   **Special rules**:
+   - **S12 ADR table edits** → delegate ADR file creation to `/skill architecture-definition-record`, then update `docs/10-references.md`. Skip standard Phase 1–3.
+   - **S5 component edits** → cascade through S5's downstream row PLUS grep the component name across `docs/`, PLUS include matching `handoffs/{component}-handoff.md`.
+   - **`docs/10-references.md`** is cross-cutting — include in scan whenever ADR set changes, technology added/removed, or new glossary term introduced.
+
+   See [DOWNSTREAM_PROPAGATION.md](DOWNSTREAM_PROPAGATION.md) for: full reverse dependency table (S1–S12 → downstream files), Phase 1 impact discovery procedure (1a–1e), Phase 1.5 token-set construction + pruning rule + Anthropic prompt-cache stable-prefix template + cache-warm sub-agent sequencing, Phase 2 user checklist format, Phase 3 update procedure, Phase 4 report format, Phase 5 asset regeneration keyword→asset table.
+
+---
+
+6. **Verification**
+   - After edits, re-read the modified `docs/` file to verify changes
+   - Use Grep to search for specific content without loading multiple files
+
+### Discovering Available Files
+
+When the target section is not obvious, read `ARCHITECTURE.md` first:
+
+```python
+# Step 1: Read navigation table
+nav_content = Read(file_path="ARCHITECTURE.md")
+
+# Step 2: Parse the Documentation table to find the target file
+# Example row: | 8 | Security Architecture | [docs/07-security-architecture.md](docs/07-security-architecture.md) | ... |
+
+# Step 3: Read that specific docs/ file in full
+target_content = Read(file_path="docs/07-security-architecture.md")
+```
+
+### Technology Context Enrichment (context7) — Component Documentation
+
+When creating NEW component documentation (Workflow 1, Section 5), and the component's **Technology** field references specific frameworks, libraries, or tools, use the context7 MCP tool to fetch current documentation for those technologies.
+
+**Prerequisite**: The context7 MCP tool must be available (`resolve-library-id` and `get-library-docs` functions). If not available, skip silently — component doc generation proceeds normally.
+
+**When to use**:
+- During Workflow 1 (new ARCHITECTURE.md creation) when populating Section 5 component files
+- When a user explicitly asks to "enrich" or "validate" technology references in an existing component doc
+- NOT during routine section edits, NOT during compliance generation, NOT during handoff generation
+
+**Procedure**:
+1. Extract technology names from the component's Technology field (e.g., "Java 17, Spring Boot 3.1.5, PostgreSQL 15").
+2. For each distinct technology, call `resolve-library-id` (e.g., `spring-boot`, `postgresql`, `nestjs`).
+3. For each resolved library, call `get-library-docs` with a topic hint scoped to configuration patterns and version features for the documented version (e.g., "Spring Boot 3.1 actuator endpoints and configuration properties").
+4. Present a **Technology Context Brief** to the user as an advisory checklist — do NOT auto-fill any document fields:
+
+   ```
+   Technology Context Brief — [Component Name]
+
+   Spring Boot 3.1.5:
+   - Key config patterns: application.yml (spring.datasource.*, management.endpoints.*)
+   - Health check endpoints: /actuator/health (liveness), /actuator/health/readiness
+   - Suggested fields to document: connection pool settings, JPA dialect, security filter chain
+
+   PostgreSQL 15:
+   - Notable in v15: MERGE statement, improved JSON path, pg_walinspect
+   - Suggested fields to document: connection pool strategy (PgBouncer?), vacuum/autovacuum, extensions used
+   ```
+
+5. The architect decides which items to include in the component doc. The skill does NOT auto-populate any fields from this brief.
+
+**What this is NOT**:
+- Not a replacement for the architect's knowledge or documentation decisions
+- Not auto-filled content (the "no invention" policy still applies)
+- Not blocking — generation proceeds with or without it
+
+### Updating the Navigation Index
+
+Update `ARCHITECTURE.md` only when:
+- A new section file is added to `docs/`
+- A new component file is added to `docs/components/`
+- A file is renamed or removed
+
+**Do NOT update ARCHITECTURE.md** for content edits within existing `docs/` files.
+
+---
+
+## Architecture Type Selection Workflow
+
+Full workflow for guiding users through architecture type selection (Banking/BIAN, Microservices, Monolith, etc.), the PO Spec prerequisite check, template loading, and diagram generation is in `ARCHITECTURE_TYPE_SELECTION_WORKFLOW.md`.
+
+Read it when:
+- User is creating a NEW architecture document
+- User asks to change architecture type
+- No existing ARCHITECTURE.md is detected
+
+The workflow runs Steps 0–7 (PO Spec gate → type selection → template load → metadata → multi-file creation → ADR delegation → diagrams).
+
+**ADR operations**: Any ADR creation, update, or supersede must delegate to `/skill architecture-definition-record`. This skill reads `adr/*.md` for context only.
+
+### When to Trigger
+
+**Activate this workflow when:**
+- ✅ User asks to create a NEW ARCHITECTURE.md document
+- ✅ User explicitly requests to "change architecture type" or "select architecture type"
+- ✅ User is updating an existing ARCHITECTURE.md and mentions changing from one architecture type to another
+
+**Prerequisite**: Step 0 (PO Spec check) runs before Step 1 for all new document creation triggers
+
+**Skip this workflow when:**
+- ❌ Editing an existing ARCHITECTURE.md (type already selected)
+- ❌ User is only updating specific sections unrelated to architecture type
+- ❌ Document type is already clear from context
+
+See `ARCHITECTURE_TYPE_SELECTION_WORKFLOW.md` for full workflow details.
+
+---
+
+## Navigation Index Updates
+
+**When to update the navigation index in `ARCHITECTURE.md`:**
+
+- ✅ When a new `docs/NN-*.md` file is added
+- ✅ When a `docs/NN-*.md` file is renamed or removed
+- ✅ When a new ADR is accepted (add row to the ADR table)
+- ✅ When a component is added/removed/renamed (delegate to `architecture-component-guardian` for `docs/components/README.md`)
+
+**Do NOT update for:**
+- ❌ Content edits within existing `docs/NN-*.md` files (no line ranges to maintain)
+- ❌ Typo or formatting fixes
+- ❌ Metric value updates inside a file
+
+**Workflow**:
+1. Check `ls docs/*.md` against the Documentation table in `ARCHITECTURE.md`
+2. Add/remove rows as needed — each row has S-prefix, title, file link, one-line description
+3. Report changes to user
+
+The navigation index has **no line numbers** — each row links directly to a `docs/NN-*.md` file that is read in full when needed.
+
+---
+
+## Metric Consistency Detection & Management
+
+Full workflow and reference details are in `METRIC_CALCULATIONS.md` (Read it when this workflow is needed).
+
+**Quick summary**: Automatically detects and reviews metric inconsistencies when Section 1 Key Metrics are updated, scanning the entire document for stale duplicates and presenting a structured audit report before applying changes.
+
+**When to invoke**: After editing Section 1 Executive Summary Key Metrics, or when user requests "check metric consistency", "verify metrics", or "audit metrics".
+
+---
+
+## Foundational Context Anchor Protocol
+
+Full workflow and reference details are in `ARCHITECTURE_DOCUMENTATION_GUIDE.md` (Read it when this workflow is needed).
+
+**Quick summary**: Dependency-aware editing workflow that loads required upstream context (S1+S2, S3, ADRs, and section-specific parents) before any downstream section edit, requires source attribution for derived claims, and detects downstream impact when any section changes (executed via Step 5.5 Downstream Documentation Propagation).
+
+**When to invoke**: Before editing any docs/ file from `docs/03-architecture-layers.md` through `docs/09-operational-considerations.md`, or any `docs/components/*.md` file.
+
+---
+
+## Design Drivers Impact Metrics Calculation
+
+Full workflow and reference details are in `DESIGN_DRIVER_CALCULATIONS.md` (Read it when this workflow is needed).
+
+**Quick summary**: Automatically calculates and maintains Design Drivers impact metrics (Value Delivery, Scale, Impacts) from Sections 1, 2.3, 5, and 8, using a 6-phase workflow to extract data, present findings, and update Section 2.2.1.
+
+**When to invoke**: When user requests "architecture review", "calculate design drivers", "update design drivers", or "assess design impact".
+
+---
+
+## Architecture Reference Docs (C4 Model + Type-Specific Rules)
+
+The `references/` directory contains the architecture rules and C4 translation guides for each architecture type. These are loaded during Step 3 of the Architecture Type Selection Workflow.
+
+| File | Purpose |
+|------|---------|
+| `references/ICEPANEL-C4-MODEL.md` | **Governing C4 reference** — defines C4 abstractions, diagram levels, boundary test. Constrains component documentation behavior. |
+| `references/MICROSERVICES-ARCHITECTURE.md` | Microservices architecture rules and patterns |
+| `references/MICROSERVICES-TO-C4-TRANSLATION.md` | Microservices → C4 mapping (services=containers, not systems) |
+| `references/3-TIER-ARCHITECTURE.md` | 3-Tier architecture rules (Presentation, Logic, Data) |
+| `references/3-TIER-TO-C4-TRANSLATION.md` | 3-Tier → C4 mapping (tier≠container distinction) |
+| `references/N-LAYER-ARCHITECTURE.md` | N-Layer variants (DDD, Clean, Hexagonal, 5-Layer Extended) |
+| `references/N-LAYER-TO-C4-TRANSLATION.md` | N-Layer → C4 mapping (inner layers=C3, infra=C2) |
+| `references/META-ARCHITECTURE.md` | META 6-layer banking architecture rules |
+| `references/META-TO-C4-TRANSLATION.md` | META → C4 mapping (layers as visual groupings at C2) |
+| `references/BIAN-ARCHITECTURE.md` | BIAN V12.0 5-layer architecture rules |
+| `references/BIAN-TO-C4-TRANSLATION.md` | BIAN → C4 mapping (Service Domains as containers) |
+| `references/DIAGRAM-GENERATION-GUIDE.md` | **Diagram generation reference** — defines 4 standard architecture diagrams with type-specific templates for META, BIAN, 3-Tier, N-Layer, and Microservices. Includes C4 color conventions, Mermaid compatibility rules, and generation workflow. |
+
+**Critical rule**: Every architecture type MUST have both reference docs. Types without them are greyed out in the selection menu and cannot be used.
+
+---
+
+## Documentation Structure
+
+Full workflow and reference details are in `QUERY_SECTION_MAPPING.md` (Read it when this workflow is needed).
+
+**Quick summary**: Covers when and how to use ARCHITECTURE_DOCUMENTATION_GUIDE.md for creating, documenting, and maintaining architecture docs, the 9 required Architecture Principles, the 12 required section names with exact format, and the Workflow 7 Informational Query workflow for answering questions from architecture documentation.
+
+**When to invoke**: When creating new architecture documents, documenting existing projects, maintaining architecture docs, or answering user questions about documented architecture content.
+
+---
+
+## Workflow 8: Diagram Generation (Generate Architecture Diagrams)
+
+**Two reference files** (read both when this workflow is needed):
+- `references/DIAGRAM-GENERATION-GUIDE.md` — **Primary generation reference**: defines the 4 standard diagrams (Logical View ASCII, C4 L1 Context, C4 L2 Container, Detailed View Mermaid), architecture-type-specific templates for all 5 types (META, BIAN, 3-Tier, N-Layer, Microservices), data sources, C4 color conventions, Mermaid compatibility rules, and the generation workflow algorithm.
+- `MERMAID_DIAGRAMS_GUIDE.md` — **Authoring reference**: Mermaid syntax patterns, component guidelines, data flow conventions, standard color scheme, common scenarios, and best practices.
+
+**Quick summary**: Generate all 4 standard diagrams in order (ASCII logical → C4 L1 → C4 L2 → Detailed) under `## Architecture Diagrams` in `docs/03-architecture-layers.md`. Each diagram adapts its grouping, naming, and color conventions to the detected architecture type **and theme preference** (light/dark). Theme is detected from `<!-- DIAGRAM_THEME: light|dark -->` in `docs/03-architecture-layers.md` — if absent, ask the user once and persist. Dark theme applies `%%{init: {'theme': 'dark'}}%%` to C4/sequence diagrams and uses the dark `classDef` palette for the Detailed View. Data Flow sequence diagrams are generated separately in `docs/04-data-flow-patterns.md`. External diagram reconciliation, canonical location enforcement, and completeness audit rules apply.
+
+**When to invoke**: When user requests "generate diagrams", "create diagrams", "add diagrams", "update diagrams", or references Mermaid/architecture/visual diagrams.
+
+---
+
+## Workflow 9: Migrate Existing ARCHITECTURE.md to docs/ Structure
+
+Full workflow and reference details are in `RESTRUCTURING_GUIDE.md` (Read it when this workflow is needed).
+
+**Quick summary**: Covers migrating a monolithic ARCHITECTURE.md to the multi-file docs/ structure (6 steps: analyze, propose target layout, extract files, rewrite ARCHITECTURE.md as navigation index, update external references, verify), plus optional enhancements and reference document inventory.
+
+**When to invoke**: When user mentions "migrate", "restructure", "split", "reorganize", or "convert" with "architecture" or "ARCHITECTURE.md", or when the file is "too large" or "hard to navigate".
+
+---
+
+## Workflow 10: Release Architecture Version
+
+Full workflow and reference details are in `RELEASE_WORKFLOW.md` (Read it when this workflow is needed).
+
+**Quick summary**: Formal release of a new architecture version. Bumps the semver version, generates a `docs/CHANGELOG.md` entry from detected changes (new/modified components, accepted/superseded ADRs, section edits), updates version metadata across `ARCHITECTURE.md` and all component files, and creates an annotated git tag `architecture-v{version}` on HEAD (when repo is under git, working tree is clean). If the project is NOT under git, creates an immutable archive snapshot at `archive/v{version}/` as the baseline mechanism; git projects can opt into the archive for audit compliance.
+
+**When to invoke**: When user asks to "release architecture", "release architecture version", "bump architecture version", "freeze architecture", "tag architecture version", or transitions an architecture from Draft to Released status.
+
+**Preconditions**:
+- `ARCHITECTURE.md` exists with `<!-- ARCHITECTURE_VERSION: -->` metadata block
+- If repo is under git: working tree must be clean, `architecture-v{new-version}` tag must not already exist
+
+**Drift detection** (informational, on every architecture-docs invocation): if doc version ≠ latest `architecture-v*` git tag, emit a one-line warning. Does not block other workflows. See `RELEASE_WORKFLOW.md` → "Drift Detection" for details.
+

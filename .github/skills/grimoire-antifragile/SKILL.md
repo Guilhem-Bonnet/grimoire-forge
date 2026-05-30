@@ -1,6 +1,6 @@
 ---
 name: grimoire-antifragile
-description: 'Assess BMAD Grimoire project resilience and anti-fragility. Use when: antifragile score, resilience check, how robust is the project, system health, failure analysis, early warning, stress test, project resilience, fragility assessment. Combines antifragile scoring, early warning system, and failure museum analysis.'
+description: 'Assess Grimoire project resilience and anti-fragility. Use when: antifragile score, resilience check, how robust is the project, system health, failure analysis, early warning, stress test, project resilience, fragility assessment. Combines antifragile scoring, early warning system, and failure museum analysis.'
 ---
 
 # Grimoire Antifragile Assessment
@@ -57,7 +57,7 @@ Measures project complexity/disorder. High entropy = risk of cascading failures.
 ### Step 4 — Failure Museum Review
 
 ```bash
-cat _bmad/_memory/failure-museum.md 2>/dev/null | head -100
+cat _grimoire-runtime/_memory/failure-museum.md 2>/dev/null | head -100
 ```
 
 Analyze:

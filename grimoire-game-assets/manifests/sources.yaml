@@ -1,0 +1,59 @@
+version: 1
+updated_by: manual
+rules:
+  forbidden_source_paths:
+    - _grimoire-output/da-tests
+  allowed_extensions:
+    - .png
+    - .json
+    - .txt
+    - .md
+sources:
+  - id: local-pixel-agents
+    type: local
+    path: _grimoire-output/assets
+    status: approved
+    license: internal-procedural
+    notes: Existing observatory-compatible baseline assets.
+
+  - id: grimoire-procedural-pack-v1
+    type: local
+    path: grimoire-game-assets/10-curated
+    status: approved
+    license: internal-procedural
+    notes: Procedural baseline expansion covering furniture, fx, ui, floors and walls.
+
+  - id: kenney-top-down-shooter
+    type: remote
+    url: https://kenney.nl/assets/top-down-shooter
+    status: approved
+    license: CC0-1.0
+    notes: Office furniture and interior-compatible tiles.
+
+  - id: kenney-tiny-town
+    type: remote
+    url: https://kenney.nl/assets/tiny-town
+    status: approved
+    license: CC0-1.0
+    notes: Cozy interior props and room decoration.
+
+  - id: kenney-tiny-dungeon
+    type: remote
+    url: https://kenney.nl/assets/tiny-dungeon
+    status: approved
+    license: CC0-1.0
+    notes: Extra decorative variants for dark-academia mood.
+
+  - id: lpc-house-interior
+    type: remote
+    url: https://opengameart.org/content/lpc-house-interior-and-decorations
+    status: approved-with-attribution
+    license: CC-BY-SA-3.0
+    notes: Attribution and share-alike obligations apply.
+
+  - id: lpc-misc-atlas
+    type: remote
+    url: https://opengameart.org/content/lpc-misc-tile-atlas-interior-exterior-trees-bridges-furniture
+    status: approved-with-attribution
+    license: CC-BY-SA-3.0
+    notes: Attribution and share-alike obligations apply.

@@ -1,0 +1,155 @@
+# Auto-enriched from events and interactions
+# Last updated: 2026-03-06T14:03:06Z
+
+agent_graph:
+  version: "1.0"
+
+  agents:
+    dev:
+      persona: "Amelia"
+      static_capabilities: ["story-execution", "tdd", "code-implementation"]
+      emergent_capabilities:
+        - skill: "JWT auth patterns"
+          confidence: 0.92
+          evidence: ["US-042 impl (trust:91)", "US-038 impl (trust:88)"]
+        - skill: "PostgreSQL optimization"
+          confidence: 0.78
+          evidence: ["US-031 impl (trust:85)"]
+      metrics:
+        tasks_completed: 47
+        avg_trust_score: 87
+        hup_red_count: 3
+        hup_red_resolved: 3
+        evasion_flags: 0
+        cross_validations_passed: 12
+        cross_validations_challenged: 2
+      routing_hints:
+        best_for: ["implementation", "refactoring", "debugging"]
+        avoid_for: ["architecture decisions", "market analysis"]
+
+    qa:
+      persona: "Quinn"
+      static_capabilities: ["test-automation", "api-testing", "e2e-testing", "coverage-analysis"]
+      emergent_capabilities:
+        - skill: "Security testing OWASP"
+          confidence: 0.85
+          evidence: ["Security review sprint-5", "Pentest US-029"]
+      metrics:
+        tasks_completed: 38
+        avg_trust_score: 91
+        hup_red_count: 1
+        hup_red_resolved: 1
+        evasion_flags: 0
+        cross_validations_passed: 15
+        cross_validations_challenged: 1
+
+    architect:
+      persona: "Winston"
+      static_capabilities: ["distributed-systems", "cloud-infrastructure", "api-design", "scalable-patterns"]
+      emergent_capabilities: []
+      metrics:
+        tasks_completed: 22
+        avg_trust_score: 94
+        hup_red_count: 0
+        hup_red_resolved: 0
+        evasion_flags: 0
+        cross_validations_passed: 18
+        cross_validations_challenged: 0
+
+    pm:
+      persona: "John"
+      static_capabilities: ["product-strategy", "roadmap", "stakeholder-management"]
+      emergent_capabilities: []
+      metrics:
+        tasks_completed: 15
+        avg_trust_score: 82
+        hup_red_count: 0
+        hup_red_resolved: 0
+
+    analyst:
+      persona: "Mary"
+      static_capabilities: ["requirements-analysis", "market-research", "user-interviews"]
+      emergent_capabilities: []
+      metrics:
+        tasks_completed: 20
+        avg_trust_score: 86
+
+    sm:
+      persona: "Bob"
+      static_capabilities: ["sprint-management", "backlog-grooming", "retrospective"]
+      emergent_capabilities: []
+      metrics:
+        tasks_completed: 30
+        avg_trust_score: 85
+
+    tech-writer:
+      persona: "Paige"
+      static_capabilities: ["documentation", "api-docs", "onboarding"]
+      emergent_capabilities: []
+      metrics:
+        tasks_completed: 12
+        avg_trust_score: 88
+
+  relationships:
+    - from: "dev"
+      to: "qa"
+      type: "collaboration"
+      strength: 0.92
+      interactions: 23
+      avg_outcome_trust: 89
+      last_interaction: "2026-03-06T09:07:51Z"
+
+    - from: "dev"
+      to: "architect"
+      type: "delegation"
+      strength: 0.85
+      interactions: 12
+      avg_outcome_trust: 91
+
+    - from: "architect"
+      to: "qa"
+      type: "validation"
+      strength: 0.82
+      interactions: 8
+      avg_outcome_trust: 93
+
+    - from: "architect"
+      to: "pm"
+      type: "challenge"
+      strength: 0.65
+      interactions: 5
+      avg_outcome_trust: 82
+
+    - from: "pm"
+      to: "analyst"
+      type: "collaboration"
+      strength: 0.80
+      interactions: 8
+      avg_outcome_trust: 85
+
+    - from: "dev"
+      to: "tech-writer"
+      type: "delegation"
+      strength: 0.55
+      interactions: 4
+      avg_outcome_trust: 88
+
+  synergies:
+    - pair: ["dev", "qa"]
+      synergy_score: 0.92
+      pattern: "Implementation → Validation rapide"
+
+    - pair: ["architect", "dev"]
+      synergy_score: 0.88
+      pattern: "Architecture → Implementation fidèle"
+
+    - pair: ["qa", "architect"]
+      synergy_score: 0.85
+      pattern: "Security review pipeline"
+
+  anti_patterns:
+    - pair: ["dev", "ux-designer"]
+      issue: "Peu d'interactions directes"
+
+    - agent: "tech-writer"
+      issue: "Isolé — rarement inclus dans les reviews"

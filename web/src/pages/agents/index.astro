@@ -1,0 +1,182 @@
+---
+import fs from 'node:fs';
+import path from 'node:path';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const repoRoot = path.resolve(process.cwd(), '..');
+const manifestPath = path.join(repoRoot, '_grimoire-runtime/_config/agent-manifest.csv');
+
+interface Agent {
+  name: string;
+  displayName: string;
+  title: string;
+  icon: string;
+  capabilities: string;
+  role: string;
+  module: string;
+  path: string;
+}
+
+// Parseur CSV minimal tolérant aux guillemets doublés.
+function parseCSV(input: string): Agent[] {
+  const rows: string[][] = [];
+  let field = '';
+  let row: string[] = [];
+  let inQuotes = false;
+  for (let i = 0; i < input.length; i++) {
+    const c = input[i];
+    if (inQuotes) {
+      if (c === '"' && input[i + 1] === '"') { field += '"'; i++; }
+      else if (c === '"') { inQuotes = false; }
+      else { field += c; }
+    } else {
+      if (c === '"') inQuotes = true;
+      else if (c === ',') { row.push(field); field = ''; }
+      else if (c === '\n') { row.push(field); rows.push(row); row = []; field = ''; }
+      else if (c === '\r') { /* skip */ }
+      else field += c;
+    }
+  }
+  if (field.length || row.length) { row.push(field); rows.push(row); }
+  if (rows.length === 0) return [];
+  const header = rows[0];
+  return rows.slice(1)
+    .filter(r => r.length > 1 && r[0])
+    .map(r => {
+      const o: Record<string, string> = {};
+      header.forEach((h, i) => { o[h] = (r[i] || '').replace(/&apos;/g, "'").replace(/&amp;/g, '&'); });
+      return o as unknown as Agent;
+    });
+}
+
+const raw = fs.existsSync(manifestPath) ? fs.readFileSync(manifestPath, 'utf-8') : '';
+const agents = parseCSV(raw);
+
+const groups: Record<string, Agent[]> = {};
+for (const a of agents) {
+  const k = a.module || 'other';
+  if (!groups[k]) groups[k] = [];
+  groups[k].push(a);
+}
+const moduleLabels: Record<string, string> = {
+  core: 'Core — Orchestrateur',
+  bmm: 'BMM — Méthode',
+  bmb: 'BMB — Builders',
+  cis: 'CIS — Créativité',
+  tea: 'TEA — Test Architecture',
+};
+const moduleOrder = ['core', 'bmm', 'bmb', 'cis', 'tea'];
+const ordered = moduleOrder.filter(m => groups[m]).concat(Object.keys(groups).filter(m => !moduleOrder.includes(m)));
+---
+<BaseLayout title="Agents — Grimoire Forge" description="Catalogue des agents du runtime Grimoire : orchestrateur, méthode, builders, créativité, test architecture.">
+  <nav class="forge-nav" data-forge-nav>
+    <div class="nav-inner">
+      <a href="/" class="nav-brand">
+        <span class="nav-brand-mark">⚒</span>
+        <span class="nav-brand-text">Grimoire Forge</span>
+      </a>
+      <div class="nav-links">
+        <a href="/anatomy/">Anatomie</a>
+        <a href="/demo/">Démo</a>
+        <a href="/observability/">Observatory</a>
+        <a href="/agents/" aria-current="page">Agents</a>
+        <a href="/changelog/">Changelog</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="agents-page">
+    <header class="agents-header">
+      <span class="eyebrow">Agent Registry</span>
+      <h1 class="grad-text">{agents.length} agents, un seul point d'entrée.</h1>
+      <p class="lead">Le <strong>Grimoire Master</strong> est la seule interface utilisateur. Les autres agents sont dispatchés automatiquement selon l'intention détectée — tu ne les vois jamais, mais ils travaillent pour toi.</p>
+    </header>
+
+    {ordered.map(mod => (
+      <section class="agent-group">
+        <h2 class="agent-group-title">
+          <span class="agent-group-dot"></span>
+          {moduleLabels[mod] || mod.toUpperCase()}
+          <span class="agent-group-count">{groups[mod].length}</span>
+        </h2>
+        <div class="agent-grid">
+          {groups[mod].map(a => (
+            <article class="agent-card">
+              <div class="agent-card-head">
+                <span class="agent-icon" aria-hidden="true">{a.icon}</span>
+                <div class="agent-names">
+                  <span class="agent-display">{a.displayName}</span>
+                  <span class="agent-slug">{a.name}</span>
+                </div>
+              </div>
+              <p class="agent-title">{a.title}</p>
+              <p class="agent-role">{a.role}</p>
+              {a.capabilities && (
+                <ul class="agent-caps">
+                  {a.capabilities.split(',').slice(0, 4).map(c => (
+                    <li>{c.trim()}</li>
+                  ))}
+                </ul>
+              )}
+            </article>
+          ))}
+        </div>
+      </section>
+    ))}
+  </main>
+
+  <style is:global>
+    .agents-page { max-width: 1120px; margin: 0 auto; padding: 140px 32px 120px; }
+    .agents-header { margin-bottom: 72px; padding-bottom: 48px; border-bottom: 1px solid var(--line); }
+    .agents-header .eyebrow {
+      display: inline-block; font-family: var(--font-mono); font-size: 0.66rem;
+      letter-spacing: 0.14em; color: var(--accent); text-transform: uppercase; margin-bottom: 16px;
+    }
+    .agents-header h1 { font-size: clamp(2.2rem, 3.8vw, 3rem); margin: 0 0 16px; line-height: 1.1; max-width: 720px; }
+    .agents-header .lead { color: var(--ink-soft); font-size: 1.02rem; line-height: 1.7; max-width: 640px; }
+    .agents-header strong { color: var(--ink); font-weight: 500; }
+
+    .agent-group { margin-bottom: 64px; }
+    .agent-group-title {
+      display: flex; align-items: center; gap: 14px;
+      font-family: var(--font-mono); font-size: 0.82rem; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--ink-muted);
+      margin: 0 0 28px; padding-bottom: 16px; border-bottom: 1px solid var(--line);
+    }
+    .agent-group-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--accent); box-shadow: 0 0 10px var(--accent-glow);
+    }
+    .agent-group-count {
+      margin-left: auto; font-family: var(--font-mono); font-size: 0.7rem;
+      color: var(--ink-muted); letter-spacing: 0;
+    }
+
+    .agent-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+    .agent-card {
+      background: var(--elev-1); border: 1px solid var(--line);
+      border-radius: var(--r-md); padding: 22px 22px 20px;
+      transition: border-color 220ms, transform 220ms;
+      display: flex; flex-direction: column;
+    }
+    .agent-card:hover { border-color: var(--accent-dim); transform: translateY(-1px); }
+    .agent-card-head { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+    .agent-icon {
+      width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;
+      background: var(--elev-2); border: 1px solid var(--line); border-radius: var(--r-sm);
+      font-size: 18px;
+    }
+    .agent-names { display: flex; flex-direction: column; min-width: 0; }
+    .agent-display { color: var(--ink); font-weight: 500; font-size: 0.98rem; line-height: 1.2; }
+    .agent-slug { font-family: var(--font-mono); font-size: 0.66rem; color: var(--ink-muted); letter-spacing: 0.04em; }
+    .agent-title { margin: 0 0 10px; color: var(--accent); font-size: 0.78rem; font-family: var(--font-mono); letter-spacing: 0.04em; }
+    .agent-role { margin: 0 0 14px; color: var(--ink-soft); font-size: 0.88rem; line-height: 1.55; flex: 1; }
+    .agent-caps { list-style: none; padding: 0; margin: auto 0 0; display: flex; flex-wrap: wrap; gap: 6px; }
+    .agent-caps li {
+      font-family: var(--font-mono); font-size: 0.62rem;
+      background: var(--elev-2); border: 1px solid var(--line);
+      color: var(--ink-muted); padding: 3px 8px; border-radius: 3px;
+      letter-spacing: 0.03em;
+    }
+  </style>
+</BaseLayout>

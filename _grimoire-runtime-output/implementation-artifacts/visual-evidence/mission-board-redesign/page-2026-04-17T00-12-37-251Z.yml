@@ -1,0 +1,539 @@
+- generic [ref=e3]:
+  - generic [ref=e4]:
+    - generic [ref=e5]:
+      - generic [ref=e6]: Live runtime atlas
+      - heading "Grimoire Agent OS" [level=1] [ref=e7]
+      - paragraph [ref=e8]: "Local shell centered on the runtime surfaces that matter first: cockpit, mission board, command table, noyau, preuves, observability and war room. The rest stays available in the secondary atlas without flooding the first fold."
+      - generic [ref=e9]:
+        - generic [ref=e10]: blocked
+        - generic [ref=e11]: sequence 34
+        - generic [ref=e12]: surface Mission Board
+        - generic [ref=e13]: store GameState
+      - generic [ref=e14]:
+        - article [ref=e15]:
+          - generic [ref=e16]: Active surface
+          - strong [ref=e17]: Mission Board
+          - paragraph [ref=e18]: A tactical kanban stays dominant while rooms, verification rails and causal history remain readable around the same runtime truth.
+        - article [ref=e19]:
+          - generic [ref=e20]: Pressure snapshot
+          - strong [ref=e21]: 6 blocking reason(s)
+          - paragraph [ref=e22]: 10 proof rail signal(s), 13 proof artifact(s), focus Activate power cards.
+    - generic [ref=e23]:
+      - generic [ref=e24]:
+        - generic [ref=e25]:
+          - heading "Guardrails bloquants" [level=2] [ref=e26]
+          - paragraph [ref=e27]: Une carte est rejetee par le trust et une attribution manquante bloque la fin de branche.
+        - generic [ref=e28]: 3 marker(s)
+      - generic [ref=e29]:
+        - generic [ref=e30]: trust blocked
+        - generic [ref=e31]: missing attribution
+        - generic [ref=e32]: merge blocked
+      - generic [ref=e33]:
+        - article [ref=e34]:
+          - text: Open proofs
+          - strong [ref=e35]: "10"
+          - generic [ref=e36]: runtime proof rail
+        - article [ref=e37]:
+          - text: Proof artifacts
+          - strong [ref=e38]: "13"
+          - generic [ref=e39]: RUN-20260414-000430
+        - article [ref=e40]:
+          - text: Kernel invariants
+          - strong [ref=e41]: "6"
+          - generic [ref=e42]: 6 contract(s) tied to GameState
+        - article [ref=e43]:
+          - text: Hosts
+          - strong [ref=e44]: "4"
+          - generic [ref=e45]: browser preview
+  - generic [ref=e46]:
+    - generic [ref=e47]:
+      - generic [ref=e48]: Run
+      - generic [ref=e49]:
+        - button "Guardrails bloquants" [ref=e50] [cursor=pointer]
+        - button "Release ready" [ref=e51] [cursor=pointer]
+        - button "Drift et hygiene compliance" [ref=e52] [cursor=pointer]
+    - generic [ref=e53]:
+      - generic [ref=e54]:
+        - generic [ref=e55]: Primary surfaces
+        - generic [ref=e56]:
+          - button "Cockpit" [ref=e57] [cursor=pointer]
+          - button "Mission Board" [ref=e58] [cursor=pointer]
+          - button "Game UI" [ref=e59] [cursor=pointer]
+          - button "Noyau Forge" [ref=e60] [cursor=pointer]
+          - button "Dossier de preuve" [ref=e61] [cursor=pointer]
+          - button "Observability" [ref=e62] [cursor=pointer]
+          - button "War Room" [ref=e63] [cursor=pointer]
+      - generic [ref=e64]:
+        - generic [ref=e65]: Secondary atlas
+        - generic [ref=e66]:
+          - button "Observatory" [ref=e67] [cursor=pointer]
+          - button "Spectator" [ref=e68] [cursor=pointer]
+          - button "Observer" [ref=e69] [cursor=pointer]
+          - button "Workflow" [ref=e70] [cursor=pointer]
+          - button "Expert" [ref=e71] [cursor=pointer]
+          - button "Host Bridge" [ref=e72] [cursor=pointer]
+          - button "VS Code" [ref=e73] [cursor=pointer]
+    - generic [ref=e74]:
+      - generic [ref=e75]: Lens
+      - generic [ref=e76]:
+        - button "Tout" [ref=e77] [cursor=pointer]
+        - button "Attention" [ref=e78] [cursor=pointer]
+        - button "Bloques" [ref=e79] [cursor=pointer]
+  - generic [ref=e80]:
+    - complementary [ref=e81]:
+      - generic [ref=e83]:
+        - generic [ref=e84]: Mission atlas
+        - heading "Mission Board" [level=2] [ref=e85]
+        - paragraph [ref=e86]: Rooms = contexte. Le vrai pilotage reste au centre, en colonnes, avec un dossier detaille sur la droite.
+      - generic [ref=e87]:
+        - link "Intake Desk 1 Qualifier 1 entree(s) attendent qualification ou confirmation de routage. 1 file(s) 1 alert(s) task 2 board alert(s)" [ref=e88] [cursor=pointer]:
+          - /url: "#mission-room-intake-desk"
+          - generic [ref=e89]:
+            - generic [ref=e90]:
+              - text: Intake Desk
+              - strong [ref=e91]: "1"
+            - generic [ref=e92]: Qualifier
+          - paragraph [ref=e93]: 1 entree(s) attendent qualification ou confirmation de routage.
+          - generic [ref=e94]:
+            - generic [ref=e95]: 1 file(s)
+            - generic [ref=e96]: 1 alert(s) task
+            - generic [ref=e97]: 2 board alert(s)
+        - link "War Room 4 Arbitrer 7 carte(s) de decision et 3 mission(s) bloquee(s) cadrent l arbitrage. 7 decision(s) 3 bloquee(s) 3 active(s)" [ref=e98] [cursor=pointer]:
+          - /url: "#mission-room-war-room"
+          - generic [ref=e99]:
+            - generic [ref=e100]:
+              - text: War Room
+              - strong [ref=e101]: "4"
+            - generic [ref=e102]: Arbitrer
+          - paragraph [ref=e103]: 7 carte(s) de decision et 3 mission(s) bloquee(s) cadrent l arbitrage.
+          - generic [ref=e104]:
+            - generic [ref=e105]: 7 decision(s)
+            - generic [ref=e106]: 3 bloquee(s)
+            - generic [ref=e107]: 3 active(s)
+        - link "Workshop 1 Ouvrir le run 1 run(s) actif(s) et 2 operateur(s) restent visibles cote execution. 2 working 0 lease(s) 1 node(s)" [ref=e108] [cursor=pointer]:
+          - /url: "#mission-room-workshop"
+          - generic [ref=e109]:
+            - generic [ref=e110]:
+              - text: Workshop
+              - strong [ref=e111]: "1"
+            - generic [ref=e112]: Ouvrir le run
+          - paragraph [ref=e113]: 1 run(s) actif(s) et 2 operateur(s) restent visibles cote execution.
+          - generic [ref=e114]:
+            - generic [ref=e115]: 2 working
+            - generic [ref=e116]: 0 lease(s)
+            - generic [ref=e117]: 1 node(s)
+        - link "Branch Finisher 3 Demander verification 3 item(s) dans la file de verification, 0 accepte(s). 0 needs work 0 accepted 2 option(s) ouvertes" [ref=e118] [cursor=pointer]:
+          - /url: "#mission-room-branch-finisher"
+          - generic [ref=e119]:
+            - generic [ref=e120]:
+              - text: Branch Finisher
+              - strong [ref=e121]: "3"
+            - generic [ref=e122]: Demander verification
+          - paragraph [ref=e123]: 3 item(s) dans la file de verification, 0 accepte(s).
+          - generic [ref=e124]:
+            - generic [ref=e125]: 0 needs work
+            - generic [ref=e126]: 0 accepted
+            - generic [ref=e127]: 2 option(s) ouvertes
+        - link "Seance Archive 3 Relire 3 seance(s), 3 lien(s) causaux, 0 orphelin(s). 3 edge(s) 3 alert(s) 19 envelope(s)" [ref=e128] [cursor=pointer]:
+          - /url: "#mission-room-seance-archive"
+          - generic [ref=e129]:
+            - generic [ref=e130]:
+              - text: Seance Archive
+              - strong [ref=e131]: "3"
+            - generic [ref=e132]: Relire
+          - paragraph [ref=e133]: 3 seance(s), 3 lien(s) causaux, 0 orphelin(s).
+          - generic [ref=e134]:
+            - generic [ref=e135]: 3 edge(s)
+            - generic [ref=e136]: 3 alert(s)
+            - generic [ref=e137]: 19 envelope(s)
+        - link "Watchtower 13 Escalader 13 signal(aux) de surveillance gardent la release et les derives visibles. release NO-GO 0 security blocker(s) 5 attention item(s)" [ref=e138] [cursor=pointer]:
+          - /url: "#mission-room-watchtower"
+          - generic [ref=e139]:
+            - generic [ref=e140]:
+              - text: Watchtower
+              - strong [ref=e141]: "13"
+            - generic [ref=e142]: Escalader
+          - paragraph [ref=e143]: 13 signal(aux) de surveillance gardent la release et les derives visibles.
+          - generic [ref=e144]:
+            - generic [ref=e145]: release NO-GO
+            - generic [ref=e146]: 0 security blocker(s)
+            - generic [ref=e147]: 5 attention item(s)
+    - generic [ref=e148]:
+      - generic [ref=e149]:
+        - generic [ref=e150]:
+          - generic [ref=e151]:
+            - generic [ref=e152]: Causal command deck
+            - heading "Mission Board" [level=2] [ref=e153]
+            - paragraph [ref=e154]: Shell a rooms specialisees pour lire, arbitrer et verifier une task sans sortir du meme GameState.
+          - generic [ref=e155]: 3 mission(s), 3 file(s) de verification, 13 signal(aux) de veille.
+        - generic [ref=e156]:
+          - generic [ref=e157]: run run:blocked-guardrails
+          - generic [ref=e158]: branch feature/provenance-clean
+          - generic [ref=e159]: filtre attention
+          - generic [ref=e160]: focus task-release
+        - generic [ref=e161]:
+          - article [ref=e162]:
+            - text: Flux
+            - strong [ref=e163]: "3"
+            - generic [ref=e164]: 0 derive(s)
+          - article [ref=e165]:
+            - text: Blocages
+            - strong [ref=e166]: "3"
+            - generic [ref=e167]: 2 carte(s) critiques
+          - article [ref=e168]:
+            - text: Verification
+            - strong [ref=e169]: "3"
+            - generic [ref=e170]: 0 needs work
+          - article [ref=e171]:
+            - text: Lineage
+            - strong [ref=e172]: "3"
+            - generic [ref=e173]: 8 evenement(s)
+      - generic [ref=e174]:
+        - generic [ref=e175]:
+          - generic [ref=e176]:
+            - generic [ref=e177]: War Room
+            - heading "Quelle est la situation tactique de la mission ?" [level=2] [ref=e178]
+            - paragraph [ref=e179]: "Le board devient la surface tactique principale: intake, qualification, execution, review et cloture visibles d un coup d oeil."
+          - generic [ref=e180]:
+            - generic [ref=e181]: 2 carte(s) visibles
+            - generic [ref=e182]: 2 queued
+            - generic [ref=e183]: 0 verified
+        - generic [ref=e184]:
+          - generic [ref=e185]:
+            - generic [ref=e186]:
+              - generic [ref=e187]:
+                - generic [ref=e188]:
+                  - generic [ref=e189]:
+                    - text: Intake
+                    - heading "0" [level=3] [ref=e190]
+                  - generic [ref=e191]: backlog
+                - paragraph [ref=e192]: Nouveaux dossiers encore bruts.
+              - article [ref=e194]:
+                - paragraph [ref=e195]: Aucune carte visible dans intake pour ce filtre.
+            - generic [ref=e196]:
+              - generic [ref=e197]:
+                - generic [ref=e198]:
+                  - generic [ref=e199]:
+                    - text: Qualified
+                    - heading "1" [level=3] [ref=e200]
+                  - generic [ref=e201]: todo
+                - paragraph [ref=e202]: Missions pretes a etre prises en charge.
+              - button "Qualified aligned Prepare branch finish decision sans room · non assigne Task Prepare branch finish decision is active without a valid assignee. medium ops non assigne 1 trace(s) 3 blocage(s)" [ref=e204] [cursor=pointer]:
+                - generic [ref=e205]:
+                  - generic [ref=e206]: Qualified
+                  - generic [ref=e207]: aligned
+                - strong [ref=e208]: Prepare branch finish decision
+                - paragraph [ref=e209]: sans room · non assigne
+                - paragraph [ref=e210]: Task Prepare branch finish decision is active without a valid assignee.
+                - generic [ref=e211]:
+                  - generic [ref=e212]: medium
+                  - generic [ref=e213]: ops
+                  - generic [ref=e214]: non assigne
+                  - generic [ref=e215]: 1 trace(s)
+                  - generic [ref=e216]: 3 blocage(s)
+            - generic [ref=e217]:
+              - generic [ref=e218]:
+                - generic [ref=e219]:
+                  - generic [ref=e220]:
+                    - text: Running
+                    - heading "1" [level=3] [ref=e221]
+                  - generic [ref=e222]: in_progress
+                - paragraph [ref=e223]: Execution active dans le theatre runtime.
+              - article [ref=e225]:
+                - paragraph [ref=e226]: Aucune carte visible dans running pour ce filtre.
+            - generic [ref=e227]:
+              - generic [ref=e228]:
+                - generic [ref=e229]:
+                  - generic [ref=e230]:
+                    - text: Review
+                    - heading "1" [level=3] [ref=e231]
+                  - generic [ref=e232]: review
+                - paragraph [ref=e233]: Gate de verification avant cloture.
+              - 'button "Review aligned Activate power cards war-room · Orchestrator Done gate blocked: TASK_NO_OPEN_CRITICAL_FINDINGS. high ops Orchestrator 3 trace(s) 1 blocage(s)" [ref=e235] [cursor=pointer]':
+                - generic [ref=e236]:
+                  - generic [ref=e237]: Review
+                  - generic [ref=e238]: aligned
+                - strong [ref=e239]: Activate power cards
+                - paragraph [ref=e240]: war-room · Orchestrator
+                - paragraph [ref=e241]: "Done gate blocked: TASK_NO_OPEN_CRITICAL_FINDINGS."
+                - generic [ref=e242]:
+                  - generic [ref=e243]: high
+                  - generic [ref=e244]: ops
+                  - generic [ref=e245]: Orchestrator
+                  - generic [ref=e246]: 3 trace(s)
+                  - generic [ref=e247]: 1 blocage(s)
+            - generic [ref=e248]:
+              - generic [ref=e249]:
+                - generic [ref=e250]:
+                  - generic [ref=e251]:
+                    - text: Done
+                    - heading "0" [level=3] [ref=e252]
+                  - generic [ref=e253]: done
+                - paragraph [ref=e254]: Travail clos avec chaine causale visible.
+              - article [ref=e256]:
+                - paragraph [ref=e257]: Aucune carte visible dans done pour ce filtre.
+          - generic [ref=e258]:
+            - generic [ref=e259]:
+              - generic [ref=e261]:
+                - generic [ref=e262]: Branch Finisher
+                - heading "Qu est-ce qui peut etre verifie ou cloture ?" [level=3] [ref=e263]
+              - generic [ref=e264]:
+                - button "Blocked Activate power cards FAIL Orchestrator · Review TASK_NO_OPEN_CRITICAL_FINDINGS 3 trace(s) 13 preuve(s) review n/a" [ref=e265] [cursor=pointer]:
+                  - generic [ref=e266]:
+                    - generic [ref=e267]:
+                      - text: Blocked
+                      - strong [ref=e268]: Activate power cards
+                    - generic [ref=e269]: FAIL
+                  - paragraph [ref=e270]: Orchestrator · Review
+                  - paragraph [ref=e271]: TASK_NO_OPEN_CRITICAL_FINDINGS
+                  - generic [ref=e272]:
+                    - generic [ref=e273]: 3 trace(s)
+                    - generic [ref=e274]: 13 preuve(s)
+                    - generic [ref=e275]: review n/a
+                - button "Queued Prepare branch finish decision WARN non assigne · Qualified TASK_ASSIGNED 1 trace(s) 4 preuve(s) review n/a" [ref=e276] [cursor=pointer]:
+                  - generic [ref=e277]:
+                    - generic [ref=e278]:
+                      - text: Queued
+                      - strong [ref=e279]: Prepare branch finish decision
+                    - generic [ref=e280]: WARN
+                  - paragraph [ref=e281]: non assigne · Qualified
+                  - paragraph [ref=e282]: TASK_ASSIGNED
+                  - generic [ref=e283]:
+                    - generic [ref=e284]: 1 trace(s)
+                    - generic [ref=e285]: 4 preuve(s)
+                    - generic [ref=e286]: review n/a
+                - button "Queued Audit provenance bundle WARN Compliance Bot · Running TASK_HAS_ACTION_ID 1 trace(s) 6 preuve(s) review n/a" [ref=e287] [cursor=pointer]:
+                  - generic [ref=e288]:
+                    - generic [ref=e289]:
+                      - text: Queued
+                      - strong [ref=e290]: Audit provenance bundle
+                    - generic [ref=e291]: WARN
+                  - paragraph [ref=e292]: Compliance Bot · Running
+                  - paragraph [ref=e293]: TASK_HAS_ACTION_ID
+                  - generic [ref=e294]:
+                    - generic [ref=e295]: 1 trace(s)
+                    - generic [ref=e296]: 6 preuve(s)
+                    - generic [ref=e297]: review n/a
+            - generic [ref=e298]:
+              - generic [ref=e300]:
+                - generic [ref=e301]: Watchtower
+                - heading "Qu est-ce qui derive, stagne ou demande escalation ?" [level=3] [ref=e302]
+              - generic [ref=e303]:
+                - button "Gate Release gate NO-GO branch feature/provenance-clean One or more missions are blocked in the mission ledger. 3 mission(s) bloquee(s) 1 verification blocker(s) 0 security blocker(s) Ensuite Escalader ou resoudre les preuves et dependances critiques." [ref=e304] [cursor=pointer]:
+                  - generic [ref=e305]:
+                    - generic [ref=e306]:
+                      - text: Gate
+                      - strong [ref=e307]: Release gate
+                    - generic [ref=e308]: NO-GO
+                  - paragraph [ref=e309]: branch feature/provenance-clean
+                  - paragraph [ref=e310]: One or more missions are blocked in the mission ledger.
+                  - generic [ref=e311]:
+                    - generic [ref=e312]: 3 mission(s) bloquee(s)
+                    - generic [ref=e313]: 1 verification blocker(s)
+                    - generic [ref=e314]: 0 security blocker(s)
+                  - paragraph [ref=e315]:
+                    - strong [ref=e316]: Ensuite
+                    - text: Escalader ou resoudre les preuves et dependances critiques.
+                - article [ref=e317]:
+                  - generic [ref=e318]:
+                    - generic [ref=e319]:
+                      - text: Lineage
+                      - strong [ref=e320]: MISSING_EVIDENCE
+                    - generic [ref=e321]: MISSING_EVIDENCE
+                  - paragraph [ref=e322]: power-001
+                  - paragraph [ref=e323]: Session power-001 has decisions without attached evidence refs.
+                  - generic [ref=e325]: warning
+                  - paragraph [ref=e326]:
+                    - strong [ref=e327]: Ensuite
+                    - text: Rejouer la causalite ou rattacher la preuve manquante.
+                - article [ref=e328]:
+                  - generic [ref=e329]:
+                    - generic [ref=e330]:
+                      - text: Lineage
+                      - strong [ref=e331]: MISSING_RUN_ID
+                    - generic [ref=e332]: MISSING_RUN_ID
+                  - paragraph [ref=e333]: power-001
+                  - paragraph [ref=e334]: Session power-001 did not expose a stable run or correlation identifier.
+                  - generic [ref=e336]: info
+                  - paragraph [ref=e337]:
+                    - strong [ref=e338]: Ensuite
+                    - text: Rejouer la causalite ou rattacher la preuve manquante.
+                - article [ref=e339]:
+                  - generic [ref=e340]:
+                    - generic [ref=e341]:
+                      - text: Signal
+                      - strong [ref=e342]: "Runtime error: RUNTIME_WEB_RELEASE_BLOCKED"
+                    - generic [ref=e343]: critical
+                  - paragraph [ref=e344]: runtime_error
+                  - paragraph [ref=e345]: Runtime web release gate is blocked by unresolved provenance controls.
+                  - paragraph [ref=e346]:
+                    - strong [ref=e347]: Ensuite
+                    - text: Traiter le signal avant de continuer la fermeture.
+      - generic [ref=e348]:
+        - generic [ref=e349]:
+          - generic [ref=e351]:
+            - generic [ref=e352]: Workshop
+            - heading "Que font les lanes et les runs en ce moment ?" [level=3] [ref=e353]
+          - article [ref=e355]:
+            - paragraph [ref=e356]: Aucun run actif ne monopolise encore le workshop.
+        - generic [ref=e357]:
+          - generic [ref=e359]:
+            - generic [ref=e360]: Intake Desk
+            - heading "Qu est-ce qui entre dans le systeme et comment le qualifier ?" [level=3] [ref=e361]
+          - button "Task Prepare branch finish decision Route task-release · Qualified · non assignee feature/provenance-clean priority medium ops 1 trace(s) 2 dep(s) Ensuite Confirmer le routage propose." [ref=e363] [cursor=pointer]:
+            - generic [ref=e364]:
+              - generic [ref=e365]:
+                - text: Task
+                - strong [ref=e366]: Prepare branch finish decision
+              - generic [ref=e367]: Route
+            - paragraph [ref=e368]: task-release · Qualified · non assignee
+            - paragraph [ref=e369]: feature/provenance-clean
+            - generic [ref=e370]:
+              - generic [ref=e371]: priority medium
+              - generic [ref=e372]: ops
+              - generic [ref=e373]: 1 trace(s)
+              - generic [ref=e374]: 2 dep(s)
+            - paragraph [ref=e375]:
+              - strong [ref=e376]: Ensuite
+              - text: Confirmer le routage propose.
+        - generic [ref=e377]:
+          - generic [ref=e379]:
+            - generic [ref=e380]: Seance Archive
+            - heading "Qui a decide quoi, quand, sur quelle preuve ?" [level=3] [ref=e381]
+          - article [ref=e383]:
+            - paragraph [ref=e384]: Aucune seance archivee ne remonte encore en surface.
+      - generic [ref=e385]:
+        - generic [ref=e387]:
+          - generic [ref=e388]: Frise causale
+          - heading "Pourquoi le board ressemble a ca" [level=2] [ref=e389]
+          - paragraph [ref=e390]: Les derniers evenements canoniques restent visibles en bas de page, comme preuve de causalite et pas comme decoration.
+        - generic [ref=e391]:
+          - article [ref=e392]:
+            - generic [ref=e393]:
+              - generic [ref=e394]:
+                - text: Watchtower
+                - strong [ref=e395]: Power card activation blocked
+              - generic [ref=e396]: 01:31
+            - paragraph [ref=e397]: blocked trust
+            - generic [ref=e398]:
+              - generic [ref=e399]: task-power
+              - generic [ref=e400]: power-002
+          - article [ref=e401]:
+            - generic [ref=e402]:
+              - generic [ref=e403]:
+                - text: War Room
+                - strong [ref=e404]: Branch finisher options updated
+              - generic [ref=e405]: 02:30
+            - paragraph [ref=e406]: feature/provenance-clean
+            - generic [ref=e407]:
+              - generic [ref=e408]: task-release
+              - generic [ref=e409]: trace-runtime-web
+          - article [ref=e410]:
+            - generic [ref=e411]:
+              - generic [ref=e412]:
+                - text: Seance Archive
+                - strong [ref=e413]: Branch finisher options updated
+              - generic [ref=e414]: 02:30
+            - paragraph [ref=e415]: feature/provenance-clean
+            - generic [ref=e416]:
+              - generic [ref=e417]: task-release
+              - generic [ref=e418]: trace-runtime-web
+          - article [ref=e419]:
+            - generic [ref=e420]:
+              - generic [ref=e421]:
+                - text: Seance Archive
+                - strong [ref=e422]: Power card activation blocked
+              - generic [ref=e423]: 01:31
+            - paragraph [ref=e424]: blocked trust
+            - generic [ref=e425]:
+              - generic [ref=e426]: task-power
+              - generic [ref=e427]: power-002
+          - article [ref=e428]:
+            - generic [ref=e429]:
+              - generic [ref=e430]:
+                - text: Branch Finisher
+                - strong [ref=e431]: Verification gate FAIL
+              - generic [ref=e432]: 02:30
+            - paragraph [ref=e433]: "blocked-guardrails: verify runtime web proof bundle."
+            - generic [ref=e434]:
+              - generic [ref=e435]: task-power
+              - generic [ref=e436]: trace-runtime-web
+          - article [ref=e437]:
+            - generic [ref=e438]:
+              - generic [ref=e439]:
+                - text: Seance Archive
+                - strong [ref=e440]: Verification gate FAIL
+              - generic [ref=e441]: 02:30
+            - paragraph [ref=e442]: "blocked-guardrails: verify runtime web proof bundle."
+            - generic [ref=e443]:
+              - generic [ref=e444]: task-power
+              - generic [ref=e445]: trace-runtime-web
+          - article [ref=e446]:
+            - generic [ref=e447]:
+              - generic [ref=e448]:
+                - text: War Room
+                - strong [ref=e449]: Handoff provenance validation
+              - generic [ref=e450]: 02:30
+            - paragraph [ref=e451]: Compliance Bot reviews the provenance lane before release decision.
+            - generic [ref=e452]:
+              - generic [ref=e453]: task-provenance
+              - generic [ref=e454]: trace-runtime-web
+          - article [ref=e455]:
+            - generic [ref=e456]:
+              - generic [ref=e457]:
+                - text: Seance Archive
+                - strong [ref=e458]: Handoff provenance validation
+              - generic [ref=e459]: 02:30
+            - paragraph [ref=e460]: Compliance Bot reviews the provenance lane before release decision.
+            - generic [ref=e461]:
+              - generic [ref=e462]: task-provenance
+              - generic [ref=e463]: trace-runtime-web
+    - complementary [ref=e464]:
+      - generic [ref=e465]:
+        - generic [ref=e466]:
+          - text: ops dossier
+          - heading "Prepare branch finish decision" [level=2] [ref=e467]
+          - paragraph [ref=e468]: Qualified · non assigne · 02:30
+        - generic [ref=e469]: focus
+      - generic [ref=e470]:
+        - generic [ref=e471]: task task-release
+        - generic [ref=e472]: room sans room
+        - generic [ref=e473]: trace trace-runtime-web
+        - generic [ref=e474]: verif verify://runtime-host-bridge/blocked-guardrails
+      - paragraph [ref=e475]:
+        - strong [ref=e476]: Ensuite
+        - text: Task Prepare branch finish decision is active without a valid assignee.
+      - generic [ref=e477]:
+        - generic [ref=e478]:
+          - strong [ref=e480]: Etat operatoire
+          - list [ref=e481]:
+            - listitem [ref=e482]: Statut canonique Qualified -> projection Qualified
+            - listitem [ref=e483]: Assignee non assigne
+            - listitem [ref=e484]: Priorite medium · type ops
+            - listitem [ref=e485]: Task Prepare branch finish decision is aligned with the current runtime state.
+        - generic [ref=e486]:
+          - strong [ref=e488]: Blocages et gates
+          - list [ref=e489]:
+            - listitem [ref=e490]: Task Prepare branch finish decision is active without a valid assignee.
+            - listitem [ref=e491]: Dependency Activate power cards is still review.
+            - listitem [ref=e492]: Dependency Audit provenance bundle is still in_progress.
+        - generic [ref=e493]:
+          - strong [ref=e495]: Activite recente
+          - list [ref=e496]:
+            - listitem [ref=e497]: Derniere activite 02:30
+            - listitem [ref=e498]: feature/provenance-clean
+            - listitem [ref=e499]: Aucun outil recent attache a ce focus.
+            - listitem [ref=e500]: Decision Branch finisher options updated
+        - generic [ref=e501]:
+          - strong [ref=e503]: Verification et preuves
+          - list [ref=e504]:
+            - listitem [ref=e505]: Queue Queued · verdict WARN
+            - listitem [ref=e506]: Traces 1 · preuves 4
+            - listitem [ref=e507]: Action host.review.import:review://blocked-guardrails/claude-runtime
+            - listitem [ref=e508]: Reference verify://runtime-host-bridge/blocked-guardrails
+        - generic [ref=e509]:
+          - strong [ref=e511]: Prochains mouvements
+          - list [ref=e512]:
+            - listitem [ref=e513]: Intake · bloque · Transition planning requires an authenticated role context.
+            - listitem [ref=e514]: Running · bloque · Transition planning requires an authenticated role context.
+            - listitem [ref=e515]: Review · bloque · Transition planning requires an authenticated role context.

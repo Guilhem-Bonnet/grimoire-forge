@@ -1,0 +1,112 @@
+{
+  "runId": "RUN-20260414-000430",
+  "generatedAt": "2026-04-14T00:04:30",
+  "package": {
+    "name": "@grimoire-kit/grimoire-game",
+    "version": "0.0.0",
+    "root": "grimoire-kit/apps/grimoire-game"
+  },
+  "verdict": {
+    "programV5": "GO",
+    "releaseV5": "NO-GO",
+    "blockedBy": [
+      "G-V5-01",
+      "G-V5-02",
+      "G-V5-04"
+    ]
+  },
+  "metrics": {
+    "testFiles": 91,
+    "tests": 419,
+    "coverage": {
+      "statements": 88.87,
+      "branches": 79.59,
+      "functions": 95.52,
+      "lines": 88.87
+    },
+    "artifacts": {
+      "cockpitAppDiskUsage": "788K",
+      "runtimeViewsReportHtmlBytes": 931569,
+      "runtimeViewsReportClientJsBytes": 96108,
+      "npmPackBytes": 394368,
+      "npmPackUnpackedBytes": 2712292
+    }
+  },
+  "commands": [
+    {
+      "category": "integration",
+      "command": "npm run check",
+      "status": "passed",
+      "output": "integration/check.txt"
+    },
+    {
+      "category": "integration",
+      "command": "npm run build",
+      "status": "passed",
+      "output": "integration/build.txt"
+    },
+    {
+      "category": "integration",
+      "command": "npm test",
+      "status": "passed",
+      "output": "integration/test.txt"
+    },
+    {
+      "category": "contracts",
+      "command": "npm run test:coverage",
+      "status": "passed",
+      "output": "contracts/test-coverage.txt"
+    },
+    {
+      "category": "contracts",
+      "command": "npm run test -- tests/contracts/vscode-webview-bridge.contract.test.ts tests/contracts/runtime-web-scenarios.contract.test.ts tests/contracts/public-api-exports.contract.test.ts",
+      "status": "passed",
+      "output": "contracts/runtime-contracts.txt"
+    },
+    {
+      "category": "integration",
+      "command": "npm run test -- tests/integration/runtime-game-ui-view.test.ts tests/integration/runtime-observability-surface-view.test.ts tests/integration/runtime-dashboard-ui-view.test.ts tests/integration/runtime-cockpit-view.test.ts",
+      "status": "passed",
+      "output": "integration/runtime-surfaces.txt"
+    },
+    {
+      "category": "security",
+      "command": "npm run test -- tests/integration/auth-rbac.test.ts tests/integration/auth-token-registry.test.ts",
+      "status": "passed",
+      "output": "security/auth-rbac.txt"
+    },
+    {
+      "category": "observability",
+      "command": "npm run test -- tests/integration/observability-panel-view.test.ts tests/integration/observability-view.test.ts tests/integration/runtime-observability-surface-view.test.ts",
+      "status": "passed",
+      "output": "observability/observability-tests.txt"
+    },
+    {
+      "category": "observability",
+      "command": "npm run cockpit:verify",
+      "status": "passed",
+      "output": "observability/cockpit-verify.txt"
+    },
+    {
+      "category": "release",
+      "command": "npm run pack:verify",
+      "status": "passed",
+      "output": "release/pack-verify.txt"
+    },
+    {
+      "category": "release",
+      "command": "npm run pack:artifact",
+      "status": "passed",
+      "output": "release/pack-artifact.txt"
+    }
+  ],
+  "artifacts": [
+    "contracts/coverage/coverage-summary.json",
+    "contracts/coverage/lcov.info",
+    "observability/runtime-views-report.html",
+    "observability/runtime-views-report-client.js",
+    "release/cockpit-app/index.html",
+    "release/grimoire-kit-grimoire-game-0.0.0.tgz",
+    "release/npm-pack.json"
+  ]
+}

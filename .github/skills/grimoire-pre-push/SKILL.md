@@ -1,6 +1,6 @@
 ---
 name: grimoire-pre-push
-description: 'Pre-push validation checklist for BMAD Grimoire Kit. Use when: before pushing, pre-push check, validate before commit, pre-commit, ready to push, CI check, final validation, run all checks. Runs tests, lint, harmony check, and preflight in sequence.'
+description: 'Pre-push validation checklist for Grimoire Kit. Use when: before pushing, pre-push check, validate before commit, pre-commit, ready to push, CI check, final validation, run all checks. Runs tests, lint, harmony check, and preflight in sequence.'
 ---
 
 # Grimoire Pre-Push Validation
@@ -14,9 +14,21 @@ Complete validation checklist before pushing code. Catches issues locally before
 - After completing a feature or fix
 - When the user says "ready to push", "pre-push", "validate everything", or "run all checks"
 
+## When NOT to Use
+
+- To verify a single completion claim with explicit evidence → `grimoire-verification` (lighter, claim-scoped).
+- For a deep multi-axis project audit (memory, harmony, antifragile, structure) → `grimoire-health-check`.
+- This skill is the FINAL gate; do not run it during in-progress work.
+
 ## Procedure
 
 All commands run from the `grimoire-kit/` directory.
+
+### Step 0 — GitHub Flow Gate
+
+- Work on a feature branch, never push directly to `main`.
+- Use Conventional Commits for local commits and for the pull request title.
+- Ensure local hooks are installed at least once per clone with `bash ../grimoire-init.sh hooks --install` from `grimoire-kit/`.
 
 ### Step 1 — Test Suite
 
@@ -59,11 +71,13 @@ python3 framework/tools/preflight-check.py --project-root .
 ### Step 5 — Git Status Review
 
 ```bash
+git branch --show-current
 git status --short
 git diff --stat
 ```
 
 Verify:
+- Current branch is not `main`
 - No unintended files staged
 - All intended changes are committed
 - No sensitive files (keys, tokens, .env)

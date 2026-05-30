@@ -1,0 +1,1 @@
+{"task":"grimoire: install-git-hooks","flow":"setup","kind":"task","status":"success","event":"task-finish","exitCode":0,"durationSeconds":1,"startedAt":"2026-04-15T05:20:11Z","finishedAt":"2026-04-15T05:20:12Z","cwd":"/mnt/Travail/Projets/Dev/Grimoire-Forge/grimoire-kit","command":"bash grimoire-init.sh hooks --install"}

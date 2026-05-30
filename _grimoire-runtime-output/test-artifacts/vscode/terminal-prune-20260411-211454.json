@@ -1,0 +1,87 @@
+{
+  "version": "1.1.1",
+  "mode": "apply",
+  "pty_host_count": 1,
+  "zsh_safe_total": 12,
+  "zsh_safe_attached_to_pty": 12,
+  "idle_candidates": [
+    {
+      "pid": 38163,
+      "idle_seconds": 111974,
+      "cpu_percent": 0.0,
+      "cmd": "/usr/bin/zsh -f"
+    },
+    {
+      "pid": 56890,
+      "idle_seconds": 111360,
+      "cpu_percent": 0.0,
+      "cmd": "/usr/bin/zsh -f"
+    },
+    {
+      "pid": 347403,
+      "idle_seconds": 97592,
+      "cpu_percent": 0.0,
+      "cmd": "/usr/bin/zsh -f"
+    },
+    {
+      "pid": 350288,
+      "idle_seconds": 97549,
+      "cpu_percent": 0.0,
+      "cmd": "/usr/bin/zsh -f"
+    },
+    {
+      "pid": 380305,
+      "idle_seconds": 96407,
+      "cpu_percent": 0.0,
+      "cmd": "/usr/bin/zsh -f"
+    },
+    {
+      "pid": 438002,
+      "idle_seconds": 95021,
+      "cpu_percent": 0.0,
+      "cmd": "/usr/bin/zsh -f"
+    },
+    {
+      "pid": 798475,
+      "idle_seconds": 76376,
+      "cpu_percent": 0.0,
+      "cmd": "/usr/bin/zsh -f"
+    },
+    {
+      "pid": 948666,
+      "idle_seconds": 70453,
+      "cpu_percent": 0.0,
+      "cmd": "/usr/bin/zsh -f"
+    },
+    {
+      "pid": 1836886,
+      "idle_seconds": 23663,
+      "cpu_percent": 0.0,
+      "cmd": "/usr/bin/zsh -f"
+    },
+    {
+      "pid": 1939951,
+      "idle_seconds": 19511,
+      "cpu_percent": 0.0,
+      "cmd": "/usr/bin/zsh -f"
+    },
+    {
+      "pid": 2062180,
+      "idle_seconds": 14411,
+      "cpu_percent": 0.0,
+      "cmd": "/usr/bin/zsh -f"
+    }
+  ],
+  "planned_prune_count": 8,
+  "killed_pids": [
+    38163,
+    56890,
+    347403,
+    350288,
+    380305,
+    438002,
+    798475,
+    948666
+  ],
+  "failures": []
+}

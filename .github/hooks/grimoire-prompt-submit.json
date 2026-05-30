@@ -1,0 +1,11 @@
+{
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "type": "command",
+        "command": ".github/hooks/scripts/grimoire-hook-gateway.sh --hook-id grimoire-prompt-submit --event UserPromptSubmit --control-file .github/hooks/grimoire-prompt-submit.json",
+        "timeout": 5
+      }
+    ]
+  }
+}

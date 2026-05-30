@@ -1,6 +1,6 @@
 $schema: "grimoire-agentic-standard-decision-graph/v1"
 metadata:
-  project: "Grimoire-Forge-agentic-standard-baseline"
+  project: "Grimoire-Forge"
   generated_by: "grimoire standard init"
 required_decision_record:
   - decision_id

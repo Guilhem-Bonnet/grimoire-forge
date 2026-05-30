@@ -1,6 +1,6 @@
 ---
 name: grimoire-health-check
-description: 'Run a full BMAD Grimoire project health check. Use when: project audit, health check, sanity check, validate project, check project health, diagnose issues, preflight, harmony check, quality score, early warning. Combines 5 diagnostic tools into one unified report.'
+description: 'Run a full Grimoire project health check. Use when: project audit, health check, sanity check, validate project, check project health, diagnose issues, preflight, harmony check, quality score, early warning. Combines 5 diagnostic tools into one unified report.'
 ---
 
 # Grimoire Health Check

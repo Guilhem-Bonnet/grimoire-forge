@@ -1,0 +1,112 @@
+Version:          Code 1.114.0 (e7fb5e96c0730b9deb70b33781f98e2f35975036, 2026-04-01T09:27:11Z)
+OS Version:       Linux x64 6.19.10-200.fc43.x86_64
+CPUs:             Intel(R) Core(TM) i9-9900K CPU @ 3.60GHz (16 x 4699)
+Memory (System):  31.25GB (9.43GB free)
+Load (avg):       8, 7, 7
+VM:               0%
+Screen Reader:    no
+Process Argv:     --crash-reporter-id 5c770b7b-ba4f-4eee-8446-35d0cd4a31d6
+GPU Status:       2d_canvas:                              enabled
+                  GPU0:                                   VENDOR= 0x1002 [Google Inc. (AMD)], DEVICE=0x7550 [ANGLE (AMD, AMD Radeon RX 9070 XT (radeonsi gfx1201 LLVM 21.1.8), OpenGL ES 3.2 Mesa 25.3.6)], DRIVER_VENDOR=Mesa, DRIVER_VERSION=25.3.6 *ACTIVE*
+                  Machine model name:                     
+                  Machine model version:                  
+                  direct_rendering_display_compositor:    disabled_off_ok
+                  gpu_compositing:                        enabled
+                  multiple_raster_threads:                enabled_on
+                  opengl:                                 enabled_on
+                  rasterization:                          enabled
+                  raw_draw:                               disabled_off_ok
+                  skia_graphite:                          disabled_off
+                  trees_in_viz:                           disabled_off
+                  video_decode:                           enabled
+                  video_encode:                           disabled_software
+                  vulkan:                                 disabled_off
+                  webgl:                                  enabled
+                  webgl2:                                 enabled
+                  webgpu:                                 disabled_off
+                  webnn:                                  disabled_off
+GPU Log Messages:
+[36895:0407/211945.672660:WARNING:sandbox/policy/linux/sandbox_linux.cc:404] : InitializeSandbox() called with multiple threads in process gpu-process.
+
+[36895:0408/223503.271344:ERROR:gpu/command_buffer/service/shared_image/shared_image_manager.cc:393] : SharedImageManager::ProduceSkia: Trying to Produce a Skia representation from a non-existent mailbox.
+
+[36895:0408/223503.272331:ERROR:gpu/command_buffer/service/shared_image/shared_image_manager.cc:393] : SharedImageManager::ProduceSkia: Trying to Produce a Skia representation from a non-existent mailbox.
+
+[36895:0408/223503.272554:ERROR:gpu/command_buffer/service/shared_image/shared_image_manager.cc:393] : SharedImageManager::ProduceSkia: Trying to Produce a Skia representation from a non-existent mailbox.
+
+[36895:0408/223503.273034:ERROR:gpu/command_buffer/service/shared_image/shared_image_manager.cc:393] : SharedImageManager::ProduceSkia: Trying to Produce a Skia representation from a non-existent mailbox.
+
+
+CPU %	Mem MB	   PID	Process
+    0	64441639067	 36828	code
+    0	     0	 36832	   zygote
+    0	32220819534	 36895	     zygote
+    0	     0	 36833	   zygote
+    0	     0	 36835	     zygote
+    0	107402731779	 38410	window [2] (Welcome - Documents - Visual Studio Code)
+    6	289987375803	486500	window [3] (Preview CdC-grimoire-game.md - bmad-custom - Visual Studio Code)
+    0	42961092712	547737	       zygote
+    0	10740273178	 36904	   utility-network-service
+    0	32220819534	 37433	shared-process
+    0	10740273178	 38912	pty-host
+    0	     0	 41077	     /usr/bin/zsh
+    0	     0	 62069	     /usr/bin/zsh -i
+    0	10740273178	107733	     /usr/bin/zsh -i
+    0	     0	324587	     /usr/bin/zsh -i
+    0	     0	487888	     /usr/bin/zsh -i
+    0	     0	524040	     /usr/bin/zsh -i
+    0	     0	545486	     /usr/bin/zsh -i
+    0	     0	594995	     /usr/bin/zsh -i
+    0	     0	645632	     /usr/bin/zsh -i
+    0	     0	647601	     /usr/bin/zsh -i
+    0	     0	649677	     /usr/bin/zsh -i
+    0	     0	650484	     /usr/bin/zsh -i
+    0	     0	651593	     bash -c OUT="/mnt/Travail/Projets/Dev/bmad-custom/_grimoire-runtime-output/test-artifacts/vscode"; mkdir -p "$OUT"; TS=$(date +%Y%m%d-%H%M%S); if command -v code >/dev/null 2>&1; then code --status > "$OUT/code-status-$TS.txt" 2>&1 || true; code --verbose --status > "$OUT/code-verbose-status-$TS.txt" 2>&1 || true; echo "Diagnostics sauvegardes dans $OUT"; else echo "Commande code indisponible dans ce shell"; fi
+    0	     0	651597	       sh /usr/bin/code --status
+    0	21480546356	651602	         electron-nodejs (cli.js)
+    0	53701365890	651615	           /usr/share/code/code --status
+    0	10740273178	651618	             zygote
+    0	21480546356	651687	               zygote
+    0	10740273178	651619	             zygote
+    0	     0	651621	               zygote
+    0	21480546356	651693	             utility-network-service
+    0	     0	 40021	file-watcher [2]
+    0	118143004957	 40035	extension-host [2]
+    0	     0	 40228	     /usr/share/code/code /usr/share/code/resources/app/extensions/json-language-features/server/dist/node/jsonServerMain --node-ipc --clientProcessId=40035
+    0	     0	 40976	     /home/guilhem/.vscode/extensions/hashicorp.terraform-2.39.2-linux-x64/bin/terraform-ls serve
+    0	     0	 40988	     /home/guilhem/.vscode/extensions/ms-python.vscode-python-envs-1.26.0-linux-x64/python-env-tools/bin/pet server
+    0	     0	 41048	     /home/guilhem/.config/Code/User/globalStorage/eamodio.gitlens/gk mcp --host=vscode --source=gitlens --scheme=vscode
+    0	     0	 41057	       /home/guilhem/.local/share/GitKrakenCLI/gk mcp --host=vscode --source=gitlens --scheme=vscode
+    0	10740273178	 41596	     electron-nodejs (bundle.js)
+    0	21480546356	487389	file-watcher [3]
+    1	440351200294	487404	extension-host [3]
+    0	21480546356	487818	     /usr/share/code/code /usr/share/code/resources/app/extensions/json-language-features/server/dist/node/jsonServerMain --node-ipc --clientProcessId=487404
+    0	     0	487879	     /home/guilhem/.local/bin/ruff server
+    0	     0	488376	     /home/guilhem/.vscode/extensions/ms-python.vscode-python-envs-1.26.0-linux-x64/python-env-tools/bin/pet server
+    0	21480546356	488404	     electron-nodejs (server-node.js)
+    0	128883278135	488434	     electron-nodejs (bundle.js)
+    0	21480546356	489707	     /usr/share/code/code /usr/share/code/resources/app/extensions/markdown-language-features/dist/serverWorkerMain --node-ipc --clientProcessId=487404
+    0	     0	502360	     /home/guilhem/.config/Code/User/globalStorage/eamodio.gitlens/gk mcp --host=vscode --source=gitlens --scheme=vscode
+    0	     0	502369	       /home/guilhem/.local/share/GitKrakenCLI/gk mcp --host=vscode --source=gitlens --scheme=vscode
+    0	10740273178	502387	     npm exec @playwright/mcp --image-responses omit
+    0	10740273178	502400	       node /home/guilhem/.npm/_npx/86170c4cd1c5da32/node_modules/.bin/playwright-mcp --image-responses omit
+    0	21480546356	503078	     electron-nodejs (languageserver.js)
+    0	10740273178	506414	     /bin/python /home/guilhem/.vscode/extensions/ms-python.isort-2025.0.0/bundled/tool/lsp_server.py
+    0	32220819534	598206	     mdx-language-server
+    0	64441639067	646477	     electron-nodejs (tsserver.js)
+    0	75181912245	646478	     electron-nodejs (tsserver.js)
+    0	32220819534	646502	       electron-nodejs (typingsInstaller.js)
+
+Workspace Stats: 
+|  Window (Preview CdC-grimoire-game.md - bmad-custom - Visual Studio Code)
+|  Window (Welcome - Documents - Visual Studio Code)
+|    Folder (Documents): 0 files
+|      File types:
+|      Conf files:
+|    Folder (bmad-custom): more than 22571 files
+|      File types: json(11120) pyc(1978) py(1949) md(926) png(266) so(183)
+|                  pyi(170) txt(115) yaml(91) typed(43)
+|      Conf files: github-prompts-dir(95) github-instructions-dir(4)
+|                  copilot-instructions.md(1) github-actions(1) mcp.json(1)
+|                  settings.json(1) tasks.json(1) devcontainer.json(1)
+|                  makefile(1)

@@ -84,11 +84,11 @@ INCIDENT: {{incident_type}}
 
 ### 5. Post-Mortem Template
 
-Ajouter dans `_bmad-output/team-ops/incident-log.md` après résolution :
+Ajouter dans `_grimoire-runtime-output/team-ops/incident-log.md` après résolution :
 ```
 [{{date}}] {{incident_type}} — Durée : {{duration}} — Cause : {{root_cause}} — Fix : {{fix}} — Action : {{preventive_action}}
 ```
 
 ## Output
 
-Sauvegarder dans `_bmad-output/implementation-artifacts/runbook-{{incident_slug}}-{{date}}.md`
+Sauvegarder dans `_grimoire-runtime-output/implementation-artifacts/runbook-{{incident_slug}}-{{date}}.md`

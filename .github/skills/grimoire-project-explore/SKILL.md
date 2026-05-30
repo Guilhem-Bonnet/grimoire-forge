@@ -1,6 +1,6 @@
 ---
 name: grimoire-project-explore
-description: 'Explore BMAD Grimoire project structure and hidden patterns. Use when: project archeology, hidden patterns, dark matter, desire paths, project graph, orphan files, unused agents, dead code, bus factor, tribal knowledge, who knows what, implicit assumptions. Combines project-graph, dark-matter, and desire-paths analysis.'
+description: 'Explore Grimoire project structure and hidden patterns. Use when: project archeology, hidden patterns, dark matter, desire paths, project graph, orphan files, unused agents, dead code, bus factor, tribal knowledge, who knows what, implicit assumptions. Combines project-graph, dark-matter, and desire-paths analysis.'
 ---
 
 # Grimoire Project Explore

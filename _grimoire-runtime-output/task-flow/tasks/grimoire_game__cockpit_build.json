@@ -1,0 +1,1 @@
+{"task":"grimoire-game: cockpit:build","flow":"game","kind":"task","status":"success","event":"task-finish","exitCode":0,"durationSeconds":2,"startedAt":"2026-04-17T00:12:27Z","finishedAt":"2026-04-17T00:12:29Z","cwd":"/mnt/Travail/Projets/Dev/Grimoire-Forge/grimoire-kit/apps/grimoire-game","command":"npm run cockpit:build"}

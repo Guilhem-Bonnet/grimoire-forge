@@ -1,0 +1,6 @@
+[syntax-check]
+bash: grimoire-kit/bmad-init.sh: Aucun fichier ou dossier de ce nom
+bmad-init OK
+cc-verify OK
+sil-collect OK
+pre-commit-cc OK

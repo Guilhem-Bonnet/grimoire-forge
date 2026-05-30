@@ -29,6 +29,11 @@ Rapporte uniquement les cas non gérés — pas de commentaire sur la qualité d
 - **Pas de filler** : aucune prose inutile, findings uniquement
 - **Ignorer le reste** de la codebase sauf si le contenu référence explicitement des fonctions externes
 
+## Quand NE PAS utiliser
+
+- Pour une review de code générale (style, architecture, design, sécurité applicative) → `grimoire-code-review`. Cette skill est orthogonale et ne couvre QUE les paths d'exécution non gardés.
+- Pour valider un livrable terminé avant push → `grimoire-verification` puis `grimoire-pre-push`.
+
 ## Procédure
 
 ### Step 1 — Recevoir le contenu

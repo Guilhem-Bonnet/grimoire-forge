@@ -1,6 +1,6 @@
 $schema: "grimoire-agentic-standard-rule-packs/v1"
 metadata:
-  project: "Grimoire-Forge-agentic-standard-baseline"
+  project: "Grimoire-Forge"
   generated_by: "grimoire standard init"
 rule_families:
   - security

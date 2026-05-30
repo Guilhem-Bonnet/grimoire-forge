@@ -4,7 +4,21 @@ Ce document suit le format Keep a Changelog.
 
 ## [Unreleased]
 
-- Aucune entree pour le moment.
+### Added
+
+- Nouveau site public base sur [Astro](https://astro.build) dans `web/`, avec socle HTML/CSS/JS premium (dark control plane + FX layer futuriste) sous `web/src/_socle/`.
+- Pages `/agents/` (generee depuis `_grimoire-runtime/_config/agent-manifest.csv`) et `/changelog/` (generee depuis `CHANGELOG.md`).
+- Scripts `web/scripts/build-pages.mjs` et `web/scripts/copy-cockpit.mjs` pour projeter le socle et le cockpit dans `public/` au build.
+- Sitemap automatique via `@astrojs/sitemap`, pretty URLs (trailing slash).
+- [web/README.md](web/README.md) avec structure, routes et workflow de dev.
+
+### Removed
+
+- Ancien site MkDocs : `docs/`, `mkdocs.yml`, `mkdocs_hooks/`, `site/`, `project-context.yaml` supprimes au profit du nouveau site Astro.
+
+### Changed
+
+- README racine mis a jour : nouvelle section **Site public**, suppression des liens `docs/`.
 
 ## [0.1.0] - 2026-03-27
 
@@ -15,7 +29,7 @@ Ce document suit le format Keep a Changelog.
 - Structuration de la documentation en trois axes : vision, roadmap, gouvernance.
 - Roadmap publique v1 et backlog initial priorise.
 - Kit open source de contribution : templates d'issues et template de pull request.
-- Message de lancement public pret a publier.
+- Message de lancement public versionne et pret a diffuser.
 
 ### Changed
 

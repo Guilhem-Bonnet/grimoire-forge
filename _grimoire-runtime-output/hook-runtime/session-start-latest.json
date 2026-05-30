@@ -1,0 +1,6 @@
+{
+  "user": "Guilhem",
+  "language": "Fran\u00e7ais",
+  "sharedContextSummary": "# Shared Context",
+  "additionalContext": "Utilisateur courant: Guilhem. Langue de travail: Fran\u00e7ais. Projet: Grimoire. Les hooks natifs couvrent le cycle agent; tasks.json reste orchestre via .github/hooks/scripts/grimoire-task-flow.sh. Shared context actif: # Shared Context"
+}

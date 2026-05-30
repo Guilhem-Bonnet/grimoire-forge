@@ -75,4 +75,4 @@ Effectue une revue de code adversariale sur `{{files_or_pr}}`.
 / ✅ APPROVED — RAS
 ```
 
-Sauvegarder dans `_bmad-output/team-build/code-review-{{date}}.md`
+Sauvegarder dans `_grimoire-runtime-output/team-build/code-review-{{date}}.md`

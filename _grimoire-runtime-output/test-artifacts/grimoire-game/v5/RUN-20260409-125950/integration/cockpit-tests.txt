@@ -1,0 +1,24 @@
+
+> @grimoire-kit/grimoire-game@0.0.0 test
+> vitest run tests/integration/runtime-dashboard-view.test.ts tests/integration/runtime-dashboard-ui-view.test.ts tests/integration/runtime-dashboard-store.test.ts tests/integration/runtime-dashboard-session.test.ts tests/integration/session-view.test.ts tests/integration/task-view.test.ts tests/integration/board-view.test.ts tests/integration/verification-view.test.ts tests/integration/observability-view.test.ts tests/integration/observability-panel-view.test.ts tests/integration/audit-view.test.ts
+
+
+ RUN  v3.2.4 /mnt/Travail/Projets/Dev/bmad-custom/grimoire-kit/apps/grimoire-game
+
+ ✓ tests/integration/board-view.test.ts (3 tests) 18ms
+ ✓ tests/integration/task-view.test.ts (3 tests) 24ms
+ ✓ tests/integration/verification-view.test.ts (3 tests) 24ms
+ ✓ tests/integration/audit-view.test.ts (3 tests) 24ms
+ ✓ tests/integration/session-view.test.ts (3 tests) 25ms
+ ✓ tests/integration/runtime-dashboard-ui-view.test.ts (2 tests) 23ms
+ ✓ tests/integration/observability-panel-view.test.ts (2 tests) 24ms
+ ✓ tests/integration/runtime-dashboard-view.test.ts (3 tests) 28ms
+ ✓ tests/integration/runtime-dashboard-store.test.ts (4 tests) 36ms
+ ✓ tests/integration/observability-view.test.ts (3 tests) 35ms
+ ✓ tests/integration/runtime-dashboard-session.test.ts (5 tests) 40ms
+
+ Test Files  11 passed (11)
+      Tests  34 passed (34)
+   Start at  12:58:33
+   Duration  536ms (transform 641ms, setup 0ms, collect 1.65s, tests 299ms, environment 2ms, prepare 1.24s)
+

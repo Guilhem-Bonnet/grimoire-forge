@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Grimoire Forge — Noyau Agentique</title>
+  <meta name="description" content="Grimoire Forge orchestre agents, surfaces et artefacts dans un runtime unique. Conçu pour les builders qui exigent la trace." />
+  <link rel="stylesheet" href="forge-landing.css" />
+  <style>
+    /* ── Shimmer once (CTA reveal) ── */
+    @keyframes shimmer-once {
+      0%   { left: -100%; }
+      100% { left: 160%; }
+    }
+    .shimmer-once::before {
+      animation: shimmer-once 600ms var(--ease-forge, cubic-bezier(.2,.8,.2,1)) forwards;
+    }
+
+    /* ── Egg shimmer ── */
+    @keyframes egg-sweep {
+      0%   { background-position: -200% center; }
+      100% { background-position: 200% center; }
+    }
+    .egg-shimmer {
+      background: linear-gradient(90deg, #FF2A00 0%, #FF8C00 40%, #FF2A00 100%);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: egg-sweep 600ms linear forwards;
+    }
+
+    /* Surface card hover border */
+    @property --angle {
+      syntax: '<angle>';
+      initial-value: 0deg;
+      inherits: false;
+    }
+    .surface-card:hover {
+      --angle: 360deg;
+    }
+    .surface-card::before {
+      background: conic-gradient(from var(--angle), var(--accent, #FF6B3D), transparent 40%);
+    }
+
+    /* Timeline vertical layout on mobile */
+    @media (max-width: 640px) {
+      .timeline-track { display: none; }
+      .timeline-step { padding: 0 0 32px 24px; border-left: 1px solid var(--line); }
+      .timeline-dot { top: 0; left: -5px; }
+    }
+
+    /* Tweaks panel */
+    #tweaks-panel {
+      position: fixed;
+      bottom: 24px; right: 24px;
+      background: var(--elev-2, #1A1D22);
+      border: 1px solid rgba(255,107,61,0.3);
+      border-radius: 6px;
+      padding: 20px;
+      width: 240px;
+      z-index: 9999;
+      display: none;
+      font-family: 'Geist Mono', monospace;
+      font-size: 0.72rem;
+    }
+    #tweaks-panel.open { display: block; }
+    #tweaks-panel h4 {
+      color: #FF6B3D;
+      letter-spacing: 0.1em;
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .tweak-row { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+    .tweak-row label { color: #9BA0A8; font-size: 0.65rem; letter-spacing: 0.06em; }
+    .tweak-row input[type=range] { width: 100%; accent-color: #FF6B3D; }
+    .tweak-row select {
+      background: #0B0C0E; border: 1px solid rgba(255,255,255,0.08);
+      color: #F6F7F8; padding: 4px 8px; border-radius: 3px; font-family: inherit; font-size: 0.7rem;
+    }
+    .tweak-row input[type=color] { width: 32px; height: 24px; border: none; background: none; cursor: pointer; }
+    .tweak-sep { border: none; border-top: 1px solid rgba(255,255,255,0.06); margin: 8px 0 14px; }
+  </style>
+</head>
+<body>
+
+<!-- Scroll progress -->
+<div id="scroll-progress" aria-hidden="true"></div>
+
+<!-- ════════════════════════════════════════════════════
+     NAVIGATION
+════════════════════════════════════════════════════ -->
+<nav aria-label="Navigation principale">
+  <div class="container">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">GRIMOIRE&nbsp;<span class="forge-word">FORGE</span></a>
+      <ul class="nav-links" role="list">
+        <li><a href="#manifeste">MANIFESTE</a></li>
+        <li><a href="#surfaces">SURFACES</a></li>
+        <li><a href="#anatomie">ANATOMIE</a></li>
+        <li><a href="#capacites">CAPACITÉS</a></li>
+      </ul>
+      <a href="#cta-final" class="nav-cta">OUVRIR LE COCKPIT →</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ════════════════════════════════════════════════════
+     01 · HERO
+════════════════════════════════════════════════════ -->
+<section id="hero">
+  <div class="container" style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;">
+
+    <div class="hero-content">
+      <div class="hero-eyebrow" data-hero-reveal>
+        <span class="status-dot" aria-hidden="true"></span>
+        <span class="eyebrow mono">NOYAU AGENTIQUE &nbsp;·&nbsp; v2026</span>
+      </div>
+
+      <h1 class="hero-h1 grad-text" data-hero-reveal style="transition-delay:80ms">
+        Un noyau agentique.<br>Frappé, pas assemblé.
+      </h1>
+
+      <p class="hero-sub" data-hero-reveal style="transition-delay:160ms">
+        Grimoire Forge orchestre agents, surfaces et artefacts dans un runtime unique. Conçu pour les builders qui exigent la trace.
+      </p>
+
+      <div class="hero-ctas" data-hero-reveal style="transition-delay:240ms">
+        <a href="#cta-final" class="btn btn-primary">OUVRIR LE COCKPIT</a>
+        <a href="#anatomie" class="btn btn-ghost">LIRE L'ANATOMIE</a>
+      </div>
+    </div>
+
+    <!-- Cockpit embed -->
+    <div class="hero-embed" data-hero-reveal style="transition-delay:320ms">
+      <div class="cockpit-frame" role="img" aria-label="Interface cockpit de Grimoire Forge">
+        <div class="cockpit-titlebar">
+          <span class="cockpit-dot red"></span>
+          <span class="cockpit-dot yellow"></span>
+          <span class="cockpit-dot green"></span>
+          <span class="cockpit-title">GRIMOIRE FORGE · COCKPIT · runtime/session-4a2f</span>
+        </div>
+        <div class="cockpit-body">
+          <div class="term-line"><span class="prompt">▶ </span><span class="val">forge init --session 4a2f --agents 3</span></div>
+          <div class="term-line"><span class="dim">  ↳ runtime</span> <span class="ok">READY</span></div>
+          <div class="term-line"><span class="dim">  ↳ surface/cockpit</span> <span class="ok">MOUNTED</span></div>
+          <div class="term-line"><span class="dim">  ↳ surface/observatory</span> <span class="warn">PARTIAL</span></div>
+          <div class="term-line">&nbsp;</div>
+          <div class="term-line"><span class="prompt">▶ </span><span class="val">agent.spawn("analyst", { trace: true })</span></div>
+          <div class="term-line"><span class="dim">  ↳ agent/analyst</span> <span class="ok">ACTIVE</span> <span class="dim">pid:0x3f1</span></div>
+          <div class="term-line"><span class="prompt">▶ </span><span class="val">agent.spawn("writer", { contract: "RFC-09" })</span></div>
+          <div class="term-line"><span class="dim">  ↳ agent/writer</span> <span class="ok">ACTIVE</span> <span class="dim">pid:0x3f2</span></div>
+          <div class="term-line">&nbsp;</div>
+          <div class="term-line"><span class="prompt">▶ </span><span class="val">forge.run("pipeline/synthesis")</span></div>
+          <div class="term-line"><span class="dim">  ↳ artefact/report-v1.md</span> <span class="ok">EMIS</span></div>
+          <div class="term-line"><span class="prompt">▶ </span><span class="val">_</span><span class="cockpit-cursor" aria-hidden="true"></span></div>
+
+          <div class="agent-status-bar" aria-hidden="true">
+            <span class="agent-pill active"><span class="dot"></span>analyst</span>
+            <span class="agent-pill active"><span class="dot"></span>writer</span>
+            <span class="agent-pill"><span class="dot"></span>critic</span>
+            <span style="flex:1"></span>
+            <span class="agent-pill" style="color:var(--muted)">3 agents · 1 pipeline</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════
+     PROOF BAR
+════════════════════════════════════════════════════ -->
+<div id="proof-bar" aria-label="Mentions et références">
+  <div class="container">
+    <div class="proof-inner">
+      <span class="proof-item">EARLY ACCESS · 47 BUILDERS</span>
+      <span class="proof-sep">·</span>
+      <span class="proof-item">RUNTIME TYPÉ · CONTRAT STRICT</span>
+      <span class="proof-sep">·</span>
+      <span class="proof-item">ZERO HALLUCINATION POLICY</span>
+      <span class="proof-sep">·</span>
+      <span class="proof-item">TRACE COMPLÈTE · ARTEFACTS VERSIONÉS</span>
+      <span class="proof-sep">·</span>
+      <span class="proof-item">OPEN SURFACE PROTOCOL</span>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════
+     02 · MANIFESTE
+════════════════════════════════════════════════════ -->
+<section id="manifeste">
+  <div class="container">
+    <div class="section-divider" aria-hidden="true"></div>
+    <div class="eyebrow reveal" data-reveal-delay="0"><span class="num">01</span> · MANIFESTE</div>
+
+    <div class="manifeste-grid">
+
+      <div class="manifeste-block reveal" data-reveal-delay="0">
+        <div class="manifeste-num">01</div>
+        <h3>La traçabilité n'est pas une option.</h3>
+        <p>Chaque décision d'agent, chaque artefact émis, chaque contrat signé — tout est enregistré dans le runtime. Pas de boîte noire. Pas d'approximation.</p>
+      </div>
+
+      <div class="manifeste-block reveal" data-reveal-delay="120">
+        <div class="manifeste-num">02</div>
+        <h3>Un runtime, pas une collection d'appels API.</h3>
+        <p>Grimoire Forge n'enchaîne pas des LLM. Il forge une surface de contrôle cohérente où les agents opèrent selon des contrats définis, dans un espace mémoire partagé.</p>
+      </div>
+
+      <div class="manifeste-block reveal" data-reveal-delay="240">
+        <div class="manifeste-num">03</div>
+        <h3>Les artefacts sont la seule mesure de réalité.</h3>
+        <p>Un agent qui répond n'accomplit rien. Un agent qui émet un artefact versioné, validé et adressable — lui, produit du réel. Forge optimise pour l'artefact, pas pour la conversation.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════
+     03 · SURFACES
+════════════════════════════════════════════════════ -->
+<section id="surfaces">
+  <div class="container">
+    <div class="section-divider" aria-hidden="true"></div>
+    <div class="eyebrow reveal"><span class="num">02</span> · SURFACES</div>
+    <h2 class="reveal" data-reveal-delay="80" style="margin-top:16px;max-width:640px">Le control plane, surface par surface.</h2>
+    <p class="reveal" style="color:var(--soft);margin-top:12px;font-size:.9rem;max-width:520px" data-reveal-delay="120">Quatre interfaces spécialisées. Un seul runtime sous-jacent. Chaque surface expose un contrat différent avec l'opérateur.</p>
+
+    <div class="surfaces-grid">
+
+      <!-- Cockpit -->
+      <div class="surface-card reveal" data-reveal-delay="0">
+        <div class="surface-card-inner">
+          <div class="surface-card-header">
+            <span class="surface-badge">FORGE-01</span>
+            <span class="surface-status is-live"><span class="dot"></span>LIVE</span>
+          </div>
+          <div class="surface-card-body">
+            <h3>Cockpit</h3>
+            <p>Interface opérationnelle temps réel. Contrôle des agents, inspection des pipelines, émission de directives.</p>
+            <div class="surface-meta">runtime/cockpit · ws:// · latence &lt;40ms</div>
+          </div>
+          <div class="surface-preview" aria-hidden="true">
+            <div class="mini-rows">
+              <div class="mini-row"><span class="mini-row-dot active"></span><span class="mini-row-label">agent/analyst</span><span class="mini-row-val">RUNNING · 3.2s</span></div>
+              <div class="mini-row"><span class="mini-row-dot active"></span><span class="mini-row-label">agent/writer</span><span class="mini-row-val">RUNNING · 1.1s</span></div>
+              <div class="mini-row"><span class="mini-row-dot warn"></span><span class="mini-row-label">agent/critic</span><span class="mini-row-val">WAITING</span></div>
+              <div class="mini-row"><span class="mini-row-dot"></span><span class="mini-row-label">pipeline/synthesis</span><span class="mini-row-val">QUEUED</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Observatory -->
+      <div class="surface-card reveal" data-reveal-delay="80">
+        <div class="surface-card-inner">
+          <div class="surface-card-header">
+            <span class="surface-badge">FORGE-02</span>
+            <span class="surface-status is-partial"><span class="dot"></span>PARTIAL</span>
+          </div>
+          <div class="surface-card-body">
+            <h3>Observatory</h3>
+            <p>Vue longitudinale des traces. Inspection des artefacts émis, diff de versions, audit de contrats.</p>
+            <div class="surface-meta">runtime/observatory · REST + SSE · lecture seule</div>
+          </div>
+          <div class="surface-preview" aria-hidden="true">
+            <div class="mini-rows">
+              <div class="mini-row"><span class="mini-row-dot active"></span><span class="mini-row-label">artefact/report-v3.md</span><span class="mini-row-val">ÉMIS 09:14</span></div>
+              <div class="mini-row"><span class="mini-row-dot active"></span><span class="mini-row-label">artefact/brief-v1.json</span><span class="mini-row-val">ÉMIS 09:02</span></div>
+              <div class="mini-row"><span class="mini-row-dot"></span><span class="mini-row-label">trace/session-4a2f</span><span class="mini-row-val">874 events</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Kanban -->
+      <div class="surface-card reveal" data-reveal-delay="160">
+        <div class="surface-card-inner">
+          <div class="surface-card-header">
+            <span class="surface-badge">FORGE-03</span>
+            <span class="surface-status is-partial"><span class="dot"></span>BETA</span>
+          </div>
+          <div class="surface-card-body">
+            <h3>Kanban</h3>
+            <p>Gestion des tâches agentiques. Colonnes par état de contrat, drag-to-assign, SLA par lane.</p>
+            <div class="surface-meta">runtime/kanban · WS bidirectionnel · écriture</div>
+          </div>
+          <div class="surface-preview" aria-hidden="true">
+            <div class="mini-rows">
+              <div class="mini-row"><span class="mini-row-dot warn"></span><span class="mini-row-label">DRAFT · 3 tâches</span><span class="mini-row-val">→ analyst</span></div>
+              <div class="mini-row"><span class="mini-row-dot active"></span><span class="mini-row-label">IN PROGRESS · 2 tâches</span><span class="mini-row-val">→ writer</span></div>
+              <div class="mini-row"><span class="mini-row-dot active"></span><span class="mini-row-label">DONE · 11 tâches</span><span class="mini-row-val">ce sprint</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- War Room -->
+      <div class="surface-card reveal" data-reveal-delay="240">
+        <div class="surface-card-inner">
+          <div class="surface-card-header">
+            <span class="surface-badge">FORGE-04</span>
+            <span class="surface-status is-blocked"><span class="dot"></span>Q3 2026</span>
+          </div>
+          <div class="surface-card-body">
+            <h3>War Room</h3>
+            <p>Coordination multi-sessions. Tableaux de bord croisés, escalade inter-agents, conflits de ressources.</p>
+            <div class="surface-meta">runtime/warroom · multi-tenant · RBAC strict</div>
+          </div>
+          <div class="surface-preview" aria-hidden="true" style="display:flex;align-items:center;justify-content:center;">
+            <span style="font-family:'Geist Mono',monospace;font-size:.6rem;color:var(--muted);letter-spacing:.08em;">ROADMAP · Q3 2026</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════
+     04 · ANATOMIE (SVG inline)
+════════════════════════════════════════════════════ -->
+<section id="anatomie">
+  <div class="container">
+    <div class="section-divider" aria-hidden="true"></div>
+    <div class="eyebrow reveal"><span class="num">03</span> · ANATOMIE</div>
+    <h2 class="reveal" data-reveal-delay="80" style="margin-top:16px;max-width:600px">Du signal à l'artefact.</h2>
+    <p class="reveal" style="color:var(--soft);margin-top:12px;font-size:.9rem;max-width:520px" data-reveal-delay="120">Quatre couches. Un flux. Chaque composant respecte un contrat d'interface strict — pas de couplage implicite.</p>
+
+    <div class="anatomy-svg-wrap reveal" data-reveal-delay="160" role="img" aria-label="Diagramme d'anatomie du noyau Grimoire Forge : Agents, Runtime, Surfaces, Artefacts">
+      <svg viewBox="0 0 1100 420" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block;" aria-hidden="true">
+        <defs>
+          <marker id="arr" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+            <path d="M0,0 L6,3 L0,6 Z" fill="#FF6B3D" opacity="0.7"/>
+          </marker>
+          <marker id="arr-dim" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+            <path d="M0,0 L6,3 L0,6 Z" fill="#5B6068"/>
+          </marker>
+          <!-- Blueprint grid pattern -->
+          <pattern id="bp" width="32" height="32" patternUnits="userSpaceOnUse">
+            <path d="M32,0 L0,0 0,32" fill="none" stroke="#FF6B3D" stroke-width="0.4" opacity="0.08"/>
+          </pattern>
+        </defs>
+
+        <!-- Blueprint bg -->
+        <rect width="1100" height="420" fill="url(#bp)"/>
+
+        <!-- ── LAYER LABELS ── -->
+        <text x="20" y="60" font-family="Geist Mono, monospace" font-size="9" fill="#5B6068" letter-spacing="2" text-anchor="start">COUCHE</text>
+        <text x="20" y="90" font-family="Geist Mono, monospace" font-size="9" fill="#5B6068" letter-spacing="2" text-anchor="start">COMPOSANT</text>
+        <text x="20" y="200" font-family="Geist Mono, monospace" font-size="9" fill="#5B6068" letter-spacing="2" text-anchor="start">CONTRAT</text>
+        <text x="20" y="340" font-family="Geist Mono, monospace" font-size="9" fill="#5B6068" letter-spacing="2" text-anchor="start">FLUX</text>
+
+        <!-- Horizontal layer separators -->
+        <line x1="80" y1="40"  x2="1080" y2="40"  stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+        <line x1="80" y1="140" x2="1080" y2="140" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+        <line x1="80" y1="280" x2="1080" y2="280" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+        <line x1="80" y1="370" x2="1080" y2="370" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+
+        <!-- ════ COLUMN 1: AGENTS ════ -->
+        <!-- Layer label -->
+        <text x="220" y="30" font-family="Geist Mono, monospace" font-size="10" fill="#FF6B3D" letter-spacing="3" text-anchor="middle" opacity="0.9">AGENTS</text>
+
+        <!-- Agent boxes -->
+        <g transform="translate(100, 55)">
+          <!-- analyst -->
+          <rect x="0" y="0" width="90" height="60" rx="2" fill="#121418" stroke="#FF6B3D" stroke-width="1" opacity="0.8"/>
+          <text x="45" y="20" font-family="Geist Mono, monospace" font-size="8.5" fill="#FF6B3D" text-anchor="middle" opacity="0.9">agent/</text>
+          <text x="45" y="33" font-family="Geist Mono, monospace" font-size="9" fill="#F6F7F8" text-anchor="middle" font-weight="600">analyst</text>
+          <circle cx="45" cy="50" r="3" fill="#4CAF84"/>
+          <!-- writer -->
+          <rect x="110" y="0" width="90" height="60" rx="2" fill="#121418" stroke="#FF6B3D" stroke-width="1" opacity="0.8"/>
+          <text x="155" y="20" font-family="Geist Mono, monospace" font-size="8.5" fill="#FF6B3D" text-anchor="middle" opacity="0.9">agent/</text>
+          <text x="155" y="33" font-family="Geist Mono, monospace" font-size="9" fill="#F6F7F8" text-anchor="middle" font-weight="600">writer</text>
+          <circle cx="155" cy="50" r="3" fill="#4CAF84"/>
+          <!-- critic -->
+          <rect x="55" y="70" width="90" height="60" rx="2" fill="#121418" stroke="#5B6068" stroke-width="1" stroke-dasharray="4,3"/>
+          <text x="100" y="92" font-family="Geist Mono, monospace" font-size="8.5" fill="#5B6068" text-anchor="middle">agent/</text>
+          <text x="100" y="105" font-family="Geist Mono, monospace" font-size="9" fill="#9BA0A8" text-anchor="middle" font-weight="600">critic</text>
+          <circle cx="100" cy="120" r="3" fill="#F6B83A"/>
+        </g>
+
+        <!-- Contract label col 1 -->
+        <text x="220" y="170" font-family="Geist Mono, monospace" font-size="8" fill="#5B6068" text-anchor="middle">AgentContract</text>
+        <text x="220" y="185" font-family="Geist Mono, monospace" font-size="8" fill="#5B6068" text-anchor="middle">{ role, tools, memory }</text>
+
+        <!-- ════ ARROW 1→2 ════ -->
+        <line x1="360" y1="210" x2="430" y2="210" stroke="#FF6B3D" stroke-width="1" opacity="0.6" marker-end="url(#arr)"/>
+        <text x="395" y="203" font-family="Geist Mono, monospace" font-size="7.5" fill="#FF6B3D" text-anchor="middle" opacity="0.8">dispatch</text>
+
+        <!-- ════ COLUMN 2: RUNTIME ════ -->
+        <text x="570" y="30" font-family="Geist Mono, monospace" font-size="10" fill="#FF6B3D" letter-spacing="3" text-anchor="middle" opacity="0.9">RUNTIME</text>
+
+        <g transform="translate(435, 50)">
+          <rect x="0" y="0" width="260" height="200" rx="3" fill="rgba(26,29,34,0.6)" stroke="#FF6B3D" stroke-width="1.5"/>
+          <!-- Inner label -->
+          <text x="130" y="22" font-family="Geist Mono, monospace" font-size="8.5" fill="#FF6B3D" text-anchor="middle" opacity="0.7">forge-runtime · v2026</text>
+
+          <!-- Sub-modules -->
+          <rect x="12" y="32" width="108" height="48" rx="2" fill="#0B0C0E" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+          <text x="66" y="50" font-family="Geist Mono, monospace" font-size="8" fill="#9BA0A8" text-anchor="middle">scheduler</text>
+          <text x="66" y="63" font-family="Geist Mono, monospace" font-size="7.5" fill="#5B6068" text-anchor="middle">priority · SLA</text>
+
+          <rect x="140" y="32" width="108" height="48" rx="2" fill="#0B0C0E" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+          <text x="194" y="50" font-family="Geist Mono, monospace" font-size="8" fill="#9BA0A8" text-anchor="middle">memory bus</text>
+          <text x="194" y="63" font-family="Geist Mono, monospace" font-size="7.5" fill="#5B6068" text-anchor="middle">shared ctx</text>
+
+          <rect x="12" y="92" width="108" height="48" rx="2" fill="#0B0C0E" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+          <text x="66" y="110" font-family="Geist Mono, monospace" font-size="8" fill="#9BA0A8" text-anchor="middle">trace ledger</text>
+          <text x="66" y="123" font-family="Geist Mono, monospace" font-size="7.5" fill="#5B6068" text-anchor="middle">immutable log</text>
+
+          <rect x="140" y="92" width="108" height="48" rx="2" fill="#0B0C0E" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+          <text x="194" y="110" font-family="Geist Mono, monospace" font-size="8" fill="#9BA0A8" text-anchor="middle">contract engine</text>
+          <text x="194" y="123" font-family="Geist Mono, monospace" font-size="7.5" fill="#5B6068" text-anchor="middle">validate · sign</text>
+
+          <!-- Forge strike line inside runtime -->
+          <line x1="12" y1="155" x2="248" y2="155" stroke="rgba(255,107,61,0.15)" stroke-width="1"/>
+          <text x="130" y="170" font-family="Geist Mono, monospace" font-size="8" fill="#5B6068" text-anchor="middle">pipeline executor · event bus</text>
+          <text x="130" y="183" font-family="Geist Mono, monospace" font-size="8" fill="#5B6068" text-anchor="middle">artefact emitter · session mgr</text>
+        </g>
+
+        <!-- Contract label col 2 -->
+        <text x="570" y="270" font-family="Geist Mono, monospace" font-size="8" fill="#5B6068" text-anchor="middle">RuntimeContract</text>
+        <text x="570" y="285" font-family="Geist Mono, monospace" font-size="8" fill="#5B6068" text-anchor="middle">{ session, pipeline, trace }</text>
+
+        <!-- ════ ARROW 2→3 ════ -->
+        <line x1="700" y1="210" x2="770" y2="210" stroke="#FF6B3D" stroke-width="1" opacity="0.6" marker-end="url(#arr)"/>
+        <text x="735" y="203" font-family="Geist Mono, monospace" font-size="7.5" fill="#FF6B3D" text-anchor="middle" opacity="0.8">mount</text>
+
+        <!-- ════ COLUMN 3: SURFACES ════ -->
+        <text x="865" y="30" font-family="Geist Mono, monospace" font-size="10" fill="#FF6B3D" letter-spacing="3" text-anchor="middle" opacity="0.9">SURFACES</text>
+
+        <g transform="translate(775, 50)">
+          <!-- Cockpit -->
+          <rect x="0" y="0" width="80" height="36" rx="2" fill="#121418" stroke="#4CAF84" stroke-width="1"/>
+          <text x="40" y="15" font-family="Geist Mono, monospace" font-size="8" fill="#4CAF84" text-anchor="middle">cockpit</text>
+          <text x="40" y="28" font-family="Geist Mono, monospace" font-size="7.5" fill="#5B6068" text-anchor="middle">LIVE</text>
+          <!-- Observatory -->
+          <rect x="100" y="0" width="80" height="36" rx="2" fill="#121418" stroke="#F6B83A" stroke-width="1"/>
+          <text x="140" y="15" font-family="Geist Mono, monospace" font-size="8" fill="#F6B83A" text-anchor="middle">observatory</text>
+          <text x="140" y="28" font-family="Geist Mono, monospace" font-size="7.5" fill="#5B6068" text-anchor="middle">PARTIAL</text>
+          <!-- Kanban -->
+          <rect x="0" y="52" width="80" height="36" rx="2" fill="#121418" stroke="#F6B83A" stroke-width="1"/>
+          <text x="40" y="67" font-family="Geist Mono, monospace" font-size="8" fill="#F6B83A" text-anchor="middle">kanban</text>
+          <text x="40" y="80" font-family="Geist Mono, monospace" font-size="7.5" fill="#5B6068" text-anchor="middle">BETA</text>
+          <!-- War Room -->
+          <rect x="100" y="52" width="80" height="36" rx="2" fill="#121418" stroke="#5B6068" stroke-width="1" stroke-dasharray="4,3"/>
+          <text x="140" y="67" font-family="Geist Mono, monospace" font-size="8" fill="#5B6068" text-anchor="middle">war room</text>
+          <text x="140" y="80" font-family="Geist Mono, monospace" font-size="7.5" fill="#5B6068" text-anchor="middle">Q3 2026</text>
+        </g>
+
+        <!-- Arrow to artefacts (vertical) -->
+        <line x1="865" y1="165" x2="865" y2="310" stroke="#FF6B3D" stroke-width="1" opacity="0.5" marker-end="url(#arr)" stroke-dasharray="6,4"/>
+        <text x="878" y="245" font-family="Geist Mono, monospace" font-size="7.5" fill="#FF6B3D" opacity="0.7" transform="rotate(90 878 245)">emit</text>
+
+        <!-- Contract label col 3 -->
+        <text x="865" y="270" font-family="Geist Mono, monospace" font-size="8" fill="#5B6068" text-anchor="middle">SurfaceContract</text>
+        <text x="865" y="285" font-family="Geist Mono, monospace" font-size="8" fill="#5B6068" text-anchor="middle">{ mount, expose, permissions }</text>
+
+        <!-- ════ ARTEFACTS row (bottom) ════ -->
+        <text x="570" y="395" font-family="Geist Mono, monospace" font-size="10" fill="#FF6B3D" letter-spacing="3" text-anchor="middle" opacity="0.9">ARTEFACTS</text>
+
+        <!-- Artefact chips -->
+        <g transform="translate(160, 320)">
+          <rect x="0" y="0" width="100" height="28" rx="2" fill="#0B0C0E" stroke="#FF6B3D" stroke-width="1" opacity="0.7"/>
+          <text x="50" y="18" font-family="Geist Mono, monospace" font-size="8" fill="#FF6B3D" text-anchor="middle">report-v3.md</text>
+
+          <rect x="116" y="0" width="100" height="28" rx="2" fill="#0B0C0E" stroke="#FF6B3D" stroke-width="1" opacity="0.7"/>
+          <text x="166" y="18" font-family="Geist Mono, monospace" font-size="8" fill="#FF6B3D" text-anchor="middle">brief-v1.json</text>
+
+          <rect x="232" y="0" width="100" height="28" rx="2" fill="#0B0C0E" stroke="#FF6B3D" stroke-width="1" opacity="0.7"/>
+          <text x="282" y="18" font-family="Geist Mono, monospace" font-size="8" fill="#FF6B3D" text-anchor="middle">schema-v2.ts</text>
+
+          <rect x="348" y="0" width="100" height="28" rx="2" fill="#0B0C0E" stroke="#FF6B3D" stroke-width="1" opacity="0.7"/>
+          <text x="398" y="18" font-family="Geist Mono, monospace" font-size="8" fill="#FF6B3D" text-anchor="middle">trace/4a2f.log</text>
+
+          <rect x="464" y="0" width="100" height="28" rx="2" fill="#0B0C0E" stroke="#FF6B3D" stroke-width="1" opacity="0.7"/>
+          <text x="514" y="18" font-family="Geist Mono, monospace" font-size="8" fill="#FF6B3D" text-anchor="middle">contract.sig</text>
+
+          <rect x="580" y="0" width="80" height="28" rx="2" fill="#0B0C0E" stroke="#5B6068" stroke-width="1" stroke-dasharray="3,3"/>
+          <text x="620" y="18" font-family="Geist Mono, monospace" font-size="8" fill="#5B6068" text-anchor="middle">· · ·</text>
+        </g>
+
+        <!-- Arrow from runtime to artefacts -->
+        <line x1="570" y1="255" x2="570" y2="315" stroke="#FF6B3D" stroke-width="1" opacity="0.5" marker-end="url(#arr)" stroke-dasharray="6,4"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════
+     05 · TIMELINE
+════════════════════════════════════════════════════ -->
+<section id="timeline">
+  <div class="container">
+    <div class="section-divider" aria-hidden="true"></div>
+    <div class="eyebrow reveal"><span class="num">04</span> · FLUX</div>
+    <h2 class="reveal" data-reveal-delay="80" style="margin-top:16px;max-width:560px">De l'idée à l'artefact.</h2>
+
+    <!-- Progress track -->
+    <div class="timeline-track reveal" data-reveal-delay="120" aria-hidden="true">
+      <div class="timeline-track-fill"></div>
+    </div>
+
+    <div class="timeline-steps" role="list">
+
+      <div class="timeline-step reveal" data-reveal-delay="0" role="listitem">
+        <div class="timeline-dot" aria-hidden="true"></div>
+        <div class="timeline-step-num">01</div>
+        <h3>Formulation du contrat</h3>
+        <p>L'opérateur définit l'objectif, les outils autorisés et les critères de validation. Le runtime valide la signature du contrat avant toute exécution.</p>
+      </div>
+
+      <div class="timeline-step reveal" data-reveal-delay="80" role="listitem">
+        <div class="timeline-dot" aria-hidden="true"></div>
+        <div class="timeline-step-num">02</div>
+        <h3>Frappe des agents</h3>
+        <p>Le scheduler sélectionne et spawne les agents selon le contrat. Chaque agent reçoit un contexte mémoire délimité et une directive précise.</p>
+      </div>
+
+      <div class="timeline-step reveal" data-reveal-delay="160" role="listitem">
+        <div class="timeline-dot" aria-hidden="true"></div>
+        <div class="timeline-step-num">03</div>
+        <h3>Exécution du pipeline</h3>
+        <p>Le runtime orchestre la séquence d'appels, gère les dépendances entre agents et enregistre chaque décision dans le trace ledger.</p>
+      </div>
+
+      <div class="timeline-step reveal" data-reveal-delay="240" role="listitem">
+        <div class="timeline-dot" aria-hidden="true"></div>
+        <div class="timeline-step-num">04</div>
+        <h3>Émission de l'artefact</h3>
+        <p>L'artefact final est versioné, adressable et signé par le contrat. Il est disponible dans l'Observatory et exportable via l'API.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════
+     06 · FEATURE GRID
+════════════════════════════════════════════════════ -->
+<section id="capacites">
+  <div class="container">
+    <div class="section-divider" aria-hidden="true"></div>
+    <div class="eyebrow reveal"><span class="num">05</span> · CAPACITÉS</div>
+    <h2 class="reveal" data-reveal-delay="80" style="margin-top:16px;max-width:560px">Un noyau. Neuf surfaces de précision.</h2>
+
+    <div class="feature-grid">
+
+      <div class="feature-card reveal" data-reveal-delay="0">
+        <svg class="feature-icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="4" y="8" width="24" height="18" rx="1.5"/>
+          <path d="M9 4h14M12 13h8M12 17h5"/>
+        </svg>
+        <h3>Contrats typés</h3>
+        <p>Chaque agent opère selon un contrat déclaratif validé au runtime. Aucun appel non autorisé. Aucune dérive silencieuse.</p>
+        <a href="#" class="feature-link">LIRE LA SPEC →</a>
+      </div>
+
+      <div class="feature-card reveal" data-reveal-delay="60">
+        <svg class="feature-icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="16" cy="16" r="10"/>
+          <path d="M16 8v8l5 3"/>
+        </svg>
+        <h3>Trace immutable</h3>
+        <p>Chaque décision, chaque appel, chaque transition d'état est enregistrée dans un ledger append-only. Auditabilité totale.</p>
+        <a href="#" class="feature-link">EXPLORER LA TRACE →</a>
+      </div>
+
+      <div class="feature-card reveal" data-reveal-delay="120">
+        <svg class="feature-icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M6 16h4l4-8 4 16 4-8h4"/>
+        </svg>
+        <h3>Scheduler adaptatif</h3>
+        <p>Priorisation par SLA, dépendances inter-agents déclarées, backpressure automatique en cas de saturation du pipeline.</p>
+        <a href="#" class="feature-link">VOIR LE SCHEDULER →</a>
+      </div>
+
+      <div class="feature-card reveal" data-reveal-delay="0">
+        <svg class="feature-icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="4" y="4" width="10" height="10" rx="1.5"/>
+          <rect x="18" y="4" width="10" height="10" rx="1.5"/>
+          <rect x="4" y="18" width="10" height="10" rx="1.5"/>
+          <rect x="18" y="18" width="10" height="10" rx="1.5"/>
+        </svg>
+        <h3>Open Surface Protocol</h3>
+        <p>Les surfaces sont des plugins. N'importe quel builder peut exposer une surface custom via le protocole WS standardisé.</p>
+        <a href="#" class="feature-link">PROTOCOL SPEC →</a>
+      </div>
+
+      <div class="feature-card reveal" data-reveal-delay="60">
+        <svg class="feature-icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M16 4l3 9h9l-7 5 3 9-8-6-8 6 3-9-7-5h9z"/>
+        </svg>
+        <h3>Artefacts versionés</h3>
+        <p>Chaque émission est versionnée, adressable par hash et liée à la trace qui l'a produite. Reproductibilité garantie.</p>
+        <a href="#" class="feature-link">API ARTEFACTS →</a>
+      </div>
+
+      <div class="feature-card reveal" data-reveal-delay="120">
+        <svg class="feature-icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M4 28L12 4l4 12 4-6 4 18"/>
+          <circle cx="28" cy="28" r="2"/>
+        </svg>
+        <h3>Memory bus partagé</h3>
+        <p>Contexte mémoire structuré accessible à tous les agents d'une session. Isolation par namespace, TTL configurable.</p>
+        <a href="#" class="feature-link">MÉMOIRE API →</a>
+      </div>
+
+      <div class="feature-card reveal" data-reveal-delay="0">
+        <svg class="feature-icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M8 16h16M16 8v16"/>
+          <circle cx="16" cy="16" r="11"/>
+        </svg>
+        <h3>Multi-session RBAC</h3>
+        <p>Isolation stricte par session, rôles opérateurs configurables, audit trail par tenant. Production-ready dès le premier sprint.</p>
+        <a href="#" class="feature-link">RBAC SPEC →</a>
+      </div>
+
+      <div class="feature-card reveal" data-reveal-delay="60">
+        <svg class="feature-icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M4 12h6v8H4zM13 8h6v12h-6zM22 4h6v16h-6z"/>
+          <path d="M4 28h24"/>
+        </svg>
+        <h3>Observabilité native</h3>
+        <p>Métriques de pipeline, latence par agent, taux d'émission d'artefacts — exposés en OpenTelemetry sans instrumentation supplémentaire.</p>
+        <a href="#" class="feature-link">MÉTRIQUES →</a>
+      </div>
+
+      <div class="feature-card reveal" data-reveal-delay="120">
+        <svg class="feature-icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M16 4c6.627 0 12 5.373 12 12"/>
+          <path d="M4 16C4 9.373 9.373 4 16 4"/>
+          <path d="M16 28C9.373 28 4 22.627 4 16"/>
+          <path d="M28 16c0 6.627-5.373 12-12 12"/>
+          <circle cx="16" cy="16" r="4"/>
+        </svg>
+        <h3>Model-agnostic</h3>
+        <p>Anthropic, OpenAI, Mistral, local via Ollama — le runtime abstrait le modèle. Les contrats restent valides quelle que soit la coulée.</p>
+        <a href="#" class="feature-link">ADAPTATEURS →</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════
+     07 · PREUVES
+════════════════════════════════════════════════════ -->
+<section id="preuves" style="background:var(--elev-1);border-top:1px solid var(--line);border-bottom:1px solid var(--line);">
+  <div class="container">
+    <div class="section-divider" aria-hidden="true"></div>
+    <div class="eyebrow reveal"><span class="num">06</span> · PREUVES</div>
+
+    <div class="preuves-grid">
+      <div>
+        <div class="metrics-row">
+          <div class="metric reveal" data-reveal-delay="0">
+            <div class="metric-value">
+              <span data-counter data-target="47" data-suffix="">47</span><span class="accent"> +</span>
+            </div>
+            <div class="metric-label">BUILDERS · EARLY ACCESS</div>
+          </div>
+          <div class="metric reveal" data-reveal-delay="80">
+            <div class="metric-value">
+              <span data-counter data-target="12400" data-suffix="">12 400</span>
+            </div>
+            <div class="metric-label">ARTEFACTS ÉMIS · 30 JOURS</div>
+          </div>
+          <div class="metric reveal" data-reveal-delay="160">
+            <div class="metric-value">
+              <span data-counter data-target="99" data-suffix="%" data-decimals="0">99%</span>
+            </div>
+            <div class="metric-label">UPTIME · RUNTIME PROD</div>
+          </div>
+        </div>
+
+        <div class="metrics-row">
+          <div class="metric reveal" data-reveal-delay="0">
+            <div class="metric-value">
+              <span data-counter data-target="38" data-suffix="ms">38ms</span>
+            </div>
+            <div class="metric-label">LATENCE P95 · COCKPIT</div>
+          </div>
+          <div class="metric reveal" data-reveal-delay="80">
+            <div class="metric-value">
+              <span data-counter data-target="0">0</span>
+            </div>
+            <div class="metric-label">HALLUCINATIONS NON TRACÉES</div>
+          </div>
+          <div class="metric reveal" data-reveal-delay="160">
+            <div class="metric-value">
+              <span data-counter data-target="4" data-suffix=" surfaces">4</span>
+            </div>
+            <div class="metric-label">SURFACES · CONTROL PLANE</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="quote-block reveal" data-reveal-delay="200">
+        <p class="quote-text">"Pour la première fois, je peux auditer exactement pourquoi un agent a pris une décision — et rejouer la séquence à l'identique. C'est ce que j'attendais depuis trois ans."</p>
+        <div class="quote-author">THOMAS V. · STAFF ENGINEER · EARLY ACCESS</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════
+     08 · CTA FINAL
+════════════════════════════════════════════════════ -->
+<section id="cta-final">
+  <div class="container">
+    <div class="eyebrow reveal" style="justify-content:center;display:flex;margin-bottom:32px;"><span class="num">↓</span> &nbsp; ACCÈS RESTREINT · EARLY ACCESS</div>
+    <h2 class="reveal grad-text" data-reveal-delay="80">Prêt à forger votre premier pipeline agentique ?</h2>
+    <p class="reveal" data-reveal-delay="160">Accès sur invitation. Intégration en 48h. Support runtime dédié.</p>
+    <div class="reveal" data-reveal-delay="240" style="display:flex;justify-content:center;">
+      <a href="#" class="btn btn-primary">OUVRIR LE COCKPIT</a>
+    </div>
+    <p class="reveal" data-reveal-delay="320" style="margin-top:24px;font-family:var(--mono);font-size:.65rem;color:var(--muted);letter-spacing:.08em;">
+      runtime/session · contrat signé · trace immédiate
+    </p>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════
+     FOOTER
+════════════════════════════════════════════════════ -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo">GRIMOIRE <span>FORGE</span></div>
+        <p>Noyau agentique modulaire.<br>Frappé, pas assemblé.<br>v2026 · runtime typé · open surface protocol.</p>
+      </div>
+      <div class="footer-col">
+        <h4>RUNTIME</h4>
+        <ul>
+          <li><a href="#">Documentation</a></li>
+          <li><a href="#">API Reference</a></li>
+          <li><a href="#">Contrats</a></li>
+          <li><a href="#">Changelog</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>SURFACES</h4>
+        <ul>
+          <li><a href="#">Cockpit</a></li>
+          <li><a href="#">Observatory</a></li>
+          <li><a href="#">Kanban</a></li>
+          <li><a href="#">War Room</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>PROJET</h4>
+        <ul>
+          <li><a href="#">Manifeste</a></li>
+          <li><a href="#">Early Access</a></li>
+          <li><a href="#">Roadmap</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2026 GRIMOIRE FORGE · runtime/v2026 · Tous droits réservés.</p>
+      <p style="font-family:var(--mono);font-size:.6rem;color:var(--muted);">BUILD · TRACE · EMIT</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ════════════════════════════════════════════════════
+     TWEAKS PANEL
+════════════════════════════════════════════════════ -->
+<div id="tweaks-panel" role="complementary" aria-label="Panneau de configuration">
+  <h4>⚙ TWEAKS</h4>
+
+  <div class="tweak-row">
+    <label>Accent couleur</label>
+    <input type="color" id="tw-accent" value="#FF6B3D" />
+  </div>
+
+  <hr class="tweak-sep"/>
+
+  <div class="tweak-row">
+    <label>Ambiance glow (opacité)</label>
+    <input type="range" id="tw-glow" min="0" max="0.12" step="0.01" value="0.05"/>
+  </div>
+
+  <div class="tweak-row">
+    <label>Grille blueprint</label>
+    <select id="tw-grid">
+      <option value="visible">Visible</option>
+      <option value="hidden">Masquée</option>
+    </select>
+  </div>
+
+  <hr class="tweak-sep"/>
+
+  <div class="tweak-row">
+    <label>Densité body</label>
+    <select id="tw-density">
+      <option value="normal">Normale (120px)</option>
+      <option value="dense">Dense (80px)</option>
+      <option value="airy">Aérée (160px)</option>
+    </select>
+  </div>
+
+  <div class="tweak-row">
+    <label>Taille de texte base</label>
+    <input type="range" id="tw-fontsize" min="14" max="20" step="1" value="16"/>
+  </div>
+</div>
+
+<script src="forge-motion.js" defer></script>
+<script>
+/* ── Tweaks panel ── */
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+  "accent": "#FF6B3D",
+  "glow": 0.03,
+  "grid": "visible",
+  "density": "normal",
+  "fontsize": 16
+}/*EDITMODE-END*/;
+
+(function() {
+  // Register listener BEFORE announcing availability
+  window.addEventListener('message', (e) => {
+    if (e.data?.type === '__activate_edit_mode') {
+      document.getElementById('tweaks-panel').classList.add('open');
+    }
+    if (e.data?.type === '__deactivate_edit_mode') {
+      document.getElementById('tweaks-panel').classList.remove('open');
+    }
+  });
+
+  window.parent.postMessage({ type: '__edit_mode_available' }, '*');
+
+  const root = document.documentElement;
+  const d = TWEAK_DEFAULTS;
+
+  function applyAll(vals) {
+    root.style.setProperty('--accent', vals.accent);
+    root.style.setProperty('--accent-dim', vals.accent + '26');
+    root.style.setProperty('--accent-glow', vals.accent + '66');
+    document.documentElement.style.fontSize = vals.fontsize + 'px';
+
+    // Glow opacity
+    document.body.style.setProperty('--glow-op', vals.glow);
+    document.body.style.cssText = document.body.style.cssText.replace(
+      /--glow-op:[^;]+;?/, ''
+    );
+
+    // Grid visibility
+    document.body.style.setProperty(
+      '--grid-vis',
+      vals.grid === 'hidden' ? 'none' : 'block'
+    );
+
+    // Section density
+    const padMap = { normal: '120px', dense: '80px', airy: '160px' };
+    document.querySelectorAll('section:not(#hero):not(#cta-final)').forEach(s => {
+      s.style.paddingTop = padMap[vals.density] || '120px';
+      s.style.paddingBottom = padMap[vals.density] || '120px';
+    });
+  }
+
+  applyAll(d);
+
+  function send(edits) {
+    window.parent.postMessage({ type: '__edit_mode_set_keys', edits }, '*');
+  }
+
+  document.getElementById('tw-accent').value = d.accent;
+  document.getElementById('tw-glow').value = d.glow;
+  document.getElementById('tw-grid').value = d.grid;
+  document.getElementById('tw-density').value = d.density;
+  document.getElementById('tw-fontsize').value = d.fontsize;
+
+  document.getElementById('tw-accent').addEventListener('input', function() {
+    const v = { ...d, accent: this.value };
+    applyAll(v);
+    send({ accent: this.value });
+    d.accent = this.value;
+  });
+
+  document.getElementById('tw-glow').addEventListener('input', function() {
+    const v = parseFloat(this.value);
+    d.glow = v;
+    applyAll(d);
+    send({ glow: v });
+  });
+
+  document.getElementById('tw-grid').addEventListener('change', function() {
+    d.grid = this.value;
+    applyAll(d);
+    send({ grid: this.value });
+  });
+
+  document.getElementById('tw-density').addEventListener('change', function() {
+    d.density = this.value;
+    applyAll(d);
+    send({ density: this.value });
+  });
+
+  document.getElementById('tw-fontsize').addEventListener('input', function() {
+    const v = parseInt(this.value);
+    d.fontsize = v;
+    applyAll(d);
+    send({ fontsize: v });
+  });
+})();
+</script>
+</body>
+</html>

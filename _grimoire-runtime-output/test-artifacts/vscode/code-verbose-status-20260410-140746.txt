@@ -1,0 +1,157 @@
+[35885:0410/140749.962233:WARNING:ui/ozone/platform/wayland/common/wayland_object.cc:119] Binding to wl_shm version 1 but version 2 is available.
+[35885:0410/140749.962269:WARNING:ui/ozone/platform/wayland/common/wayland_object.cc:119] Binding to wl_seat version 8 but version 10 is available.
+[35885:0410/140749.962275:WARNING:ui/ozone/platform/wayland/common/wayland_object.cc:119] Binding to zwp_pointer_gestures_v1 version 1 but version 3 is available.
+[35885:0410/140749.962290:WARNING:ui/ozone/platform/wayland/common/wayland_object.cc:119] Binding to wp_cursor_shape_manager_v1 version 1 but version 2 is available.
+[35885:0410/140749.962305:WARNING:ui/ozone/platform/wayland/common/wayland_object.cc:119] Binding to org_kde_kwin_appmenu_manager version 1 but version 2 is available.
+[35885:0410/140749.962344:WARNING:ui/ozone/platform/wayland/common/wayland_object.cc:119] Binding to zwp_linux_dmabuf_v1 version 4 but version 5 is available.
+WARNING: radv is not a conformant Vulkan implementation, testing use only.
+[90m[main 2026-04-10T18:07:50.097Z][0m PolicyConfiguration#initialize
+[90m[main 2026-04-10T18:07:50.098Z][0m PolicyConfiguration#updatePolicyDefinitions [
+  'update.mode',
+  'update.channel',
+  'update.showReleaseNotes',
+  'http.useLocalProxyConfiguration',
+  'http.electronFetch',
+  'http.proxy',
+  'http.proxyStrictSSL',
+  'http.proxyKerberosServicePrincipal',
+  'http.noProxy',
+  'http.proxyAuthorization',
+  'http.proxySupport',
+  'http.systemCertificates',
+  'http.systemCertificatesNode',
+  'http.experimental.systemCertificatesV2',
+  'http.fetchAdditionalSupport',
+  'http.webSocketAdditionalSupport',
+  'http.experimental.networkInterfaceCheckInterval',
+  'telemetry.telemetryLevel',
+  'telemetry.feedback.enabled',
+  'telemetry.enableTelemetry',
+  'extensions.allowed'
+]
+[90m[main 2026-04-10T18:07:50.104Z][0m [File Watcher (node.js)] Request to start watching: /etc/vscode/policy.json (excludes: <none>, includes: <all>, filter: <none>, correlationId: <none>),/home/guilhem/.config/Code/User (excludes: <none>, includes: <all>, filter: <none>, correlationId: <none>),/home/guilhem/.config/Code/User/settings.json (excludes: <none>, includes: <all>, filter: <none>, correlationId: <none>)
+[90m[main 2026-04-10T18:07:50.105Z][0m PolicyConfiguration#update [
+  'update.mode',
+  'telemetry.telemetryLevel',
+  'telemetry.feedback.enabled',
+  'extensions.allowed'
+]
+[90m[main 2026-04-10T18:07:50.105Z][0m PolicyConfiguration#updatePolicyDefinitions [
+  'update.enableWindowsBackgroundUpdates',
+  'update.showPostInstallInfo'
+]
+[90m[main 2026-04-10T18:07:50.105Z][0m PolicyConfiguration#update []
+[90m[main 2026-04-10T18:07:50.105Z][0m [File Watcher (node.js)] ignoring a path for watching who's stat info failed to resolve: /etc/vscode/policy.json (error: Error: ENOENT: no such file or directory, stat '/etc/vscode/policy.json')
+[90m[main 2026-04-10T18:07:50.106Z][0m [File Watcher (node.js)] starting fs.watchFile() on /etc/vscode/policy.json (correlationId: undefined)
+[35940:0410/140750.108362:WARNING:sandbox/policy/linux/sandbox_linux.cc:404] InitializeSandbox() called with multiple threads in process gpu-process.
+[90m[main 2026-04-10T18:07:50.145Z][0m [File Watcher (node.js)] Started watching: '/home/guilhem/.config/Code/User'
+[90m[main 2026-04-10T18:07:50.146Z][0m [File Watcher (node.js)] Started watching: '/home/guilhem/.config/Code/User/settings.json'
+[90m[main 2026-04-10T18:07:50.907Z][0m [File Watcher (node.js)] Request to stop watching: /etc/vscode/policy.json (excludes: <none>, includes: <all>, filter: <none>, correlationId: <none>)
+[90m[main 2026-04-10T18:07:50.907Z][0m [File Watcher (node.js)] stopping file watcher (/etc/vscode/policy.json (excludes: <none>, includes: <all>, filter: <none>, correlationId: <none>))
+Version:          Code 1.115.0 (41dd792b5e652393e7787322889ed5fdc58bd75b, 2026-04-07T22:04:57Z)
+OS Version:       Linux x64 6.19.11-200.fc43.x86_64
+CPUs:             Intel(R) Core(TM) i9-9900K CPU @ 3.60GHz (16 x 4701)
+Memory (System):  31.25GB (15.80GB free)
+Load (avg):       4, 4, 3
+VM:               0%
+Screen Reader:    no
+Process Argv:     --crash-reporter-id 5c770b7b-ba4f-4eee-8446-35d0cd4a31d6
+GPU Status:       2d_canvas:                              enabled
+                  GPU0:                                   VENDOR= 0x1002 [Google Inc. (AMD)], DEVICE=0x7550 [ANGLE (AMD, AMD Radeon RX 9070 XT (radeonsi gfx1201 LLVM 21.1.8), OpenGL ES 3.2 Mesa 25.3.6)], DRIVER_VENDOR=Mesa, DRIVER_VERSION=25.3.6 *ACTIVE*
+                  Machine model name:                     
+                  Machine model version:                  
+                  direct_rendering_display_compositor:    disabled_off_ok
+                  gpu_compositing:                        enabled
+                  multiple_raster_threads:                enabled_on
+                  opengl:                                 enabled_on
+                  rasterization:                          enabled
+                  raw_draw:                               disabled_off_ok
+                  skia_graphite:                          disabled_off
+                  trees_in_viz:                           disabled_off
+                  video_decode:                           enabled
+                  video_encode:                           disabled_software
+                  vulkan:                                 disabled_off
+                  webgl:                                  enabled
+                  webgl2:                                 enabled
+                  webgpu:                                 disabled_off
+                  webnn:                                  disabled_off
+GPU Log Messages:
+[4744:0410/135512.849013:WARNING:sandbox/policy/linux/sandbox_linux.cc:404] : InitializeSandbox() called with multiple threads in process gpu-process.
+
+
+CPU %	Mem MB	   PID	Process
+    0	96662411409	  4693	code
+    0	10740267934	  4696	   zygote
+    0	118142947278	  4744	     zygote
+    0	10740267934	  4697	   zygote
+    0	     0	  4699	     zygote
+    0	139623483146	  4819	window [1] (Welcome - Documents - Visual Studio Code)
+    0	558493932585	  4829	window [2] (agent-frameworks.md - bmad-custom - Visual Studio Code)
+    0	32220803803	  4753	   utility-network-service
+    0	53701339672	  5503	shared-process
+    0	32220803803	  5504	file-watcher [1]
+    0	182584554884	  5535	extension-host [1]
+    0	32220803803	  6810	     /usr/share/code/code /usr/share/code/resources/app/extensions/json-language-features/server/dist/node/jsonServerMain --node-ipc --clientProcessId=5535
+    0	655156343994	  5569	extension-host [2]
+    0	53701339672	  7854	     electron-nodejs (tsserver.js)
+    0	85922143475	  7855	     electron-nodejs (tsserver.js)
+    0	32220803803	  7879	       electron-nodejs (typingsInstaller.js)
+    0	32220803803	  7870	     /usr/share/code/code /usr/share/code/resources/app/extensions/markdown-language-features/dist/serverWorkerMain --node-ipc --clientProcessId=5569
+    0	     0	  7902	     /home/guilhem/.vscode/extensions/ms-python.vscode-python-envs-1.26.0-linux-x64/python-env-tools/bin/pet server
+    0	21480535869	  7914	     /usr/share/code/code /usr/share/code/resources/app/extensions/json-language-features/server/dist/node/jsonServerMain --node-ipc --clientProcessId=5569
+    0	32220803803	  7937	     electron-nodejs (languageserver.js)
+    0	21480535869	  7946	     /usr/share/code/code /usr/share/code/resources/app/extensions/css-language-features/server/dist/node/cssServerMain --node-ipc --clientProcessId=5569
+    0	32220803803	  8325	     mdx-language-server
+    0	10740267934	  8777	     /bin/python /home/guilhem/.vscode/extensions/ms-python.isort-2025.0.0/bundled/tool/lsp_server.py
+    0	     0	  8807	     /home/guilhem/.local/bin/ruff server
+    0	32220803803	  8907	     /usr/lib/jvm/java-25-openjdk/bin/java -XX:+ExitOnOutOfMemoryError -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/home/guilhem/.config/Code/User/globalStorage/redhat.vscode-xml -Xmx64M -cp /home/guilhem/.vscode/extensions/redhat.vscode-xml-0.29.0-linux-x64/server/org.eclipse.lemminx-0.31.0-uber.jar org.eclipse.lemminx.XMLServerLauncher
+    0	150363751081	  9165	     electron-nodejs (bundle.js)
+    0	32220803803	  9495	     electron-nodejs (server-node.js)
+    0	     0	 17724	     bash /mnt/Travail/Projets/Dev/bmad-custom/grimoire-kit/framework/tools/playwright-mcp.sh
+    0	     0	 17765	       bash /mnt/Travail/Projets/Dev/bmad-custom/grimoire-kit/framework/tools/playwright-mcp.sh
+    0	     0	 35571	         sleep 3
+    0	21480535869	 17766	       npm exec @playwright/mcp@latest --config /mnt/Travail/Projets/Dev/bmad-custom/.vscode/playwright-mcp.config.json --output-dir /mnt/Travail/Projets/Dev/bmad-custom/_grimoire-runtime-output/test-artifacts/playwright --image-responses omit
+    0	32220803803	 17784	         node /home/guilhem/.npm/_npx/9833c18b2d85bc59/node_modules/.bin/playwright-mcp --config /mnt/Travail/Projets/Dev/bmad-custom/.vscode/playwright-mcp.config.json --output-dir /mnt/Travail/Projets/Dev/bmad-custom/_grimoire-runtime-output/test-artifacts/playwright --image-responses omit
+    0	32220803803	 17809	           /mnt/Travail/Projets/Dev/bmad-custom/.playwright-mcp/ms-playwright/chromium_headless_shell-1217/chrome-headless-shell-linux64/chrome-headless-shell --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate,RenderDocument,OptimizationHints,AutomationControlled,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/tmp/playwright_chromiumdev_profile-JqnKxS --remote-debugging-port=38989 --no-startup-window
+    0	10740267934	 17830	             zygote
+    0	32220803803	 17845	               gpu-process
+    0	10740267934	 17831	             zygote
+    0	75181875540	 17887	               window
+    0	21480535869	 17898	               window
+    0	21480535869	 17899	               window
+    0	21480535869	 17849	             utility-network-service
+    0	21480535869	 30091	     /mnt/Travail/Projets/Dev/bmad-custom/grimoire-kit/.venv/bin/python -m grimoire.mcp.server
+    0	32220803803	  5594	pty-host
+    0	     0	  7080	     /usr/bin/zsh -i
+    0	     0	  8353	     /usr/bin/zsh -i
+    0	     0	 12350	     /usr/bin/zsh -i
+    0	     0	 14830	     /usr/bin/zsh -f
+    0	     0	 22646	     /usr/bin/zsh -f
+    0	     0	 35488	     bash -c OUT="/mnt/Travail/Projets/Dev/bmad-custom/_grimoire-runtime-output/test-artifacts/vscode"; mkdir -p "$OUT"; TS=$(date +%Y%m%d-%H%M%S); if command -v code >/dev/null 2>&1; then code --status > "$OUT/code-status-$TS.txt" 2>&1 || true; code --verbose --status > "$OUT/code-verbose-status-$TS.txt" 2>&1 || true; echo "Diagnostics sauvegardes dans $OUT"; else echo "Commande code indisponible dans ce shell"; fi
+    0	     0	 35867	       sh /usr/bin/code --verbose --status
+    0	21480535869	 35872	         electron-nodejs (cli.js)
+    0	53701339672	 35885	           /usr/share/code/code --verbose --status
+    0	10740267934	 35888	             zygote
+    0	32220803803	 35940	               zygote
+    0	10740267934	 35889	             zygote
+    0	     0	 35891	               zygote
+    0	21480535869	 35948	             utility-network-service
+    0	     0	 35997	             /usr/bin/ps -ax -o pid=,ppid=,pcpu=,pmem=,command=
+    0	32220803803	  6439	file-watcher [2]
+
+Workspace Stats: 
+|  Window (agent-frameworks.md - bmad-custom - Visual Studio Code)
+|  Window (Welcome - Documents - Visual Studio Code)
+|    Folder (Documents): 0 files
+|      File types:
+|      Conf files:
+|    Folder (bmad-custom): more than 22728 files
+|      File types: json(11145) dat(1087) md(1028) pyc(1003) py(985) png(455)
+|                  pak(446) html(365) txt(175) yml(105)
+|      Conf files: github-prompts-dir(97) github-instructions-dir(5)
+|                  github-actions(2) copilot-instructions.md(1) mcp.json(1)
+|                  settings.json(1) tasks.json(1) devcontainer.json(1)
+|                  makefile(1)
+[90m[main 2026-04-10T18:07:51.458Z][0m Lifecycle#kill()
+[90m[main 2026-04-10T18:07:51.458Z][0m Lifecycle#onWillShutdown.fire()
+[35885:0410/140752.113734:ERROR:components/services/storage/service_worker/service_worker_storage.cc:1809] Failed to delete the database: Database IO error

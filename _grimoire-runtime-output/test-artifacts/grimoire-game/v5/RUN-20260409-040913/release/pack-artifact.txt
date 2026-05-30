@@ -1,0 +1,4 @@
+
+> @grimoire-kit/grimoire-game@0.0.0 pack:artifact
+> mkdir -p .release && npm pack --pack-destination .release --json > .release/npm-pack.json
+

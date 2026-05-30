@@ -1,4 +1,4 @@
-# BMAD Grimoire Test Conventions
+# Grimoire Test Conventions
 
 ## File Structure
 
@@ -46,7 +46,7 @@ def tearDown(self):
 ### Memory tree helper
 ```python
 def _setup_memory(root, *, learnings=None, decisions=None):
-    mem = root / "_bmad" / "_memory"
+    mem = root / "_grimoire-runtime" / "_memory"
     mem.mkdir(parents=True, exist_ok=True)
     if learnings:
         ld = mem / "agent-learnings"

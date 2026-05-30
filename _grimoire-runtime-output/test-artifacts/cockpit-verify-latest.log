@@ -1,0 +1,428 @@
+
+> @grimoire-kit/grimoire-game@0.0.0 cockpit:verify
+> npm run demo:views && npm run demo:report && npm run cockpit:build && test -f .release/runtime-views-report.html && test -f .release/cockpit-app/index.html
+
+
+> @grimoire-kit/grimoire-game@0.0.0 demo:views
+> vite-node --script examples/demo-runtime-views.ts
+
+
+=== SCENARIO GUARDRAILS BLOQUANTS ===
+{
+  "id": "blocked-guardrails",
+  "outcome": "blocked",
+  "description": "Une carte est rejetee par le trust et une attribution manquante bloque la fin de branche.",
+  "tags": [
+    "trust blocked",
+    "missing attribution",
+    "merge blocked"
+  ],
+  "walkthrough": [
+    "Host Review Relay reste actif et persiste correctement.",
+    "Branch Guard tente une activation, mais le trust le rejette immediatement.",
+    "Hero Banner manque de bundle d attribution, donc merge et pr sont refuses."
+  ]
+}
+
+=== POWER CARDS VIEW ===
+{
+  "summary": {
+    "cardCount": 2,
+    "enabledRuntimeCount": 1,
+    "enabledStorageCount": 1,
+    "blockedCount": 0,
+    "divergedCount": 0,
+    "invalidCount": 0,
+    "rejectedActivationCount": 1
+  },
+  "cards": [
+    {
+      "cardId": "power-card.host-review",
+      "target": "room:challenge-room",
+      "runtimeEnabled": true,
+      "storageEnabled": true,
+      "persistenceStatus": "synced",
+      "trustStatus": "trusted",
+      "issueCodes": [],
+      "diagnostic": null
+    },
+    {
+      "cardId": "power-card.branch-guard",
+      "target": "agent:orch-1",
+      "runtimeEnabled": false,
+      "storageEnabled": false,
+      "persistenceStatus": "synced",
+      "trustStatus": "blocked",
+      "issueCodes": [
+        "POWER_CARD_ACTIVATION_REJECTED"
+      ],
+      "diagnostic": "Power card Branch Guard is blocked by trust status blocked."
+    }
+  ]
+}
+
+=== PROVENANCE COMPLIANCE VIEW ===
+{
+  "shipBlocked": true,
+  "summary": {
+    "entryCount": 2,
+    "compliantCount": 1,
+    "blockedEntryCount": 1,
+    "missingSourceCount": 0,
+    "missingLicenseCount": 0,
+    "missingAttributionCount": 1,
+    "attributionBundleCount": 0
+  },
+  "blockingReasons": [
+    "Provenance entry Hero Banner requires an attribution bundle before merge."
+  ],
+  "attributionBundles": []
+}
+
+=== BRANCH FINISHER VIEW ===
+{
+  "branch": "feature/provenance-clean",
+  "shipBlocked": true,
+  "blockingReasons": [
+    "Provenance entry Hero Banner requires an attribution bundle before merge."
+  ],
+  "provenanceCompliance": {
+    "entryCount": 2,
+    "compliantCount": 1,
+    "blockedEntryCount": 1,
+    "missingSourceCount": 0,
+    "missingLicenseCount": 0,
+    "missingAttributionCount": 1,
+    "attributionBundleCount": 0
+  },
+  "options": [
+    {
+      "option": "merge",
+      "allowed": false,
+      "blockedReasons": [
+        "Provenance compliance has unresolved blocking entries."
+      ]
+    },
+    {
+      "option": "pr",
+      "allowed": false,
+      "blockedReasons": [
+        "Provenance compliance has unresolved blocking entries."
+      ]
+    },
+    {
+      "option": "keep",
+      "allowed": true,
+      "blockedReasons": []
+    },
+    {
+      "option": "discard",
+      "allowed": true,
+      "blockedReasons": []
+    }
+  ]
+}
+
+=== SCENARIO RELEASE READY ===
+{
+  "id": "release-ready",
+  "outcome": "clear",
+  "description": "Toutes les cartes sont synchronisees, la provenance est complete, merge et pr redeviennent autorises.",
+  "tags": [
+    "all clear",
+    "trusted",
+    "merge allowed"
+  ],
+  "walkthrough": [
+    "Les deux cartes de pouvoir sont alignees entre runtime et stockage.",
+    "Chaque entree de provenance declare source, licence et attribution si necessaire.",
+    "Le branch finisher repasse en vert et laisse merge et pr disponibles."
+  ]
+}
+
+=== POWER CARDS VIEW ===
+{
+  "summary": {
+    "cardCount": 2,
+    "enabledRuntimeCount": 2,
+    "enabledStorageCount": 2,
+    "blockedCount": 0,
+    "divergedCount": 0,
+    "invalidCount": 0,
+    "rejectedActivationCount": 0
+  },
+  "cards": [
+    {
+      "cardId": "power-card.host-review",
+      "target": "room:challenge-room",
+      "runtimeEnabled": true,
+      "storageEnabled": true,
+      "persistenceStatus": "synced",
+      "trustStatus": "trusted",
+      "issueCodes": [],
+      "diagnostic": null
+    },
+    {
+      "cardId": "power-card.branch-guard",
+      "target": "agent:orch-1",
+      "runtimeEnabled": true,
+      "storageEnabled": true,
+      "persistenceStatus": "synced",
+      "trustStatus": "trusted",
+      "issueCodes": [],
+      "diagnostic": null
+    }
+  ]
+}
+
+=== PROVENANCE COMPLIANCE VIEW ===
+{
+  "shipBlocked": false,
+  "summary": {
+    "entryCount": 3,
+    "compliantCount": 3,
+    "blockedEntryCount": 0,
+    "missingSourceCount": 0,
+    "missingLicenseCount": 0,
+    "missingAttributionCount": 0,
+    "attributionBundleCount": 1
+  },
+  "blockingReasons": [],
+  "attributionBundles": [
+    {
+      "bundleId": "attribution://asset.hero-banner",
+      "entryIds": [
+        "asset.hero-banner"
+      ],
+      "attributionRefs": [
+        "artifact://attribution/hero-banner"
+      ]
+    }
+  ]
+}
+
+=== BRANCH FINISHER VIEW ===
+{
+  "branch": "release/ready-runtime",
+  "shipBlocked": false,
+  "blockingReasons": [],
+  "provenanceCompliance": {
+    "entryCount": 3,
+    "compliantCount": 3,
+    "blockedEntryCount": 0,
+    "missingSourceCount": 0,
+    "missingLicenseCount": 0,
+    "missingAttributionCount": 0,
+    "attributionBundleCount": 1
+  },
+  "options": [
+    {
+      "option": "merge",
+      "allowed": true,
+      "blockedReasons": []
+    },
+    {
+      "option": "pr",
+      "allowed": true,
+      "blockedReasons": []
+    },
+    {
+      "option": "keep",
+      "allowed": true,
+      "blockedReasons": []
+    },
+    {
+      "option": "discard",
+      "allowed": true,
+      "blockedReasons": []
+    }
+  ]
+}
+
+=== SCENARIO DRIFT ET HYGIENE COMPLIANCE ===
+{
+  "id": "drift-and-compliance",
+  "outcome": "attention",
+  "description": "Un drift runtime/storage apparait sur une carte, pendant que la provenance detecte source et licence manquantes.",
+  "tags": [
+    "runtime drift",
+    "missing license",
+    "missing source"
+  ],
+  "walkthrough": [
+    "Host Review Relay diverge entre runtime et stockage, ce qui force une investigation de persistance.",
+    "Deux entrees de provenance sont incompletes, donc le front reste a risque.",
+    "Le branch finisher maintient le blocage jusqu a regularisation des metadonnees de provenance."
+  ]
+}
+
+=== POWER CARDS VIEW ===
+{
+  "summary": {
+    "cardCount": 2,
+    "enabledRuntimeCount": 2,
+    "enabledStorageCount": 1,
+    "blockedCount": 0,
+    "divergedCount": 1,
+    "invalidCount": 0,
+    "rejectedActivationCount": 0
+  },
+  "cards": [
+    {
+      "cardId": "power-card.host-review",
+      "target": "room:challenge-room",
+      "runtimeEnabled": true,
+      "storageEnabled": false,
+      "persistenceStatus": "runtime_only",
+      "trustStatus": "trusted",
+      "issueCodes": [
+        "POWER_CARD_PERSISTENCE_DIVERGENCE"
+      ],
+      "diagnostic": "Power card Host Review Relay diverges between runtime and storage snapshots."
+    },
+    {
+      "cardId": "power-card.branch-guard",
+      "target": "agent:orch-1",
+      "runtimeEnabled": true,
+      "storageEnabled": true,
+      "persistenceStatus": "synced",
+      "trustStatus": "trusted",
+      "issueCodes": [],
+      "diagnostic": null
+    }
+  ]
+}
+
+=== PROVENANCE COMPLIANCE VIEW ===
+{
+  "shipBlocked": true,
+  "summary": {
+    "entryCount": 3,
+    "compliantCount": 1,
+    "blockedEntryCount": 2,
+    "missingSourceCount": 1,
+    "missingLicenseCount": 1,
+    "missingAttributionCount": 0,
+    "attributionBundleCount": 2
+  },
+  "blockingReasons": [
+    "Provenance entry Untracked Room Kit is missing source reference.",
+    "Provenance entry Host Review Relay is missing license metadata."
+  ],
+  "attributionBundles": [
+    {
+      "bundleId": "attribution://asset.hero-banner",
+      "entryIds": [
+        "asset.hero-banner"
+      ],
+      "attributionRefs": [
+        "artifact://attribution/hero-banner"
+      ]
+    },
+    {
+      "bundleId": "attribution://asset.untracked-room",
+      "entryIds": [
+        "asset.untracked-room"
+      ],
+      "attributionRefs": [
+        "artifact://attribution/untracked-room"
+      ]
+    }
+  ]
+}
+
+=== BRANCH FINISHER VIEW ===
+{
+  "branch": "hotfix/drift-audit",
+  "shipBlocked": true,
+  "blockingReasons": [
+    "Provenance entry Host Review Relay is missing license metadata.",
+    "Provenance entry Untracked Room Kit is missing source reference."
+  ],
+  "provenanceCompliance": {
+    "entryCount": 3,
+    "compliantCount": 1,
+    "blockedEntryCount": 2,
+    "missingSourceCount": 1,
+    "missingLicenseCount": 1,
+    "missingAttributionCount": 0,
+    "attributionBundleCount": 2
+  },
+  "options": [
+    {
+      "option": "merge",
+      "allowed": false,
+      "blockedReasons": [
+        "Provenance compliance has unresolved blocking entries."
+      ]
+    },
+    {
+      "option": "pr",
+      "allowed": false,
+      "blockedReasons": [
+        "Provenance compliance has unresolved blocking entries."
+      ]
+    },
+    {
+      "option": "keep",
+      "allowed": true,
+      "blockedReasons": []
+    },
+    {
+      "option": "discard",
+      "allowed": true,
+      "blockedReasons": []
+    }
+  ]
+}
+
+> @grimoire-kit/grimoire-game@0.0.0 demo:report
+> vite-node --script examples/render-runtime-views-report.ts
+
+/mnt/Travail/Projets/Dev/bmad-custom/grimoire-kit/apps/grimoire-game/.release/runtime-views-report.html
+
+> @grimoire-kit/grimoire-game@0.0.0 cockpit:build
+> npm run cockpit:prepare && vite build --base ./ --outDir .release/cockpit-app
+
+
+> @grimoire-kit/grimoire-game@0.0.0 cockpit:prepare
+> vite-node --script examples/prepare-runtime-cockpit-app.ts
+
+{
+  "manifestPath": "/mnt/Travail/Projets/Dev/bmad-custom/grimoire-kit/apps/grimoire-game/.generated/public/observatory/manifest.json",
+  "availableSources": [
+    "runtime-output-observatory",
+    "product-output-observatory"
+  ],
+  "proofManifestPath": "/mnt/Travail/Projets/Dev/bmad-custom/grimoire-kit/apps/grimoire-game/.generated/public/proofs/manifest.json",
+  "latestProofRunId": "RUN-20260414-000430",
+  "availableProofSources": [
+    "v5-scope",
+    "execution-summary",
+    "run-manifest",
+    "go-no-go",
+    "validation-matrix",
+    "risk-register",
+    "release-notes",
+    "known-limitations",
+    "observability-summary",
+    "security-summary",
+    "perf-summary",
+    "runtime-report",
+    "npm-package"
+  ]
+}
+vite v6.4.2 building for production...
+transforming...
+✓ 79 modules transformed.
+rendering chunks...
+computing gzip size...
+.release/cockpit-app/index.html                   0.87 kB │ gzip:   0.54 kB
+.release/cockpit-app/assets/index-DZ35krQD.css   13.01 kB │ gzip:   3.52 kB
+.release/cockpit-app/assets/index-BEysYE13.js   557.38 kB │ gzip: 129.59 kB
+
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 908ms

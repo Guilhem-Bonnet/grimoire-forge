@@ -1,0 +1,77 @@
+name: Memory OS Gate
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "docker-compose.memory-target.yml"
+      - "grimoire-kit/project-context.yaml"
+      - "grimoire-kit/src/grimoire/cli/cmd_memory.py"
+      - "grimoire-kit/src/grimoire/codegraph/**"
+      - "grimoire-kit/src/grimoire/evidence/**"
+      - "grimoire-kit/src/grimoire/memory/**"
+      - "grimoire-kit/src/grimoire/missions/**"
+      - "grimoire-kit/tests/unit/memory/**"
+      - "grimoire-kit/tests/unit/cli/test_cmd_memory.py"
+      - ".github/workflows/memory-os-gate.yml"
+  workflow_dispatch:
+
+jobs:
+  memory-os-gate:
+    name: Weaviate + Neo4j projection gate
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: grimoire-kit
+    env:
+      GRIMOIRE_NEO4J_PASSWORD: grimoire-dev-password
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - uses: astral-sh/setup-uv@v7
+
+      - name: Start memory target stack
+        working-directory: .
+        run: docker compose -f docker-compose.memory-target.yml up -d
+
+      - name: Wait for memory services
+        working-directory: .
+        run: |
+          for _ in $(seq 1 60); do
+            if curl -fsS http://localhost:8080/v1/.well-known/ready >/dev/null 2>&1 \
+              && docker exec grimoire-forge-neo4j cypher-shell -u neo4j -p "$GRIMOIRE_NEO4J_PASSWORD" 'RETURN 1' >/dev/null 2>&1; then
+              exit 0
+            fi
+            sleep 2
+          done
+          docker compose -f docker-compose.memory-target.yml ps
+          exit 1
+
+      - name: Sync dependencies
+        run: uv sync --locked --extra dev --extra weaviate --extra neo4j
+
+      - name: Sync semantic vector projections
+        run: |
+          uv run --extra weaviate --extra neo4j grimoire memory vector sync-code --paths src,tests
+          uv run --extra weaviate --extra neo4j grimoire memory vector sync-tasks
+
+      - name: Run Memory OS gate
+        run: uv run --extra weaviate --extra neo4j grimoire memory gate --skip-migration
+
+      - name: Verify migration bundle when present
+        run: |
+          if [[ -d _grimoire/_memory/migration/weaviate-neo4j ]]; then
+            uv run --extra weaviate --extra neo4j grimoire memory migrate verify \
+              --bundle _grimoire/_memory/migration/weaviate-neo4j
+          else
+            echo "No migration bundle committed; migration parity check skipped."
+          fi
+
+      - name: Stop memory target stack
+        if: always()
+        working-directory: .
+        run: docker compose -f docker-compose.memory-target.yml down

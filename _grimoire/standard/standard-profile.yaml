@@ -2,8 +2,6 @@ $schema: grimoire-agentic-standard-profile/v1
 artifacts:
 - path: _grimoire/standard/mission-brief.md
   type: mission_brief
-- path: _grimoire/standard/task-board.yaml
-  type: task_board
 - path: _grimoire-output/evidence/bootstrap/task-envelope.md
   type: task_envelope
 - path: _grimoire-output/evidence/bootstrap/evidence-pack.md
@@ -18,31 +16,26 @@ artifacts:
   type: memory_policy
 - path: _grimoire/standard/context-contract.yaml
   type: context_contract
-- path: _grimoire/standard/decision-graph.yaml
-  type: decision_graph
-- path: _grimoire/standard/rule-packs.yaml
-  type: rule_packs
-- path: _grimoire/standard/hook-registry.yaml
-  type: hook_registry
-- path: _grimoire/standard/orchestration-policy.yaml
-  type: orchestration_policy
-- path: _grimoire/standard/evidence-gates.yaml
-  type: evidence_gates
-- path: _grimoire/standard/pattern-catalog.yaml
-  type: pattern_catalog
-display_name: Orchestrated
-generated_at: '2026-05-28T05:18:49.781994+00:00'
+- path: _grimoire/standard/task-board.yaml
+  type: task_board
+display_name: Governed
+generated_at: '2026-05-29T21:56:00.000000+00:00'
 mapped_capabilities:
 - advanced-context-orchestrator
 - knowledge-base-indexer
 - memory-integrity-validator
+- memory-os-contract
 - runtime-provider-contract
 - trajectory-logging
+- evidence-gated-workflow
+- task-board-governance
 minimum_evidence:
 - Context selections cite their source, freshness, and reason for inclusion.
 - Knowledge sources have indexing mode, trust level, and refresh policy.
 - Memory and knowledge base writes are separated.
-profile: orchestrated
+- Memory OS contract declared with target backends and promotion gates.
+- Task board tracks acceptance criteria and evidence refs per task.
+profile: governed
 project: Grimoire-Forge
 required_artifacts:
 - mission_brief
@@ -60,6 +53,10 @@ required_artifacts:
 - orchestration_policy
 - evidence_gates
 - pattern_catalog
+- compliance_score
+- remediation_plan
+- accepted_risks
+- waivers
 task_id: bootstrap
 upstream_standard:
   entrypoint: docs/norme-structure-agentique.md

@@ -90,4 +90,4 @@ docker scout cves {{image}}
 - [ ] [SEC-002] Activer gitleaks en pre-commit → responsable: dev → délai: cette semaine
 ```
 
-Sauvegarder dans `_bmad-output/implementation-artifacts/security-audit-{{date}}.md`
+Sauvegarder dans `_grimoire-runtime-output/implementation-artifacts/security-audit-{{date}}.md`

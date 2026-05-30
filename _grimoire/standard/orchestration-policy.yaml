@@ -1,6 +1,6 @@
 $schema: "grimoire-agentic-standard-orchestration-policy/v1"
 metadata:
-  project: "Grimoire-Forge-agentic-standard-baseline"
+  project: "Grimoire-Forge"
   generated_by: "grimoire standard init"
 autonomy_levels:
   - observe

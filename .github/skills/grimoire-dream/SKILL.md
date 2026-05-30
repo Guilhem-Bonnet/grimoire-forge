@@ -1,6 +1,6 @@
 ---
 name: grimoire-dream
-description: 'Run BMAD Grimoire dream consolidation and insight pipeline. Use when: dream mode, consolidate learnings, off-session insights, what did we learn, cross-domain patterns, generate insights, emerging patterns, stigmergy signals, dream journal. Runs dream analysis, deposits stigmergy signals, and optionally seeds incubator with actionable ideas.'
+description: 'Run Grimoire dream consolidation and insight pipeline. Use when: dream mode, consolidate learnings, off-session insights, what did we learn, cross-domain patterns, generate insights, emerging patterns, stigmergy signals, dream journal. Runs dream analysis, deposits stigmergy signals, and optionally seeds incubator with actionable ideas.'
 ---
 
 # Grimoire Dream
@@ -26,7 +26,7 @@ python3 framework/tools/dream.py --project-root .
 
 This reads learnings, decisions, trace, failure museum, and shared-context, then produces cross-domain insights that no single agent would have formulated.
 
-Review the output: `_bmad-output/dream-journal.md`
+Review the output: `_grimoire-runtime-output/dream-journal.md`
 
 ### Step 2 — Validate Insights (no hallucination)
 

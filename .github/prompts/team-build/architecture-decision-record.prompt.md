@@ -87,5 +87,5 @@ Documente la décision architecturale pour `{{decision_topic}}`.
 *ADR créé par : {{agent}} | Projet : {{project_name}}*
 ```
 
-Sauvegarder dans `_bmad-output/implementation-artifacts/adr-{{adr_slug}}.md`
-ET référencer dans `_bmad/_memory/decisions-log.md`
+Sauvegarder dans `_grimoire-runtime-output/implementation-artifacts/adr-{{adr_slug}}.md`
+ET référencer dans `_grimoire-runtime/_memory/decisions-log.md`

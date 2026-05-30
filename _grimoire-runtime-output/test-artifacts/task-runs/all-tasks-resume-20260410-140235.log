@@ -1,0 +1,19 @@
+===== grimoire: setup-interactive =====
+
+╔══════════════════════════════════════════════════════╗
+║       Grimoire Setup — Configuration Projet         ║
+╚══════════════════════════════════════════════════════╝
+
+  Valeurs actuelles (project-context.yaml) :
+    Project          : grimoire-kit
+    User             : Guilhem
+    Language         : Français
+    Doc Language     : Français
+    Skill Level      : expert
+
+  Nom du projet [grimoire-kit]:   Votre nom [Guilhem]:   Langue de communication [Français]:   Langue des documents [Français]:   Niveau (beginner/intermediate/expert) [expert]:     ⚠ Choix valides : beginner, intermediate, expert
+  Niveau (beginner/intermediate/expert) [expert]:     ⚠ Choix valides : beginner, intermediate, expert
+  Niveau (beginner/intermediate/expert) [expert]: 
+  ✅ Rien à changer — config déjà synchronisée.
+
+----- grimoire: setup-interactive rc=0 -----

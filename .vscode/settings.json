@@ -4,26 +4,211 @@
   // Réglages pour le workspace racine (hérités par tous les sous-projets)
   // ════════════════════════════════════════════════════════════════════
 
+  // ── Chat Customizations — monorepo parent discovery ────────────────
+  // Si un sous-dossier est ouvert comme workspace, VS Code peut quand même
+  // remonter au repo parent pour découvrir .github/agents et autres artefacts.
+  "chat.useCustomizationsInParentRepositories": true,
+  // Active les hooks définis directement dans le frontmatter des agents.
+  // Utilisé par grimoire-master pour intercepter la fin de réponse et
+  // relancer proprement l'utilisateur dans la même conversation.
+  "chat.useCustomAgentHooks": true,
+
+  // ── Copilot Agent — permissions ciblées / MCP connu ───────────────
+  // Reste sur la config MCP explicitement déclarée dans `.vscode/mcp.json`
+  // pour éviter les découvertes auto hors workspace.
+  "chat.mcp.discovery.enabled": {
+    "claude-desktop": false,
+    "windsurf": false,
+    "cursor-global": false,
+    "cursor-workspace": false
+  },
+  // Garde l'auto-start MCP limité aux serveurs nouveaux ou obsolètes.
+  "chat.mcp.autostart": "newAndOutdated",
+  // Autorise les workflows agentiques longs sans relances artificielles.
+  "chat.agent.maxRequests": 500,
+  // Force les commandes terminal des agents Copilot a utiliser le shell
+  // stable du workspace, meme si le profil par defaut change cote utilisateur.
+  "chat.tools.terminal.terminalProfile.linux": {
+    "path": "/usr/bin/zsh",
+    "args": ["-f"]
+  },
+  // Verrouille la langue par defaut des reponses chat sur le francais
+  // pour rester aligne avec la charte et les instructions du projet.
+  "github.copilot.chat.localeOverride": "fr",
+  // Auto-approbation sélective: lecture/diagnostic oui, destruction non.
+  "chat.tools.terminal.autoApprove": {
+    "cat": true,
+    "ls": true,
+    "pwd": true,
+    "cd": true,
+    "find": true,
+    "grep": true,
+    "head": true,
+    "tail": true,
+    "wc": true,
+    "tree": true,
+    "which": true,
+    "echo": true,
+    "date": true,
+    "file": true,
+    "stat": true,
+    "readlink": true,
+    "realpath": true,
+    "basename": true,
+    "dirname": true,
+    "sort": true,
+    "cut": true,
+    "tr": true,
+    "sed": true,
+    "awk": true,
+    "rg": true,
+    "/^git (status|diff|log|show|rev-parse|branch|fetch)\\b/": {
+      "approve": true,
+      "matchCommandLine": true
+    },
+    "/^bash .*grimoire-task-flow\\.sh\\b/": {
+      "approve": true,
+      "matchCommandLine": true
+    },
+    "/^(?:python|python3|\/.*\/python) .*vscode-terminal-prune\\.py\\b/": {
+      "approve": true,
+      "matchCommandLine": true
+    },
+    "rm": false,
+    "rmdir": false,
+    "del": false,
+    "kill": false,
+    "curl": false,
+    "wget": false,
+    "eval": false,
+    "chmod": false,
+    "chown": false,
+    "sudo": false
+  },
+  // Evite de restaurer automatiquement un vieux transcript volumineux.
+  // Dans ce workspace, reprendre une longue session restauree augmente le risque
+  // de requetes Copilot trop grosses et d'erreurs 413 "failed to parse request".
+  "chat.restoreLastPanelSession": false,
+
   // ── Diff — éviter "L'algorithme diff a été arrêté tôt" ──────────────
+  // maxComputationTime=0 : pas de timeout (override le défaut 5000ms)
+  // maxFileSize=0 : pas de limite de taille
+  // diffAlgorithm=legacy : algorithme rapide (vs "advanced" lent depuis 1.72)
+  // ignoreTrimWhitespace : ignore les espaces en fin de ligne → diff plus léger
   "diffEditor.maxComputationTime": 0,
   "diffEditor.maxFileSize": 0,
+  "diffEditor.diffAlgorithm": "legacy",
+  "diffEditor.ignoreTrimWhitespace": true,
+
+  // ── Images — forcer l'aperçu natif du built-in viewer ──────────────
+  // Protège le workspace contre une association utilisateur cassée
+  // qui ouvrirait les PNG dans un éditeur texte/hex au lieu du preview.
+  "workbench.editorAssociations": {
+    "*.png": "imagePreview.previewEditor",
+    "*.jpg": "imagePreview.previewEditor",
+    "*.jpeg": "imagePreview.previewEditor",
+    "*.gif": "imagePreview.previewEditor",
+    "*.webp": "imagePreview.previewEditor"
+  },
 
   // ── Git — réduire les écritures automatiques dans .git ──────────────
   "git.autoFetch": false,
   "git.autoRefresh": false,
   "git.decorations.enabled": false,
 
+  // ── Terminal — profil stable pour agents et tasks ────────────────
+  // zsh -f évite le chargement de ~/.zshrc (plugins/thèmes) qui peut
+  // provoquer des sorties intermittentes avec code 1 dans VS Code.
+  "terminal.integrated.profiles.linux": {
+    "zsh (grimoire-safe)": {
+      "path": "/usr/bin/zsh",
+      "args": ["-f"]
+    },
+    "zsh (user)": {
+      "path": "/usr/bin/zsh",
+      "args": ["-i"]
+    }
+  },
+  "terminal.integrated.defaultProfile.linux": "zsh (grimoire-safe)",
+  "terminal.integrated.automationProfile.linux": {
+    "path": "/usr/bin/zsh",
+    "args": ["-f"]
+  },
+  // Evite la réanimation de sessions terminal obsolètes (source de
+  // multiplication des shells /usr/bin/zsh -i côté pty-host).
+  "terminal.integrated.enablePersistentSessions": false,
+  // Désactive explicitement le mode "revive" au redémarrage de VS Code.
+  "terminal.integrated.persistentSessionReviveProcess": "never",
+  // Limite la mémoire du buffer terminal sur les sessions longues.
+  "terminal.integrated.scrollback": 2000,
+  "terminal.integrated.persistentSessionScrollback": 200,
+  // Contournement Linux/Chromium: évite les crashs liés au renderer GPU du terminal.
+  "terminal.integrated.gpuAcceleration": "off",
+  // Évite de rouvrir systématiquement le panneau terminal sur startup.
+  "terminal.integrated.hideOnStartup": "whenEmpty",
+  // Autorise une seule tâche automatique cachée au démarrage du workspace:
+  // la purge des shells d'agents IA inactifs.
+  "task.allowAutomaticTasks": "on",
+
   // ── Recherche — exclure les gros répertoires knowledge ──────────────
   // Réduit le volume que Copilot indexe → moins de timeouts réseau
   "search.exclude": {
-    "_bmad/tea/testarch/knowledge/": true,
-    "_bmad/tea/workflows/": true,
-    "_bmad/_memory/": true,
-    "_bmad-output/": true,
+    "_grimoire-output/": true,
+    "_grimoire-runtime/tea/testarch/knowledge/": true,
+    "_grimoire-runtime/tea/workflows/": true,
+    "_grimoire-runtime/_memory/": true,
+    "_grimoire-runtime-output/": true,
+    ".playwright-mcp/": true,
+    "grimoire-kit/site/": true,
+    "site/": true,
+    "grimoire-kit/_grimoire/": true,
+    "grimoire-kit/_grimoire-output/": true,
     "**/node_modules": true,
     "**/.terraform": true,
     "**/.venv": true
   },
+
+  // ── Pylance — réduction mémoire (hard cap + features coûteuses off) ────
+  // Plafond dur sur le heap Node.js du language server : évite les fuites
+  // qui font monter Pylance à 1-3 GB en session longue.
+  "python.analysis.nodeArguments": ["--max-old-space-size=512"],
+  // Active le preset mémoire minimal du language server.
+  "python.analysis.languageServerMode": "light",
+  // Évite de garder l'AST des libs en RAM (grosse économie sur .venv/site-packages).
+  "python.analysis.memory.keepLibraryAst": false,
+  // Analyse seulement les fichiers ouverts, pas tout le workspace.
+  "python.analysis.diagnosticMode": "openFilesOnly",
+  // Réduit la quantité de découverte implicite de chemins/imports.
+  "python.analysis.autoSearchPaths": false,
+  // Utilise les stubs plutôt que l'analyse profonde du code des dépendances.
+  "python.analysis.useLibraryCodeForTypes": false,
+  // Désactive l'indexation des symboles en arrière-plan.
+  "python.analysis.indexing": false,
+  // Garde-fou si l'indexation est réactivée lors d'une mise à jour extension.
+  "python.analysis.userFileIndexingLimit": 200,
+  // Auto-import désactivé : requiert de maintenir un index complet en RAM.
+  "python.analysis.autoImportCompletions": false,
+  // Semantic tokens désactivés : stoppe les appels Pylance à chaque frappe
+  // pour coloriser les types → économie CPU + RAM continue.
+  "editor.semanticHighlighting.enabled": false,
+  // Inlay hints désactivés : calcul de types pour tout le code visible.
+  "python.analysis.inlayHints.variableTypes": false,
+  "python.analysis.inlayHints.functionReturnTypes": false,
+  "python.analysis.inlayHints.callArgumentNames": "off",
+  "python.analysis.inlayHints.pytestParameters": false,
+  // Exclut les dossiers lourds de l'analyse statique.
+  "python.analysis.exclude": [
+    "**/.venv/**",
+    "**/node_modules/**",
+    "_grimoire-runtime-output/**",
+    "_grimoire-runtime/_memory/**",
+    "_grimoire-runtime/tea/testarch/knowledge/**"
+  ],
+  // Réduit le plafond mémoire du TypeScript server (défaut observé: 3072MB).
+  "js/ts.tsserver.maxMemory": 1024,
+  // Le projet TypeScript réel est déjà cadré dans `grimoire-game/tsconfig.json`.
+  // Désactive l'acquisition implicite de typings pour les JS hors projet et artefacts générés.
+  "js/ts.tsserver.automaticTypeAcquisition.enabled": false,
 
   // ── Python Testing — désactiver la discovery automatique ──────────────
   // Empêche VS Code de spawner des centaines de processus
@@ -31,11 +216,14 @@
   // Lancer les tests manuellement via le terminal ou un task runner.
   "python.testing.unittestEnabled": false,
   "python.testing.pytestEnabled": true,
+  "python.testing.autoTestDiscoverOnSaveEnabled": false,
 
   // ── Fichiers exclus de l'explorateur ────────────────────────────────
   "files.exclude": {
     "**/__pycache__": true,
-    "**/*.pyc": true
+    "**/*.pyc": true,
+    ".playwright-mcp/": true,
+    "grimoire-kit/site/": true
   },
 
   // ── File Watcher — DÉSACTIVÉ pour éviter les crashs ban() ───────────
@@ -54,6 +242,15 @@
   "gitlens.codeLens.enabled": false,
   "gitlens.hovers.enabled": false,
   "gitlens.statusBar.enabled": false,
+
+  // ── Terraform LS — limiter au strict minimum ──────────────────────────
+  // Désactive le watcher Terraform dans ce workspace (pas de .tf ici).
+  "terraform.languageServer.enable": false,
+
+  // ── C# / Roslyn — inutile dans ce workspace, donc off ─────────────────
+  // Empêche le language server .NET de rester resident pour rien.
+  "dotnet.server.useOmnisharp": false,
+  "csharp.suppressDotnetInstallWarning": true,
 
   "python.testing.pytestArgs": [
     "grimoire-kit"

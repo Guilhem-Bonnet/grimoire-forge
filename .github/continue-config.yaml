@@ -1,0 +1,113 @@
+---
+name: Grimoire Forge — Continue Configuration
+version: 1.0.0
+schema: v1
+description: |
+  Configuration Continue partagée pour le projet Grimoire Forge.
+  Place ce fichier dans ~/.continue/config.yaml pour activer tous les agents Grimoire.
+  
+  Support multi-serveurs Ollama:
+  - Local (http://localhost:11434): grimoire-coder, qwen3-coder:30b, qwen3-coder-next
+  - Distant (http://192.168.2.81:11434): qwen3:8b, llama3.1:8b, nomic-embed-text
+
+context:
+  - provider: currentFile
+  - provider: code
+  - provider: diff
+  - provider: terminal
+  - provider: tree
+  - provider: problems
+  - provider: repo-map
+
+rules:
+  - uses: file:///mnt/Travail/Projets/Dev/Grimoire-Forge/.github/copilot-instructions.md
+  - uses: file:///mnt/Travail/Projets/Dev/Grimoire-Forge/_grimoire-runtime/core/agents/grimoire-master.md
+  - |
+    Tu opères dans Grimoire Forge en français.
+    Tu dois prioriser la structure active de _grimoire-runtime/ et appliquer la logique SOG:
+    agent unique côté user, orchestration interne invisible, exécution de bout en bout.
+    Pour toute exécution de workflow, utiliser les artefacts existants du repo avant toute invention.
+
+models:
+  # Primary: grimoire-coder — optimisé pour le projet avec system prompt Grimoire
+  # Taille: 30.5B (18 Go Q4_K_M), contextLength: 65536
+  - name: grimoire-coder (primary)
+    provider: ollama
+    model: grimoire-coder:latest
+    roles:
+      - chat
+      - edit
+      - apply
+      - autocomplete
+    defaultCompletionOptions:
+      temperature: 0.2
+      contextLength: 65536
+
+  # Secondary: qwen3-coder:30b brut — pour override session ou comparaison
+  # Taille: 30B (18 Go Q4_K_M), contextLength: 131072
+  - name: qwen3-coder:30b (raw)
+    provider: ollama
+    model: qwen3-coder:30b
+    roles:
+      - chat
+      - edit
+      - apply
+      - autocomplete
+    defaultCompletionOptions:
+      temperature: 0.1
+      contextLength: 131072
+
+  # Gros modèle local (attention: ~53 Go VRAM+RAM requis)
+  # Utile pour deep reasoning et multi-contexte
+  - name: qwen3-coder-next:79B
+    provider: ollama
+    model: qwen3-coder-next:latest
+    roles:
+      - chat
+      - edit
+    defaultCompletionOptions:
+      temperature: 0.2
+      contextLength: 131072
+
+  # Serveur distant (auto-détecte): qwen3:8b, llama3.1:8b, nomic-embed-text
+  # Permet la continuité de service ou des exécutions parallèles
+  - name: ollama-remote (autodetect)
+    provider: ollama
+    model: AUTODETECT
+    apiBase: http://192.168.2.81:11434
+    roles:
+      - chat
+      - edit
+      - apply
+      - autocomplete
+    defaultCompletionOptions:
+      temperature: 0.2
+
+prompts:
+  - name: grimoire-bootstrap
+    description: Charge et applique le cadre agentique Grimoire sur la tâche en cours
+    prompt: |
+      Charge le contexte agentique du repo en priorité:
+      1. .github/copilot-instructions.md
+      2. _grimoire-runtime/core/agents/grimoire-master.md
+      3. _grimoire-runtime/bmm/config.yaml
+      Puis exécute la demande utilisateur en suivant SOG (agent user unique + orchestration interne).
+
+  - name: grimoire-workflow-run
+    description: Exécute un workflow Grimoire existant sans en inventer
+    prompt: |
+      Identifie le workflow Grimoire le plus pertinent dans _grimoire-runtime/.
+      N'invente pas de nouvel artefact si un workflow/skill/instruction existe déjà.
+      Exécute les étapes de façon incrémentale avec vérification explicite de sortie.
+
+  - name: grimoire-pr-review
+    description: Review orientée risques, régressions et couverture de test
+    prompt: |
+      Fais une review type production:
+      - Findings d'abord, classés par sévérité
+      - Risques comportementaux et régressions
+      - Gaps de tests
+      - Résumé ensuite
+
+# Optional: override un modèle pour une session
+# Utilise: /set-model dev qwen3-coder:30b

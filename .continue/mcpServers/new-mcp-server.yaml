@@ -1,0 +1,35 @@
+name: New MCP server
+version: 0.0.1
+schema: v1
+mcpServers:
+  - name: context7
+    type: streamable-http
+    url: https://mcp.context7.com/mcp
+
+  - name: github
+    type: stdio
+    command: npx
+    args:
+      - -y
+      - '@modelcontextprotocol/server-github'
+    env:
+      GITHUB_PERSONAL_ACCESS_TOKEN: ${GITHUB_PERSONAL_ACCESS_TOKEN}
+
+  - name: playwright
+    type: stdio
+    command: /mnt/Travail/Projets/Dev/Grimoire-Forge/grimoire-kit/framework/tools/playwright-mcp.sh
+    cwd: /mnt/Travail/Projets/Dev/Grimoire-Forge
+
+  - name: grimoire
+    type: stdio
+    command: /mnt/Travail/Projets/Dev/Grimoire-Forge/grimoire-kit/.venv/bin/python
+    args:
+      - -m
+      - grimoire.mcp.server
+    cwd: /mnt/Travail/Projets/Dev/Grimoire-Forge/grimoire-kit
+    env:
+      PYTHONPATH: /mnt/Travail/Projets/Dev/Grimoire-Forge/grimoire-kit/src
+
+  # Note: Ollama n'est pas un serveur MCP.
+  # Configure Ollama dans ~/.continue/config.yaml via `models:` (provider: ollama),
+  # pas dans `mcpServers`.

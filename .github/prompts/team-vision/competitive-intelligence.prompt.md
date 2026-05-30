@@ -33,7 +33,7 @@ Ce qu'on fait MIEUX qu'eux   : [our edge]
 1. **Tableau de synthèse** : matrice forces/faiblesses comparative
 2. **Blue Ocean gaps** : opportunités non adressées par les concurrents
 3. **Top 3 insights actionnables** : ce qu'on doit faire différemment
-4. **Sauvegarder dans** : `_bmad-output/team-vision/competitive-analysis-{{date}}.md`
+4. **Sauvegarder dans** : `_grimoire-runtime-output/team-vision/competitive-analysis-{{date}}.md`
 
 ## Consigne Agent
 

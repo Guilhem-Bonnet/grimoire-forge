@@ -1,0 +1,1 @@
+{"task":"grimoire-game: cockpit:verify","flow":"game","kind":"task","status":"success","event":"task-finish","exitCode":0,"durationSeconds":4,"startedAt":"2026-04-17T00:09:34Z","finishedAt":"2026-04-17T00:09:38Z","cwd":"/mnt/Travail/Projets/Dev/Grimoire-Forge/grimoire-kit/apps/grimoire-game","command":"npm run cockpit:verify"}
