@@ -57,16 +57,19 @@ tasks:
     remediation_ref: "_grimoire/standard/remediation-plan.yaml"
   - task_id: "r8-redis-adapter"
     title: "R8 — Redis hot memory adapter"
-    status: "proposed"
+    status: "review"
     priority: "high"
     owner: "grimoire-maintainers"
     agent_roles:
       - implementation-agent
     acceptance_criteria:
-      - "Redis adapter implemented with TTL, leases, streams, promotion gates."
-      - "MemoryManager routes short-term ops to Redis."
-      - "Standard memory_os.short_term layer reports active."
+      - "Redis adapter implemented in Kit with TTL payloads, leases, namespaced event publishing, and optional install extra."
+      - "Forge declares Redis as optional hot memory while keeping durable Weaviate, Neo4j, and SQLite authoritative."
+      - "Memory OS status reports Redis as ready when configured, or partial/soft-fail without data loss when Redis is absent."
+      - "Standard verify stays green from a Forge-only checkout without vendored grimoire-kit."
     blockers: []
+    context_bundle_ref: "_grimoire-output/context/r8-redis-adapter/context-bundle.yaml"
+    decision_trace_ref: "_grimoire-output/decisions/r8-redis-adapter/decision-trace.yaml"
     evidence_pack_ref: "_grimoire-output/evidence/r8-redis-adapter/evidence-pack.md"
   - task_id: "r9-hooks-skills"
     title: "R9 — Normalize hooks/rules/skills/agents taxonomy"
