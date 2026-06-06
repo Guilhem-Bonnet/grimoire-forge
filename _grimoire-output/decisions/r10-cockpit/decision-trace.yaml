@@ -1,0 +1,49 @@
+$schema: "grimoire-agentic-standard-decision-trace/v1"
+metadata:
+  project: "Grimoire-Forge"
+  task_id: "r10-cockpit"
+  profile: "governed"
+decisions:
+  - decision_id: "r10-cockpit-read-only"
+    task_id: "r10-cockpit"
+    decision_type: "tool_authorization"
+    profile: "governed"
+    inputs:
+      - "_grimoire/standard/observability-policy.yaml"
+      - "_grimoire-output/evidence/r10-cockpit/cockpit-report.md"
+    policy_refs:
+      - "observability-governance.cockpit-consumes-evidence"
+    rule_refs:
+      - "observability.cockpit-read-only"
+      - "observability.inputs-are-declared"
+      - "observability.no-secret-export"
+    result:
+      action: "allow_read_only_projection"
+      rationale: "The cockpit report can summarize governed artifacts, but all mutations must target source artifacts or standard commands."
+    confidence: "high"
+    event: "cockpit.projection_authorized"
+    evidence_refs:
+      - "_grimoire-output/evidence/r10-cockpit/evidence-pack.md"
+    remediation_ref: "_grimoire/standard/remediation-plan.yaml"
+    timestamp: "2026-06-06T17:35:00Z"
+  - decision_id: "r10-exclude-legacy-observatory-as-source"
+    task_id: "r10-cockpit"
+    decision_type: "context_source_selection"
+    profile: "governed"
+    inputs:
+      - "_grimoire-runtime-output/observatory.html"
+      - "_grimoire-runtime-output/hook-runtime"
+      - "_grimoire/standard/observability-policy.yaml"
+    policy_refs:
+      - "observability-governance.declared-inputs-only"
+    rule_refs:
+      - "observability.inputs-are-declared"
+    result:
+      action: "exclude_as_authoritative_source"
+      rationale: "Legacy UI/runtime outputs remain references until normalized into declared runtime events and evidence packs."
+    confidence: "high"
+    event: "cockpit.source_excluded"
+    evidence_refs:
+      - "_grimoire-output/context/r10-cockpit/context-bundle.yaml"
+    remediation_ref: "_grimoire/standard/remediation-plan.yaml"
+    timestamp: "2026-06-06T17:35:00Z"

@@ -1,0 +1,50 @@
+$schema: "grimoire-agentic-standard-context-bundle/v1"
+metadata:
+  project: "Grimoire-Forge"
+  task_id: "r10-cockpit"
+  profile: "governed"
+  generated_at: "2026-06-06T17:35:00Z"
+task_summary:
+  title: "R10 - Cockpit and governed observability"
+  objective: "Define a read-only cockpit projection from standard artifacts, runtime events and evidence packs."
+acceptance_criteria:
+  - "Cockpit inputs are declared in observability-policy.yaml."
+  - "Cockpit report is generated from standard artifacts, runtime events and evidence packs only."
+  - "Cockpit remains read-only and never becomes the source of truth for tasks, memory, gates or scores."
+  - "Governed standard verify, audit and docs build stay green."
+selected_sources:
+  - path: "_grimoire/standard/observability-policy.yaml"
+    reason: "R10 cockpit input/output contract."
+  - path: "_grimoire/standard/task-board.yaml"
+    reason: "Authoritative task and evidence references."
+  - path: "_grimoire/standard/memory-policy.yaml"
+    reason: "Authoritative Memory OS contract."
+  - path: "_grimoire/standard/compliance-score.yaml"
+    reason: "Authoritative score dimensions and thresholds."
+  - path: "_grimoire-output/evidence"
+    reason: "Task evidence packs consumed by the cockpit."
+excluded_sources:
+  - path: "_grimoire-runtime-output/observatory.html"
+    reason: "Legacy UI artifact; useful reference but not the R10 source of truth."
+  - path: "_grimoire-runtime-output/hook-runtime"
+    reason: "Runtime logs are inputs only after redaction and event contract normalization."
+memory_os:
+  hot_memory: "redis optional read signal only"
+  semantic_memory: "weaviate-server durable target"
+  graph_projection: "neo4j durable target"
+  sidecar: "sqlite fallback"
+  legacy_vector: "qdrant migration/rollback only"
+provider_constraints:
+  default_route: "declared-default"
+  data_policy: "no secrets or credentials in cockpit exports"
+decision_inputs:
+  - "Cockpit must be reproducible from declared artifacts."
+  - "Generated reports must not mutate task, memory, gate or score state."
+  - "Runtime events are advisory unless backed by evidence packs."
+evidence_requirements:
+  - "_grimoire-output/decisions/r10-cockpit/decision-trace.yaml"
+  - "_grimoire-output/evidence/r10-cockpit/evidence-pack.md"
+  - "_grimoire-output/evidence/r10-cockpit/cockpit-report.md"
+fingerprints:
+  observability_policy: "_grimoire/standard/observability-policy.yaml"
+  cockpit_report: "_grimoire-output/evidence/r10-cockpit/cockpit-report.md"

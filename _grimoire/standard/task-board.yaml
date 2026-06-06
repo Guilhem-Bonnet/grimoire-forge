@@ -91,12 +91,17 @@ tasks:
     evidence_pack_ref: "_grimoire-output/evidence/r9-hooks-skills/evidence-pack.md"
   - task_id: "r10-cockpit"
     title: "R10 — Cockpit/observability"
-    status: "proposed"
+    status: "review"
     priority: "medium"
     owner: "grimoire-maintainers"
     agent_roles:
       - implementation-agent
     acceptance_criteria:
-      - "Memory OS health, graph/vector stats, drift, agentic decisions, live kanban visible."
+      - "Cockpit inputs are declared in observability-policy.yaml."
+      - "Cockpit report is generated from standard artifacts, runtime events and evidence packs only."
+      - "Cockpit remains read-only and never becomes the source of truth for tasks, memory, gates or scores."
+      - "Governed standard verify, audit and docs build stay green."
     blockers: []
+    context_bundle_ref: "_grimoire-output/context/r10-cockpit/context-bundle.yaml"
+    decision_trace_ref: "_grimoire-output/decisions/r10-cockpit/decision-trace.yaml"
     evidence_pack_ref: "_grimoire-output/evidence/r10-cockpit/evidence-pack.md"
