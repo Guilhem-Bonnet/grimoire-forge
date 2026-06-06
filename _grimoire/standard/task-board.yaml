@@ -21,6 +21,7 @@ transitions:
     requires:
       - context_bundle
       - provider_policy
+      - memory_os_hot_layer_policy
   in_progress_to_review:
     requires:
       - evidence_pack
@@ -33,6 +34,7 @@ transitions:
     requires:
       - compliance_score
       - release_authorization
+      - hot_memory_degradation_recorded
   any_to_blocked:
     requires:
       - blocker_reason
