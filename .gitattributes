@@ -6,6 +6,11 @@
 _grimoire-output/**                     -diff
 grimoire-kit/_grimoire-output/**        -diff
 
+# Artefacts gouvernés versionnés — diff textuel utile en revue
+_grimoire-output/evidence/**/*.md       diff
+_grimoire-output/context/**/*.yaml      diff
+_grimoire-output/decisions/**/*.yaml    diff
+
 # Artefacts de test
 _full_test_output.txt                   -diff
 grimoire-kit/_test_out.txt              -diff

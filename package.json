@@ -4,7 +4,9 @@
     "playwright": "^1.57.0"
   },
   "scripts": {
-    "check:standard": "grimoire-kit/.venv/bin/grimoire standard verify",
+    "check:standard": "bash scripts/check-standard.sh",
+    "standard:verify": "bash scripts/run-standard.sh verify",
+    "standard:audit": "bash scripts/run-standard.sh audit",
     "docs:build": "mkdocs build --strict"
   }
 }

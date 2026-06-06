@@ -59,3 +59,30 @@ patterns:
     rule_refs: []
     hook_refs: []
     check_refs: ["events.invalid_line"]
+  - id: redis-hot-memory-soft-gate
+    category: memory
+    maturity: governed
+    source_normative: memory-os.hot-memory-non-authoritative
+    intent: "Use Redis for TTL-bound session state, leases and transient events without making it a durable source of truth."
+    required_artifacts: ["memory-policy.yaml", "evidence-pack.md"]
+    rule_refs: ["memory.hot-degrades-safely"]
+    hook_refs: ["memory.hot-soft-gate"]
+    check_refs: ["memory.hot_memory_partial"]
+  - id: governed-hook-gateway
+    category: governance
+    maturity: governed
+    source_normative: hook-governance.gateway-required
+    intent: "Route hooks through a policy gateway so tool mediation, traces and evidence gates stay auditable."
+    required_artifacts: ["hook-registry.yaml", "rule-packs.yaml"]
+    rule_refs: ["hooks.must-use-gateway", "hooks.no-destructive-bypass"]
+    hook_refs: ["hooks.gateway-required", "tools.terminal-guard"]
+    check_refs: ["hooks.gateway_missing", "hooks.destructive_bypass"]
+  - id: skill-classification-matrix
+    category: orchestration
+    maturity: governed
+    source_normative: skill-governance.classification-required
+    intent: "Classify skills as core templates, Forge project packs or incubator assets before promotion."
+    required_artifacts: ["hook-registry.yaml", "pattern-catalog.yaml"]
+    rule_refs: ["skills.classified-before-use"]
+    hook_refs: ["skills.require-classification"]
+    check_refs: ["skills.classification_missing"]

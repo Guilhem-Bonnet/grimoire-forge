@@ -4,6 +4,8 @@ project:
   type: "library"
 
 memory:
+  short_term_backend: "sqlite"
+  redis_url: ""
   knowledge_graph: "neo4j"
   semantic_memory: "weaviate-server"
   memory_graph: "neo4j"

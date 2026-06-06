@@ -1,0 +1,75 @@
+$schema: "grimoire-agentic-standard-context-bundle/v1"
+metadata:
+  project: "Grimoire-Forge"
+  task_id: "r9-hooks-skills"
+  profile: "governed"
+  generated_at: "2026-06-06T17:16:00Z"
+task_summary:
+  title: "R9 - Normalize hooks/rules/skills/agents taxonomy"
+  objective: "Classify Forge hooks and skills into governed promotion lanes without treating all local assets as canonical Kit material."
+acceptance_criteria:
+  - "Hooks are classified into core template candidates, Forge project pack, and incubator assets."
+  - "Skills are classified before promotion into Kit templates or governed Forge packs."
+  - "hook-registry.yaml, rule-packs.yaml and pattern-catalog.yaml link hook/skill rules to evidence gates."
+  - "standard verify stays green after taxonomy changes."
+selected_sources:
+  - path: ".github/hooks"
+    reason: "Runtime hook implementations and JSON descriptors to classify."
+  - path: ".github/skills"
+    reason: "Skill packs to classify by portability and governance maturity."
+  - path: "_grimoire/standard/hook-registry.yaml"
+    reason: "Governed source of hook policy and managed-source taxonomy."
+  - path: "_grimoire/standard/rule-packs.yaml"
+    reason: "Normative rule IDs used by hook and skill gates."
+  - path: "_grimoire/standard/pattern-catalog.yaml"
+    reason: "Pattern-level classification and reuse contract."
+excluded_sources:
+  - path: "grimoire-kit/"
+    reason: "Ignored/local embedded checkout; not a canonical source for Forge PRs."
+  - path: "site/"
+    reason: "Generated MkDocs output."
+  - path: "_grimoire-runtime-output/"
+    reason: "Runtime/generated output, not normative input for R9 taxonomy."
+memory_inclusions:
+  - layer: "project"
+    items:
+      - "R7 governed profile adoption merged into Forge main."
+      - "R8 declares Redis as optional hot memory; Weaviate, Neo4j and SQLite remain durable layers."
+      - "Forge hooks and skills are valuable evidence but must be promoted selectively."
+memory_exclusions:
+  - layer: "legacy_embedded_kit"
+    reason: "Local ignored copy may contain useful R&D but cannot be merged wholesale."
+memory_os:
+  hot_memory: "redis optional; soft gate only"
+  semantic_memory: "weaviate-server durable target"
+  graph_projection: "neo4j durable target"
+  sidecar: "sqlite fallback"
+  legacy_vector: "qdrant migration/rollback only"
+knowledge_nodes:
+  - "hook-governance.gateway-required"
+  - "skill-governance.classification-required"
+  - "tool-governance.no-destructive-implicit-action"
+provider_constraints:
+  default_route: "declared-default"
+  data_policy: "no secrets or credentials in generated evidence"
+agent_role_constraints:
+  primary_role: "implementation-agent"
+  reviewer_role: "release_governor"
+token_or_context_budget:
+  max_context_items: 24
+  max_memory_items: 8
+  max_knowledge_sources: 8
+redactions:
+  required: true
+  applied: []
+decision_inputs:
+  - "Portability: reusable across projects vs Forge-specific."
+  - "Maturity: governed, reviewed, or incubator."
+  - "Risk: destructive tools require gateway and evidence mediation."
+evidence_requirements:
+  - "_grimoire-output/decisions/r9-hooks-skills/decision-trace.yaml"
+  - "_grimoire-output/evidence/r9-hooks-skills/evidence-pack.md"
+fingerprints:
+  hook_registry: "_grimoire/standard/hook-registry.yaml"
+  rule_packs: "_grimoire/standard/rule-packs.yaml"
+  pattern_catalog: "_grimoire/standard/pattern-catalog.yaml"

@@ -1,0 +1,104 @@
+$schema: "grimoire-agentic-standard-decision-trace/v1"
+metadata:
+  project: "Grimoire-Forge"
+  task_id: "r9-hooks-skills"
+  profile: "governed"
+decisions:
+  - decision_id: "r9-classify-hook-sources"
+    task_id: "r9-hooks-skills"
+    decision_type: "tool_authorization"
+    profile: "governed"
+    inputs:
+      - ".github/hooks"
+      - "_grimoire/standard/hook-registry.yaml"
+      - "_grimoire/standard/rule-packs.yaml"
+    policy_refs:
+      - "hook-governance.gateway-required"
+      - "tool-governance.no-destructive-implicit-action"
+    rule_refs:
+      - "hooks.must-use-gateway"
+      - "hooks.no-destructive-bypass"
+    result:
+      action: "classify"
+      core_template_candidates:
+        - ".github/hooks/grimoire-memory-gate.json"
+        - ".github/hooks/grimoire-terminal-guard.json"
+        - ".github/hooks/grimoire-doc-drift.json"
+        - ".github/hooks/scripts/grimoire-hook-gateway.sh"
+      forge_project_pack:
+        - ".github/hooks/grimoire-control-surface-guard.json"
+        - ".github/hooks/grimoire-subagent-context.json"
+        - ".github/hooks/grimoire-subagent-trace.json"
+        - ".github/hooks/grimoire-prompt-submit.json"
+        - ".github/hooks/grimoire-session-start.json"
+      incubator:
+        - ".github/hooks/scripts/grimoire-docker.sh"
+        - ".github/hooks/scripts/grimoire-task-flow.sh"
+    confidence: "medium"
+    event: "hook.classification_recorded"
+    evidence_refs:
+      - "_grimoire/standard/hook-registry.yaml"
+      - "_grimoire-output/evidence/r9-hooks-skills/evidence-pack.md"
+    remediation_ref: "_grimoire/standard/remediation-plan.yaml"
+    timestamp: "2026-06-06T17:16:00Z"
+  - decision_id: "r9-classify-skill-sources"
+    task_id: "r9-hooks-skills"
+    decision_type: "agent_role_routing"
+    profile: "governed"
+    inputs:
+      - ".github/skills"
+      - "_grimoire/standard/hook-registry.yaml"
+      - "_grimoire/standard/pattern-catalog.yaml"
+    policy_refs:
+      - "skill-governance.classification-required"
+    rule_refs:
+      - "skills.classified-before-use"
+    result:
+      action: "classify"
+      core_template_candidates:
+        - ".github/skills/grimoire-code-review/SKILL.md"
+        - ".github/skills/grimoire-security-review/SKILL.md"
+        - ".github/skills/grimoire-verification/SKILL.md"
+        - ".github/skills/grimoire-writing-plans/SKILL.md"
+        - ".github/skills/grimoire-test-architecture/SKILL.md"
+      forge_project_pack:
+        - ".github/skills/grimoire-dispatch-engineer/SKILL.md"
+        - ".github/skills/grimoire-memory-audit/SKILL.md"
+        - ".github/skills/grimoire-safety-guards/SKILL.md"
+        - ".github/skills/grimoire-session-bootstrap/SKILL.md"
+        - ".github/skills/architecture-docs/SKILL.md"
+      incubator:
+        - ".github/skills/grimoire-pixel-observatory/SKILL.md"
+        - ".github/skills/grimoire-2d-asset-pipeline/SKILL.md"
+        - ".github/skills/grimoire-visual-orchestration/SKILL.md"
+    confidence: "medium"
+    event: "skill.classification_recorded"
+    evidence_refs:
+      - "_grimoire/standard/hook-registry.yaml"
+      - "_grimoire/standard/pattern-catalog.yaml"
+      - "_grimoire-output/evidence/r9-hooks-skills/evidence-pack.md"
+    remediation_ref: "_grimoire/standard/remediation-plan.yaml"
+    timestamp: "2026-06-06T17:16:00Z"
+  - decision_id: "r9-keep-local-assets-out-of-kit-core"
+    task_id: "r9-hooks-skills"
+    decision_type: "state_transition"
+    profile: "governed"
+    inputs:
+      - "R7/R8 reconciliation decision"
+      - "Ignored grimoire-kit local checkout status"
+      - "Forge hooks and skills inventory"
+    policy_refs:
+      - "governed-profile.requires-evidence-before-promotion"
+    rule_refs:
+      - "skills.classified-before-use"
+      - "hooks.must-use-gateway"
+    result:
+      action: "do_not_bulk_promote"
+      rationale: "Forge assets are classified as candidates, project pack or incubator before any Kit promotion PR."
+    confidence: "high"
+    event: "asset.promotion_deferred"
+    evidence_refs:
+      - "_grimoire-output/context/r9-hooks-skills/context-bundle.yaml"
+      - "_grimoire-output/evidence/r9-hooks-skills/evidence-pack.md"
+    remediation_ref: "_grimoire/standard/remediation-plan.yaml"
+    timestamp: "2026-06-06T17:16:00Z"
