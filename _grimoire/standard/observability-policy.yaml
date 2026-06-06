@@ -71,6 +71,7 @@ non_authoritative:
   authoritative_sources:
     - "_grimoire/standard/*.yaml"
     - "_grimoire-output/evidence/**/evidence-pack.md"
+  advisory_sources:
     - "_grimoire-output/events/runtime-journal.jsonl"
   cockpit_may_not_update:
     - "task status"

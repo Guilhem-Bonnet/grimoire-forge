@@ -10,7 +10,6 @@ decisions:
     profile: "governed"
     inputs:
       - "_grimoire/standard/observability-policy.yaml"
-      - "_grimoire-output/evidence/r10-cockpit/cockpit-report.md"
     policy_refs:
       - "observability-governance.cockpit-consumes-evidence"
     rule_refs:
@@ -24,6 +23,7 @@ decisions:
     event: "cockpit.projection_authorized"
     evidence_refs:
       - "_grimoire-output/evidence/r10-cockpit/evidence-pack.md"
+      - "_grimoire-output/evidence/r10-cockpit/cockpit-report.md"
     remediation_ref: "_grimoire/standard/remediation-plan.yaml"
     timestamp: "2026-06-06T17:35:00Z"
   - decision_id: "r10-exclude-legacy-observatory-as-source"

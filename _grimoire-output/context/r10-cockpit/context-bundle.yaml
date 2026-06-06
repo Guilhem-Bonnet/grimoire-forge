@@ -21,7 +21,7 @@ selected_sources:
     reason: "Authoritative Memory OS contract."
   - path: "_grimoire/standard/compliance-score.yaml"
     reason: "Authoritative score dimensions and thresholds."
-  - path: "_grimoire-output/evidence"
+  - path: "_grimoire-output/evidence/**/evidence-pack.md"
     reason: "Task evidence packs consumed by the cockpit."
 excluded_sources:
   - path: "_grimoire-runtime-output/observatory.html"
