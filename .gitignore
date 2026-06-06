@@ -36,6 +36,10 @@ _grimoire/_memory/backends/__pycache__/
 _grimoire-output/*
 !_grimoire-output/evidence/
 !_grimoire-output/evidence/**
+!_grimoire-output/context/
+!_grimoire-output/context/**
+!_grimoire-output/decisions/
+!_grimoire-output/decisions/**
 
 # pytest
 .pytest_cache/

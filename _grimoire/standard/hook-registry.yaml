@@ -53,3 +53,63 @@ hooks:
     action: create_remediation
     rule_ref: knowledge.graph-current
     reason: "Context builds should refresh the local doc-to-graph view when knowledge sources are enabled."
+  - id: memory.hot-soft-gate
+    phase: pre_context_build
+    action: require_evidence
+    rule_ref: memory.hot-degrades-safely
+    reason: "Redis hot memory may be absent, but the degradation must be recorded and durable stores remain authoritative."
+    implementation_ref: ".github/hooks/grimoire-memory-gate.json"
+    script_ref: ".github/hooks/scripts/grimoire-memory-gate.sh"
+  - id: tools.terminal-guard
+    phase: pre_tool_call
+    action: block
+    rule_ref: hooks.no-destructive-bypass
+    reason: "Terminal and tool calls that can mutate state must pass safety/evidence checks."
+    implementation_ref: ".github/hooks/grimoire-terminal-guard.json"
+    script_ref: ".github/hooks/scripts/grimoire-terminal-guard.sh"
+  - id: hooks.gateway-required
+    phase: pre_tool_call
+    action: block
+    rule_ref: hooks.must-use-gateway
+    reason: "Project hooks should execute through the Grimoire hook gateway for traceability and policy mediation."
+    implementation_ref: ".github/hooks/scripts/grimoire-hook-gateway.sh"
+  - id: skills.require-classification
+    phase: pre_context_build
+    action: require_evidence
+    rule_ref: skills.classified-before-use
+    reason: "Skills must be classified before being promoted into core Kit templates or governed Forge packs."
+    implementation_ref: ".github/skills"
+
+managed_sources:
+  hooks:
+    core_template_candidates:
+      - ".github/hooks/grimoire-memory-gate.json"
+      - ".github/hooks/grimoire-terminal-guard.json"
+      - ".github/hooks/grimoire-doc-drift.json"
+      - ".github/hooks/scripts/grimoire-hook-gateway.sh"
+    forge_project_pack:
+      - ".github/hooks/grimoire-control-surface-guard.json"
+      - ".github/hooks/grimoire-subagent-context.json"
+      - ".github/hooks/grimoire-subagent-trace.json"
+      - ".github/hooks/grimoire-prompt-submit.json"
+      - ".github/hooks/grimoire-session-start.json"
+    incubator:
+      - ".github/hooks/scripts/grimoire-docker.sh"
+      - ".github/hooks/scripts/grimoire-task-flow.sh"
+  skills:
+    core_template_candidates:
+      - ".github/skills/grimoire-code-review/SKILL.md"
+      - ".github/skills/grimoire-security-review/SKILL.md"
+      - ".github/skills/grimoire-verification/SKILL.md"
+      - ".github/skills/grimoire-writing-plans/SKILL.md"
+      - ".github/skills/grimoire-test-architecture/SKILL.md"
+    forge_project_pack:
+      - ".github/skills/grimoire-dispatch-engineer/SKILL.md"
+      - ".github/skills/grimoire-memory-audit/SKILL.md"
+      - ".github/skills/grimoire-safety-guards/SKILL.md"
+      - ".github/skills/grimoire-session-bootstrap/SKILL.md"
+      - ".github/skills/architecture-docs/SKILL.md"
+    incubator:
+      - ".github/skills/grimoire-pixel-observatory/SKILL.md"
+      - ".github/skills/grimoire-2d-asset-pipeline/SKILL.md"
+      - ".github/skills/grimoire-visual-orchestration/SKILL.md"

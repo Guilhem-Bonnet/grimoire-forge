@@ -7,6 +7,8 @@ rule_families:
   - provider
   - memory
   - knowledge
+  - skills
+  - hooks
   - context
   - orchestration
   - evidence
@@ -46,3 +48,48 @@ rules:
     event: gate.failed
     remediation: create_missing_evidence
     check_id: evidence.minimum_missing
+  - id: memory.hot-degrades-safely
+    family: memory
+    source_normative: memory-os.hot-memory-non-authoritative
+    severity: warning
+    phase: pre_context_build
+    condition:
+      redis_unavailable: true
+      durable_memory_available: true
+    action: require_evidence
+    event: memory.hot.partial
+    remediation: record_hot_memory_degradation
+    check_id: memory.hot_memory_partial
+  - id: hooks.must-use-gateway
+    family: hooks
+    source_normative: hook-governance.gateway-required
+    severity: error
+    phase: pre_tool_call
+    condition:
+      hook_bypasses_gateway: true
+    action: block
+    event: hook.blocked
+    remediation: route_hook_through_grimoire_hook_gateway
+    check_id: hooks.gateway_missing
+  - id: hooks.no-destructive-bypass
+    family: security
+    source_normative: tool-governance.no-destructive-implicit-action
+    severity: error
+    phase: pre_tool_call
+    condition:
+      destructive_action_without_evidence: true
+    action: block
+    event: tool.blocked
+    remediation: require_evidence_or_human_authorization
+    check_id: hooks.destructive_bypass
+  - id: skills.classified-before-use
+    family: skills
+    source_normative: skill-governance.classification-required
+    severity: warning
+    phase: pre_context_build
+    condition:
+      skill_missing_classification: true
+    action: require_evidence
+    event: skill.classification_required
+    remediation: classify_skill_as_core_template_project_or_incubator
+    check_id: skills.classification_missing

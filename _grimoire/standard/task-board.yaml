@@ -73,15 +73,19 @@ tasks:
     evidence_pack_ref: "_grimoire-output/evidence/r8-redis-adapter/evidence-pack.md"
   - task_id: "r9-hooks-skills"
     title: "R9 — Normalize hooks/rules/skills/agents taxonomy"
-    status: "proposed"
+    status: "review"
     priority: "medium"
     owner: "grimoire-maintainers"
     agent_roles:
       - implementation-agent
     acceptance_criteria:
-      - "ISO-classified pattern folders with executable contracts."
-      - "hook-registry.yaml and rule-packs.yaml pass standard verify."
+      - "Hooks are classified into core template candidates, Forge project pack, and incubator assets."
+      - "Skills are classified before promotion into Kit templates or governed Forge packs."
+      - "hook-registry.yaml, rule-packs.yaml and pattern-catalog.yaml link hook/skill rules to evidence gates."
+      - "standard verify stays green after taxonomy changes."
     blockers: []
+    context_bundle_ref: "_grimoire-output/context/r9-hooks-skills/context-bundle.yaml"
+    decision_trace_ref: "_grimoire-output/decisions/r9-hooks-skills/decision-trace.yaml"
     evidence_pack_ref: "_grimoire-output/evidence/r9-hooks-skills/evidence-pack.md"
   - task_id: "r10-cockpit"
     title: "R10 — Cockpit/observability"
