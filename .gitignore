@@ -37,9 +37,13 @@ _grimoire-output/*
 !_grimoire-output/evidence/
 !_grimoire-output/evidence/**
 !_grimoire-output/context/
-!_grimoire-output/context/**
+_grimoire-output/context/*
+!_grimoire-output/context/r9-hooks-skills/
+!_grimoire-output/context/r9-hooks-skills/**
 !_grimoire-output/decisions/
-!_grimoire-output/decisions/**
+_grimoire-output/decisions/*
+!_grimoire-output/decisions/r9-hooks-skills/
+!_grimoire-output/decisions/r9-hooks-skills/**
 
 # pytest
 .pytest_cache/
