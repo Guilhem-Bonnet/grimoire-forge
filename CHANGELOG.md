@@ -12,6 +12,7 @@ Ce document suit le format Keep a Changelog.
 - Sitemap automatique via `@astrojs/sitemap`, pretty URLs (trailing slash).
 - [web/README.md](web/README.md) avec structure, routes et workflow de dev.
 - Adoption du catalogue de patterns **Grimoire Kit 3.5.0** : `_grimoire/standard/pattern-catalog.yaml` passe de 9 à 15 patterns (ajout de `code-graph-projection`, `governed-agent-orchestration`, `governed-knowledge-indexing`, `mission-evidence-ledger`, `tool-mediation-gate`, `provider-cost-slo`) et le manifeste `standard-profile.yaml` déclare désormais `observability_policy`. `npm run check:standard` reste vert (profil `governed`, score 100/90, 0 erreur / 0 avertissement).
+- **Pipeline qualité obligatoire** (`npm run quality` / [`scripts/check-quality.sh`](scripts/check-quality.sh)) : une commande unique qui enchaîne lint (ShellCheck + `bash -n` + Ruff), tests unitaires du moteur, préflight (`preflight-check.py`), memory-lint (`memory-lint.py`) et vérification de gouvernance (`standard verify`). Bloquant si un check critique échoue ; dégradation explicite quand l'outillage est absent. Documenté dans le README. Résout #1.
 
 ### Removed
 
