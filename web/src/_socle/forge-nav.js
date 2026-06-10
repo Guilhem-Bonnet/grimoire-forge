@@ -45,7 +45,7 @@
             <h4>RUNTIME</h4>
             <ul>
               <li><a href="#">Documentation</a></li>
-              <li><a href="#">API Reference</a></li>
+              <li><a href="/agents/">Agents</a></li>
               <li><a href="#">Contrats</a></li>
               <li><a href="#">Changelog</a></li>
             </ul>
@@ -64,8 +64,8 @@
             <ul>
               <li><a href="demo.html">Démo</a></li>
               <li><a href="anatomy.html">Anatomie</a></li>
-              <li><a href="#">Early Access</a></li>
-              <li><a href="#">Roadmap</a></li>
+              <li><a href="manifesto.html">Manifesto</a></li>
+              <li><a href="https://github.com/Guilhem-Bonnet/grimoire-forge" target="_blank" rel="noopener">GitHub</a></li>
             </ul>
           </div>
         </div>

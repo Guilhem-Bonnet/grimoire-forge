@@ -245,7 +245,7 @@
         <h2>Trois étapes. Premier artefact en 15 minutes.</h2>
         <p>Clone, configure, forge. La CLI prend en charge l'initialisation du runtime, la définition du premier contrat et le spawn des agents.</p>
         <p class="ds-sub" style="margin-top:16px;">
-          <a href="index.html#cta-final" class="btn btn-primary" style="font-size:.72rem">ACCÈS EARLY ACCESS</a>
+          <a href="https://github.com/Guilhem-Bonnet/grimoire-forge" class="btn btn-primary" style="font-size:.72rem">VOIR SUR GITHUB</a>
         </p>
       </div>
     </div>
@@ -323,10 +323,10 @@
 
         <!-- VIZ 6: Observability preview -->
         <div class="viz" id="viz-6" aria-label="Aperçu observability">
-          <div class="viz-label">OBSERVABILITY · MÉTRIQUES RUNTIME</div>
+          <div class="viz-label">OBSERVABILITY · APERÇU SURFACE</div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
             <div style="background:var(--elev-2);border:1px solid var(--line);border-radius:var(--r-sm);padding:12px;"><div style="font-family:var(--font-mono);font-size:.56rem;color:var(--ink-muted);margin-bottom:4px">P50 LATENCY</div><div style="font-family:var(--font-mono);font-size:1.4rem;font-weight:600;color:var(--ink)">318ms</div></div>
-            <div style="background:var(--elev-2);border:1px solid var(--line);border-radius:var(--r-sm);padding:12px;"><div style="font-family:var(--font-mono);font-size:.56rem;color:var(--ink-muted);margin-bottom:4px">HALLUC. RATE</div><div style="font-family:var(--font-mono);font-size:1.4rem;font-weight:600;color:var(--ink)">0.02%</div></div>
+            <div style="background:var(--elev-2);border:1px solid var(--line);border-radius:var(--r-sm);padding:12px;"><div style="font-family:var(--font-mono);font-size:.56rem;color:var(--ink-muted);margin-bottom:4px">CONTRATS SIGNÉS</div><div style="font-family:var(--font-mono);font-size:1.4rem;font-weight:600;color:var(--ink)">12</div></div>
             <div style="background:var(--elev-2);border:1px solid var(--line);border-radius:var(--r-sm);padding:12px;"><div style="font-family:var(--font-mono);font-size:.56rem;color:var(--ink-muted);margin-bottom:4px">TOKENS / MIN</div><div style="font-family:var(--font-mono);font-size:1.4rem;font-weight:600;color:var(--ink)">8.4k</div></div>
             <div style="background:var(--elev-2);border:1px solid var(--line);border-radius:var(--r-sm);padding:12px;"><div style="font-family:var(--font-mono);font-size:.56rem;color:var(--ink-muted);margin-bottom:4px">AGENTS ACTIFS</div><div style="font-family:var(--font-mono);font-size:1.4rem;font-weight:600;color:var(--accent)">5</div></div>
           </div>
@@ -534,16 +534,15 @@ document.getElementById('forge-btn').addEventListener('click',()=>{
 /* ── VIZ 9: Terminal typing ── */
 let termDone=false;
 const TERMINAL_LINES=[
-  {type:'cmd', text:'git clone https://github.com/grimoire/forge.git'},
-  {type:'out', text:'Cloning into forge... done.'},
-  {type:'cmd', text:'cd forge && cp .env.example .env'},
-  {type:'cmd', text:'forge init --runtime local --agents pm,analyst,writer'},
-  {type:'out', text:'  ↳ runtime READY'},
-  {type:'out', text:'  ↳ SOG MOUNTED  gateway/ws'},
-  {type:'out', text:'  ↳ 3 agents spawned'},
-  {type:'cmd', text:'forge run "Crée un PRD pour une app de notes"'},
-  {type:'out', text:'  ↳ artefact/prd-app-notes-v1.md ÉMIS'},
-  {type:'dim', text:'  Temps total : 3.4s · 14k tokens · coût $0.04'},
+  {type:'cmd', text:'git clone https://github.com/Guilhem-Bonnet/grimoire-forge.git'},
+  {type:'out', text:'Cloning into grimoire-forge... done.'},
+  {type:'cmd', text:'cd grimoire-forge && bash grimoire-init.sh hooks --install'},
+  {type:'out', text:'  ↳ hooks installés · garde-fous actifs'},
+  {type:'cmd', text:'grimoire standard verify'},
+  {type:'out', text:'  ↳ standard « governed » — conforme'},
+  {type:'dim', text:'  Dans l\'IDE — le Grimoire Master orchestre :'},
+  {type:'out', text:'  ↳ SOG dispatch → pm · analyst · writer'},
+  {type:'out', text:'  ↳ artefact/prd-app-notes-v1.md émis + trace'},
 ];
 
 function startTerminal(){

@@ -198,7 +198,7 @@
             <span class="cockpit-label">GRIMOIRE FORGE · COCKPIT · session-4a2f</span>
           </div>
           <div class="cockpit-body">
-            <div class="term"><span class="p">▶ </span><span class="v">forge init --session 4a2f --agents 3</span></div>
+            <div class="term"><span class="p">▶ </span><span class="v">runtime.boot({ session: "4a2f" })</span></div>
             <div class="term"><span class="d">  ↳ runtime</span> <span class="ok">READY</span></div>
             <div class="term"><span class="d">  ↳ SOG</span> <span class="ok">MOUNTED</span> <span class="d">gateway/ws</span></div>
             <div class="term"><span class="d">  ↳ surface/cockpit</span> <span class="ok">LIVE</span></div>
@@ -229,11 +229,11 @@
 <div id="proof-bar" aria-label="Références">
   <div class="container">
     <div class="proof-inner">
-      <span class="proof-item">47 BUILDERS · EARLY ACCESS</span>
+      <span class="proof-item">22 AGENTS · 4 MODULES</span>
       <span class="proof-sep">·</span>
-      <span class="proof-item">12 400 ARTEFACTS FORGÉS</span>
+      <span class="proof-item">87 WORKFLOWS · 44 SKILLS</span>
       <span class="proof-sep">·</span>
-      <span class="proof-item">ZERO HALLUCINATION NON TRACÉE</span>
+      <span class="proof-item">10 TYPES DE MÉMOIRE</span>
       <span class="proof-sep">·</span>
       <span class="proof-item">RUNTIME OPEN SOURCE</span>
       <span class="proof-sep">·</span>
@@ -278,7 +278,7 @@
       <div class="surface-card reveal" data-delay="0">
         <div class="surface-card-inner">
           <div class="surface-card-head"><span class="surface-badge">FORGE-01</span><span class="surface-status live"><span class="dot"></span>LIVE</span></div>
-          <div class="surface-body"><h3>Cockpit</h3><p>Interface opérationnelle temps réel. Contrôle agents, inspection pipelines, émission de directives.</p><div class="surface-meta">runtime/cockpit · ws:// · &lt;40ms</div></div>
+          <div class="surface-body"><h3>Cockpit</h3><p>Interface opérationnelle temps réel. Contrôle agents, inspection pipelines, émission de directives.</p><div class="surface-meta">runtime/cockpit · ws:// · temps réel</div></div>
           <div class="surface-preview" aria-hidden="true">
             <div class="mini-rows">
               <div class="mini-row"><span class="mini-dot on"></span><span class="mini-lbl">agent/pm</span><span class="mini-val">RUNNING</span></div>
@@ -423,7 +423,7 @@
   <div class="container">
     <div class="divider" aria-hidden="true"></div>
     <div class="eyebrow reveal"><span class="num">06</span> · CAPACITÉS</div>
-    <h2 class="reveal" data-delay="60" style="margin-top:14px;max-width:560px">Neuf surfaces de précision.</h2>
+    <h2 class="reveal" data-delay="60" style="margin-top:14px;max-width:560px">Neuf capacités de précision.</h2>
     <div class="feature-grid">
       <div class="feature-card reveal" data-delay="0"><span class="feature-badge">FORGE-01</span>
         <svg class="feature-icon" viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><circle cx="14" cy="14" r="10"/><path d="M14 8v7l4 2.5"/></svg>
@@ -432,31 +432,31 @@
       <div class="feature-card reveal" data-delay="50"><span class="feature-badge">FORGE-02</span>
         <svg class="feature-icon" viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><rect x="4" y="6" width="20" height="16" rx="1.5"/><path d="M9 11h10M9 15h6"/></svg>
         <h3>Artefacts UDF</h3><p>Unified Dynamic Factory : agents, workflows, skills, instructions créés dynamiquement avec triage éphémère/permanent intégré.</p>
-        <a href="#" class="feature-link">SPEC UDF →</a></div>
+        <a href="anatomy.html" class="feature-link">SPEC UDF →</a></div>
       <div class="feature-card reveal" data-delay="100"><span class="feature-badge">FORGE-03</span>
         <svg class="feature-icon" viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M4 20h20M4 14h12M4 8h8"/></svg>
-        <h3>Memory tiered</h3><p>Contexte mémoire structuré en niveaux : working, episodic, semantic. Isolation par namespace, TTL configurable par tier.</p>
-        <a href="#" class="feature-link">MÉMOIRE API →</a></div>
+        <h3>Memory OS</h3><p>Couches chaude, sémantique vectorielle, graphe typé et sidecar local (Redis · Weaviate · Neo4j · SQLite). Types logiques — session, task, episodic, semantic… — isolés par namespace, écritures sous gates de preuve.</p>
+        <a href="anatomy.html" class="feature-link">MÉMOIRE API →</a></div>
       <div class="feature-card reveal" data-delay="0"><span class="feature-badge">FORGE-04</span>
         <svg class="feature-icon" viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M14 4l4 8h6l-5 4 2 7-7-4-7 4 2-7-5-4h6z"/></svg>
         <h3>Hooks sécurisés</h3><p>Points d'interception pré/post exécution avec validation de contrat. Aucun agent ne peut contourner les hooks déclarés.</p>
-        <a href="#" class="feature-link">HOOKS SPEC →</a></div>
+        <a href="anatomy.html" class="feature-link">HOOKS SPEC →</a></div>
       <div class="feature-card reveal" data-delay="50"><span class="feature-badge">FORGE-05</span>
         <svg class="feature-icon" viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M5 14h18M14 5v18"/><circle cx="14" cy="14" r="10"/></svg>
-        <h3>Multi-LLM routing</h3><p>Anthropic, OpenAI, Mistral, Ollama. Le runtime abstrait le modèle. Les contrats restent valides quelle que soit la coulée.</p>
-        <a href="#" class="feature-link">ADAPTATEURS →</a></div>
+        <h3>Multi-LLM routing</h3><p>OpenAI, Anthropic, Google, Ollama local. Le runtime abstrait le modèle. Les contrats restent valides quelle que soit la coulée.</p>
+        <a href="anatomy.html" class="feature-link">ADAPTATEURS →</a></div>
       <div class="feature-card reveal" data-delay="100"><span class="feature-badge">FORGE-06</span>
         <svg class="feature-icon" viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M4 22L14 4l4 10 4-5 2 13"/><circle cx="24" cy="22" r="2"/></svg>
         <h3>CVTL cross-validation</h3><p>Cross-Validation Trust Layer : chaque artefact est soumis à un agent critique indépendant avant scellement. Taux d'erreur mesuré.</p>
-        <a href="#" class="feature-link">CVTL DOC →</a></div>
+        <a href="anatomy.html" class="feature-link">CVTL DOC →</a></div>
       <div class="feature-card reveal" data-delay="0"><span class="feature-badge">FORGE-07</span>
         <svg class="feature-icon" viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M7 14h4l3-8 4 16 3-8h4"/></svg>
         <h3>PCE debates</h3><p>Productive Conflict Engine : agents configurables en opposition pour forcer l'émergence des hypothèses faibles avant livraison.</p>
-        <a href="#" class="feature-link">PCE SPEC →</a></div>
+        <a href="anatomy.html" class="feature-link">PCE SPEC →</a></div>
       <div class="feature-card reveal" data-delay="50"><span class="feature-badge">FORGE-08</span>
         <svg class="feature-icon" viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M14 4a10 10 0 0 1 0 20M14 4A10 10 0 0 0 4 14M14 24V4"/><path d="M4 14h20"/></svg>
-        <h3>AORA iteration loop</h3><p>Assess → Orchestrate → Run → Audit : boucle d'itération autonome avec critères d'arrêt déclarés dans le contrat.</p>
-        <a href="#" class="feature-link">AORA DOC →</a></div>
+        <h3>AORA iteration loop</h3><p>Act → Observe → Reflect → Act : boucle d'itération autonome qui n'interrompt pas entre micro-tâches, avec critères d'arrêt déclarés.</p>
+        <a href="anatomy.html" class="feature-link">AORA DOC →</a></div>
       <div class="feature-card reveal" data-delay="100"><span class="feature-badge">FORGE-09</span>
         <svg class="feature-icon" viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><rect x="4" y="4" width="8" height="8" rx="1.5"/><rect x="16" y="4" width="8" height="8" rx="1.5"/><rect x="4" y="16" width="8" height="8" rx="1.5"/><rect x="16" y="16" width="8" height="8" rx="1.5"/></svg>
         <h3>Trust scoring</h3><p>Score de confiance par agent, par session et par type d'artefact. Alerte automatique si le score descend sous le seuil du contrat.</p>
@@ -473,19 +473,19 @@
     <div class="preuves-grid">
       <div>
         <div class="metrics-row">
-          <div class="reveal" data-delay="0"><div class="metric-value"><span data-counter data-target="99" data-dec="1" data-suffix="%">99%</span></div><div class="metric-label">TRAÇABILITÉ</div></div>
-          <div class="reveal" data-delay="80"><div class="metric-value"><span data-counter data-target="3.4" data-dec="1" data-suffix="s">3.4s</span></div><div class="metric-label">LATENCE MÉDIANE SOG</div></div>
-          <div class="reveal" data-delay="160"><div class="metric-value"><span data-counter data-target="0">0</span></div><div class="metric-label">HALLUCINATION NON DÉTECTÉE</div></div>
+          <div class="reveal" data-delay="0"><div class="metric-value"><span data-counter data-target="22">22</span></div><div class="metric-label">AGENTS SPÉCIALISÉS</div></div>
+          <div class="reveal" data-delay="80"><div class="metric-value"><span data-counter data-target="87">87</span></div><div class="metric-label">WORKFLOWS</div></div>
+          <div class="reveal" data-delay="160"><div class="metric-value"><span data-counter data-target="44">44</span></div><div class="metric-label">SKILLS</div></div>
         </div>
         <div class="metrics-row">
-          <div class="reveal" data-delay="0"><div class="metric-value"><span data-counter data-target="12400">12 400</span></div><div class="metric-label">ARTEFACTS FORGÉS · 30J</div></div>
-          <div class="reveal" data-delay="80"><div class="metric-value"><span data-counter data-target="47">47</span></div><div class="metric-label">BUILDERS EARLY ACCESS</div></div>
+          <div class="reveal" data-delay="0"><div class="metric-value"><span data-counter data-target="4">4</span></div><div class="metric-label">MODULES · BMM·BMB·CIS·TEA</div></div>
+          <div class="reveal" data-delay="80"><div class="metric-value"><span data-counter data-target="10">10</span></div><div class="metric-label">TYPES DE MÉMOIRE</div></div>
           <div class="reveal" data-delay="160"><div class="metric-value"><span data-counter data-target="6">6</span></div><div class="metric-label">SURFACES · CONTROL PLANE</div></div>
         </div>
       </div>
       <div class="quote-block reveal" data-delay="200">
-        <p class="quote-text">"Pour la première fois, je peux auditer exactement pourquoi un agent a pris une décision — et rejouer la séquence à l'identique. C'est ce que j'attendais depuis trois ans."</p>
-        <div class="quote-author">THOMAS V. · STAFF ENGINEER · EARLY ACCESS</div>
+        <p class="quote-text">"Chaque action d'agent est écrite dans le ledger avant d'être consommée par une surface — auditable et rejouable à l'identique. Si ce n'est pas dans le ledger, ça n'a pas eu lieu."</p>
+        <div class="quote-author">PRINCIPE TRACE-FIRST · MANIFESTE GRIMOIRE FORGE</div>
       </div>
     </div>
   </div>
@@ -494,7 +494,7 @@
 <!-- ═══ CTA FINAL ═══ -->
 <section id="cta-final">
   <div class="container" style="position:relative;z-index:1">
-    <div class="eyebrow reveal" style="justify-content:center;margin-bottom:28px"><span class="num">↓</span>&nbsp;&nbsp;ACCÈS RESTREINT · EARLY ACCESS</div>
+    <div class="eyebrow reveal" style="justify-content:center;margin-bottom:28px"><span class="num">↓</span>&nbsp;&nbsp;OPEN SOURCE · LICENCE MIT</div>
     <h2 class="reveal grad-text" data-delay="80" style="margin-bottom:12px">Forge ton propre noyau.</h2>
     <p class="reveal" data-delay="140" style="color:var(--ink-soft);margin-bottom:36px;font-size:.95rem">Open source. Traçable. Composable. Prêt.</p>
     <div class="reveal" data-delay="200" style="display:flex;justify-content:center;gap:14px;flex-wrap:wrap">

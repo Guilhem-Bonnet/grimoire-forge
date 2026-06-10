@@ -82,6 +82,7 @@ function patchJsNav(js) {
     'observability.html': '/observability/',
     'demo.html': '/demo/',
     'anatomy.html': '/anatomy/',
+    'manifesto.html': '/manifesto/',
   };
   for (const [k, v] of Object.entries(footerMap)) {
     js = js.replace(new RegExp(`href="${k.replace('.', '\\.')}"`, 'g'), `href="${v}"`);
