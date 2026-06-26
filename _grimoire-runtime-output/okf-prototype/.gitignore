@@ -1,0 +1,5 @@
+# Sorties dérivées/reconstructibles du prototype OKF — non publiées.
+# Contiennent aussi du contenu mémoire personnel (ne pas pousser sur GitHub).
+bundle/
+store/
+*.sqlite
