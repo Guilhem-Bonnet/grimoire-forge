@@ -116,6 +116,7 @@ L'orchestrateur dispatche automatiquement vers ces agents selon le besoin :
 | grimoire-subagent-trace | SubagentStart/Stop | Tracing des transitions SOG |
 | grimoire-pre-compact | PreCompact | Capsule de contexte avant compaction/summarization |
 | grimoire-master-stop-hook | Stop (agent scope) | Empeche une cloture seche et force une relance utilisateur concise |
+| grimoire-rtk-rewrite | PreToolUse | Reecriture des commandes shell via RTK (Rust Token Killer) — compresse les sorties verboses (git, pytest, ruff, build...) avant l'agent. `mode: enforced` (actif). Repli non bloquant via `hook-safety-gate.py set-mode shadow grimoire-rtk-rewrite` |
 
 ## Runtime Routing & Diagnostics (DeepWiki)
 

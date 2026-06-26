@@ -1,0 +1,11 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "type": "command",
+        "command": ".github/hooks/scripts/grimoire-hook-gateway.sh --hook-id grimoire-rtk-rewrite --event PreToolUse --control-file .github/hooks/grimoire-rtk-rewrite.json",
+        "timeout": 10
+      }
+    ]
+  }
+}
