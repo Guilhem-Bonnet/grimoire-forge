@@ -43,6 +43,12 @@ H1 est livré : export catalogue, CLI `grimoire ext`, extension pilote CrewAI,
 page extensions et blueprint viewer. Preuves et commits dans la
 documentation technique.
 
-Prochaine étape : H2 — `grimoire serve` (wizard de setup, API locale, vue
-« mon setup actuel » du viewer, éditeur blueprint v1). Gate d'entrée H2 :
-contrat d'extension prouvé (fait) ; gate de sortie : usage quotidien réel.
+H2 est livré côté outillage (2026-07-02, commits kit `2ee2661`, Forge
+`b20b458`) : `grimoire serve` (API locale + SSE + statique, 10 tests), page
+`/setup/` (wizard archetypes, installation d'extensions, vue « mon setup »,
+plan d'init), éditeur blueprint v1 (création, palette patterns + artefacts du
+projet, connexions non typées, sauvegarde et validation via l'API). Parcours
+complet vérifié navigateur.
+
+Restent pour clore H2 : la deuxième extension (LangGraph ou Langfuse) et le
+gate de sortie — l'usage quotidien réel, qui ne se livre pas, il se constate.
