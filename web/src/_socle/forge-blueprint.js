@@ -96,6 +96,10 @@
         { selector: 'node.dim', style: { opacity: 0.14 } },
         { selector: 'node.hit', style: { 'border-width': 3 } },
         {
+          selector: 'node.replay',
+          style: { 'border-width': 4, 'border-color': '#34D399', 'background-color': '#152019' },
+        },
+        {
           selector: 'edge',
           style: {
             width: 1.2,
@@ -198,7 +202,8 @@
 
     cy.on('select', 'node', evt => {
       const n = evt.target;
-      showPattern(n.data('pattern'));
+      const p = n.data('pattern');
+      if (p) showPattern(p);
       cy.edges().removeClass('focus');
       n.connectedEdges().not('.dim').addClass('focus');
     });
@@ -287,13 +292,23 @@
       document.getElementById('bp-edit').classList.add('on');
       refreshFileList();
 
-      // Palette : patterns du catalogue + artefacts du projet
+      // Palette : patterns du catalogue + artefacts du projet + node packs d'extensions
       const palette = document.getElementById('bp-palette');
-      api('/api/setup').then(view => {
+      const extNodes = {};
+      Promise.all([api('/api/setup'), api('/api/extensions')]).then(([view, exts]) => {
         const artifacts = [...(view.artifacts.agents || []), ...(view.artifacts.workflows || [])];
+        let extGroup = '';
+        for (const ext of exts.available || []) {
+          for (const n of ext.nodes || []) {
+            const ref = ext.id + '/' + n.id;
+            extNodes[ref] = n;
+            extGroup += `<option value="extnode:${ref}">${n.label} (${ext.id})</option>`;
+          }
+        }
         palette.innerHTML =
           '<optgroup label="Patterns">' + cat.patterns.map(p => `<option value="pattern:${p.id}">${p.id} ${p.name}</option>`).join('') + '</optgroup>' +
-          '<optgroup label="Artefacts du projet">' + artifacts.map(a => `<option value="artifact:${a}">${a.split('/').pop()}</option>`).join('') + '</optgroup>';
+          '<optgroup label="Artefacts du projet">' + artifacts.map(a => `<option value="artifact:${a}">${a.split('/').pop()}</option>`).join('') + '</optgroup>' +
+          (extGroup ? '<optgroup label="Nodes d’extensions">' + extGroup + '</optgroup>' : '');
       });
 
       document.getElementById('bp-file').addEventListener('change', function () {
@@ -310,19 +325,25 @@
 
       document.getElementById('bp-add').addEventListener('click', () => {
         if (!current) { toast('Ouvrir ou créer un blueprint d’abord.'); return; }
-        const [kind, ...refParts] = palette.value.split(':');
+        const [paletteKind, ...refParts] = palette.value.split(':');
         const ref = refParts.join(':');
         const id = 'n' + Date.now().toString(36) + (seq++);
-        const label = kind === 'pattern'
-          ? (cat.patterns.find(p => p.id === ref) || {}).name || ref
-          : ref.split('/').pop();
-        const bpNode = {
-          id, kind, ref, label,
-          pins: [
+        const kind = paletteKind === 'extnode' ? 'extension-node' : paletteKind;
+        let label, pins;
+        if (paletteKind === 'extnode') {
+          const decl = extNodes[ref] || {};
+          label = decl.label || ref;
+          pins = (decl.pins || []).map(p => ({ ...p }));
+        } else {
+          label = paletteKind === 'pattern'
+            ? (cat.patterns.find(p => p.id === ref) || {}).name || ref
+            : ref.split('/').pop();
+          pins = [
             { id: 'in', direction: 'in', contract: 'task-envelope' },
             { id: 'out', direction: 'out', contract: 'handoff-packet' },
-          ],
-        };
+          ];
+        }
+        const bpNode = { id, kind, ref, label, pins };
         const pan = cy.pan(), zoom = cy.zoom();
         cy.add({
           data: { id, label: (kind === 'pattern' ? ref + '\n' : '') + label, bpNode },
@@ -340,14 +361,35 @@
           : 'Mode connexion désactivé.');
       });
 
+      // Connexion typée (H4) : les contrats des pins doivent correspondre,
+      // sinon la connexion est refusée — le dessin suit le pseudo-code.
+      function compatiblePins(src, dst) {
+        const outs = (src.data('bpNode').pins || []).filter(p => p.direction === 'out');
+        const ins = (dst.data('bpNode').pins || []).filter(p => p.direction === 'in');
+        for (const o of outs) for (const i of ins) if (o.contract === i.contract) return { o, i };
+        return { outs, ins };
+      }
+
       cy.on('tap', 'node', evt => {
         const armed = document.getElementById('bp-link').classList.contains('armed');
         if (!armed || !current) return;
         if (!linkSource) { linkSource = evt.target; toast('Source : ' + linkSource.id()); return; }
         const target = evt.target;
         if (target.id() !== linkSource.id()) {
-          const bpEdge = { from: linkSource.id() + '.out', to: target.id() + '.in', contract: 'task-envelope' };
-          cy.add({ data: { id: 'be' + Date.now().toString(36), source: linkSource.id(), target: target.id(), kind: 'depends', bpEdge } });
+          const match = compatiblePins(linkSource, target);
+          if (!match.o) {
+            const outC = (match.outs || []).map(p => p.contract).join(', ') || 'aucun';
+            const inC = (match.ins || []).map(p => p.contract).join(', ') || 'aucun';
+            toast('Connexion refusée : contrats incompatibles.\nSorties : ' + outC + '\nEntrées : ' + inC, 5000);
+          } else {
+            const bpEdge = {
+              from: linkSource.id() + '.' + match.o.id,
+              to: target.id() + '.' + match.i.id,
+              contract: match.o.contract,
+            };
+            cy.add({ data: { id: 'be' + Date.now().toString(36), source: linkSource.id(), target: target.id(), kind: 'depends', bpEdge } });
+            toast('Connecté via contrat ' + match.o.contract + '.');
+          }
         }
         linkSource = null;
         document.getElementById('bp-link').classList.remove('armed');
@@ -358,10 +400,17 @@
         cy.$(':selected').remove();
       });
 
+      function lintReport(r) {
+        const parts = [];
+        if ((r.errors || []).length) parts.push('ERREURS (bloquantes) :\n- ' + r.errors.join('\n- '));
+        if ((r.warnings || []).length) parts.push('Avertissements :\n- ' + r.warnings.join('\n- '));
+        return parts.join('\n\n');
+      }
+
       document.getElementById('bp-check').addEventListener('click', () => {
         if (!current) { toast('Ouvrir un blueprint d’abord.'); return; }
         api('/api/blueprints/' + current.id + '/validate', { method: 'POST', body: JSON.stringify(serialize()) })
-          .then(r => toast(r.errors.length ? 'Validation :\n- ' + r.errors.join('\n- ') : 'Validation : aucun problème.', 6000));
+          .then(r => toast(lintReport(r) || 'Lint : aucun problème.', 8000));
       });
 
       document.getElementById('bp-save').addEventListener('click', () => {
@@ -371,8 +420,40 @@
           .then(r => {
             current = bp;
             refreshFileList(current.id);
-            toast('Sauvé : ' + r.saved + (r.warnings.length ? '\nAvertissements :\n- ' + r.warnings.join('\n- ') : ''), 5000);
+            const report = lintReport(r);
+            toast('Sauvé : ' + r.saved + (report ? '\n\n' + report : ''), 8000);
           });
+      });
+
+      /* Replay télémétrie (H4) : rejoue les events.jsonl sur le graphe via
+         les bindings du blueprint. Lecture seule, aucune exécution. */
+      document.getElementById('bp-replay').addEventListener('click', () => {
+        if (!current) { toast('Ouvrir un blueprint d’abord.'); return; }
+        const bindings = (current.telemetry || {}).bindings || [];
+        if (!bindings.length) { toast('Aucun binding télémétrie dans ce blueprint.'); return; }
+        api('/api/events/log').then(log => {
+          const seq = [];
+          for (const [source, events] of Object.entries(log)) {
+            for (const ev of events) {
+              const s = JSON.stringify(ev);
+              for (const b of bindings) {
+                if (b.eventSource !== source) continue;
+                const ok = Object.entries(b.match || {}).every(([k, v]) =>
+                  s.includes('"' + k + '"') && s.includes(String(v)));
+                if (ok) seq.push(b.nodeId);
+              }
+            }
+          }
+          if (!seq.length) { toast('Aucun événement ne matche les bindings.'); return; }
+          toast('Replay : ' + seq.length + ' événement(s)…');
+          let i = 0;
+          const timer = setInterval(() => {
+            cy.nodes().removeClass('replay');
+            if (i >= seq.length) { clearInterval(timer); toast('Replay terminé (' + seq.length + ' événements).'); return; }
+            const n = cy.getElementById(seq[i++]);
+            if (n.length) n.addClass('replay');
+          }, 550);
+        });
       });
     }
   }
