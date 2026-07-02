@@ -50,5 +50,12 @@ plan d'init), éditeur blueprint v1 (création, palette patterns + artefacts du
 projet, connexions non typées, sauvegarde et validation via l'API). Parcours
 complet vérifié navigateur.
 
-Restent pour clore H2 : la deuxième extension (LangGraph ou Langfuse) et le
-gate de sortie — l'usage quotidien réel, qui ne se livre pas, il se constate.
+Les extensions langfuse (observabilité : hooks + instructions, sans agents)
+et langgraph (framework : agent + node pack, sans hooks) sont livrées
+(commits kit `ffffa20`, Forge `3819cf7`). Trois extensions réelles valident
+le manifeste v1 sans changement structurel : **la précondition d'entrée H3
+est satisfaite**.
+
+Reste pour clore H2 : le gate de sortie — l'usage quotidien réel, qui ne se
+livre pas, il se constate. H3 (registry, publication, CI de conformité) peut
+être préparé en parallèle.
