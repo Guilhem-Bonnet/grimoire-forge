@@ -60,10 +60,11 @@ if (manifests === null) {
   process.exit(1);
 }
 
+const packaged = new Set(manifests.map((m) => m.id));
 const data = {
   generatedAt: new Date().toISOString(),
   available: manifests.sort((a, b) => a.id.localeCompare(b.id)),
-  candidates: CANDIDATES.map((c) => ({ ...c, status: 'candidate' })),
+  candidates: CANDIDATES.filter((c) => !packaged.has(c.id)).map((c) => ({ ...c, status: 'candidate' })),
 };
 
 fs.mkdirSync(path.dirname(OUT), { recursive: true });
