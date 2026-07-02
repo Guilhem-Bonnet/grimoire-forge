@@ -71,5 +71,13 @@ depuis registry avec intégrité vérifiée (commit `18212ca`, extraction
 extensions.
 
 Restent pour H3 : stats d'installation (exige une télémétrie d'usage,
-décision à prendre) et première extension tierce réelle. H4 (pins typés,
-linting normatif, replay) est le prochain grand chantier.
+décision à prendre) et première extension tierce réelle.
+
+Le cœur de H4 est livré (2026-07-02, kit `0a0cdc59`, Forge `ddb9812`) :
+pins typés bloquants (une connexion sans contrat commun ne compile pas,
+refusée dans l'éditeur et à la validation serveur), lint normatif dérivé du
+catalogue (dépendances de patterns absentes du flow, heuristique Faux Done,
+nodes isolés), node packs des extensions dans la palette, replay des
+events.jsonl sur le graphe via les bindings télémétrie. Restent pour H4 :
+subgraphs/composition (use-cases comme nodes composites), simulation
+pré-exécution, blueprints publiables au marketplace.
