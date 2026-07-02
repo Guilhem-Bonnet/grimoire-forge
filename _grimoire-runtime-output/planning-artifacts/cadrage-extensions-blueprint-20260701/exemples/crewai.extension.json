@@ -1,0 +1,76 @@
+{
+  "manifestVersion": 1,
+  "id": "crewai",
+  "name": "CrewAI Bridge",
+  "version": "0.1.0",
+  "description": "Adaptateur CrewAI : expose les crews et tasks CrewAI comme artefacts Grimoire gouvernés (agents, workflows), avec télémétrie ramenée dans les flux events.jsonl.",
+  "license": "MIT",
+  "authors": [
+    { "name": "Guilhem Bonnet", "url": "https://github.com/Guilhem-Bonnet" }
+  ],
+  "upstream": {
+    "repository": "https://github.com/crewAIInc/crewAI",
+    "kind": "framework",
+    "pinnedVersion": "0.100.x"
+  },
+  "compat": {
+    "kit": ">=3.11",
+    "manifest": 1
+  },
+  "provides": {
+    "agents": ["artifacts/agents/crewai-crew-runner.agent.md"],
+    "skills": ["artifacts/skills/crewai-crew-design/SKILL.md"],
+    "hooks": ["artifacts/hooks/crewai-telemetry-bridge.json"],
+    "workflows": ["artifacts/prompts/crewai-import-crew.prompt.md"],
+    "instructions": [],
+    "nodes": [
+      {
+        "id": "crewai-crew",
+        "label": "CrewAI Crew",
+        "description": "Un crew CrewAI complet (agents + tasks + process) exposé comme node composite.",
+        "patterns": ["ORC-01", "ORC-02", "ORC-03"],
+        "pins": [
+          { "id": "mission", "direction": "in", "contract": "task-envelope" },
+          { "id": "result", "direction": "out", "contract": "handoff-packet" }
+        ],
+        "compilesTo": ["agent", "workflow"]
+      }
+    ]
+  },
+  "patterns": {
+    "implements": ["ORC-01", "ORC-02", "ORC-03"],
+    "requires": ["GOV-01"]
+  },
+  "permissions": {
+    "filesystem": "artifacts",
+    "network": true,
+    "hooks": ["PostToolUse"],
+    "memory": "none"
+  },
+  "install": {
+    "steps": [
+      { "kind": "pip", "packages": ["crewai"] },
+      {
+        "kind": "copy",
+        "from": "artifacts/agents/crewai-crew-runner.agent.md",
+        "to": ".github/agents/crewai-crew-runner.agent.md"
+      },
+      {
+        "kind": "copy",
+        "from": "artifacts/prompts/crewai-import-crew.prompt.md",
+        "to": ".github/prompts/crewai-import-crew.prompt.md"
+      },
+      {
+        "kind": "script",
+        "path": "scripts/register-hooks.sh",
+        "args": ["--mode", "shadow"]
+      }
+    ],
+    "verify": "scripts/verify-install.sh"
+  },
+  "uninstall": {
+    "steps": [
+      { "kind": "script", "path": "scripts/unregister-hooks.sh" }
+    ]
+  }
+}

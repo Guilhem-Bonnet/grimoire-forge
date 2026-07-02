@@ -17,6 +17,11 @@ public/demo/
 public/observability/
 public/game-ui/
 public/forge/
+public/manifesto/
+public/documentation/
+public/extensions/
+public/blueprint/
+public/data/
 
 # logs
 npm-debug.log*

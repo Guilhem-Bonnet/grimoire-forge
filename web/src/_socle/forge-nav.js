@@ -25,6 +25,9 @@
             <li><a href="game-ui.html"       class="${isActive('game-ui.html') ? 'active' : ''}">GAME UI</a></li>
             <li><a href="observability.html" class="${isActive('observability.html') ? 'active' : ''}">OBSERVABILITY</a></li>
             <li><a href="anatomy.html"       class="${isActive('anatomy.html') ? 'active' : ''}">ANATOMIE</a></li>
+            <li><a href="documentation.html" class="${isActive('documentation.html') ? 'active' : ''}">DOCS</a></li>
+            <li><a href="extensions.html"    class="${isActive('extensions.html') ? 'active' : ''}">EXTENSIONS</a></li>
+            <li><a href="blueprint.html"     class="${isActive('blueprint.html') ? 'active' : ''}">BLUEPRINT</a></li>
           </ul>
           <a href="#cta-final" class="nav-cta">OUVRIR LE COCKPIT →</a>
         </div>
@@ -44,8 +47,8 @@
           <div class="footer-col">
             <h4>RUNTIME</h4>
             <ul>
-              <li><a href="#">Documentation</a></li>
-              <li><a href="#">API Reference</a></li>
+              <li><a href="documentation.html">Documentation</a></li>
+              <li><a href="/agents/">Agents</a></li>
               <li><a href="#">Contrats</a></li>
               <li><a href="#">Changelog</a></li>
             </ul>
@@ -64,8 +67,8 @@
             <ul>
               <li><a href="demo.html">Démo</a></li>
               <li><a href="anatomy.html">Anatomie</a></li>
-              <li><a href="#">Early Access</a></li>
-              <li><a href="#">Roadmap</a></li>
+              <li><a href="manifesto.html">Manifesto</a></li>
+              <li><a href="https://github.com/Guilhem-Bonnet/grimoire-forge" target="_blank" rel="noopener">GitHub</a></li>
             </ul>
           </div>
         </div>

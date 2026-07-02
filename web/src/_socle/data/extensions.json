@@ -1,0 +1,78 @@
+{
+  "generatedAt": "2026-07-02T03:48:58.823Z",
+  "available": [
+    {
+      "id": "crewai",
+      "name": "CrewAI Bridge",
+      "version": "0.1.0",
+      "description": "Expose les crews CrewAI comme artefacts Grimoire gouvernés via l'adaptateur grimoire.runtime.crewai_adapter : import de flows en Recipes, exécution bornée, traces normalisées.",
+      "license": "MIT",
+      "upstream": "https://github.com/crewAIInc/crewAI",
+      "upstreamKind": "framework",
+      "patterns": [
+        "ORC-01",
+        "ORC-02",
+        "ORC-03"
+      ],
+      "requires": [
+        "GOV-01"
+      ],
+      "permissions": {
+        "filesystem": "artifacts",
+        "network": true,
+        "hooks": [
+          "PostToolUse"
+        ],
+        "memory": "none"
+      },
+      "provides": {
+        "agents": 1,
+        "skills": 1,
+        "hooks": 1,
+        "workflows": 1,
+        "nodes": 1
+      },
+      "nodes": [
+        "CrewAI Crew"
+      ],
+      "status": "available"
+    }
+  ],
+  "candidates": [
+    {
+      "id": "langgraph",
+      "name": "LangGraph",
+      "description": "Graphes d’agents avec état persistant et checkpoints.",
+      "upstream": "https://github.com/langchain-ai/langgraph",
+      "status": "candidate"
+    },
+    {
+      "id": "langfuse",
+      "name": "Langfuse",
+      "description": "Observabilité et évaluation LLM — traces, scores, datasets.",
+      "upstream": "https://github.com/langfuse/langfuse",
+      "status": "candidate"
+    },
+    {
+      "id": "autogen",
+      "name": "AutoGen",
+      "description": "Conversations multi-agents et patterns de coopération Microsoft.",
+      "upstream": "https://github.com/microsoft/autogen",
+      "status": "candidate"
+    },
+    {
+      "id": "browser-use",
+      "name": "Browser Use",
+      "description": "Agents de navigation web pilotés par LLM.",
+      "upstream": "https://github.com/browser-use/browser-use",
+      "status": "candidate"
+    },
+    {
+      "id": "haystack",
+      "name": "Haystack",
+      "description": "Pipelines RAG et recherche sémantique en production.",
+      "upstream": "https://github.com/deepset-ai/haystack",
+      "status": "candidate"
+    }
+  ]
+}
