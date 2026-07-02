@@ -1,6 +1,70 @@
 {
-  "generatedAt": "2026-07-02T12:01:59.073Z",
+  "generatedAt": "2026-07-02T21:42:35.176Z",
+  "source": "registry",
+  "registry": "https://github.com/Guilhem-Bonnet/grimoire-extensions-registry",
   "available": [
+    {
+      "id": "autogen",
+      "name": "AutoGen Bridge",
+      "version": "0.1.0",
+      "description": "Pont AutoGen (Microsoft) : conversations multi-agents exposées comme orchestrations Grimoire gouvernées — rôles bornés, tours de parole tracés, sortie en handoff packet.",
+      "license": "MIT",
+      "upstream": "https://github.com/microsoft/autogen",
+      "upstreamKind": "framework",
+      "patterns": [
+        "ORC-01",
+        "ORC-03"
+      ],
+      "requires": [
+        "GOV-01"
+      ],
+      "permissions": {
+        "filesystem": "artifacts",
+        "network": true,
+        "hooks": [],
+        "memory": "none"
+      },
+      "provides": {
+        "agents": 1,
+        "skills": 1,
+        "nodes": 1
+      },
+      "nodes": [
+        "AutoGen Conversation"
+      ],
+      "status": "available"
+    },
+    {
+      "id": "browser-use",
+      "name": "Browser Use",
+      "version": "0.1.0",
+      "description": "Agents de navigation web gouvernés : chaque action UI produit une preuve (screenshot, DOM, URL), périmètre de navigation borné par allowlist, actions irréversibles simulées avant exécution.",
+      "license": "MIT",
+      "upstream": "https://github.com/browser-use/browser-use",
+      "upstreamKind": "tooling",
+      "patterns": [
+        "QUA-11",
+        "GOV-07"
+      ],
+      "requires": [
+        "GOV-02"
+      ],
+      "permissions": {
+        "filesystem": "artifacts",
+        "network": true,
+        "hooks": [],
+        "memory": "none"
+      },
+      "provides": {
+        "agents": 1,
+        "instructions": 1,
+        "nodes": 1
+      },
+      "nodes": [
+        "Browser Task"
+      ],
+      "status": "available"
+    },
     {
       "id": "crewai",
       "name": "CrewAI Bridge",
@@ -34,6 +98,37 @@
       },
       "nodes": [
         "CrewAI Crew"
+      ],
+      "status": "available"
+    },
+    {
+      "id": "haystack",
+      "name": "Haystack RAG",
+      "version": "0.1.0",
+      "description": "Pipelines RAG Haystack gouvernés : indexation documentaire déclarée (sources, fraîcheur, propriétaire), rappel avec provenance obligatoire — contre le RAG aveugle.",
+      "license": "Apache-2.0",
+      "upstream": "https://github.com/deepset-ai/haystack",
+      "upstreamKind": "framework",
+      "patterns": [
+        "KNO-06",
+        "KNO-02"
+      ],
+      "requires": [
+        "ORC-06"
+      ],
+      "permissions": {
+        "filesystem": "artifacts",
+        "network": true,
+        "hooks": [],
+        "memory": "read"
+      },
+      "provides": {
+        "skills": 1,
+        "instructions": 1,
+        "nodes": 1
+      },
+      "nodes": [
+        "Haystack Retrieval"
       ],
       "status": "available"
     },
@@ -102,24 +197,24 @@
   ],
   "candidates": [
     {
-      "id": "autogen",
-      "name": "AutoGen",
-      "description": "Conversations multi-agents et patterns de coopération Microsoft.",
-      "upstream": "https://github.com/microsoft/autogen",
+      "id": "dify",
+      "name": "Dify",
+      "description": "Plateforme LLM apps — workflows visuels, RAG, agents.",
+      "upstream": "https://github.com/langgenius/dify",
       "status": "candidate"
     },
     {
-      "id": "browser-use",
-      "name": "Browser Use",
-      "description": "Agents de navigation web pilotés par LLM.",
-      "upstream": "https://github.com/browser-use/browser-use",
+      "id": "openhands",
+      "name": "OpenHands",
+      "description": "Agents développeurs autonomes en sandbox.",
+      "upstream": "https://github.com/All-Hands-AI/OpenHands",
       "status": "candidate"
     },
     {
-      "id": "haystack",
-      "name": "Haystack",
-      "description": "Pipelines RAG et recherche sémantique en production.",
-      "upstream": "https://github.com/deepset-ai/haystack",
+      "id": "mem0",
+      "name": "Mem0",
+      "description": "Couche mémoire persistante pour agents.",
+      "upstream": "https://github.com/mem0ai/mem0",
       "status": "candidate"
     }
   ]
