@@ -57,5 +57,13 @@ le manifeste v1 sans changement structurel : **la précondition d'entrée H3
 est satisfaite**.
 
 Reste pour clore H2 : le gate de sortie — l'usage quotidien réel, qui ne se
-livre pas, il se constate. H3 (registry, publication, CI de conformité) peut
-être préparé en parallèle.
+livre pas, il se constate.
+
+H3 est préparé (2026-07-02, commit kit `18212ca`) : `grimoire ext publish`
+(archives déterministes + checksums), installation depuis registry avec
+vérification d'intégrité et extraction sûre, scaffold `registry/` extractible
+en repo dédié (schéma d'index, CI de conformité validée sur les 3 extensions
+publiées avec contrôle des patterns contre le catalogue, workflow GitHub
+Actions prêt). Restent pour H3 : la création du repo distant (décision de
+Guilhem), `ext publish` ouvrant une PR, et le marketplace web enrichi
+(recherche, filtres, stats).
