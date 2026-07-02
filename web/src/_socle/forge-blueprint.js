@@ -238,6 +238,7 @@
     function nodeColor(n) {
       if (n.kind === 'pattern') return FAMILY_COLORS[String(n.ref).split('-')[0]] || '#5B6068';
       if (n.kind === 'extension-node') return '#FF6B3D';
+      if (n.kind === 'composite') return '#A78BFA';
       return '#9BA0A8';
     }
 
@@ -307,6 +308,7 @@
         }
         palette.innerHTML =
           '<optgroup label="Patterns">' + cat.patterns.map(p => `<option value="pattern:${p.id}">${p.id} ${p.name}</option>`).join('') + '</optgroup>' +
+          '<optgroup label="Use-cases (composites)">' + (cat.useCases || []).map(u => `<option value="composite:use-case:${u.id}">${u.name}</option>`).join('') + '</optgroup>' +
           '<optgroup label="Artefacts du projet">' + artifacts.map(a => `<option value="artifact:${a}">${a.split('/').pop()}</option>`).join('') + '</optgroup>' +
           (extGroup ? '<optgroup label="Nodes d’extensions">' + extGroup + '</optgroup>' : '');
       });
@@ -334,6 +336,13 @@
           const decl = extNodes[ref] || {};
           label = decl.label || ref;
           pins = (decl.pins || []).map(p => ({ ...p }));
+        } else if (paletteKind === 'composite') {
+          const ucId = ref.replace('use-case:', '');
+          label = ((cat.useCases || []).find(u => u.id === ucId) || {}).name || ucId;
+          pins = [
+            { id: 'in', direction: 'in', contract: 'task-envelope' },
+            { id: 'out', direction: 'out', contract: 'handoff-packet' },
+          ];
         } else {
           label = paletteKind === 'pattern'
             ? (cat.patterns.find(p => p.id === ref) || {}).name || ref
