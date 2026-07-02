@@ -31,6 +31,7 @@ const PAGES = [
   { src: 'documentation.html', out: 'documentation/index.html' },
   { src: 'extensions.html', out: 'extensions/index.html' },
   { src: 'blueprint.html', out: 'blueprint/index.html' },
+  { src: 'setup.html', out: 'setup/index.html' },
 ];
 
 const NAV_MAP = {
@@ -44,6 +45,7 @@ const NAV_MAP = {
   'documentation.html': '/documentation/',
   'extensions.html': '/extensions/',
   'blueprint.html': '/blueprint/',
+  'setup.html': '/setup/',
 };
 
 // Copier les assets bruts (CSS intacts, JS patché pour pretty URLs)
@@ -88,6 +90,7 @@ function patchJsNav(js) {
             <li><a href="/documentation/" class="\${isActive('/documentation/') ? 'active' : ''}">DOCS</a></li>
             <li><a href="/extensions/"    class="\${isActive('/extensions/') ? 'active' : ''}">EXTENSIONS</a></li>
             <li><a href="/blueprint/"     class="\${isActive('/blueprint/') ? 'active' : ''}">BLUEPRINT</a></li>
+            <li><a href="/setup/"         class="\${isActive('/setup/') ? 'active' : ''}">SETUP</a></li>
             <li><a href="/agents/"        class="\${isActive('/agents/') ? 'active' : ''}">AGENTS</a></li>
             <li><a href="/changelog/"     class="\${isActive('/changelog/') ? 'active' : ''}">CHANGELOG</a></li>
           </ul>`

@@ -64,6 +64,16 @@
     .bp-d-rel .lbl { color: var(--ink-muted); font-size: .58rem; }
     .bp-d-doc { font-family: var(--font-mono); font-size: .58rem; color: var(--ink-muted); word-break: break-all; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--line); }
 
+    /* ── Mode éditeur (grimoire serve) ── */
+    .bp-edit { display: none; align-items: center; gap: 8px; }
+    .bp-edit.on { display: flex; }
+    .bp-edit select, .bp-edit input { background: var(--bg); border: 1px solid var(--line); border-radius: var(--r-sm); color: var(--ink); font-family: var(--font-mono); font-size: .6rem; padding: 5px 8px; max-width: 170px; }
+    .bp-btn { background: none; border: 1px solid var(--line); border-radius: var(--r-sm); color: var(--ink-soft); font-family: var(--font-mono); font-size: .58rem; letter-spacing: .06em; padding: 5px 9px; cursor: pointer; transition: color var(--dur-fast), border-color var(--dur-fast); }
+    .bp-btn:hover { color: var(--accent); border-color: var(--accent-dim); }
+    .bp-btn.armed { color: var(--data-cyan); border-color: rgba(110,231,255,.4); }
+    .bp-btn.primary { color: var(--accent); border-color: var(--accent-dim); background: var(--accent-soft); }
+    .bp-toast { position: fixed; bottom: 20px; right: 20px; z-index: 950; background: var(--elev-3); border: 1px solid var(--line-strong); border-left: 2px solid var(--accent); border-radius: var(--r-sm); padding: 12px 16px; font-family: var(--font-mono); font-size: .64rem; color: var(--ink-soft); max-width: 420px; white-space: pre-wrap; display: none; }
+    .bp-toast.show { display: block; }
     @media (max-width: 1100px) { .bp-shell { grid-template-columns: 200px 1fr; } .bp-detail { position: fixed; right: 0; top: 104px; bottom: 0; width: 320px; z-index: 900; transform: translateX(100%); transition: transform var(--dur-base) var(--ease-forge); } .bp-detail.open { transform: none; } }
   </style>
 </head>
@@ -73,11 +83,21 @@
 
 <main id="main">
 <div class="bp-topbar">
-  <span class="bp-title">BLUEPRINT · CATALOGUE DE PATTERNS</span>
+  <span class="bp-title" id="bp-title">BLUEPRINT · CATALOGUE DE PATTERNS</span>
   <div class="bp-stats" id="bp-stats"></div>
   <div class="bp-spacer"></div>
+  <div class="bp-edit" id="bp-edit">
+    <select id="bp-file" aria-label="Blueprint à éditer"></select>
+    <select id="bp-palette" aria-label="Node à ajouter"></select>
+    <button type="button" class="bp-btn" id="bp-add">AJOUTER</button>
+    <button type="button" class="bp-btn" id="bp-link">CONNECTER</button>
+    <button type="button" class="bp-btn" id="bp-del">SUPPR.</button>
+    <button type="button" class="bp-btn" id="bp-check">VALIDER</button>
+    <button type="button" class="bp-btn primary" id="bp-save">SAUVER</button>
+  </div>
   <span class="bp-source" id="bp-source"><span class="sync"></span>CHARGEMENT…</span>
 </div>
+<div class="bp-toast" id="bp-toast" role="status"></div>
 
 <div class="bp-shell">
   <aside class="bp-side" aria-label="Filtres du graphe">

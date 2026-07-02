@@ -39,3 +39,4 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+public/setup/

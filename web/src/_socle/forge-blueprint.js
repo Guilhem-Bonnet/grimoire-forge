@@ -206,5 +206,174 @@
       cy.edges().removeClass('focus');
       detail.classList.remove('open');
     });
+
+    setupEditor(cy, cat);
+  }
+
+  /* ── Éditeur v1 (mode local via grimoire serve) ─────────────────────────
+     Connexions non typées, pas de subgraphs (limites assumées, roadmap H2).
+     Le blueprint compile vers des artefacts ; il n'exécute rien. */
+  function setupEditor(cy, cat) {
+    const api = (path, opts) => fetch(path, opts).then(r => r.json());
+    api('/api/status').then(() => enable()).catch(() => {});
+
+    function toast(msg, ms) {
+      const el = document.getElementById('bp-toast');
+      el.textContent = msg;
+      el.classList.add('show');
+      clearTimeout(toast._t);
+      toast._t = setTimeout(() => el.classList.remove('show'), ms || 3200);
+    }
+
+    const catalogElements = cy.elements().jsons();
+    let current = null;        // blueprint ouvert (objet) ou null = vue catalogue
+    let linkSource = null;     // node source en mode connexion
+    let seq = 1;
+
+    function nodeColor(n) {
+      if (n.kind === 'pattern') return FAMILY_COLORS[String(n.ref).split('-')[0]] || '#5B6068';
+      if (n.kind === 'extension-node') return '#FF6B3D';
+      return '#9BA0A8';
+    }
+
+    function bpElements(bp) {
+      const nodes = (bp.nodes || []).map((n, i) => ({
+        data: { id: n.id, label: (n.kind === 'pattern' ? n.ref + '\n' : '') + n.label, bpNode: n },
+        position: n.position ? { x: n.position.x, y: n.position.y } : { x: 120 + (i % 5) * 240, y: 120 + Math.floor(i / 5) * 110 },
+        style: { 'border-color': nodeColor(n) },
+      }));
+      const edges = (bp.edges || []).map((e, i) => ({
+        data: { id: 'be' + i, source: e.from.split('.')[0], target: e.to.split('.')[0], kind: 'depends', label: e.contract, bpEdge: e },
+      }));
+      return { nodes, edges };
+    }
+
+    function openBlueprint(bp) {
+      current = bp;
+      cy.elements().remove();
+      cy.add(bpElements(bp));
+      cy.fit(undefined, 80);
+      document.getElementById('bp-title').textContent = 'BLUEPRINT · ' + (bp.name || bp.id).toUpperCase();
+    }
+
+    function backToCatalog() {
+      current = null;
+      cy.elements().remove();
+      cy.add(catalogElements);
+      cy.fit(undefined, 40);
+      document.getElementById('bp-title').textContent = 'BLUEPRINT · CATALOGUE DE PATTERNS';
+    }
+
+    function serialize() {
+      const nodes = cy.nodes().map(n => {
+        const bpNode = { ...n.data('bpNode') };
+        bpNode.position = { x: Math.round(n.position('x')), y: Math.round(n.position('y')) };
+        return bpNode;
+      });
+      const edges = cy.edges().map(e => e.data('bpEdge'));
+      return { ...current, nodes, edges };
+    }
+
+    function refreshFileList(selected) {
+      api('/api/blueprints').then(list => {
+        const sel = document.getElementById('bp-file');
+        sel.innerHTML = '<option value="">— catalogue —</option>'
+          + '<option value="__new__">+ nouveau blueprint</option>'
+          + list.map(b => `<option value="${b.id}" ${b.id === selected ? 'selected' : ''}>${b.id} (${b.nodes}n/${b.edges}e)</option>`).join('');
+      });
+    }
+
+    function enable() {
+      document.getElementById('bp-edit').classList.add('on');
+      refreshFileList();
+
+      // Palette : patterns du catalogue + artefacts du projet
+      const palette = document.getElementById('bp-palette');
+      api('/api/setup').then(view => {
+        const artifacts = [...(view.artifacts.agents || []), ...(view.artifacts.workflows || [])];
+        palette.innerHTML =
+          '<optgroup label="Patterns">' + cat.patterns.map(p => `<option value="pattern:${p.id}">${p.id} ${p.name}</option>`).join('') + '</optgroup>' +
+          '<optgroup label="Artefacts du projet">' + artifacts.map(a => `<option value="artifact:${a}">${a.split('/').pop()}</option>`).join('') + '</optgroup>';
+      });
+
+      document.getElementById('bp-file').addEventListener('change', function () {
+        if (!this.value) { backToCatalog(); return; }
+        if (this.value === '__new__') {
+          const id = prompt('Identifiant du blueprint (kebab-case) :');
+          if (!id || !/^[a-z0-9]+(-[a-z0-9]+)*$/.test(id)) { toast('Identifiant invalide.'); refreshFileList(); return; }
+          openBlueprint({ blueprintVersion: 1, id, name: id, catalogRef: { version: cat.catalogVersion }, nodes: [], edges: [] });
+          refreshFileList(id);
+          return;
+        }
+        api('/api/blueprints/' + this.value).then(openBlueprint);
+      });
+
+      document.getElementById('bp-add').addEventListener('click', () => {
+        if (!current) { toast('Ouvrir ou créer un blueprint d’abord.'); return; }
+        const [kind, ...refParts] = palette.value.split(':');
+        const ref = refParts.join(':');
+        const id = 'n' + Date.now().toString(36) + (seq++);
+        const label = kind === 'pattern'
+          ? (cat.patterns.find(p => p.id === ref) || {}).name || ref
+          : ref.split('/').pop();
+        const bpNode = {
+          id, kind, ref, label,
+          pins: [
+            { id: 'in', direction: 'in', contract: 'task-envelope' },
+            { id: 'out', direction: 'out', contract: 'handoff-packet' },
+          ],
+        };
+        const pan = cy.pan(), zoom = cy.zoom();
+        cy.add({
+          data: { id, label: (kind === 'pattern' ? ref + '\n' : '') + label, bpNode },
+          position: { x: (cy.width() / 2 - pan.x) / zoom, y: (cy.height() / 2 - pan.y) / zoom },
+          style: { 'border-color': nodeColor(bpNode) },
+        });
+      });
+
+      document.getElementById('bp-link').addEventListener('click', function () {
+        if (!current) { toast('Ouvrir un blueprint d’abord.'); return; }
+        linkSource = null;
+        this.classList.toggle('armed');
+        toast(this.classList.contains('armed')
+          ? 'Mode connexion : cliquer le node source puis le node cible.'
+          : 'Mode connexion désactivé.');
+      });
+
+      cy.on('tap', 'node', evt => {
+        const armed = document.getElementById('bp-link').classList.contains('armed');
+        if (!armed || !current) return;
+        if (!linkSource) { linkSource = evt.target; toast('Source : ' + linkSource.id()); return; }
+        const target = evt.target;
+        if (target.id() !== linkSource.id()) {
+          const bpEdge = { from: linkSource.id() + '.out', to: target.id() + '.in', contract: 'task-envelope' };
+          cy.add({ data: { id: 'be' + Date.now().toString(36), source: linkSource.id(), target: target.id(), kind: 'depends', bpEdge } });
+        }
+        linkSource = null;
+        document.getElementById('bp-link').classList.remove('armed');
+      });
+
+      document.getElementById('bp-del').addEventListener('click', () => {
+        if (!current) return;
+        cy.$(':selected').remove();
+      });
+
+      document.getElementById('bp-check').addEventListener('click', () => {
+        if (!current) { toast('Ouvrir un blueprint d’abord.'); return; }
+        api('/api/blueprints/' + current.id + '/validate', { method: 'POST', body: JSON.stringify(serialize()) })
+          .then(r => toast(r.errors.length ? 'Validation :\n- ' + r.errors.join('\n- ') : 'Validation : aucun problème.', 6000));
+      });
+
+      document.getElementById('bp-save').addEventListener('click', () => {
+        if (!current) { toast('Ouvrir un blueprint d’abord.'); return; }
+        const bp = serialize();
+        api('/api/blueprints/' + current.id, { method: 'PUT', body: JSON.stringify(bp) })
+          .then(r => {
+            current = bp;
+            refreshFileList(current.id);
+            toast('Sauvé : ' + r.saved + (r.warnings.length ? '\nAvertissements :\n- ' + r.warnings.join('\n- ') : ''), 5000);
+          });
+      });
+    }
   }
 })();

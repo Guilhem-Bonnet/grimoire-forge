@@ -28,6 +28,7 @@
             <li><a href="documentation.html" class="${isActive('documentation.html') ? 'active' : ''}">DOCS</a></li>
             <li><a href="extensions.html"    class="${isActive('extensions.html') ? 'active' : ''}">EXTENSIONS</a></li>
             <li><a href="blueprint.html"     class="${isActive('blueprint.html') ? 'active' : ''}">BLUEPRINT</a></li>
+            <li><a href="setup.html"         class="${isActive('setup.html') ? 'active' : ''}">SETUP</a></li>
           </ul>
           <a href="#cta-final" class="nav-cta">OUVRIR LE COCKPIT →</a>
         </div>
