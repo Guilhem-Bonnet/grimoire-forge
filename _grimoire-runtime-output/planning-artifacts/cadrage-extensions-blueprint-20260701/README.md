@@ -59,11 +59,17 @@ est satisfaite**.
 Reste pour clore H2 : le gate de sortie — l'usage quotidien réel, qui ne se
 livre pas, il se constate.
 
-H3 est préparé (2026-07-02, commit kit `18212ca`) : `grimoire ext publish`
-(archives déterministes + checksums), installation depuis registry avec
-vérification d'intégrité et extraction sûre, scaffold `registry/` extractible
-en repo dédié (schéma d'index, CI de conformité validée sur les 3 extensions
-publiées avec contrôle des patterns contre le catalogue, workflow GitHub
-Actions prêt). Restent pour H3 : la création du repo distant (décision de
-Guilhem), `ext publish` ouvrant une PR, et le marketplace web enrichi
-(recherche, filtres, stats).
+H3 est en production (2026-07-02, validé par Guilhem) : le registry vit dans
+son repo dédié
+[grimoire-extensions-registry](https://github.com/Guilhem-Bonnet/grimoire-extensions-registry)
+— index versionné, 3 extensions publiées, CI de conformité autonome verte
+sur GitHub (validation embarquée, sans dépendance au cycle de release du
+kit), flux de publication par PR (`scripts/publish-pr.sh`). Côté kit :
+`grimoire ext publish` (archives déterministes + sha256) et installation
+depuis registry avec intégrité vérifiée (commit `18212ca`, extraction
+`e7582c2d`). Côté site : recherche + filtres par famille sur la page
+extensions.
+
+Restent pour H3 : stats d'installation (exige une télémétrie d'usage,
+décision à prendre) et première extension tierce réelle. H4 (pins typés,
+linting normatif, replay) est le prochain grand chantier.
