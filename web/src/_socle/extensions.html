@@ -43,6 +43,12 @@
     .ext-cmd { font-family: var(--font-mono); font-size: .66rem; color: var(--ink-soft); background: var(--bg); border: 1px solid var(--line); border-radius: var(--r-sm); padding: 8px 10px; }
     .ext-cmd .p { color: var(--ink-muted); user-select: none; }
 
+    .ext-tools { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 26px; }
+    .ext-tools input[type=search] { background: var(--elev-1); border: 1px solid var(--line); border-radius: var(--r-sm); color: var(--ink); font-family: var(--font-mono); font-size: .72rem; padding: 9px 12px; width: 260px; }
+    .ext-tools input[type=search]:focus { outline: none; border-color: var(--accent-dim); }
+    .ext-chip { background: none; border: 1px solid var(--line); border-radius: var(--r-sm); color: var(--ink-muted); font-family: var(--font-mono); font-size: .6rem; letter-spacing: .06em; padding: 6px 10px; cursor: pointer; transition: color var(--dur-fast), border-color var(--dur-fast); }
+    .ext-chip.on { color: var(--data-cyan); border-color: rgba(110,231,255,.4); }
+    .ext-chip:hover { border-color: var(--accent-dim); }
     .ext-contract { padding: 44px 0 90px; }
     .ext-rules { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
     .ext-rule { background: var(--elev-1); border: 1px solid var(--line); border-left: 2px solid var(--accent); border-radius: var(--r-sm); padding: 16px; }
@@ -63,8 +69,12 @@
     <h1>Extensions</h1>
     <p>Chaque extension packe un framework agentique public en artefacts gouvernés — agents, skills, hooks, workflows — installés dans votre projet et ancrés sur le catalogue de patterns. Pas de boîte noire : un manifeste validé, des permissions déclarées, des hooks en mode shadow.</p>
     <div class="ext-install">
-      <span class="p">$</span><code id="ext-install-cmd">grimoire ext add extensions/crewai</code>
+      <span class="p">$</span><code id="ext-install-cmd">grimoire ext add crewai --registry grimoire-extensions-registry</code>
       <button type="button" data-copy="#ext-install-cmd" aria-label="Copier la commande">COPIER</button>
+    </div>
+    <div class="ext-tools">
+      <input id="ext-search" type="search" placeholder="Rechercher (nom, pattern, description)…" aria-label="Rechercher une extension"/>
+      <span id="ext-chips"></span>
     </div>
   </div>
 </section>
@@ -143,15 +153,48 @@
     </article>`;
   }
 
+  let allData = null;
+  const activeFamilies = new Set();
+
+  function matches(e) {
+    const q = document.getElementById('ext-search').value.trim().toLowerCase();
+    const hay = [e.name, e.description, ...(e.patterns || [])].join(' ').toLowerCase();
+    if (q && !hay.includes(q)) return false;
+    if (activeFamilies.size) {
+      const fams = new Set((e.patterns || []).map(p => p.split('-')[0]));
+      if (![...activeFamilies].some(f => fams.has(f))) return false;
+    }
+    return true;
+  }
+
+  function render() {
+    const av = allData.available.filter(matches);
+    const ca = allData.candidates.filter(matches);
+    document.getElementById('ext-available').innerHTML = av.length
+      ? av.map(card).join('')
+      : '<div class="ext-empty">Aucune extension ne correspond aux filtres.</div>';
+    document.getElementById('ext-candidates').innerHTML = ca.length
+      ? ca.map(card).join('')
+      : '<div class="ext-empty">Aucun candidat ne correspond aux filtres.</div>';
+    document.getElementById('ext-count-available').textContent = '· ' + av.length + '/' + allData.available.length;
+    document.getElementById('ext-count-candidates').textContent = '· ' + ca.length + '/' + allData.candidates.length;
+  }
+
   loadData('extensions.json').then(data => {
-    const av = document.getElementById('ext-available');
-    const ca = document.getElementById('ext-candidates');
-    av.innerHTML = data.available.length
-      ? data.available.map(card).join('')
-      : '<div class="ext-empty">Aucune extension publiée pour le moment.</div>';
-    ca.innerHTML = data.candidates.map(card).join('');
-    document.getElementById('ext-count-available').textContent = '· ' + data.available.length;
-    document.getElementById('ext-count-candidates').textContent = '· ' + data.candidates.length;
+    allData = data;
+    const families = [...new Set(data.available.flatMap(e => (e.patterns || []).map(p => p.split('-')[0])))].sort();
+    document.getElementById('ext-chips').innerHTML = families.map(f =>
+      `<button type="button" class="ext-chip" data-family="${esc(f)}">${esc(f)}</button>`).join(' ');
+    document.getElementById('ext-chips').addEventListener('click', e => {
+      const chip = e.target.closest('[data-family]');
+      if (!chip) return;
+      const f = chip.dataset.family;
+      if (activeFamilies.has(f)) { activeFamilies.delete(f); chip.classList.remove('on'); }
+      else { activeFamilies.add(f); chip.classList.add('on'); }
+      render();
+    });
+    document.getElementById('ext-search').addEventListener('input', render);
+    render();
   }).catch(() => {
     document.getElementById('ext-available').innerHTML =
       '<div class="ext-empty">Données indisponibles — lancer node scripts/build-extensions-data.mjs.</div>';
