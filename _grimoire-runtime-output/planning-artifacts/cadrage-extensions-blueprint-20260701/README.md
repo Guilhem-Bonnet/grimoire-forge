@@ -37,12 +37,12 @@ Cadrage des chantiers extensions installables, marketplace, setup web et
 Le blueprint compile vers les artefacts gouvernés existants ; le runtime
 existant exécute. Aucun moteur d'exécution parallèle.
 
-## Avancement H1
+## Avancement
 
-Livrés : export catalogue (`scripts/export-catalogue.py` dans le repo de
-patterns, JSON validé), CLI `grimoire ext` (grimoire-kit, testé), extension
-pilote CrewAI (`grimoire-kit/extensions/crewai/`, cycle complet prouvé).
-Voir la documentation technique pour les preuves.
+H1 est livré : export catalogue, CLI `grimoire ext`, extension pilote CrewAI,
+page extensions et blueprint viewer. Preuves et commits dans la
+documentation technique.
 
-Prochaine étape : page extensions statique du site et blueprint viewer
-read-only.
+Prochaine étape : H2 — `grimoire serve` (wizard de setup, API locale, vue
+« mon setup actuel » du viewer, éditeur blueprint v1). Gate d'entrée H2 :
+contrat d'extension prouvé (fait) ; gate de sortie : usage quotidien réel.

@@ -80,9 +80,13 @@ v1 pour éviter les migrations structurelles.
 
 | Livrable | Emplacement | Preuve |
 | --- | --- | --- |
-| Script d'export catalogue | `processus-developpement-agentique/scripts/export-catalogue.py` | `exports/catalogue-export.json` valide le schéma |
-| CLI extensions | `grimoire-kit/src/grimoire/tools/ext_manager.py` + `grimoire.sh ext` | 18 tests unitaires (`tests/unit/tools/test_ext_manager.py`), suites tools et core vertes |
+| Script d'export catalogue | `processus-developpement-agentique/scripts/export-catalogue.py` (commit `556059a`) | `exports/catalogue-export.json` valide le schéma |
+| CLI extensions | `grimoire-kit/src/grimoire/tools/ext_manager.py` + `grimoire.sh ext` + wrapper Typer `cmd_ext.py` (commit `9e25c9d`) | 21 tests unitaires (tools + cli), suites tools et core vertes |
 | Extension pilote CrewAI | `grimoire-kit/extensions/crewai/` | Cycle add/list/verify/remove complet sur projet témoin ; hook enregistré puis retiré en mode shadow dans `hook-safety-registry.json` |
+| Page extensions | `web/src/_socle/extensions.html` + `build-extensions-data.mjs` (commit `a59502e`) | Rendu vérifié navigateur, capture dans `test-artifacts/extensions-blueprint-h1/` |
+| Blueprint viewer | `web/src/_socle/blueprint.html` + `forge-blueprint.js` | 78 patterns, 141 relations typées, filtres et fiche détail vérifiés navigateur (sélection ORG-01 testée) |
 
-Restent pour clore H1 : la page extensions statique du site et le blueprint
-viewer read-only (consommateur de `catalogue-export.json`).
+H1 est livré. La vue « mon setup actuel » du viewer est reportée à H2 : elle
+exige la lecture des artefacts du projet, donc `grimoire serve`. Le câblage
+CLI Typer dans le kit (`app.py`, `grimoire.sh`) reste dans le working tree de
+la branche car il dépend d'un refactoring pré-existant non commité.
