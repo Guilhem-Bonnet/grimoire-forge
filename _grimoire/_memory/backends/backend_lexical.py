@@ -78,12 +78,13 @@ class LexicalBackend:
         return entry
 
     def search(self, query: str, user_id: str = "", limit: int = 5) -> list[dict]:
-        if self._fts:
+        fts_query = _fts_query(query)
+        if self._fts and fts_query:
             sql = (
                 "SELECT id, user_id, memory, metadata, created_at, bm25(mem) AS score "
                 "FROM mem WHERE mem MATCH ?"
             )
-            params: list = [_fts_query(query)]
+            params: list = [fts_query]
             if user_id:
                 sql += " AND user_id = ?"
                 params.append(user_id)

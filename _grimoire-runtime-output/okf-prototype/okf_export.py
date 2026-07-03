@@ -19,6 +19,7 @@ Stdlib + PyYAML uniquement. Aucun lock-in : la sortie est "just markdown / just 
 from __future__ import annotations
 
 import argparse
+import os
 import re
 import sys
 from datetime import datetime, timezone
@@ -30,8 +31,15 @@ import yaml
 OKF_RESERVED = ("type", "title", "description", "resource", "tags", "timestamp")
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
+# Mémoire agent Claude Code : dérivée du chemin du repo (slug = path avec / -> -),
+# surchargée via GRIMOIRE_AGENT_MEMORY pour les setups non standard.
 DEFAULT_AGENT_MEMORY = Path(
-    "~/.claude/projects/-mnt-Travail-Projets-Dev-Grimoire-Forge/memory"
+    os.environ.get(
+        "GRIMOIRE_AGENT_MEMORY",
+        Path("~/.claude/projects").expanduser()
+        / str(REPO_ROOT).replace("/", "-")
+        / "memory",
+    )
 ).expanduser()
 DEFAULT_OUT = REPO_ROOT / "_grimoire-runtime-output" / "okf-prototype" / "bundle"
 

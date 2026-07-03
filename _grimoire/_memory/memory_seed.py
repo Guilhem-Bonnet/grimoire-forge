@@ -22,6 +22,7 @@ Usage:
 from __future__ import annotations
 
 import argparse
+import os
 import re
 import sys
 from datetime import datetime
@@ -34,8 +35,15 @@ REPO_ROOT = HERE.parent.parent
 sys.path.insert(0, str(HERE))
 import backends  # noqa: E402  (résolu via sys.path ci-dessus)
 
+# Mémoire agent Claude Code : dérivée du chemin du repo (slug = path avec / -> -),
+# surchargée via GRIMOIRE_AGENT_MEMORY pour les setups non standard.
 AGENT_MEMORY = Path(
-    "~/.claude/projects/-mnt-Travail-Projets-Dev-Grimoire-Forge/memory"
+    os.environ.get(
+        "GRIMOIRE_AGENT_MEMORY",
+        Path("~/.claude/projects").expanduser()
+        / str(REPO_ROOT).replace("/", "-")
+        / "memory",
+    )
 ).expanduser()
 # Fichiers _memory curatés et porteurs de connaissance durable (pas les journaux JSONL).
 CURATED = ["shared-context.md", "failure-museum.md", "handoff-log.md", "decisions-log.md"]

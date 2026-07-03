@@ -1016,7 +1016,9 @@ def cmd_seed(args):
     if getattr(args, "search", None):
         cmd += ["--search", args.search]
     import subprocess
-    subprocess.run(cmd, check=False)
+    rc = subprocess.run(cmd, check=False).returncode
+    if rc != 0:
+        sys.exit(rc)
 
 
 def main():

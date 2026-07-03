@@ -635,11 +635,15 @@
 /* ── Tweaks panel ── */
 const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{"accent":"#FF6B3D","size":16,"density":"120","grid":"1"}/*EDITMODE-END*/;
 (function(){
-  window.addEventListener('message', e => {
-    if (e.data?.type === '__activate_edit_mode')   document.getElementById('tweaks-panel').classList.add('open');
-    if (e.data?.type === '__deactivate_edit_mode') document.getElementById('tweaks-panel').classList.remove('open');
-  });
-  window.parent.postMessage({type:'__edit_mode_available'},'*');
+  const embedded = window.self !== window.top;
+  if (embedded) {
+    window.addEventListener('message', e => {
+      if (e.source !== window.parent) return;
+      if (e.data?.type === '__activate_edit_mode')   document.getElementById('tweaks-panel').classList.add('open');
+      if (e.data?.type === '__deactivate_edit_mode') document.getElementById('tweaks-panel').classList.remove('open');
+    });
+    window.parent.postMessage({type:'__edit_mode_available'},'*');
+  }
 
   const r = document.documentElement;
   const d = TWEAK_DEFAULTS;

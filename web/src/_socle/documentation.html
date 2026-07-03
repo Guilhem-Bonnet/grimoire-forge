@@ -104,11 +104,17 @@ const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
   "size": 16
 }/*EDITMODE-END*/;
 (function(){
-  window.addEventListener('message', e => {
-    if (e.data?.type === '__activate_edit_mode')   document.getElementById('tweaks-panel').classList.add('open');
-    if (e.data?.type === '__deactivate_edit_mode') document.getElementById('tweaks-panel').classList.remove('open');
-  });
-  window.parent.postMessage({type:'__edit_mode_available'},'*');
+  // Bridge edit-mode : uniquement quand la page est embarquée, et seulement
+  // pour les messages émis par la frame parente (pas d'origine arbitraire).
+  const embedded = window.self !== window.top;
+  if (embedded) {
+    window.addEventListener('message', e => {
+      if (e.source !== window.parent) return;
+      if (e.data?.type === '__activate_edit_mode')   document.getElementById('tweaks-panel').classList.add('open');
+      if (e.data?.type === '__deactivate_edit_mode') document.getElementById('tweaks-panel').classList.remove('open');
+    });
+    window.parent.postMessage({type:'__edit_mode_available'},'*');
+  }
 
   const r = document.documentElement;
   const d = TWEAK_DEFAULTS;

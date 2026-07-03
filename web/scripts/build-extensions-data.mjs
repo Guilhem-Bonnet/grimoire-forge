@@ -6,8 +6,9 @@
 // quand disponibles ; fallback complet sur le kit si le registry est absent.
 import fs from 'node:fs';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-const ROOT = path.resolve(new URL('.', import.meta.url).pathname, '..');
+const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const EXT_DIR = path.resolve(ROOT, '../grimoire-kit/extensions');
 const REGISTRY_CANDIDATES = [
   path.resolve(ROOT, '../../grimoire-extensions-registry/registry.json'),

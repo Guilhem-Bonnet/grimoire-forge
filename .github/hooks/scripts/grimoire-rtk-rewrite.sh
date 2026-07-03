@@ -3,9 +3,9 @@
 # Route les appels d'outil shell via RTK (Rust Token Killer) pour compresser
 # les sorties verboses (git, pytest, ruff, build...) avant qu'elles n'atteignent
 # l'agent. Cote Copilot, RTK reecrit la commande de maniere transparente.
-# Mode: shadow → la reecriture n'est appliquee qu'apres promotion en `enforced`
-# via `grimoire: hooks-promote`. En shadow/canary le gateway encapsule la sortie
-# de maniere non bloquante (observation seule).
+# Mode courant : `enforced` (voir hook-safety-registry.json) — la reecriture est
+# appliquee. Repli non bloquant : `hook-safety-gate.py set-mode shadow
+# grimoire-rtk-rewrite` (en shadow/canary le gateway observe sans reecrire).
 
 set -euo pipefail
 

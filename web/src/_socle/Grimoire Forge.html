@@ -830,17 +830,22 @@ const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
 }/*EDITMODE-END*/;
 
 (function() {
-  // Register listener BEFORE announcing availability
-  window.addEventListener('message', (e) => {
-    if (e.data?.type === '__activate_edit_mode') {
-      document.getElementById('tweaks-panel').classList.add('open');
-    }
-    if (e.data?.type === '__deactivate_edit_mode') {
-      document.getElementById('tweaks-panel').classList.remove('open');
-    }
-  });
+  // Register listener BEFORE announcing availability — embedded frames only,
+  // and only for messages emitted by the parent frame.
+  const embedded = window.self !== window.top;
+  if (embedded) {
+    window.addEventListener('message', (e) => {
+      if (e.source !== window.parent) return;
+      if (e.data?.type === '__activate_edit_mode') {
+        document.getElementById('tweaks-panel').classList.add('open');
+      }
+      if (e.data?.type === '__deactivate_edit_mode') {
+        document.getElementById('tweaks-panel').classList.remove('open');
+      }
+    });
 
-  window.parent.postMessage({ type: '__edit_mode_available' }, '*');
+    window.parent.postMessage({ type: '__edit_mode_available' }, '*');
+  }
 
   const root = document.documentElement;
   const d = TWEAK_DEFAULTS;
