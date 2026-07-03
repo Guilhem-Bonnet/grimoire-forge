@@ -7,7 +7,6 @@
     "quality": "bash scripts/check-quality.sh",
     "check:standard": "bash scripts/check-standard.sh",
     "standard:verify": "bash scripts/run-standard.sh verify",
-    "standard:audit": "bash scripts/run-standard.sh audit",
-    "docs:build": "mkdocs build --strict"
+    "standard:audit": "bash scripts/run-standard.sh audit"
   }
 }

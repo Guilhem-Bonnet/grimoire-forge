@@ -131,7 +131,7 @@
         <div class="alert-i w"><div class="alert-imsg">Hallucination rate &gt; 0.4%<br><span style="color:var(--ink-muted)">agent/critic · session-4a2f</span></div><div class="alert-itime">09:14:32</div></div>
         <div class="alert-i"><div class="alert-imsg">P99 latency spike 1.8s<br><span style="color:var(--ink-muted)">agent/tech-writer · pipeline/synthesis</span></div><div class="alert-itime">09:12:01</div></div>
         <div class="alert-i"><div class="alert-imsg">Sub-agent depth &gt; 4<br><span style="color:var(--ink-muted)">agent/architect · RFC-09</span></div><div class="alert-itime">09:08:44</div></div>
-        <div class="alert-i c"><div class="alert-imsg">Cost rate +32% vs SLA<br><span style="color:var(--ink-muted)">session-7c3d · GPT-4o</span></div><div class="alert-itime">09:02:11</div></div>
+        <div class="alert-i c"><div class="alert-imsg">Cost rate +32% vs SLA<br><span style="color:var(--ink-muted)">session-7c3d · primary model</span></div><div class="alert-itime">09:02:11</div></div>
       </div>
     </div>
   </div>
@@ -407,7 +407,7 @@ const pheCells=[];
     {type:'AGENT',msg:'agent/critic · CVTL pass · score 0.94'},
     {type:'FORGE',msg:'artefact FORGE-0341 · brief-v2.json émis'},
     {type:'ALERT',msg:'hallucination rate 0.41% · agent/critic · seuil 0.5%'},
-    {type:'SOG',  msg:'routing → claude-opus-4 · latence SOG 38ms'},
+    {type:'SOG',  msg:'routing → primary model · latence SOG 38ms'},
     {type:'FORGE',msg:'artefact FORGE-0340 · schema-v3.ts émis'},
     {type:'AGENT',msg:'agent/architect · sub-agent depth 3 · trust 0.91'},
     {type:'TRACE',msg:'session-7c3d opened · 2 agents · pipeline/review'},

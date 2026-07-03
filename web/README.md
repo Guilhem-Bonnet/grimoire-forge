@@ -4,6 +4,21 @@ Site statique de Grimoire Forge, basé sur [Astro](https://astro.build).
 Le socle HTML/CSS/JS premium (dark control plane + FX layer futuriste) est
 stocké dans [src/_socle/](src/_socle/) et projeté dans `public/` au build.
 
+## Source de vérité vs vitrine du kit
+
+Deux sites partagent le socle visuel forge, sans être des copies l'un de l'autre :
+
+| Surface | Rôle | Déploiement |
+|---|---|---|
+| `web/src/_socle/` (ce dépôt) | **Banc de design** — pages Forge (blueprint, extensions, manifesto, setup) et socle canonique | Local uniquement |
+| `web/` du repo Grimoire-kit | **Vitrine produit du kit** (kanban, memory, portfolio, observatory) + UI cockpit bundlée dans le wheel | GitHub Pages + PyPI |
+
+Règle de synchronisation : les fichiers de fondation (`forge-tokens.css`,
+`forge-base.css`, `forge-charts.css`, `forge-motion.*`) sont canoniques **ici** ;
+toute évolution doit être reportée vers le `web/` du kit dans la même itération.
+Les pages et scripts spécifiques à chaque site (ex. `forge-blueprint.js` ici,
+`forge-observatory.js`, `data-loader.js` côté kit) ne se synchronisent pas.
+
 ## Structure
 
 ```
@@ -81,46 +96,3 @@ Variable d'environnement :
 
 - `SITE_URL` — URL canonique (défaut : `https://grimoire-forge.dev`).
   Utilisée pour le sitemap et les balises `og:`.
-# Astro Starter Kit: Minimal
-
-```sh
-npm create astro@latest -- --template minimal
-```
-
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
-
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
-
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
-
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).

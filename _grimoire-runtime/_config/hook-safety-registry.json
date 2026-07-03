@@ -177,6 +177,17 @@
       "mode": "shadow",
       "validatedDigest": "399fe6e58fff03306268c81e0fa53a8d050df9ef33847009099ad2d63f595e2e",
       "validatedAt": "2026-05-08T00:00:00Z"
+    },
+    "grimoire-rtk-rewrite": {
+      "event": "PreToolUse",
+      "target": ".github/hooks/scripts/grimoire-rtk-rewrite.sh",
+      "controlFiles": [
+        ".github/hooks/grimoire-rtk-rewrite.json",
+        ".github/hooks/scripts/grimoire-hook-gateway.sh"
+      ],
+      "mode": "enforced",
+      "validatedDigest": "0320cd36a3c7ad98f1931e6566d2e08e51319bacc3cb9b79eed9acc812070f3c",
+      "validatedAt": "2026-06-26T02:09:16Z"
     }
   }
 }

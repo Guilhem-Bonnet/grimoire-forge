@@ -1,0 +1,177 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grimoire-forge.dev/schemas/blueprint/v1",
+  "title": "Grimoire Forge Blueprint",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["blueprintVersion", "id", "name", "catalogRef", "nodes", "edges"],
+  "properties": {
+    "blueprintVersion": {
+      "type": "integer",
+      "const": 1
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+    },
+    "name": { "type": "string", "minLength": 1 },
+    "description": { "type": "string" },
+    "catalogRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["version"],
+      "properties": {
+        "version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" }
+      }
+    },
+    "extensions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "version"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" },
+          "version": {
+            "type": "string",
+            "description": "Contrainte semver, ex. >=0.1.0"
+          }
+        }
+      }
+    },
+    "nodes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "kind", "ref", "label", "pins"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+          },
+          "kind": {
+            "type": "string",
+            "enum": ["pattern", "artifact", "composite", "extension-node"]
+          },
+          "ref": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Pattern ID, chemin d'artefact, use-case:slug, chemin .blueprint.json, ou extension/node-id"
+          },
+          "label": { "type": "string", "minLength": 1 },
+          "position": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["x", "y"],
+            "properties": {
+              "x": { "type": "number" },
+              "y": { "type": "number" }
+            }
+          },
+          "config": {
+            "type": "object",
+            "description": "Paramètres propres au node, passés à la compilation"
+          },
+          "pins": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["id", "direction", "contract"],
+              "properties": {
+                "id": { "type": "string", "minLength": 1 },
+                "direction": { "type": "string", "enum": ["in", "out"] },
+                "contract": {
+                  "type": "string",
+                  "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "edges": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["from", "to", "contract"],
+        "properties": {
+          "from": { "$ref": "#/$defs/pinRef" },
+          "to": { "$ref": "#/$defs/pinRef" },
+          "contract": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+          }
+        }
+      }
+    },
+    "compiled": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["at", "catalogVersion", "artifacts"],
+      "properties": {
+        "at": { "type": "string", "format": "date-time" },
+        "catalogVersion": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+        "artifacts": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["path", "hash", "sourceNode"],
+            "properties": {
+              "path": { "type": "string", "minLength": 1 },
+              "hash": {
+                "type": "string",
+                "pattern": "^sha256:[0-9a-f]{64}$"
+              },
+              "sourceNode": {
+                "type": "string",
+                "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+              }
+            }
+          }
+        }
+      }
+    },
+    "telemetry": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "bindings": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["nodeId", "eventSource", "match"],
+            "properties": {
+              "nodeId": {
+                "type": "string",
+                "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+              },
+              "eventSource": {
+                "type": "string",
+                "enum": ["hook-runtime", "task-flow"]
+              },
+              "match": {
+                "type": "object",
+                "minProperties": 1,
+                "additionalProperties": { "type": "string" }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "pinRef": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*\\.[A-Za-z0-9_-]+$",
+      "description": "Référence nodeId.pinId"
+    }
+  }
+}

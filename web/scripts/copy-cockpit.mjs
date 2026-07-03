@@ -1,10 +1,10 @@
 #!/usr/bin/env node
-// Copie l'app cockpit + runtime views report vers web/public/
-// Équivalent du hook mkdocs_hooks/copy_cockpit.py supprimé.
+// Copie l'app cockpit + runtime views report vers web/public/.
 import fs from 'node:fs';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-const ROOT = path.resolve(new URL('.', import.meta.url).pathname, '..');
+const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const REPO = path.resolve(ROOT, '..');
 const SRC_COCKPIT = path.join(REPO, 'grimoire-kit/apps/grimoire-game/.release/cockpit-app');
 const SRC_REPORT = path.join(REPO, 'grimoire-kit/apps/grimoire-game/.release/runtime-views-report.html');

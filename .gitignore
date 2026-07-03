@@ -4,6 +4,7 @@
 
 # Le produit a son propre repo git — on l'exclut ici
 grimoire-kit/
+*etudes/
 
 # Python
 __pycache__/
@@ -48,6 +49,18 @@ _grimoire-output/decisions/*
 !_grimoire-output/decisions/r9-hooks-skills/**
 !_grimoire-output/decisions/r10-cockpit/
 !_grimoire-output/decisions/r10-cockpit/**
+
+# Mémoire runtime locale (backend lexical, index)
+_grimoire/memory/
+
+# Télémétrie runtime (streams d'événements, jamais committée)
+_grimoire-runtime-output/hook-runtime/
+_grimoire-runtime-output/task-flow/
+_grimoire-runtime/_memory/activity.jsonl
+_grimoire-runtime-output/.qdrant_data/
+_grimoire-runtime-output/.event-log.jsonl
+_grimoire-runtime-output/.router-stats.jsonl
+_grimoire-runtime-output/GRIMOIRE_TRACE.jsonl
 
 # pytest
 .pytest_cache/

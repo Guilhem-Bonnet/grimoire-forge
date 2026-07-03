@@ -96,7 +96,7 @@
 <nav aria-label="Navigation principale">
   <div class="container">
     <div class="nav-inner">
-      <a href="#" class="nav-logo">GRIMOIRE&nbsp;<span class="forge-word">FORGE</span></a>
+      <a href="index.html" class="nav-logo">GRIMOIRE&nbsp;<span class="forge-word">FORGE</span></a>
       <ul class="nav-links" role="list">
         <li><a href="#manifeste">MANIFESTE</a></li>
         <li><a href="#surfaces">SURFACES</a></li>
@@ -144,7 +144,7 @@
           <span class="cockpit-title">GRIMOIRE FORGE · COCKPIT · runtime/session-4a2f</span>
         </div>
         <div class="cockpit-body">
-          <div class="term-line"><span class="prompt">▶ </span><span class="val">forge init --session 4a2f --agents 3</span></div>
+          <div class="term-line"><span class="prompt">▶ </span><span class="val">runtime.boot({ session: "4a2f" })</span></div>
           <div class="term-line"><span class="dim">  ↳ runtime</span> <span class="ok">READY</span></div>
           <div class="term-line"><span class="dim">  ↳ surface/cockpit</span> <span class="ok">MOUNTED</span></div>
           <div class="term-line"><span class="dim">  ↳ surface/observatory</span> <span class="warn">PARTIAL</span></div>
@@ -178,11 +178,11 @@
 <div id="proof-bar" aria-label="Mentions et références">
   <div class="container">
     <div class="proof-inner">
-      <span class="proof-item">EARLY ACCESS · 47 BUILDERS</span>
+      <span class="proof-item">22 AGENTS · 87 WORKFLOWS</span>
       <span class="proof-sep">·</span>
       <span class="proof-item">RUNTIME TYPÉ · CONTRAT STRICT</span>
       <span class="proof-sep">·</span>
-      <span class="proof-item">ZERO HALLUCINATION POLICY</span>
+      <span class="proof-item">ANTI-HALLUCINATION · HUP</span>
       <span class="proof-sep">·</span>
       <span class="proof-item">TRACE COMPLÈTE · ARTEFACTS VERSIONÉS</span>
       <span class="proof-sep">·</span>
@@ -245,7 +245,7 @@
           <div class="surface-card-body">
             <h3>Cockpit</h3>
             <p>Interface opérationnelle temps réel. Contrôle des agents, inspection des pipelines, émission de directives.</p>
-            <div class="surface-meta">runtime/cockpit · ws:// · latence &lt;40ms</div>
+            <div class="surface-meta">runtime/cockpit · ws:// · temps réel</div>
           </div>
           <div class="surface-preview" aria-hidden="true">
             <div class="mini-rows">
@@ -550,7 +550,7 @@
   <div class="container">
     <div class="section-divider" aria-hidden="true"></div>
     <div class="eyebrow reveal"><span class="num">05</span> · CAPACITÉS</div>
-    <h2 class="reveal" data-reveal-delay="80" style="margin-top:16px;max-width:560px">Un noyau. Neuf surfaces de précision.</h2>
+    <h2 class="reveal" data-reveal-delay="80" style="margin-top:16px;max-width:560px">Un noyau. Neuf capacités de précision.</h2>
 
     <div class="feature-grid">
 
@@ -561,7 +561,7 @@
         </svg>
         <h3>Contrats typés</h3>
         <p>Chaque agent opère selon un contrat déclaratif validé au runtime. Aucun appel non autorisé. Aucune dérive silencieuse.</p>
-        <a href="#" class="feature-link">LIRE LA SPEC →</a>
+        <a href="anatomy.html" class="feature-link">LIRE LA SPEC →</a>
       </div>
 
       <div class="feature-card reveal" data-reveal-delay="60">
@@ -571,7 +571,7 @@
         </svg>
         <h3>Trace immutable</h3>
         <p>Chaque décision, chaque appel, chaque transition d'état est enregistrée dans un ledger append-only. Auditabilité totale.</p>
-        <a href="#" class="feature-link">EXPLORER LA TRACE →</a>
+        <a href="anatomy.html" class="feature-link">EXPLORER LA TRACE →</a>
       </div>
 
       <div class="feature-card reveal" data-reveal-delay="120">
@@ -579,8 +579,8 @@
           <path d="M6 16h4l4-8 4 16 4-8h4"/>
         </svg>
         <h3>Scheduler adaptatif</h3>
-        <p>Priorisation par SLA, dépendances inter-agents déclarées, backpressure automatique en cas de saturation du pipeline.</p>
-        <a href="#" class="feature-link">VOIR LE SCHEDULER →</a>
+        <p>Le SOG route agents et modèles selon l'intention et le contrat (routing task-aware), décompose la tâche en sous-étapes et dispatche en concurrence.</p>
+        <a href="anatomy.html" class="feature-link">VOIR LE SCHEDULER →</a>
       </div>
 
       <div class="feature-card reveal" data-reveal-delay="0">
@@ -592,7 +592,7 @@
         </svg>
         <h3>Open Surface Protocol</h3>
         <p>Les surfaces sont des plugins. N'importe quel builder peut exposer une surface custom via le protocole WS standardisé.</p>
-        <a href="#" class="feature-link">PROTOCOL SPEC →</a>
+        <a href="anatomy.html" class="feature-link">PROTOCOL SPEC →</a>
       </div>
 
       <div class="feature-card reveal" data-reveal-delay="60">
@@ -601,7 +601,7 @@
         </svg>
         <h3>Artefacts versionés</h3>
         <p>Chaque émission est versionnée, adressable par hash et liée à la trace qui l'a produite. Reproductibilité garantie.</p>
-        <a href="#" class="feature-link">API ARTEFACTS →</a>
+        <a href="anatomy.html" class="feature-link">API ARTEFACTS →</a>
       </div>
 
       <div class="feature-card reveal" data-reveal-delay="120">
@@ -610,8 +610,8 @@
           <circle cx="28" cy="28" r="2"/>
         </svg>
         <h3>Memory bus partagé</h3>
-        <p>Contexte mémoire structuré accessible à tous les agents d'une session. Isolation par namespace, TTL configurable.</p>
-        <a href="#" class="feature-link">MÉMOIRE API →</a>
+        <p>Memory OS partagé : couche chaude Redis, sémantique Weaviate, graphe Neo4j, sidecar SQLite. Types logiques accessibles aux agents d'une session, isolés par namespace.</p>
+        <a href="anatomy.html" class="feature-link">MÉMOIRE API →</a>
       </div>
 
       <div class="feature-card reveal" data-reveal-delay="0">
@@ -620,8 +620,8 @@
           <circle cx="16" cy="16" r="11"/>
         </svg>
         <h3>Multi-session RBAC</h3>
-        <p>Isolation stricte par session, rôles opérateurs configurables, audit trail par tenant. Production-ready dès le premier sprint.</p>
-        <a href="#" class="feature-link">RBAC SPEC →</a>
+        <p>Isolation par session, rôles opérateurs configurables et audit trail par tenant. Modèle multi-tenant en cours de durcissement pour la War Room (Q3 2026).</p>
+        <a href="anatomy.html" class="feature-link">RBAC SPEC →</a>
       </div>
 
       <div class="feature-card reveal" data-reveal-delay="60">
@@ -631,7 +631,7 @@
         </svg>
         <h3>Observabilité native</h3>
         <p>Métriques de pipeline, latence par agent, taux d'émission d'artefacts — exposés en OpenTelemetry sans instrumentation supplémentaire.</p>
-        <a href="#" class="feature-link">MÉTRIQUES →</a>
+        <a href="anatomy.html" class="feature-link">MÉTRIQUES →</a>
       </div>
 
       <div class="feature-card reveal" data-reveal-delay="120">
@@ -643,8 +643,8 @@
           <circle cx="16" cy="16" r="4"/>
         </svg>
         <h3>Model-agnostic</h3>
-        <p>Anthropic, OpenAI, Mistral, local via Ollama — le runtime abstrait le modèle. Les contrats restent valides quelle que soit la coulée.</p>
-        <a href="#" class="feature-link">ADAPTATEURS →</a>
+        <p>OpenAI, Anthropic, Google, local via Ollama — le runtime abstrait le modèle. Les contrats restent valides quelle que soit la coulée.</p>
+        <a href="anatomy.html" class="feature-link">ADAPTATEURS →</a>
       </div>
 
     </div>
@@ -664,40 +664,40 @@
         <div class="metrics-row">
           <div class="metric reveal" data-reveal-delay="0">
             <div class="metric-value">
-              <span data-counter data-target="47" data-suffix="">47</span><span class="accent"> +</span>
+              <span data-counter data-target="22">22</span>
             </div>
-            <div class="metric-label">BUILDERS · EARLY ACCESS</div>
+            <div class="metric-label">AGENTS SPÉCIALISÉS</div>
           </div>
           <div class="metric reveal" data-reveal-delay="80">
             <div class="metric-value">
-              <span data-counter data-target="12400" data-suffix="">12 400</span>
+              <span data-counter data-target="87">87</span>
             </div>
-            <div class="metric-label">ARTEFACTS ÉMIS · 30 JOURS</div>
+            <div class="metric-label">WORKFLOWS</div>
           </div>
           <div class="metric reveal" data-reveal-delay="160">
             <div class="metric-value">
-              <span data-counter data-target="99" data-suffix="%" data-decimals="0">99%</span>
+              <span data-counter data-target="44">44</span>
             </div>
-            <div class="metric-label">UPTIME · RUNTIME PROD</div>
+            <div class="metric-label">SKILLS</div>
           </div>
         </div>
 
         <div class="metrics-row">
           <div class="metric reveal" data-reveal-delay="0">
             <div class="metric-value">
-              <span data-counter data-target="38" data-suffix="ms">38ms</span>
+              <span data-counter data-target="4">4</span>
             </div>
-            <div class="metric-label">LATENCE P95 · COCKPIT</div>
+            <div class="metric-label">MODULES · BMM·BMB·CIS·TEA</div>
           </div>
           <div class="metric reveal" data-reveal-delay="80">
             <div class="metric-value">
-              <span data-counter data-target="0">0</span>
+              <span data-counter data-target="10">10</span>
             </div>
-            <div class="metric-label">HALLUCINATIONS NON TRACÉES</div>
+            <div class="metric-label">TYPES DE MÉMOIRE</div>
           </div>
           <div class="metric reveal" data-reveal-delay="160">
             <div class="metric-value">
-              <span data-counter data-target="4" data-suffix=" surfaces">4</span>
+              <span data-counter data-target="6">6</span>
             </div>
             <div class="metric-label">SURFACES · CONTROL PLANE</div>
           </div>
@@ -705,8 +705,8 @@
       </div>
 
       <div class="quote-block reveal" data-reveal-delay="200">
-        <p class="quote-text">"Pour la première fois, je peux auditer exactement pourquoi un agent a pris une décision — et rejouer la séquence à l'identique. C'est ce que j'attendais depuis trois ans."</p>
-        <div class="quote-author">THOMAS V. · STAFF ENGINEER · EARLY ACCESS</div>
+        <p class="quote-text">"Chaque action d'agent est écrite dans le ledger avant d'être consommée par une surface — auditable et rejouable à l'identique. Si ce n'est pas dans le ledger, ça n'a pas eu lieu."</p>
+        <div class="quote-author">PRINCIPE TRACE-FIRST · MANIFESTE GRIMOIRE FORGE</div>
       </div>
     </div>
   </div>
@@ -717,11 +717,11 @@
 ════════════════════════════════════════════════════ -->
 <section id="cta-final">
   <div class="container">
-    <div class="eyebrow reveal" style="justify-content:center;display:flex;margin-bottom:32px;"><span class="num">↓</span> &nbsp; ACCÈS RESTREINT · EARLY ACCESS</div>
+    <div class="eyebrow reveal" style="justify-content:center;display:flex;margin-bottom:32px;"><span class="num">↓</span> &nbsp; OPEN SOURCE · LICENCE MIT</div>
     <h2 class="reveal grad-text" data-reveal-delay="80">Prêt à forger votre premier pipeline agentique ?</h2>
-    <p class="reveal" data-reveal-delay="160">Accès sur invitation. Intégration en 48h. Support runtime dédié.</p>
+    <p class="reveal" data-reveal-delay="160">Open source sous licence MIT. Clonez le dépôt, installez les hooks, ouvrez le cockpit.</p>
     <div class="reveal" data-reveal-delay="240" style="display:flex;justify-content:center;">
-      <a href="#" class="btn btn-primary">OUVRIR LE COCKPIT</a>
+      <a href="/cockpit/" class="btn btn-primary">OUVRIR LE COCKPIT</a>
     </div>
     <p class="reveal" data-reveal-delay="320" style="margin-top:24px;font-family:var(--mono);font-size:.65rem;color:var(--muted);letter-spacing:.08em;">
       runtime/session · contrat signé · trace immédiate
@@ -742,28 +742,28 @@
       <div class="footer-col">
         <h4>RUNTIME</h4>
         <ul>
-          <li><a href="#">Documentation</a></li>
-          <li><a href="#">API Reference</a></li>
-          <li><a href="#">Contrats</a></li>
-          <li><a href="#">Changelog</a></li>
+          <li><a href="anatomy.html">Documentation</a></li>
+          <li><a href="/agents/">Agents</a></li>
+          <li><a href="/cockpit/?mode=proofs">Contrats</a></li>
+          <li><a href="/changelog/">Changelog</a></li>
         </ul>
       </div>
       <div class="footer-col">
         <h4>SURFACES</h4>
         <ul>
-          <li><a href="#">Cockpit</a></li>
-          <li><a href="#">Observatory</a></li>
-          <li><a href="#">Kanban</a></li>
-          <li><a href="#">War Room</a></li>
+          <li><a href="/cockpit/">Cockpit</a></li>
+          <li><a href="observability.html">Observatory</a></li>
+          <li><a href="game-ui.html">Game UI</a></li>
+          <li><a href="/cockpit/?mode=war-room">War Room</a></li>
         </ul>
       </div>
       <div class="footer-col">
         <h4>PROJET</h4>
         <ul>
-          <li><a href="#">Manifeste</a></li>
-          <li><a href="#">Early Access</a></li>
-          <li><a href="#">Roadmap</a></li>
-          <li><a href="#">Contact</a></li>
+          <li><a href="manifesto.html">Manifeste</a></li>
+          <li><a href="https://github.com/Guilhem-Bonnet/grimoire-forge" target="_blank" rel="noopener">GitHub</a></li>
+          <li><a href="https://github.com/Guilhem-Bonnet/grimoire-forge" target="_blank" rel="noopener">Roadmap</a></li>
+          <li><a href="https://github.com/Guilhem-Bonnet/grimoire-forge/issues" target="_blank" rel="noopener">Contact</a></li>
         </ul>
       </div>
     </div>
@@ -830,17 +830,22 @@ const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
 }/*EDITMODE-END*/;
 
 (function() {
-  // Register listener BEFORE announcing availability
-  window.addEventListener('message', (e) => {
-    if (e.data?.type === '__activate_edit_mode') {
-      document.getElementById('tweaks-panel').classList.add('open');
-    }
-    if (e.data?.type === '__deactivate_edit_mode') {
-      document.getElementById('tweaks-panel').classList.remove('open');
-    }
-  });
+  // Register listener BEFORE announcing availability — embedded frames only,
+  // and only for messages emitted by the parent frame.
+  const embedded = window.self !== window.top;
+  if (embedded) {
+    window.addEventListener('message', (e) => {
+      if (e.source !== window.parent) return;
+      if (e.data?.type === '__activate_edit_mode') {
+        document.getElementById('tweaks-panel').classList.add('open');
+      }
+      if (e.data?.type === '__deactivate_edit_mode') {
+        document.getElementById('tweaks-panel').classList.remove('open');
+      }
+    });
 
-  window.parent.postMessage({ type: '__edit_mode_available' }, '*');
+    window.parent.postMessage({ type: '__edit_mode_available' }, '*');
+  }
 
   const root = document.documentElement;
   const d = TWEAK_DEFAULTS;

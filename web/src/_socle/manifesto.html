@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>Manifesto — Grimoire Forge</title>
-  <meta name="description" content="Pourquoi Grimoire Forge existe, ce qu'il n'est pas, et quand il est le bon choix. Comparaisons factuelles avec Aider, Claude Code, Cursor et GitHub Copilot agent mode."/>
+  <meta name="description" content="Pourquoi Grimoire Forge existe, ce qu'il n'est pas, et quand il est le bon choix : un runtime agentique traçable et auditable, pensé pour rester à côté de ton stack."/>
   <link rel="stylesheet" href="forge-tokens.css"/>
   <link rel="stylesheet" href="forge-base.css"/>
   <link rel="stylesheet" href="forge-motion.css"/>
@@ -44,32 +44,6 @@
     .principle-title { font-size: 1.02rem; font-weight: 700; margin-bottom: 8px; letter-spacing: -.01em; }
     .principle-desc { font-size: .86rem; color: var(--ink-soft); line-height: 1.7; }
 
-    /* Comparison table */
-    .compare-table {
-      display: flex; flex-direction: column; gap: 20px; margin-top: 32px;
-    }
-    .compare-row {
-      background: var(--elev-1); border: 1px solid var(--line);
-      border-radius: var(--r-md); padding: 24px 28px;
-    }
-    .compare-head {
-      display: flex; align-items: baseline; gap: 14px;
-      flex-wrap: wrap; margin-bottom: 12px;
-    }
-    .compare-name { font-size: 1.05rem; font-weight: 700; letter-spacing: -.01em; }
-    .compare-tag {
-      font-family: var(--font-mono); font-size: .58rem;
-      letter-spacing: .12em; color: var(--ink-muted);
-      border: 1px solid var(--line); border-radius: 2px; padding: 3px 8px;
-    }
-    .compare-body { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
-    @media (max-width: 720px) { .compare-body { grid-template-columns: 1fr; } }
-    .compare-col h4 {
-      font-family: var(--font-mono); font-size: .58rem;
-      letter-spacing: .12em; color: var(--ink-muted);
-      margin-bottom: 10px;
-    }
-    .compare-col p { margin-bottom: 0; font-size: .88rem; }
 
     /* When-not */
     .when-not {
@@ -131,84 +105,7 @@
       <div class="principle reveal" data-delay="180">
         <div class="principle-num">04 · COMPOSABLE · OUVERT</div>
         <div class="principle-title">Ton stack reste ton stack.</div>
-        <div class="principle-desc">Grimoire s'installe à côté de ton IDE, pas à la place. Git, Copilot, Claude Code, Aider restent pilotables. Le runtime orchestre, il ne captive pas.</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="mani-section" id="comparaisons">
-  <div class="container">
-    <h2 class="reveal">Où se place Grimoire — honnêtement.</h2>
-    <p class="reveal" data-delay="60">Il y a déjà d'excellents outils dans l'espace "agent + code". Grimoire Forge ne vise pas à les remplacer. Chacun résout un problème différent ; voici comment lire la carte.</p>
-
-    <div class="compare-table">
-      <div class="compare-row reveal" data-delay="80">
-        <div class="compare-head">
-          <div class="compare-name">Aider</div>
-          <div class="compare-tag">CLI · PAIR PROGRAMMING</div>
-        </div>
-        <div class="compare-body">
-          <div class="compare-col">
-            <h4>CE QU'IL FAIT TRÈS BIEN</h4>
-            <p>Boucle terminal / git serrée, multi-fichiers, modèles interchangeables. Excellent pour des sessions courtes en solo sur un repo connu.</p>
-          </div>
-          <div class="compare-col">
-            <h4>OÙ GRIMOIRE COMPLÈTE</h4>
-            <p>Aider optimise la conversation. Grimoire optimise la <strong>persistance structurée</strong> de ce qui se passe autour : trace, sous-agents, surfaces multi-vues, audit post-hoc.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="compare-row reveal" data-delay="120">
-        <div class="compare-head">
-          <div class="compare-name">Claude Code</div>
-          <div class="compare-tag">CLI · AGENT AUTONOME</div>
-        </div>
-        <div class="compare-body">
-          <div class="compare-col">
-            <h4>CE QU'IL FAIT TRÈS BIEN</h4>
-            <p>Agent autonome puissant, outils riches, fine gestion du contexte long. Référence en productivité brute.</p>
-          </div>
-          <div class="compare-col">
-            <h4>OÙ GRIMOIRE COMPLÈTE</h4>
-            <p>Claude Code <em>est</em> un agent. Grimoire est un <strong>runtime sous les agents</strong>. On peut piloter Claude Code (ou un autre) depuis Grimoire et récupérer une trace structurée que le CLI seul ne produit pas nativement.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="compare-row reveal" data-delay="160">
-        <div class="compare-head">
-          <div class="compare-name">Cursor</div>
-          <div class="compare-tag">IDE · ÉDITEUR AGENTIQUE</div>
-        </div>
-        <div class="compare-body">
-          <div class="compare-col">
-            <h4>CE QU'IL FAIT TRÈS BIEN</h4>
-            <p>Expérience IDE polie, complétion agentique intégrée, chat contextualisé sur le projet. Courbe d'adoption quasi nulle pour qui vient de VS Code.</p>
-          </div>
-          <div class="compare-col">
-            <h4>OÙ GRIMOIRE COMPLÈTE</h4>
-            <p>Cursor vise l'édition. Grimoire vise l'<strong>orchestration et la trace</strong>. Les deux cohabitent : on peut utiliser Cursor pour coder et Grimoire pour piloter des sous-agents + conserver le ledger d'événements.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="compare-row reveal" data-delay="200">
-        <div class="compare-head">
-          <div class="compare-name">GitHub Copilot · agent mode</div>
-          <div class="compare-tag">IDE · VS CODE NATIF</div>
-        </div>
-        <div class="compare-body">
-          <div class="compare-col">
-            <h4>CE QU'IL FAIT TRÈS BIEN</h4>
-            <p>Intégration native VS Code, outils workspace, compatibilité GitHub. Excellent terrain de départ pour une équipe déjà sur la stack Microsoft.</p>
-          </div>
-          <div class="compare-col">
-            <h4>OÙ GRIMOIRE COMPLÈTE</h4>
-            <p>Copilot agent mode exécute. Grimoire est conçu pour fonctionner <strong>à côté</strong> (même repo) en ajoutant une couche d'<strong>observabilité cross-session</strong>, une factory d'artefacts dynamiques, et une mémoire structurée inter-agents.</p>
-          </div>
-        </div>
+        <div class="principle-desc">Grimoire s'installe à côté de ton IDE, pas à la place. Ton éditeur, ton agent de code et ta chaîne git restent pilotables. Le runtime orchestre, il ne captive pas.</div>
       </div>
     </div>
   </div>
@@ -220,7 +117,7 @@
     <p class="reveal" data-delay="60">On préfère être honnête plutôt que large. Évite Grimoire si :</p>
     <div class="when-not reveal" data-delay="100">
       <ul>
-        <li>Tu cherches une expérience IDE clef-en-main — Cursor ou VS Code + Copilot te serviront mieux.</li>
+        <li>Tu cherches une expérience IDE clef-en-main, prête à l'emploi, sans couche d'orchestration à configurer.</li>
         <li>Ton besoin se limite à "un agent qui écrit du code" sans exigence d'audit ou de rejouabilité.</li>
         <li>Tu ne veux pas manipuler de config YAML, de hooks shell, ou de contrats versionnés. Grimoire est transparent par design — donc explicite.</li>
         <li>Tu n'as pas l'intention d'exposer plusieurs surfaces sur la même session (cockpit, observatory, kanban) ; un seul chat suffit.</li>
@@ -239,7 +136,7 @@
       <a href="/cockpit/" class="btn btn-primary">OUVRIR LE COCKPIT</a>
       <a href="/demo/" class="btn btn-ghost">VOIR LA DÉMO</a>
     </div>
-    <p style="margin-top:22px;font-family:var(--font-mono);font-size:.62rem;color:var(--ink-muted);letter-spacing:.08em">git clone · pip install -e . · forge init</p>
+    <p style="margin-top:22px;font-family:var(--font-mono);font-size:.62rem;color:var(--ink-muted);letter-spacing:.08em">git clone · grimoire-init.sh hooks --install · grimoire standard verify</p>
   </div>
 </section>
 

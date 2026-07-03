@@ -3,8 +3,9 @@
 // Source: /tmp/grimoire-new-socle ou web/src/_socle/ selon dispo.
 import fs from 'node:fs';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-const ROOT = path.resolve(new URL('.', import.meta.url).pathname, '..');
+const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const CANDIDATES = [
   path.join(ROOT, 'src/_socle'),
   '/tmp/grimoire-new-socle',
@@ -28,6 +29,10 @@ const PAGES = [
   { src: 'game-ui.html', out: 'game-ui/index.html' },
   { src: 'manifesto.html', out: 'manifesto/index.html' },
   { src: 'Grimoire Forge.html', out: 'forge/index.html' },
+  { src: 'documentation.html', out: 'documentation/index.html' },
+  { src: 'extensions.html', out: 'extensions/index.html' },
+  { src: 'blueprint.html', out: 'blueprint/index.html' },
+  { src: 'setup.html', out: 'setup/index.html' },
 ];
 
 const NAV_MAP = {
@@ -38,11 +43,26 @@ const NAV_MAP = {
   'game-ui.html': '/game-ui/',
   'manifesto.html': '/manifesto/',
   'Grimoire Forge.html': '/forge/',
+  'documentation.html': '/documentation/',
+  'extensions.html': '/extensions/',
+  'blueprint.html': '/blueprint/',
+  'setup.html': '/setup/',
 };
 
 // Copier les assets bruts (CSS intacts, JS patché pour pretty URLs)
 fs.mkdirSync(path.join(DST, 'styles'), { recursive: true });
 fs.mkdirSync(path.join(DST, 'scripts'), { recursive: true });
+
+// Copier les données consommées par les pages (catalogue, extensions)
+const DATA_SRC = path.join(SRC, 'data');
+if (fs.existsSync(DATA_SRC)) {
+  fs.mkdirSync(path.join(DST, 'data'), { recursive: true });
+  for (const f of fs.readdirSync(DATA_SRC)) {
+    if (f.endsWith('.json')) {
+      fs.copyFileSync(path.join(DATA_SRC, f), path.join(DST, 'data', f));
+    }
+  }
+}
 for (const f of fs.readdirSync(SRC)) {
   if (f.startsWith('forge-') && f.endsWith('.css')) {
     fs.copyFileSync(path.join(SRC, f), path.join(DST, 'styles', f));
@@ -68,6 +88,10 @@ function patchJsNav(js) {
             <li><a href="/game-ui/"       class="\${isActive('/game-ui/') ? 'active' : ''}">GAME UI</a></li>
             <li><a href="/observability/" class="\${isActive('/observability/') ? 'active' : ''}">OBSERVATORY</a></li>
             <li><a href="/anatomy/"       class="\${isActive('/anatomy/') ? 'active' : ''}">ANATOMIE</a></li>
+            <li><a href="/documentation/" class="\${isActive('/documentation/') ? 'active' : ''}">DOCS</a></li>
+            <li><a href="/extensions/"    class="\${isActive('/extensions/') ? 'active' : ''}">EXTENSIONS</a></li>
+            <li><a href="/blueprint/"     class="\${isActive('/blueprint/') ? 'active' : ''}">BLUEPRINT</a></li>
+            <li><a href="/setup/"         class="\${isActive('/setup/') ? 'active' : ''}">SETUP</a></li>
             <li><a href="/agents/"        class="\${isActive('/agents/') ? 'active' : ''}">AGENTS</a></li>
             <li><a href="/changelog/"     class="\${isActive('/changelog/') ? 'active' : ''}">CHANGELOG</a></li>
           </ul>`
@@ -82,6 +106,8 @@ function patchJsNav(js) {
     'observability.html': '/observability/',
     'demo.html': '/demo/',
     'anatomy.html': '/anatomy/',
+    'manifesto.html': '/manifesto/',
+    'documentation.html': '/documentation/',
   };
   for (const [k, v] of Object.entries(footerMap)) {
     js = js.replace(new RegExp(`href="${k.replace('.', '\\.')}"`, 'g'), `href="${v}"`);
