@@ -48,7 +48,10 @@ exécute. Aucun moteur d'exécution nouveau n'est introduit.
 
 Les trois schémas utilisent JSON Schema draft 2020-12. Les champs H3/H4
 (`permissions`, `provides.nodes`, `compiled`, `telemetry`) sont présents dès la
-v1 pour éviter les migrations structurelles.
+v1 pour éviter les migrations structurelles. Le champ optionnel `kind`
+(`flow-adapter`, `mcp-toolbox`, `observability`, `capability`) qualifie la
+nature de la prise — orthogonal aux familles de patterns — et est renseigné
+sur toutes les extensions du registry (voir SPEC-manifeste-extension).
 
 ## Dépendances externes
 

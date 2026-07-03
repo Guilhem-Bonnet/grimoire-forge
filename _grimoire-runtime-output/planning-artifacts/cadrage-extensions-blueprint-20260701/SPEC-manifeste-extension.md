@@ -27,12 +27,32 @@ Chaque extension déclare un fichier `extension.json` à sa racine, validé par
 | --- | --- | --- |
 | `manifestVersion` | required | Version du schéma de manifeste (entier, `1` aujourd'hui) |
 | `id` | required | Slug unique kebab-case, clé dans le registry |
+| `kind` | optional | Nature de la prise : comment l'extension se branche au kit (voir table dédiée ci-dessous). Orthogonal à `patterns` (qui dit ce que l'extension fait dans le flow) et distinct de `upstream.kind` (nature du projet amont). Optionnel en manifeste v1, renseigné sur toutes les extensions du registry |
 | `name` | required | Nom affiché |
 | `version` | required | Semver de l'extension |
 | `description` | required | Une phrase, affichée sur la page extensions |
 | `license` | required | Identifiant SPDX |
 | `authors` | required | Liste de contributeurs |
 | `upstream` | optional | Projet amont encapsulé : `repository`, `kind` (`framework`, `observability`, `memory`, `tooling`), `pinnedVersion` |
+
+### Nature de la prise (`kind`)
+
+Deux axes de taxonomie coexistent et ne doivent pas être confondus : les
+**familles de patterns** (`patterns.implements`) disent *ce que l'extension
+fait dans le flow* (c'est l'axe des filtres marketplace) ; le **`kind`** dit
+*comment elle se branche* — ce qui conditionne l'installation, la gouvernance
+et le rendu dans la palette blueprint.
+
+| `kind` | Définition | Exemples |
+| --- | --- | --- |
+| `flow-adapter` | Encapsule un framework agentique comme bout du flow (adaptateur Recipes, exécution bornée, traces normalisées) | crewai, langgraph, autogen |
+| `mcp-toolbox` | Serveur MCP externe fournissant du grounding d'environnement (l'agent interroge un système vivant au lieu de deviner depuis les fichiers) | fennara-godot |
+| `observability` | Backend d'observation branché sur les traces/télémétrie | langfuse |
+| `capability` | Capacité outillée apportée au flow | browser-use, haystack |
+
+Conséquences par `kind` : un `mcp-toolbox` déclare typiquement
+`permissions.network: true` et un process externe (gouvernance dédiée), là où
+un `flow-adapter` installe des artefacts et des hooks shadow.
 
 ### Compatibilité
 
