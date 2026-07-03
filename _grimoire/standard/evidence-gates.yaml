@@ -19,7 +19,7 @@ transitions:
   - id: ready_to_in_progress
     from: ready
     to: in_progress
-    required_evidence: ["context_bundle", "provider_policy"]
+    required_evidence: ["context_bundle", "provider_policy", "memory_os_hot_layer_policy"]
   - id: in_progress_to_review
     from: in_progress
     to: review
@@ -31,7 +31,7 @@ transitions:
   - id: accepted_to_released
     from: accepted
     to: released
-    required_evidence: ["compliance_score", "release_authorization"]
+    required_evidence: ["compliance_score", "release_authorization", "hot_memory_degradation_recorded"]
 profile_strictness:
   starter: advisory
   controlled: warning

@@ -57,6 +57,7 @@ required_artifacts:
 - remediation_plan
 - accepted_risks
 - waivers
+- observability_policy
 task_id: bootstrap
 upstream_standard:
   entrypoint: docs/norme-structure-agentique.md

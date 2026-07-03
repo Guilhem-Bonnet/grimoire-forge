@@ -12,6 +12,9 @@ memory:
   vector_database: true
   retrieval_mode: "vector"   # vector | lexical
   backend: "auto"            # auto | weaviate-server | qdrant-server | qdrant-local | ollama | lexical | local
+  # --- Mémoire chaude (contrat R8, optionnelle) ---
+  short_term_backend: "sqlite"
+  redis_url: ""
   knowledge_graph: "neo4j"
   semantic_memory: "weaviate-server"
   memory_graph: "neo4j"

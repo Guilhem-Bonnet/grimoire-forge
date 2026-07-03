@@ -60,6 +60,9 @@ sans contrat clair, permissions bornees, traces et owner explicite.
 # Garde-fous locaux
 bash grimoire-init.sh hooks --install
 
+# Gate qualite obligatoire (lint, tests, preflight, memory-lint, gouvernance)
+npm run quality
+
 # Sante du runtime
 python3 grimoire-kit/framework/tools/preflight-check.py --project-root .
 python3 grimoire-kit/framework/tools/memory-lint.py --project-root .

@@ -7,11 +7,14 @@ rule_families:
   - provider
   - memory
   - knowledge
+  - skills
+  - hooks
   - context
   - orchestration
   - evidence
   - release
   - remediation
+  - observability
 rules:
   - id: provider.no-undeclared-route
     family: provider
@@ -46,3 +49,81 @@ rules:
     event: gate.failed
     remediation: create_missing_evidence
     check_id: evidence.minimum_missing
+  - id: memory.hot-degrades-safely
+    family: memory
+    source_normative: memory-os.hot-memory-non-authoritative
+    severity: warning
+    phase: pre_context_build
+    condition:
+      redis_unavailable: true
+      durable_memory_available: true
+    action: require_evidence
+    event: memory.hot.partial
+    remediation: record_hot_memory_degradation
+    check_id: memory.hot_memory_partial
+  - id: hooks.must-use-gateway
+    family: hooks
+    source_normative: hook-governance.gateway-required
+    severity: error
+    phase: pre_tool_call
+    condition:
+      hook_bypasses_gateway: true
+    action: block
+    event: hook.blocked
+    remediation: route_hook_through_grimoire_hook_gateway
+    check_id: hooks.gateway_missing
+  - id: hooks.no-destructive-bypass
+    family: security
+    source_normative: tool-governance.no-destructive-implicit-action
+    severity: error
+    phase: pre_tool_call
+    condition:
+      destructive_action_without_evidence: true
+    action: block
+    event: tool.blocked
+    remediation: require_evidence_or_human_authorization
+    check_id: hooks.destructive_bypass
+  - id: skills.classified-before-use
+    family: skills
+    source_normative: skill-governance.classification-required
+    severity: warning
+    phase: pre_context_build
+    condition:
+      skill_missing_classification: true
+    action: require_evidence
+    event: skill.classification_required
+    remediation: classify_skill_as_core_template_project_or_incubator
+    check_id: skills.classification_missing
+  - id: observability.cockpit-read-only
+    family: observability
+    source_normative: observability-governance.cockpit-consumes-evidence
+    severity: error
+    phase: post_state_transition
+    condition:
+      cockpit_mutates_source_of_truth: true
+    action: block
+    event: cockpit.blocked
+    remediation: regenerate_cockpit_from_standard_artifacts
+    check_id: observability.cockpit_mutation
+  - id: observability.inputs-are-declared
+    family: observability
+    source_normative: observability-governance.declared-inputs-only
+    severity: warning
+    phase: post_context_build
+    condition:
+      undeclared_observability_input: true
+    action: require_evidence
+    event: cockpit.input_rejected
+    remediation: declare_observability_input_or_exclude
+    check_id: observability.input_undeclared
+  - id: observability.no-secret-export
+    family: security
+    source_normative: observability-governance.no-sensitive-export
+    severity: error
+    phase: pre_release
+    condition:
+      cockpit_export_contains_secret: true
+    action: block
+    event: cockpit.export_blocked
+    remediation: redact_cockpit_export_and_record_event
+    check_id: observability.secret_export

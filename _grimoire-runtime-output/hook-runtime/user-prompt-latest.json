@@ -1,0 +1,54 @@
+{
+  "timestamp": "2026-05-08T05:27:06.324Z",
+  "promptPreview": "envois tous le projet dans une nouvelle branche sur le repos en WIP",
+  "promptLength": 67,
+  "tags": [],
+  "constraints": {
+    "planOnly": false,
+    "safetyFocus": false
+  },
+  "signals": {
+    "taskListDetected": false,
+    "taskItems": [],
+    "brainstormRecommended": false,
+    "autonomousExecutionPreferred": false
+  },
+  "notes": [
+    "Clarification debloquee automatiquement: priorite retenue = Prioriser le control plane hooks."
+  ],
+  "routing": {},
+  "memoryHints": {
+    "taskType": "general-execution",
+    "proceduralPatterns": [],
+    "nudges": []
+  },
+  "rag": {
+    "enabled": false,
+    "chunks": []
+  },
+  "clarification": {},
+  "challengeMode": {},
+  "proposalChallenge": {},
+  "debateMode": {},
+  "designAuthority": {},
+  "visualValidation": {},
+  "tokenBudget": {},
+  "externalReferences": {},
+  "internalReferences": {},
+  "dispatchContract": {},
+  "clarificationState": {
+    "status": "auto-resolved",
+    "question": "Je peux prioriser le control plane hooks, la boucle tests/breaker, ou memoire/tokens. Lequel veux-tu traiter d'abord ?",
+    "options": [
+      "Prioriser le control plane hooks",
+      "Prioriser la boucle tests/review/breaker",
+      "Prioriser memoire, contexte et tokens"
+    ],
+    "answer": "Try Again",
+    "selectedOption": "Prioriser le control plane hooks",
+    "selectedIndex": 0,
+    "relanceCount": 1,
+    "resolutionSource": "fallback-default",
+    "instruction": "Clarification debloquee: appliquer la priorite par defaut et poursuivre."
+  }
+}

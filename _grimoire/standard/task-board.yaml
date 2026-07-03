@@ -21,6 +21,7 @@ transitions:
     requires:
       - context_bundle
       - provider_policy
+      - memory_os_hot_layer_policy
   in_progress_to_review:
     requires:
       - evidence_pack
@@ -33,6 +34,7 @@ transitions:
     requires:
       - compliance_score
       - release_authorization
+      - hot_memory_degradation_recorded
   any_to_blocked:
     requires:
       - blocker_reason
@@ -57,37 +59,49 @@ tasks:
     remediation_ref: "_grimoire/standard/remediation-plan.yaml"
   - task_id: "r8-redis-adapter"
     title: "R8 — Redis hot memory adapter"
-    status: "proposed"
+    status: "review"
     priority: "high"
     owner: "grimoire-maintainers"
     agent_roles:
       - implementation-agent
     acceptance_criteria:
-      - "Redis adapter implemented with TTL, leases, streams, promotion gates."
-      - "MemoryManager routes short-term ops to Redis."
-      - "Standard memory_os.short_term layer reports active."
+      - "Redis adapter implemented in Kit with TTL payloads, leases, namespaced event publishing, and optional install extra."
+      - "Forge declares Redis as optional hot memory while keeping durable Weaviate, Neo4j, and SQLite authoritative."
+      - "Memory OS status reports Redis as ready when configured, or partial/soft-fail without data loss when Redis is absent."
+      - "Standard verify stays green from a Forge-only checkout without vendored grimoire-kit."
     blockers: []
+    context_bundle_ref: "_grimoire-output/context/r8-redis-adapter/context-bundle.yaml"
+    decision_trace_ref: "_grimoire-output/decisions/r8-redis-adapter/decision-trace.yaml"
     evidence_pack_ref: "_grimoire-output/evidence/r8-redis-adapter/evidence-pack.md"
   - task_id: "r9-hooks-skills"
     title: "R9 — Normalize hooks/rules/skills/agents taxonomy"
-    status: "proposed"
+    status: "review"
     priority: "medium"
     owner: "grimoire-maintainers"
     agent_roles:
       - implementation-agent
     acceptance_criteria:
-      - "ISO-classified pattern folders with executable contracts."
-      - "hook-registry.yaml and rule-packs.yaml pass standard verify."
+      - "Hooks are classified into core template candidates, Forge project pack, and incubator assets."
+      - "Skills are classified before promotion into Kit templates or governed Forge packs."
+      - "hook-registry.yaml, rule-packs.yaml and pattern-catalog.yaml link hook/skill rules to evidence gates."
+      - "standard verify stays green after taxonomy changes."
     blockers: []
+    context_bundle_ref: "_grimoire-output/context/r9-hooks-skills/context-bundle.yaml"
+    decision_trace_ref: "_grimoire-output/decisions/r9-hooks-skills/decision-trace.yaml"
     evidence_pack_ref: "_grimoire-output/evidence/r9-hooks-skills/evidence-pack.md"
   - task_id: "r10-cockpit"
     title: "R10 — Cockpit/observability"
-    status: "proposed"
+    status: "review"
     priority: "medium"
     owner: "grimoire-maintainers"
     agent_roles:
       - implementation-agent
     acceptance_criteria:
-      - "Memory OS health, graph/vector stats, drift, agentic decisions, live kanban visible."
+      - "Cockpit inputs are declared in observability-policy.yaml."
+      - "Cockpit report is generated from standard artifacts, runtime events and evidence packs only."
+      - "Cockpit remains read-only and never becomes the source of truth for tasks, memory, gates or scores."
+      - "Governed standard verify, audit and docs build stay green."
     blockers: []
+    context_bundle_ref: "_grimoire-output/context/r10-cockpit/context-bundle.yaml"
+    decision_trace_ref: "_grimoire-output/decisions/r10-cockpit/decision-trace.yaml"
     evidence_pack_ref: "_grimoire-output/evidence/r10-cockpit/evidence-pack.md"

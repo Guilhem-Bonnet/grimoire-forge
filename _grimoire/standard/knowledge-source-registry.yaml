@@ -63,7 +63,7 @@ sources:
   - id: "grimoire-kit-framework"
     type: "folder"
     locator: "grimoire-kit/framework/agentic-standard"
-    enabled: true
+    enabled: false
     indexing:
       mode: "on_demand"
       cadence: "after grimoire-kit standard bridge changes"
@@ -82,4 +82,6 @@ sources:
     evidence:
       last_indexed_at: "manual-bootstrap"
       index_manifest: "grimoire-kit/framework/agentic-standard/profile-map.yaml"
-      known_gaps: ["Generated project files are not automatically re-indexed yet."]
+      known_gaps:
+        - "The canonical Kit framework is not vendored in Forge; enable this source only in jobs that checkout grimoire-kit explicitly."
+        - "Generated project files are not automatically re-indexed yet."

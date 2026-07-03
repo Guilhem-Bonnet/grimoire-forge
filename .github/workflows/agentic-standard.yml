@@ -51,15 +51,15 @@ jobs:
 
       - name: Verify agentic standard baseline
         run: |
-          npm run standard:verify -- --profile orchestrated
-          npm run standard:audit -- --profile orchestrated
+          npm run standard:verify -- --profile governed
+          npm run standard:audit -- --profile governed
 
       - name: Smoke agentic standard runtime
         run: |
-          grimoire -o json standard context build . --profile orchestrated
-          grimoire -o json standard decision trace . --profile orchestrated
-          grimoire -o json standard knowledge index . --profile orchestrated
-          grimoire -o json standard hooks simulate . --phase pre_context_build --profile orchestrated
-          grimoire -o json standard gate check . --target-state review --profile orchestrated
+          grimoire -o json standard context build . --profile governed
+          grimoire -o json standard decision trace . --profile governed
+          grimoire -o json standard knowledge index . --profile governed
+          grimoire -o json standard hooks simulate . --phase pre_context_build --profile governed
+          grimoire -o json standard gate check . --target-state review --profile governed
           grimoire -o json standard events audit .
-          grimoire -o json standard score . --profile orchestrated
+          grimoire -o json standard score . --profile governed

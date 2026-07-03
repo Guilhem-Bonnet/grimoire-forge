@@ -1,0 +1,9 @@
+{
+  "event": "SubagentStop",
+  "agent": "tea",
+  "task": "Mission: produire une contre-analyse research-only du corpus /mnt/Travail/Projets/Dev/R\u00e9f\u00e9rence-Agentique/ sur performance, efficacit\u00e9, validation, risques et garde-fous des syst\u00e8mes de pilotage agentique. Ne modifie aucun fichier. Lis les",
+  "taskType": "hooks-guardrails",
+  "outputPreview": "",
+  "explicitFailure": false,
+  "timestamp": "2026-04-27T00:15:05Z"
+}

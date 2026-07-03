@@ -108,7 +108,11 @@ La gouvernance detaillee vit desormais dans le site public (voir section **Site 
 # Installer les hooks git et le commit template
 bash grimoire-init.sh hooks --install
 
-# Validation rapide
+# Pipeline qualite obligatoire — enchaine lint, tests, preflight, memory-lint
+# et verification de gouvernance ; bloquant si un check critique echoue.
+npm run quality
+
+# Validation rapide (checks individuels)
 python3 -m ruff check grimoire-kit/framework/tools/ grimoire-kit/tests/ --statistics
 python3 -m pytest grimoire-kit/tests/ -q --tb=short -x --ignore=grimoire-kit/tests/test_background_tasks.py
 
@@ -116,6 +120,16 @@ python3 -m pytest grimoire-kit/tests/ -q --tb=short -x --ignore=grimoire-kit/tes
 python3 grimoire-kit/framework/tools/preflight-check.py --project-root .
 python3 grimoire-kit/framework/tools/memory-lint.py --project-root .
 ```
+
+`npm run quality` (alias de [`scripts/check-quality.sh`](scripts/check-quality.sh)) est le **gate qualite obligatoire** a executer avant toute Pull Request faisant evoluer le moteur. Il enchaine, dans l'ordre :
+
+1. **Lint** — ShellCheck + `bash -n` sur les scripts du depot, et Ruff sur le moteur ;
+2. **Tests** — suite unitaire `grimoire-kit/tests/unit` ;
+3. **Preflight** — `framework/tools/preflight-check.py` sur le moteur ;
+4. **Memory-lint** — `framework/tools/memory-lint.py` sur le moteur ;
+5. **Gouvernance** — `standard verify` (profil `governed`).
+
+La commande sort en erreur (exit code non nul) si un check critique echoue. Les checks dont l'outillage est absent (ShellCheck non installe, moteur `grimoire-kit/` non present dans le checkout) sont ignores avec une note explicite, en miroir de la CI. Variables utiles : `QUALITY_SKIP_TESTS=1` (iteration rapide), `GRIMOIRE_CLI` (CLI grimoire explicite).
 
 ## Standard agentique
 

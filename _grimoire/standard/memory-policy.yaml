@@ -42,13 +42,26 @@ memory_os:
     qdrant: "Legacy vector source retained only for migration, rollback, and parity checks."
   promotion_gates:
     - "hot_memory_ttl_declared"
+    - "hot_memory_degrades_without_data_loss"
     - "semantic_write_has_evidence"
     - "graph_projection_has_source_refs"
     - "qdrant_migration_bundle_verified"
   runtime_commands:
+    - "grimoire memory status"
     - "grimoire memory gate"
     - "grimoire memory migrate verify"
     - "grimoire memory graph verify"
+  hot_memory_contract:
+    backend: "redis"
+    activation: "optional"
+    default_fallback: "sqlite-sidecar-and-local-runtime-state"
+    namespace: "grimoire_forge"
+    default_ttl_seconds: 3600
+    lease_ttl_seconds: 120
+    install_extra: "grimoire-kit[redis]"
+    health_surface: "grimoire memory status"
+    failure_mode: "soft-fail: report partial hot_memory layer, keep durable Weaviate/Neo4j/SQLite gates authoritative"
+    promotion_policy: "Only promote selected hot-memory entries through explicit evidence gates into durable semantic or graph memory."
 memory_types:
   - memory_id: "session"
     type: "session"

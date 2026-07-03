@@ -1,0 +1,1 @@
+{"task":"grimoire: auto-doc-check","flow":"docs","kind":"task","status":"failed","event":"task-finish","exitCode":2,"durationSeconds":0,"startedAt":"2026-04-16T20:59:36Z","finishedAt":"2026-04-16T20:59:36Z","cwd":"/mnt/Travail/Projets/Dev/Grimoire-Forge","command":"./grimoire-kit/.venv/bin/python framework/tools/auto-doc.py --project-root . check"}

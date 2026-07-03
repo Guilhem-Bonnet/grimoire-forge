@@ -16,6 +16,7 @@ dimensions:
   orchestration_policy: 10
   evidence_gates: 10
   runtime_journal: 4
+  observability_cockpit: 6
   ci_release_gate: 6
 thresholds:
   starter:
