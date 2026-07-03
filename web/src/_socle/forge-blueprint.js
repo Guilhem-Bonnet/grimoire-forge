@@ -434,6 +434,37 @@
           });
       });
 
+      /* Simulation pré-exécution (H4) : dry-run côté serveur, rapport dans
+         le panneau de détail. Aucun effet produit. */
+      document.getElementById('bp-sim').addEventListener('click', () => {
+        if (!current) { toast('Ouvrir un blueprint d’abord.'); return; }
+        api('/api/blueprints/' + current.id + '/simulate', { method: 'POST', body: JSON.stringify(serialize()) })
+          .then(r => {
+            const detailEl = document.getElementById('bp-detail');
+            const ok = r.verdict === 'prêt à appliquer';
+            detailEl.innerHTML = `
+              <span class="bp-d-id" style="color:${ok ? '#34D399' : '#F87171'};border-color:${ok ? '#34D399' : '#F87171'}">SIMULATION</span>
+              <div class="bp-d-name">${esc(r.verdict)}</div>
+              ${r.blockers.length ? `<div class="bp-d-sec"><h4>Bloqueurs</h4>${r.blockers.map(b => `<p>${esc(b)}</p>`).join('')}</div>` : ''}
+              ${r.warnings.length ? `<div class="bp-d-sec"><h4>Avertissements</h4>${r.warnings.map(w => `<p>${esc(w)}</p>`).join('')}</div>` : ''}
+              <div class="bp-d-sec"><h4>Plan d’exécution</h4>
+                ${r.steps.map(s => `<div class="bp-d-rel"><span class="k">${s.order}.</span>
+                  <a data-goto="${esc(s.id)}">${esc(s.label || s.ref)}</a>
+                  <span class="lbl">${esc(s.action || '')}${s.ready === false ? ' — NON PRÊT' : ''}</span></div>`).join('')}
+              </div>
+              <div class="bp-d-sec"><h4>Entrées / sorties</h4>
+                <p>in : ${r.entryNodes.map(esc).join(', ') || '—'}<br/>out : ${r.exitNodes.map(esc).join(', ') || '—'}</p></div>`;
+            detailEl.classList.add('open');
+            detailEl.querySelectorAll('[data-goto]').forEach(a => {
+              a.addEventListener('click', () => {
+                const n = cy.getElementById(a.dataset.goto);
+                if (n.length) { cy.animate({ center: { eles: n }, zoom: 1 }, { duration: 240 }); n.select(); }
+              });
+            });
+            toast('Simulation : ' + r.verdict + '.');
+          });
+      });
+
       /* Replay télémétrie (H4) : rejoue les events.jsonl sur le graphe via
          les bindings du blueprint. Lecture seule, aucune exécution. */
       document.getElementById('bp-replay').addEventListener('click', () => {
