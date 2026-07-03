@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-03T13:01:09.046Z",
+  "generatedAt": "2026-07-03T13:17:56.751Z",
   "source": "registry",
   "registry": "https://github.com/Guilhem-Bonnet/grimoire-extensions-registry",
   "available": [
@@ -102,6 +102,30 @@
       "nodes": [
         "CrewAI Crew"
       ],
+      "status": "available"
+    },
+    {
+      "id": "grimoire-mcp",
+      "kind": "mcp-toolbox",
+      "name": "Grimoire MCP Server",
+      "version": "0.1.0",
+      "description": "Le serveur MCP du kit comme toolbox gouvernée : accès outillé aux missions, preuves et mémoire du projet depuis tout client MCP, qualifié par le MCP Trust Gate (GOV-09) — permissions déclarées, surfaces bornées.",
+      "license": "MIT",
+      "upstream": "https://github.com/Guilhem-Bonnet/Grimoire-kit",
+      "upstreamKind": null,
+      "patterns": [
+        "GOV-09",
+        "GOV-07"
+      ],
+      "requires": [],
+      "permissions": {
+        "filesystem": "artifacts",
+        "network": false,
+        "hooks": [],
+        "memory": "read"
+      },
+      "provides": {},
+      "nodes": [],
       "status": "available"
     },
     {
