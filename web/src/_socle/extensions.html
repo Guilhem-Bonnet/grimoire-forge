@@ -49,6 +49,9 @@
     .ext-chip { background: none; border: 1px solid var(--line); border-radius: var(--r-sm); color: var(--ink-muted); font-family: var(--font-mono); font-size: .6rem; letter-spacing: .06em; padding: 6px 10px; cursor: pointer; transition: color var(--dur-fast), border-color var(--dur-fast); }
     .ext-chip.on { color: var(--data-cyan); border-color: rgba(110,231,255,.4); }
     .ext-chip:hover { border-color: var(--accent-dim); }
+    .ext-chip-kind { border-style: dashed; }
+    .ext-chip-kind.on { color: var(--data-amber, #ffd166); border-color: rgba(255,209,102,.4); }
+    .ext-chip-sep { color: var(--ink-muted); margin: 0 2px; }
     .ext-contract { padding: 44px 0 90px; }
     .ext-rules { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
     .ext-rule { background: var(--elev-1); border: 1px solid var(--line); border-left: 2px solid var(--accent); border-radius: var(--r-sm); padding: 16px; }
@@ -163,6 +166,7 @@
 
   let allData = null;
   const activeFamilies = new Set();
+  const activeKinds = new Set();
 
   function matches(e) {
     const q = document.getElementById('ext-search').value.trim().toLowerCase();
@@ -172,6 +176,7 @@
       const fams = new Set((e.patterns || []).map(p => p.split('-')[0]));
       if (![...activeFamilies].some(f => fams.has(f))) return false;
     }
+    if (activeKinds.size && !activeKinds.has(e.kind || '')) return false;
     return true;
   }
 
@@ -207,14 +212,27 @@
   loadData('extensions.json').then(data => {
     allData = data;
     const families = [...new Set(data.available.flatMap(e => (e.patterns || []).map(p => p.split('-')[0])))].sort();
-    document.getElementById('ext-chips').innerHTML = families.map(f =>
-      `<button type="button" class="ext-chip" data-family="${esc(f)}">${esc(f)}</button>`).join(' ');
+    const kinds = [...new Set(data.available.map(e => e.kind).filter(Boolean))].sort();
+    document.getElementById('ext-chips').innerHTML =
+      families.map(f =>
+        `<button type="button" class="ext-chip" data-family="${esc(f)}">${esc(f)}</button>`).join(' ')
+      + (kinds.length ? ' <span class="ext-chip-sep" aria-hidden="true">·</span> ' : '')
+      + kinds.map(k =>
+        `<button type="button" class="ext-chip ext-chip-kind" data-kind="${esc(k)}" title="Nature de la prise">${esc(k)}</button>`).join(' ');
     document.getElementById('ext-chips').addEventListener('click', e => {
-      const chip = e.target.closest('[data-family]');
-      if (!chip) return;
-      const f = chip.dataset.family;
-      if (activeFamilies.has(f)) { activeFamilies.delete(f); chip.classList.remove('on'); }
-      else { activeFamilies.add(f); chip.classList.add('on'); }
+      const famChip = e.target.closest('[data-family]');
+      if (famChip) {
+        const f = famChip.dataset.family;
+        if (activeFamilies.has(f)) { activeFamilies.delete(f); famChip.classList.remove('on'); }
+        else { activeFamilies.add(f); famChip.classList.add('on'); }
+        render();
+        return;
+      }
+      const kindChip = e.target.closest('[data-kind]');
+      if (!kindChip) return;
+      const k = kindChip.dataset.kind;
+      if (activeKinds.has(k)) { activeKinds.delete(k); kindChip.classList.remove('on'); }
+      else { activeKinds.add(k); kindChip.classList.add('on'); }
       render();
     });
     document.getElementById('ext-search').addEventListener('input', render);
