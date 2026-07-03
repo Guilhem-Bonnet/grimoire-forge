@@ -1,12 +1,13 @@
 {
-  "generatedAt": "2026-07-03T12:47:45.760Z",
+  "generatedAt": "2026-07-03T13:01:09.046Z",
   "source": "registry",
   "registry": "https://github.com/Guilhem-Bonnet/grimoire-extensions-registry",
   "available": [
     {
       "id": "autogen",
+      "kind": "flow-adapter",
       "name": "AutoGen Bridge",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "description": "Pont AutoGen (Microsoft) : conversations multi-agents exposées comme orchestrations Grimoire gouvernées — rôles bornés, tours de parole tracés, sortie en handoff packet.",
       "license": "MIT",
       "upstream": "https://github.com/microsoft/autogen",
@@ -36,8 +37,9 @@
     },
     {
       "id": "browser-use",
+      "kind": "capability",
       "name": "Browser Use",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "description": "Agents de navigation web gouvernés : chaque action UI produit une preuve (screenshot, DOM, URL), périmètre de navigation borné par allowlist, actions irréversibles simulées avant exécution.",
       "license": "MIT",
       "upstream": "https://github.com/browser-use/browser-use",
@@ -67,8 +69,9 @@
     },
     {
       "id": "crewai",
+      "kind": "flow-adapter",
       "name": "CrewAI Bridge",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "description": "Expose les crews CrewAI comme artefacts Grimoire gouvernés via l'adaptateur grimoire.runtime.crewai_adapter : import de flows en Recipes, exécution bornée, traces normalisées.",
       "license": "MIT",
       "upstream": "https://github.com/crewAIInc/crewAI",
@@ -103,8 +106,9 @@
     },
     {
       "id": "haystack",
+      "kind": "capability",
       "name": "Haystack RAG",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "description": "Pipelines RAG Haystack gouvernés : indexation documentaire déclarée (sources, fraîcheur, propriétaire), rappel avec provenance obligatoire — contre le RAG aveugle.",
       "license": "Apache-2.0",
       "upstream": "https://github.com/deepset-ai/haystack",
@@ -134,8 +138,9 @@
     },
     {
       "id": "langfuse",
+      "kind": "observability",
       "name": "Langfuse Observability",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "description": "Pont d'observabilité Langfuse : exporte la télémétrie agentique locale (events.jsonl) vers Langfuse en mode best-effort, avec conventions de traces et guide d'installation. Hooks en shadow, jamais bloquants.",
       "license": "MIT",
       "upstream": "https://github.com/langfuse/langfuse",
@@ -164,8 +169,9 @@
     },
     {
       "id": "langgraph",
+      "kind": "flow-adapter",
       "name": "LangGraph Bridge",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "description": "Pont LangGraph : graphes d'agents à état persistant exposés comme workflows Grimoire gouvernés — état explicite, reprises auditées, checkpoints tracés. Matérialise ORC-09 (Workflow State Engine) et ORC-10 (Flow DSL minimal).",
       "license": "MIT",
       "upstream": "https://github.com/langchain-ai/langgraph",

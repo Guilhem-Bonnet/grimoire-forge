@@ -151,6 +151,7 @@
       <div class="ext-card-head">
         <span class="ext-name">${esc(e.name)}</span>
         ${e.version ? `<span class="ext-ver">v${esc(e.version)}</span>` : ''}
+        ${e.kind ? `<span class="ext-ver" title="Nature de la prise">${esc(e.kind)}</span>` : ''}
         <span class="ext-status ${e.status}">${e.status === 'available' ? 'Disponible' : 'En étude'}</span>
       </div>
       <p class="ext-desc">${esc(e.description)}</p>
@@ -165,7 +166,7 @@
 
   function matches(e) {
     const q = document.getElementById('ext-search').value.trim().toLowerCase();
-    const hay = [e.name, e.description, ...(e.patterns || [])].join(' ').toLowerCase();
+    const hay = [e.name, e.description, e.kind || '', ...(e.patterns || [])].join(' ').toLowerCase();
     if (q && !hay.includes(q)) return false;
     if (activeFamilies.size) {
       const fams = new Set((e.patterns || []).map(p => p.split('-')[0]));

@@ -43,6 +43,7 @@ function readKitManifests() {
 function fromManifest(m) {
   return {
     id: m.id,
+    kind: m.kind ?? null,
     name: m.name,
     version: m.version,
     description: m.description,
@@ -79,7 +80,7 @@ if (registryPath) {
     } else {
       const s = release.summary;
       available.push({
-        id, name: s.name, version: entry.latest, description: s.description,
+        id, kind: s.kind ?? null, name: s.name, version: entry.latest, description: s.description,
         license: s.license, upstream: s.upstream ?? null, upstreamKind: null,
         patterns: s.patterns ?? [], requires: [], permissions: s.permissions ?? {},
         provides: {}, nodes: [], status: 'available',
