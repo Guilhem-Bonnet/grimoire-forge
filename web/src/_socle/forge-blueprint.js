@@ -465,6 +465,19 @@
           });
       });
 
+      /* Compilation v1 (H4) : blueprint prêt -> mission pack gouverné.
+         Aucun apply automatique : le diff git reste la revue. */
+      document.getElementById('bp-compile').addEventListener('click', () => {
+        if (!current) { toast('Ouvrir un blueprint d’abord.'); return; }
+        api('/api/blueprints/' + current.id + '/compile', { method: 'POST', body: JSON.stringify(serialize()) })
+          .then(r => {
+            if (r.error) { toast('Compilation refusée :\n' + r.error, 8000); return; }
+            api('/api/blueprints/' + current.id).then(openBlueprint);
+            toast('Compilé : ' + r.artifact + '\n' + r.hash.slice(0, 19) + '…'
+              + ((r.warnings || []).length ? '\nAvertissements : ' + r.warnings.length : ''), 8000);
+          });
+      });
+
       /* Replay télémétrie (H4) : rejoue les events.jsonl sur le graphe via
          les bindings du blueprint. Lecture seule, aucune exécution. */
       document.getElementById('bp-replay').addEventListener('click', () => {
