@@ -10,7 +10,8 @@
     },
     "playwright": {
       "type": "stdio",
-      "command": "/mnt/Travail/Projets/Dev/Grimoire-Forge/grimoire-kit/framework/tools/playwright-mcp.sh",
+      "command": "npx",
+      "args": ["@playwright/mcp@latest"],
       "cwd": "/mnt/Travail/Projets/Dev/Grimoire-Forge"
     },
     "grimoire": {

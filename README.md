@@ -158,21 +158,17 @@ Le contrat Memory OS est declare dans `_grimoire/standard/memory-policy.yaml` av
 - SQLite : sidecar local et fallback.
 - Qdrant : source legacy de migration/rollback.
 
-## Demo locale du cockpit V5
+## Cockpit local
 
-Le shell local du cockpit vit dans `grimoire-kit/apps/grimoire-game/` et permet de rejouer visuellement les read models runtime deja prouves a travers `Cockpit`, `Spectator`, `Observer`, `Workflow`, `Expert`, `Observatory`, `War Room`, `Host Bridge` et `VS Code Panel`.
+Le cockpit officiel est fourni par le kit canonique via la CLI `grimoire cockpit` : il gouverne les projets enregistres de la machine (registre `~/.grimoire/cockpit/registry.json`) et sert l'UI en local.
 
 ```bash
-cd grimoire-kit/apps/grimoire-game
-npm run check
-npm run demo:views
-npm run demo:report
-npm run release:verify
+grimoire-kit/.venv/bin/grimoire cockpit serve
 ```
 
-Le rapport HTML genere atterrit dans `grimoire-kit/apps/grimoire-game/.release/runtime-views-report.html`.
+L'ancien shell R&D `apps/grimoire-game/` (read models `Cockpit`, `Spectator`, `Observer`, `Observatory`, `War Room`...) n'est plus dans l'arbre synchronise du kit ; il reste accessible sur la branche de preservation `preserve/nested-rnd-20260703` du repo Grimoire-kit.
 
-Voir aussi : [grimoire-kit/apps/grimoire-game/README.md](grimoire-kit/apps/grimoire-game/README.md) et le site public `/observability/` / `/demo/` (voir section **Site public** ci-dessous).
+Voir aussi le site public `/observability/` / `/demo/` (voir section **Site public** ci-dessous).
 
 ## Site public
 

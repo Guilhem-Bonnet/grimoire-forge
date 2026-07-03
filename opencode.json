@@ -23,9 +23,7 @@
     "grimoire": {
       "type": "local",
       "command": [
-        "node",
-        "--experimental-strip-types",
-        "grimoire-kit/adapters/grimoire-mcp/src/server.ts"
+        ".codex/mcp/grimoire-mcp.sh"
       ],
       "enabled": true
     }
