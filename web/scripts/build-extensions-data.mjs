@@ -97,15 +97,30 @@ if (registryPath) {
   process.exit(1);
 }
 
+let blueprints = [];
+if (registryPath) {
+  const index = JSON.parse(fs.readFileSync(registryPath, 'utf8'));
+  blueprints = Object.entries(index.blueprints ?? {}).map(([id, e]) => ({
+    id,
+    name: e.summary.name,
+    description: e.summary.description ?? '',
+    nodes: e.summary.nodes,
+    edges: e.summary.edges,
+    extensions: e.summary.extensions ?? [],
+    catalogVersion: e.summary.catalogVersion ?? null,
+  }));
+}
+
 const packaged = new Set(available.map((m) => m.id));
 const data = {
   generatedAt: new Date().toISOString(),
   source,
   registry: 'https://github.com/Guilhem-Bonnet/grimoire-extensions-registry',
   available: available.sort((a, b) => a.id.localeCompare(b.id)),
+  blueprints: blueprints.sort((a, b) => a.id.localeCompare(b.id)),
   candidates: CANDIDATES.filter((c) => !packaged.has(c.id)).map((c) => ({ ...c, status: 'candidate' })),
 };
 
 fs.mkdirSync(path.dirname(OUT), { recursive: true });
 fs.writeFileSync(OUT, JSON.stringify(data, null, 2) + '\n', 'utf8');
-console.log(`✓ extensions.json (source: ${source}) — ${data.available.length} disponible(s), ${data.candidates.length} candidat(s)`);
+console.log(`✓ extensions.json (source: ${source}) — ${data.available.length} disponible(s), ${data.blueprints.length} blueprint(s), ${data.candidates.length} candidat(s)`);

@@ -88,6 +88,13 @@
 
 <section class="ext-section">
   <div class="container">
+    <div class="ext-label">BLUEPRINTS <span class="n" id="ext-count-blueprints"></span></div>
+    <div class="ext-grid" id="ext-blueprints"></div>
+  </div>
+</section>
+
+<section class="ext-section">
+  <div class="container">
     <div class="ext-label">EN ÉTUDE <span class="n" id="ext-count-candidates"></span></div>
     <div class="ext-grid" id="ext-candidates"></div>
   </div>
@@ -167,6 +174,17 @@
     return true;
   }
 
+  function bpCard(b) {
+    return `<article class="ext-card">
+      <div class="ext-card-head"><span class="ext-name">${esc(b.name)}</span>
+        <span class="ext-status available">Blueprint</span></div>
+      <p class="ext-desc">${esc(b.description)}</p>
+      <div class="ext-meta"><span>${b.nodes} nodes · ${b.edges} edges</span>
+        ${b.extensions.length ? `<span>requiert : ${b.extensions.map(esc).join(', ')}</span>` : ''}</div>
+      <div class="ext-cmd"><span class="p">$ </span>grimoire ext add-blueprint ${esc(b.id)} --registry &lt;clone&gt;</div>
+    </article>`;
+  }
+
   function render() {
     const av = allData.available.filter(matches);
     const ca = allData.candidates.filter(matches);
@@ -177,6 +195,11 @@
       ? ca.map(card).join('')
       : '<div class="ext-empty">Aucun candidat ne correspond aux filtres.</div>';
     document.getElementById('ext-count-available').textContent = '· ' + av.length + '/' + allData.available.length;
+    const bps = allData.blueprints || [];
+    document.getElementById('ext-blueprints').innerHTML = bps.length
+      ? bps.map(bpCard).join('')
+      : '<div class="ext-empty">Aucun blueprint publié pour le moment.</div>';
+    document.getElementById('ext-count-blueprints').textContent = '· ' + bps.length;
     document.getElementById('ext-count-candidates').textContent = '· ' + ca.length + '/' + allData.candidates.length;
   }
 

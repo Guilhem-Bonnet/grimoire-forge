@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-02T21:42:35.176Z",
+  "generatedAt": "2026-07-03T12:47:45.760Z",
   "source": "registry",
   "registry": "https://github.com/Guilhem-Bonnet/grimoire-extensions-registry",
   "available": [
@@ -193,6 +193,19 @@
         "LangGraph StateGraph"
       ],
       "status": "available"
+    }
+  ],
+  "blueprints": [
+    {
+      "id": "onboarding-crew",
+      "name": "Onboarding d'un crew CrewAI gouverné",
+      "description": "Flow d'exemple : un crew CrewAI encapsulé derrière l'orchestrateur, avec policy engine en amont et evidence pack en aval.",
+      "nodes": 4,
+      "edges": 4,
+      "extensions": [
+        "crewai"
+      ],
+      "catalogVersion": "1.0.0"
     }
   ],
   "candidates": [
