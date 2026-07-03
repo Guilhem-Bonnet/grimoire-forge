@@ -1,6 +1,6 @@
 # Grimoire Forge
 
-Moteur de creation de projets agentiques, construit en dogfooding continu avec BMAD.
+Moteur de creation de projets agentiques, construit en dogfooding continu.
 
 ## Sommaire
 
@@ -8,11 +8,15 @@ Moteur de creation de projets agentiques, construit en dogfooding continu avec B
 - [Direction Artistique](#direction-artistique)
 - [Architecture](#architecture)
 - [Structure du depot](#structure-du-depot)
+- [Rangement de la racine](#rangement-de-la-racine)
 - [Actifs deja capitalises](#actifs-deja-capitalises)
 - [Workflow recommande](#workflow-recommande)
+- [Workflow GitHub](#workflow-github)
 - [Commandes utiles](#commandes-utiles)
 - [Standard agentique](#standard-agentique)
 - [Memoire](#memoire)
+- [Demo locale du cockpit V5](#demo-locale-du-cockpit-v5)
+- [Site public](#site-public)
 - [Documentation](#documentation)
 - [Statut](#statut)
 
@@ -83,7 +87,7 @@ grimoire-forge/
 ## Workflow recommande
 
 1. Formaliser la cible et les contraintes dans la documentation.
-2. Transformer la cible en stories exploitables via BMAD.
+2. Transformer la cible en stories exploitables via la methode Grimoire.
 3. Implementer dans [grimoire-kit](grimoire-kit/).
 4. Reinstaller dans ce workspace et valider en conditions reelles.
 5. Rejouer la boucle d'amelioration continue.
@@ -108,7 +112,7 @@ bash grimoire-init.sh hooks --install
 python3 -m ruff check grimoire-kit/framework/tools/ grimoire-kit/tests/ --statistics
 python3 -m pytest grimoire-kit/tests/ -q --tb=short -x --ignore=grimoire-kit/tests/test_background_tasks.py
 
-# Sante BMAD
+# Sante du runtime
 python3 grimoire-kit/framework/tools/preflight-check.py --project-root .
 python3 grimoire-kit/framework/tools/memory-lint.py --project-root .
 ```
@@ -158,7 +162,7 @@ Voir aussi : [grimoire-kit/apps/grimoire-game/README.md](grimoire-kit/apps/grimo
 
 ## Site public
 
-Le site public Grimoire Forge est desormais un projet [Astro](https://astro.build) autonome dans [`web/`](web/), construit sur un socle HTML/CSS/JS premium (dark control plane + FX layer futuriste). Il remplace l'ancien site MkDocs.
+Le site public Grimoire Forge est un projet [Astro](https://astro.build) autonome dans [`web/`](web/), construit sur un socle HTML/CSS/JS premium (dark control plane + FX layer futuriste).
 
 ```bash
 cd web
@@ -184,9 +188,10 @@ Details dans [web/README.md](web/README.md).
 
 ## Documentation
 
+- Site public (source Astro): [web/README.md](web/README.md)
 - Changelog: [CHANGELOG.md](CHANGELOG.md)
-- Documentation standard MkDocs: [docs/](docs/)
-- Site public: [web/README.md](web/README.md)
+- Contribuer: [CONTRIBUTING.md](CONTRIBUTING.md)
+- Securite: [SECURITY.md](SECURITY.md)
 - Runtime Grimoire (agents, workflows, config): [_grimoire-runtime/](_grimoire-runtime/)
 - Kit implementation: [grimoire-kit/](grimoire-kit/)
 

@@ -14,11 +14,15 @@ Ce document suit le format Keep a Changelog.
 
 ### Removed
 
-- Ancien site MkDocs : `docs/`, `mkdocs.yml`, `mkdocs_hooks/`, `site/`, `project-context.yaml` supprimes au profit du nouveau site Astro.
+- Ancien site MkDocs : `docs/`, `mkdocs.yml`, `.github/workflows/docs.yml`, `site/` et le script `docs:build` supprimes au profit du site Astro.
+- Section de comparaison concurrentielle (Aider, Claude Code, Cursor, GitHub Copilot) retiree du manifeste public : la page se concentre desormais sur Grimoire lui-meme.
 
 ### Changed
 
-- README racine mis a jour : nouvelle section **Site public**, suppression des liens `docs/`.
+- README racine mis a jour : section **Site public** clarifiee, suppression des liens `docs/` obsoletes, nommage legacy "BMAD" remplace par "Grimoire".
+- `CONTRIBUTING.md` reecrit : liens `docs/governance/*` et `docs/exploitation/*` casses remplaces par des cibles valides, structure clarifiee pour les contributeurs.
+- `web/README.md` : suppression du boilerplate Astro starter residuel.
+- Site public : liens morts du pied de page (`API Reference`, `Early Access`, `Roadmap`) remplaces par des cibles reelles (`/agents/`, manifeste, GitHub) ; references de modeles datees genericisees dans les pages de demo.
 
 ## [0.1.0] - 2026-03-27
 

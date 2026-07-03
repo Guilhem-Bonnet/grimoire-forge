@@ -1,6 +1,5 @@
 #!/usr/bin/env node
-// Copie l'app cockpit + runtime views report vers web/public/
-// Équivalent du hook mkdocs_hooks/copy_cockpit.py supprimé.
+// Copie l'app cockpit + runtime views report vers web/public/.
 import fs from 'node:fs';
 import path from 'node:path';
 
