@@ -1,0 +1,1589 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="design_doc_mode" content="canvas">
+<title>Refonte UX — Grimoire Kit</title>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600;700&family=Caveat:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="wireframe-kit.css">
+</head>
+<body>
+<!-- ═══ BANDE 0 · SYNTHÈSE ═══ -->
+<div class="band-label" style="left:80px;top:44px"><span class="n">0</span> <b>Synthèse</b> · la décision en une planche</div>
+
+<div class="wf" style="left:80px;top:104px;width:780px" data-screen-label="Synthèse — mission et thèse">
+  <div class="wf-tag">Refonte UX · Grimoire Kit · juillet 2026</div>
+  <div class="wf-title" style="font-size:26px">Deux espaces, un socle.</div>
+  <p class="wf-sub" style="font-size:14px;max-width:60ch">Tous les problèmes constatés ont la même racine : <b>la vitrine et l'outil vivent dans la même navigation</b>. Le visiteur reçoit du produit qu'il ne peut pas utiliser ; l'utilisateur local retombe sur du marketing. On sépare les deux parcours — <b>Vitrine</b> (comprendre, public) et <b>Atelier</b> (opérer, local) — sans dupliquer le code : mêmes pages HTML, l'API locale active les capacités.</p>
+  <hr class="hr">
+  <div class="row top" style="gap:28px">
+    <div class="grow">
+      <div class="lbl" style="margin-bottom:8px">Sommaire</div>
+      <table class="tbl">
+        <tr><td class="mono">§1</td><td>Architecture d'information — nav, arborescence, parcours, renommages</td></tr>
+        <tr><td class="mono">§2</td><td>Trois directions — structure, nav et métaphore (mixables)</td></tr>
+        <tr><td class="mono">§3</td><td>Accueil premier lancement — 3 variations</td></tr>
+        <tr><td class="mono">§4</td><td><b>Éditeur de flows — 3 variations + grammaire d'interaction UE-like (priorité)</b></td></tr>
+        <tr><td class="mono">§5</td><td>Écrans partagés — hub, marketplace, détail, catalogue</td></tr>
+        <tr><td class="mono">§6</td><td><b>Onboarding premier-flow — storyboard, états vides</b></td></tr>
+        <tr><td class="mono">§7</td><td>Recommandations tranchées, lexique, plan d'implémentation</td></tr>
+      </table>
+    </div>
+    <div style="width:230px;flex:none">
+      <div class="lbl" style="margin-bottom:8px">Sources</div>
+      <p style="font-size:11.5px;color:var(--char-soft);line-height:1.6">Captures du site actuel (4 écrans), catalogue <span class="mono">v1.0.0 · 53b2c34</span> — 78 patterns · 141 relations · 30 contrats · 50 use-cases, registry 8 extensions + 3 à l'étude. Aucune donnée inventée.</p>
+      <div class="note" style="margin-top:10px">les invariants sont respectés partout : le blueprint compile, il n'exécute <b>jamais</b></div>
+    </div>
+  </div>
+</div>
+
+<div class="wf" style="left:1000px;top:104px;width:1160px" data-screen-label="Synthèse — cinq décisions">
+  <div class="wf-tag">Les cinq décisions</div>
+  <div class="wf-title">Ce que je recommande — détail argumenté en §7</div>
+  <p class="wf-sub">Chaque décision est tenable en HTML/CSS/JS vanilla, sans toucher au moteur Cytoscape ni aux données.</p>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px">
+    <div class="bx" style="padding:13px 15px">
+      <div class="lbl" style="color:var(--ann)">R1 · Renommage</div>
+      <div style="font-size:13.5px;margin:6px 0 4px"><span class="strike mono">Setup</span> → <b>Atelier</b></div>
+      <p style="font-size:11.5px;color:var(--char-soft);line-height:1.5">Le hub du projet courant : état, blueprints, extensions, artefacts, nouveau projet. « Setup » promettait une installation ; la page est un poste de travail.</p>
+    </div>
+    <div class="bx" style="padding:13px 15px">
+      <div class="lbl" style="color:var(--ann)">R2 · Scission</div>
+      <div style="font-size:13.5px;margin:6px 0 4px"><span class="strike mono">Blueprint</span> → <b>Patterns</b> + <b>Blueprints</b></div>
+      <p style="font-size:11.5px;color:var(--char-soft);line-height:1.5">Le catalogue (pédagogique, public) et l'éditeur (outil, local) sont deux métiers. Même donnée <span class="mono">catalogue-export.json</span>, deux pages.</p>
+    </div>
+    <div class="bx" style="padding:13px 15px">
+      <div class="lbl" style="color:var(--ann)">R3 · Repositionnement</div>
+      <div style="font-size:13.5px;margin:6px 0 4px"><span class="strike mono">Game UI</span> → <b>Labs · Game UI</b></div>
+      <p style="font-size:11.5px;color:var(--char-soft);line-height:1.5">Sort de la nav. Devient la pièce maîtresse d'une section « Labs » sur le Manifeste : une direction assumée, pas une feature honteuse.</p>
+    </div>
+    <div class="bx" style="padding:13px 15px">
+      <div class="lbl" style="color:var(--ann)">R4 · Navigation</div>
+      <div style="font-size:13.5px;margin:6px 0 4px">1 nav à plat → <b>2 navs, 1 socle</b></div>
+      <p style="font-size:11.5px;color:var(--char-soft);line-height:1.5">Vitrine : topbar, 5 entrées, 1 CTA. Atelier : sidebar produit avec sélecteur de projet. <span class="mono">forge-nav.js</span> choisit selon la détection de l'API locale.</p>
+    </div>
+    <div class="bx" style="padding:13px 15px">
+      <div class="lbl" style="color:var(--ann)">R5 · Promesse</div>
+      <div style="font-size:13.5px;margin:6px 0 4px"><span class="strike mono">Ouvrir le Cockpit</span> → <b>Lancer l'atelier</b></div>
+      <p style="font-size:11.5px;color:var(--char-soft);line-height:1.5">« Cockpit » nomme une surface runtime du kit — le CTA du site doit vendre ce qui existe : le mode local. Le bouton montre la commande <span class="mono">grimoire serve</span>.</p>
+    </div>
+    <div style="padding:13px 15px;border:1.2px dashed var(--ann-bd);border-radius:6px;background:var(--ann-bg)">
+      <div class="lbl" style="color:var(--ann)">R6 · Onboarding</div>
+      <div style="font-size:13.5px;margin:6px 0 4px">Premier flow <b>guidé, &lt; 2 min</b></div>
+      <p style="font-size:11.5px;color:var(--char-soft);line-height:1.5">4 étapes actives (ajouter ×2, connecter, simuler), départs par modèles, vocabulaire expliqué au moment où il sert. Storyboard complet en §6.</p>
+    </div>
+  </div>
+</div>
+
+<div class="wf" style="left:2300px;top:104px;width:540px" data-screen-label="Synthèse — mode d'emploi">
+  <div class="wf-tag">Mode d'emploi de ce document</div>
+  <div class="wf-title" style="font-size:16px">Comment lire ces planches</div>
+  <ul class="legend" style="margin-top:10px">
+    <li><span class="n" style="background:var(--char)">▢</span><b>Wireframes = structure, pas rendu.</b> Les gris, filets et hachures sont volontaires ; la direction visuelle se décide en §2.</li>
+    <li><span class="n">✎</span><span class="note" style="font-size:16px">l'écriture manuscrite orange</span> = décision, alerte ou justification.</li>
+    <li><span class="n" style="background:var(--char)">①</span>Les pastilles numérotées renvoient à la légende sous chaque écran.</li>
+    <li><span class="n" style="background:#64748B">A</span>Trois directions <b>A · B · C</b> — pensées pour être <b>mixées</b> : ma synthèse recommandée ferme le document (§7).</li>
+  </ul>
+  <hr class="hr">
+  <p style="font-size:11.5px;color:var(--char-soft);line-height:1.55">Priorité demandée : <b>éditeur + onboarding</b> → §4 et §6 sont les bandes les plus denses. Tout le reste existe pour les rendre inévitables.</p>
+</div>
+
+<!-- ═══ BANDE 1 · ARCHITECTURE D'INFORMATION ═══ -->
+<div class="band-label" style="left:80px;top:940px"><span class="n">1</span> <b>Architecture d'information</b> · nav · arborescence · parcours · renommages</div>
+
+<div class="wf" style="left:80px;top:1000px;width:1260px" data-screen-label="IA — navigation avant / après">
+  <div class="wf-tag">1.1 · Navigation</div>
+  <div class="wf-title">Avant : 11 entrées à plat. Après : deux espaces.</div>
+  <p class="wf-sub">La nav actuelle sert trois audiences en même temps. Chaque entrée est légitime — c'est leur cohabitation qui interdit tout parcours.</p>
+
+  <div class="lbl" style="margin-bottom:6px">Avant — une seule barre pour tout</div>
+  <div class="scr" style="margin-bottom:6px">
+    <div class="tb" style="border-bottom:none;flex-wrap:wrap;row-gap:4px">
+      <span class="logo">GRIMOIRE <span style="color:var(--ann)">FORGE</span></span>
+      <span class="grow"></span>
+      <span class="chip" style="border-color:#B5AF9F">MANIFESTO</span><span class="chip">DÉMO</span><span class="chip" style="border-color:var(--ann-bd);color:var(--ann)">GAME UI</span><span class="chip">OBSERVATORY</span><span class="chip">ANATOMIE</span><span class="chip">DOCS</span><span class="chip" style="border-color:var(--ann-bd);color:var(--ann)">EXTENSIONS</span><span class="chip" style="border-color:var(--ann-bd);color:var(--ann)">BLUEPRINT</span><span class="chip" style="border-color:var(--ann-bd);color:var(--ann)">SETUP</span><span class="chip">AGENTS</span><span class="chip">CHANGELOG</span>
+      <span class="btn acc" style="font-size:9px">OUVRIR LE COCKPIT →</span>
+    </div>
+  </div>
+  <div class="row top" style="gap:20px;margin-bottom:20px">
+    <p class="note grow">11 choix d'un coup — <b>vitrine</b> (manifesto, démo…), <b>produit</b> (blueprint, setup, extensions, en orange) et <b>référence</b> (docs, anatomie, agents) mélangés. Le CTA promet un « cockpit » qui n'est pas une page du site.</p>
+    <p class="note-dim" style="width:340px;flex:none">« Setup » et « Blueprint » sont inutilisables sans explication — constat du créateur lui-même.</p>
+  </div>
+
+  <div class="lbl" style="margin-bottom:6px">Après — vitrine publique · topbar, 5 entrées, 1 CTA</div>
+  <div class="scr" style="margin-bottom:6px">
+    <div class="tb" style="border-bottom:none">
+      <span class="logo">GRIMOIRE <span style="color:var(--ann)">KIT</span></span>
+      <span class="grow"></span>
+      <span class="chip on">PRODUIT</span><span class="chip">MANIFESTE</span><span class="chip">PATTERNS</span><span class="chip">EXTENSIONS</span><span class="chip">DOCS</span>
+      <span class="btn pacc" style="font-size:9px">LANCER L'ATELIER →</span>
+    </div>
+  </div>
+  <p class="note" style="margin-bottom:20px">Démo, Game UI, Agents, Anatomie, Changelog ne disparaissent pas : ils descendent <b>dans</b> les pages (hero, Manifeste·Labs, Docs).</p>
+
+  <div class="row top" style="gap:20px">
+    <div class="grow">
+      <div class="lbl" style="margin-bottom:6px">Après — atelier local · sidebar produit</div>
+      <div class="scr" style="display:flex;min-height:236px">
+        <div class="side" style="width:200px">
+          <div class="nav-i" style="border:1.2px solid var(--char-faint);background:#fff;justify-content:space-between;margin-bottom:6px"><span>◆ mon-projet</span><span>▾</span></div>
+          <div class="nav-i on"><span class="ico"></span>Atelier</div>
+          <div class="nav-i"><span class="ico"></span>Blueprints</div>
+          <div class="nav-i"><span class="ico"></span>Extensions</div>
+          <div class="nav-sec">Comprendre</div>
+          <div class="nav-i"><span class="ico"></span>Patterns</div>
+          <div class="nav-i"><span class="ico"></span>Docs</div>
+          <div class="nav-sec">Observer</div>
+          <div class="nav-i"><span class="ico"></span>Observatoire</div>
+          <div class="nav-i"><span class="ico"></span>Mémoire · Kanban</div>
+        </div>
+        <div class="grow" style="padding:12px"><div class="ph" style="height:100%"><span class="cap">page courante</span></div></div>
+      </div>
+      <div class="statusbar" style="border:none;padding:6px 2px"><span>● API locale · :7431</span><span>kit v3.16.0</span><span>catalogue v1.0.0 ✓</span><span class="grow"></span><span>Vitrine ↗</span></div>
+    </div>
+    <div style="width:360px;flex:none" class="col">
+      <p class="note">la sidebar n'existe <b>que</b> si l'API locale répond — sur le site public, personne ne la voit jamais</p>
+      <p class="note-dim">3 groupes : <b>travailler</b> (atelier, blueprints, extensions) · <b>comprendre</b> (patterns, docs) · <b>observer</b> (surfaces runtime)</p>
+      <p class="note-dim">le sélecteur de projet est dans la sidebar, pas dans la topbar : il appartient à l'atelier</p>
+    </div>
+  </div>
+</div>
+
+<div class="wf" style="left:1480px;top:1000px;width:1200px" data-screen-label="IA — arborescence des deux espaces">
+  <div class="wf-tag">1.2 · Hiérarchie des pages</div>
+  <div class="wf-title">Un socle, deux arborescences</div>
+  <p class="wf-sub">Mêmes fichiers HTML partout. La colonne de droite n'est pas un « autre site » : c'est ce que devient le même socle quand <span class="mono">grimoire serve</span> tourne.</p>
+  <div class="row top" style="gap:24px">
+    <div class="grow tree">
+      <div class="lbl" style="margin-bottom:8px">Vitrine — comprendre (public, statique)</div>
+      <ul style="border:none;margin:0;padding:0">
+        <li><span class="pg">Accueil</span> <span class="why">— la proposition en 30 s : compose → simule → compile</span>
+          <ul><li><span class="pg">Démo</span> <span class="why">— replay, liée depuis le hero</span></li></ul>
+        </li>
+        <li><span class="pg">Manifeste</span> <span class="why">— pourquoi la gouvernance</span>
+          <ul><li><span class="pg">Labs · Game UI</span><span class="new">déplacé</span> <span class="why">— la direction jeu, assumée comme vision</span></li></ul>
+        </li>
+        <li><span class="pg">Patterns</span><span class="new">ex-blueprint</span> <span class="why">— le catalogue normatif : graphe, familles, use-cases, fiches</span></li>
+        <li><span class="pg">Extensions</span> <span class="why">— marketplace en consultation : fiches + commandes CLI</span>
+          <ul><li><span class="pg">Détail extension</span><span class="new">nouveau</span> <span class="why">— 1 page par extension</span></li></ul>
+        </li>
+        <li><span class="pg">Docs</span> <span class="why">— guides, référence agents, anatomie, changelog</span></li>
+      </ul>
+    </div>
+    <div class="grow tree">
+      <div class="lbl" style="margin-bottom:8px;color:var(--ann)">Atelier — opérer (local, grimoire serve)</div>
+      <ul style="border:none;margin:0;padding:0">
+        <li><span class="pg">Premier lancement</span><span class="new">nouveau</span> <span class="why">— sans projet : créer / exemple / explorer → §3</span>
+          <ul><li><span class="pg">Wizard de projet</span> <span class="why">— nom, chemin d'init, profil, extensions</span></li></ul>
+        </li>
+        <li><span class="pg">Atelier</span><span class="new">ex-setup</span> <span class="why">— hub du projet : état, artefacts, actions → §5.1</span></li>
+        <li><span class="pg">Blueprints</span><span class="new">scission</span> <span class="why">— mes flows + éditeur + onboarding → §4, §6</span></li>
+        <li><span class="pg">Extensions</span> <span class="why">— même marketplace, + installation en 1 clic → §5.2</span></li>
+        <li><span class="pg">Patterns</span> <span class="why">— même catalogue, + « utiliser dans un blueprint » → §5.4</span></li>
+        <li><span class="pg">Surfaces runtime</span> <span class="why">— Observatoire · Mémoire · Kanban, inchangées</span></li>
+      </ul>
+    </div>
+  </div>
+  <hr class="hr">
+  <p class="note">une page = un métier. La règle qui tue « Blueprint fait deux jobs » et « Setup fourre-tout ».</p>
+</div>
+
+<div class="wf" style="left:2820px;top:1000px;width:1140px" data-screen-label="IA — parcours visiteur">
+  <div class="wf-tag">1.3 · Parcours visiteur</div>
+  <div class="wf-title">De l'atterrissage à <span class="mono" style="font-size:16px">pip install</span> — 30 secondes utiles</div>
+  <p class="wf-sub">Un seul objectif par page, un seul CTA suivant. Le visiteur ne « visite » pas : il vérifie trois choses — c'est quoi, c'est sérieux, comment j'essaie.</p>
+  <div class="row top" style="gap:8px">
+    <div class="stepc"><span class="lbl">1 · Accueil</span><b>Comprendre</b>1 phrase, 1 schéma compose→simule→compile, 3 chiffres (78 patterns · 8 extensions · MIT)</div>
+    <span class="arr">→</span>
+    <div class="stepc"><span class="lbl">2 · Preuve</span><b>Voir tourner</b>Démo replay <i>ou</i> graphe Patterns — cliquable sans rien installer</div>
+    <span class="arr">→</span>
+    <div class="stepc"><span class="lbl">3 · Projection</span><b>Se reconnaître</b>Extensions : « CrewAI, LangGraph… mon framework est packagé, gouverné »</div>
+    <span class="arr">→</span>
+    <div class="stepc" style="border-color:var(--ann-bd)"><span class="lbl" style="color:var(--ann)">4 · Essai</span><b>Installer</b><span class="mono" style="font-size:10.5px">pip install grimoire-kit<br>grimoire serve</span></div>
+    <span class="arr">→</span>
+    <div class="stepc"><span class="lbl">5 · Bascule</span><b>Devenir utilisateur</b>le même site s'ouvre en mode atelier → parcours 1.4</div>
+  </div>
+  <div class="row top" style="gap:24px;margin-top:16px">
+    <p class="note grow">le CTA « Lancer l'atelier » ouvre un panneau avec les 2 commandes — pas de page intermédiaire</p>
+    <p class="note-dim grow">l'étape 2 recycle l'existant : la démo replay et le graphe catalogue sont déjà les meilleurs vendeurs du produit</p>
+  </div>
+</div>
+
+<div class="wf" style="left:4120px;top:1000px;width:1140px" data-screen-label="IA — parcours utilisateur local">
+  <div class="wf-tag">1.4 · Parcours utilisateur local</div>
+  <div class="wf-title">La boucle quotidienne : composer → simuler → compiler → observer</div>
+  <p class="wf-sub">Le premier lancement est un cas à part entière (états vides, §3 et §6). Ensuite, l'atelier est le point de retour permanent.</p>
+  <div class="row top" style="gap:8px;margin-bottom:10px">
+    <div class="stepc"><span class="lbl">1 · Lancement</span><b class="mono" style="font-size:11px">grimoire serve</b>détection : un projet existe-t-il ici ?</div>
+    <span class="arr">→</span>
+    <div class="stepc" style="border-color:var(--ann-bd)"><span class="lbl" style="color:var(--ann)">2 · Sans projet</span><b>Accueil produit</b>créer (wizard) · ouvrir l'exemple · explorer le catalogue</div>
+    <span class="arr">→</span>
+    <div class="stepc"><span class="lbl">3 · Wizard</span><b>3 écrans</b>nom + chemin d'init · profil · extensions de départ (facultatif)</div>
+    <span class="arr">→</span>
+    <div class="stepc"><span class="lbl">4 · Atelier</span><b>Hub du projet</b>état + « 3 prochaines actions » quand tout est vide</div>
+  </div>
+  <div class="row top" style="gap:8px">
+    <div class="stepc"><span class="lbl">5 · Extensions</span><b>Installer</b>crewai en 1 clic — manifeste validé, hooks en shadow</div>
+    <span class="arr">→</span>
+    <div class="stepc" style="border-color:var(--ann-bd)"><span class="lbl" style="color:var(--ann)">6 · Blueprints</span><b>Composer</b>onboarding premier-flow : 2 nodes, 1 lien, 1 simulation — &lt; 2 min</div>
+    <span class="arr">→</span>
+    <div class="stepc"><span class="lbl">7 · Compilation</span><b>Compiler</b>le blueprint devient artefacts dans le projet — jamais d'exécution</div>
+    <span class="arr">→</span>
+    <div class="stepc"><span class="lbl">8 · Observer</span><b>Surfaces</b>artefacts dans l'Atelier, traces dans l'Observatoire — puis retour 6</div>
+  </div>
+  <p class="note" style="margin-top:14px">les étapes 2–3 ne se revoient plus jamais ensuite : le coût d'un vrai premier-lancement se paie une fois, il est aujourd'hui payé à chaque session (on retombe sur la vitrine)</p>
+</div>
+
+<div class="wf" style="left:5440px;top:1000px;width:920px" data-screen-label="IA — renommages">
+  <div class="wf-tag">1.5 · Renommages</div>
+  <div class="wf-title">Table des renommages</div>
+  <p class="wf-sub">Règle : un nom dit ce qu'on y fait ; la métaphore reste dans le ton, jamais dans la nav (voir §2).</p>
+  <table class="tbl">
+    <tr><th>Avant</th><th>Après</th><th>Pourquoi</th></tr>
+    <tr><td class="mono strike">Setup</td><td class="mono"><b>Atelier</b></td><td>c'est le poste de travail du projet, pas une installation</td></tr>
+    <tr><td class="mono strike">Blueprint</td><td class="mono"><b>Patterns</b> + <b>Blueprints</b></td><td>consulter le standard ≠ composer ses flows — scission R2</td></tr>
+    <tr><td class="mono strike">Ouvrir le Cockpit</td><td class="mono"><b>Lancer l'atelier</b></td><td>« cockpit » nomme une surface runtime du kit, pas le site</td></tr>
+    <tr><td class="mono strike">Game UI</td><td class="mono"><b>Labs · Game UI</b></td><td>démo d'intention → vitrine du Manifeste, hors nav</td></tr>
+    <tr><td class="mono strike">Observatory</td><td class="mono"><b>Observatoire</b></td><td>langue de l'interface : français, partout</td></tr>
+    <tr><td class="mono strike">Manifesto</td><td class="mono"><b>Manifeste</b></td><td>idem</td></tr>
+    <tr><td class="mono strike">Agents · Anatomie</td><td class="mono"><b>Docs · Référence</b></td><td>consultation, pas navigation primaire</td></tr>
+    <tr><td class="mono strike">Changelog</td><td class="mono"><b>Docs</b> + footer</td><td>utile, pas structurant</td></tr>
+    <tr><td class="mono">Extensions</td><td class="mono"><b>Extensions</b> <span class="tick">✓</span></td><td>le bon nom existe ; sous-titre « marketplace gouverné »</td></tr>
+  </table>
+  <p class="note" style="margin-top:12px">« Marketplace » reste un descripteur, pas un nom de page — les devs cherchent « extensions »</p>
+</div>
+
+<!-- ═══ BANDE 2 · TROIS DIRECTIONS ═══ -->
+<div class="band-label" style="left:80px;top:2060px"><span class="n">2</span> <b>Trois directions</b> · même architecture, trois peaux — mixables</div>
+
+<div class="wf" style="left:80px;top:2120px;width:560px" data-screen-label="Directions — principe">
+  <div class="wf-tag">2.0 · Principe</div>
+  <div class="wf-title">La structure est fixée, la peau se discute</div>
+  <p class="wf-sub" style="max-width:none">L'IA de la bande 1 ne bouge plus. Les directions font varier trois choses : le <b>modèle de nav de l'atelier</b>, le <b>vocabulaire</b>, le <b>traitement visuel</b>. Demandé : « bousculer » — chaque direction est donc une vraie thèse, pas trois gris différents.</p>
+  <table class="tbl" style="margin-top:4px">
+    <tr><th></th><th>Nav atelier</th><th>Ton</th></tr>
+    <tr><td><span class="dot dot-a" style="display:inline-block"></span> <b>A · Console</b></td><td>sidebar dense</td><td>instrument, froid</td></tr>
+    <tr><td><span class="dot dot-b" style="display:inline-block"></span> <b>B · Établi</b></td><td>plein écran, outils en main</td><td>matière, geste</td></tr>
+    <tr><td><span class="dot dot-c" style="display:inline-block"></span> <b>C · Codex</b></td><td>⌘K + planches</td><td>bibliothèque, soin</td></tr>
+  </table>
+  <p class="note" style="margin-top:14px">ma synthèse (§7) : <b>structure A + gestes directs de B + pédagogie C</b> dans le catalogue — et la grammaire d'interaction de l'éditeur vient des éditeurs node-graph, Unreal Blueprint en tête (→ 4·D). Les bandes 5 et 6 sont dessinées dans cette synthèse</p>
+</div>
+
+<div class="wf" style="left:780px;top:2120px;width:900px" data-screen-label="Direction A — La Console">
+  <div class="wf-tag"><span class="dot dot-a"></span> Direction A</div>
+  <div class="wf-title">La Console — un instrument, zéro décorum</div>
+  <p class="wf-sub">Thèse : la confiance d'un dev s'achète avec de la densité maîtrisée et des états impeccables. La gouvernance n'a pas besoin de costume.</p>
+  <div class="lbl" style="margin-bottom:6px">Modèle de nav — sidebar fixe, sections</div>
+  <div class="scr" style="display:flex;height:110px;margin-bottom:14px">
+    <div class="side" style="width:150px;padding:6px">
+      <div class="nav-i" style="font-size:9px;border:1px solid var(--char-faint);background:#fff">◆ mon-projet ▾</div>
+      <div class="nav-i on" style="font-size:9px;padding:3px 7px">Atelier</div>
+      <div class="nav-i" style="font-size:9px;padding:3px 7px">Blueprints</div>
+      <div class="nav-i" style="font-size:9px;padding:3px 7px">Extensions</div>
+      <div class="nav-i" style="font-size:9px;padding:3px 7px">Patterns · Docs</div>
+    </div>
+    <div class="grow" style="padding:8px"><div class="ph" style="height:100%"><span class="cap">densité IDE · tableaux · listes</span></div></div>
+  </div>
+  <div class="row top" style="gap:16px;margin-bottom:12px">
+    <div class="grow">
+      <div class="lbl" style="margin-bottom:4px">Vocabulaire</div>
+      <table class="tbl" style="font-size:11.5px">
+        <tr><td>hub</td><td class="mono">Projet</td></tr>
+        <tr><td>éditeur</td><td class="mono">Éditeur de flows</td></tr>
+        <tr><td>compiler</td><td class="mono">Compiler</td></tr>
+        <tr><td>catalogue</td><td class="mono">Catalogue</td></tr>
+      </table>
+    </div>
+    <div class="grow">
+      <div class="lbl" style="margin-bottom:6px">Traitement</div>
+      <div class="row" style="margin-bottom:8px">
+        <div class="swatch" style="background:#0B0C0E"></div>
+        <div class="swatch" style="background:#1A1D22"></div>
+        <div class="swatch" style="background:#F6F7F8"></div>
+        <div class="swatch" style="background:#FF6B3D"></div>
+      </div>
+      <p style="font-size:11px;color:var(--char-soft);line-height:1.5">Tokens actuels, resserrés. Orange <b>réservé aux actions</b> (aujourd'hui il décore). Coins 4 px, aucune texture, mono partout où c'est de la donnée.</p>
+    </div>
+  </div>
+  <div class="lbl" style="margin-bottom:4px">Concrètement</div>
+  <ul class="legend" style="margin-bottom:10px">
+    <li style="padding-left:14px"><span style="position:absolute;left:0">·</span>états (vide, erreur, chargement) dessinés avec le même soin que le nominal</li>
+    <li style="padding-left:14px"><span style="position:absolute;left:0">·</span>chaque écran a une ligne de statut : API, versions, dernière action</li>
+    <li style="padding-left:14px"><span style="position:absolute;left:0">·</span>raccourcis clavier affichés dans les boutons</li>
+  </ul>
+  <p class="note">risque : indifférencié — c'est propre, mais rien ne dit « Grimoire ». À retenir si la priorité absolue est la vitesse d'implémentation.</p>
+</div>
+
+<div class="wf" style="left:1820px;top:2120px;width:900px" data-screen-label="Direction B — L'Établi">
+  <div class="wf-tag"><span class="dot dot-b"></span> Direction B</div>
+  <div class="wf-title">L'Établi — l'outil en main</div>
+  <p class="wf-sub">Thèse : composer un flow est un travail manuel — l'interface doit donner la sensation d'outils en main : on saisit, on pose, on branche. Aucun vocabulaire inventé : des gestes.</p>
+  <div class="lbl" style="margin-bottom:6px">Modèle de nav — l'établi plein écran, chrome minimal</div>
+  <div class="scr" style="height:110px;margin-bottom:14px;display:flex;flex-direction:column">
+    <div class="tb" style="font-size:9px;padding:6px 10px">
+      <span class="logo" style="font-size:9.5px">KIT</span>
+      <span class="chip" style="font-size:8px">ATELIER</span><span class="chip on" style="font-size:8px">BLUEPRINTS</span><span class="chip" style="font-size:8px">EXTENSIONS</span>
+      <span class="grow"></span><span class="chip" style="font-size:8px">◆ mon-projet</span>
+    </div>
+    <div class="grow" style="display:flex">
+      <div class="grow" style="padding:8px"><div class="ph" style="height:100%"><span class="cap">l'outil occupe tout</span></div></div>
+      <div style="width:64px;border-left:1.5px solid var(--char);display:flex;flex-direction:column;gap:4px;padding:6px;background:var(--paper-2)">
+        <span class="btn" style="font-size:7.5px;padding:3px 5px;justify-content:center">VALIDER</span>
+        <span class="btn" style="font-size:7.5px;padding:3px 5px;justify-content:center">SIMULER</span>
+        <span class="btn pacc" style="font-size:7.5px;padding:3px 5px;justify-content:center">COMPILER</span>
+      </div>
+    </div>
+  </div>
+  <div class="row top" style="gap:16px;margin-bottom:12px">
+    <div class="grow">
+      <div class="lbl" style="margin-bottom:4px">Vocabulaire</div>
+      <table class="tbl" style="font-size:11.5px">
+        <tr><td>hub</td><td class="mono"><b>Atelier</b></td></tr>
+        <tr><td>éditeur</td><td class="mono">L'établi</td></tr>
+        <tr><td>compiler</td><td class="mono">Compiler</td></tr>
+        <tr><td>catalogue</td><td class="mono">Patterns</td></tr>
+      </table>
+    </div>
+    <div class="grow">
+      <div class="lbl" style="margin-bottom:6px">Traitement</div>
+      <div class="row" style="margin-bottom:8px">
+        <div class="swatch" style="background:#14100C"></div>
+        <div class="swatch" style="background:#221A14"></div>
+        <div class="swatch" style="background:#F8F3EC"></div>
+        <div class="swatch" style="background:linear-gradient(135deg,#FF6B3D,#FFB05C)"></div>
+      </div>
+      <p style="font-size:11px;color:var(--char-soft);line-height:1.5">Noirs chauds, orange réservé à l'action en cours. Objets qui « pèsent » : ombres franches, gros hit targets. Motion : impacts courts (120 ms), pas de flottement.</p>
+    </div>
+  </div>
+  <div class="lbl" style="margin-bottom:4px">Concrètement</div>
+  <ul class="legend" style="margin-bottom:10px">
+    <li style="padding-left:14px"><span style="position:absolute;left:0">·</span>manipulation directe partout : on saisit un pattern, on le pose — pas de formulaire d'ajout</li>
+    <li style="padding-left:14px"><span style="position:absolute;left:0">·</span>la palette de l'éditeur devient un tiroir d'outils en bas (§4·B)</li>
+    <li style="padding-left:14px"><span style="position:absolute;left:0">·</span>succès de compilation = artefacts listés immédiatement, avec horodatage</li>
+  </ul>
+  <p class="note">risque : les gestes généreux coûtent de la densité (gros targets, tiroir). À retenir pour la sensation de manipulation — c'est elle qui rend l'éditeur agréable.</p>
+</div>
+
+<div class="wf" style="left:2860px;top:2120px;width:900px" data-screen-label="Direction C — Le Codex">
+  <div class="wf-tag"><span class="dot dot-c"></span> Direction C</div>
+  <div class="wf-title">Le Codex — le standard comme belle ouvrage</div>
+  <p class="wf-sub">Thèse : l'actif unique de Grimoire est son catalogue normatif. Traitons-le comme un ouvrage de référence — planches numérotées, soin typographique — et l'outil héritera de cette autorité.</p>
+  <div class="lbl" style="margin-bottom:6px">Modèle de nav — ⌘K d'abord, chrome effacé</div>
+  <div class="scr" style="height:110px;margin-bottom:14px;position:relative">
+    <div class="tb" style="font-size:9px;padding:6px 10px;border-bottom:1px solid var(--char-faint)">
+      <span class="logo" style="font-size:9.5px">GRIMOIRE</span><span class="mono" style="font-size:8px;color:var(--char-dim)">mon-projet / blueprints / premier-flow</span>
+      <span class="grow"></span><span class="kbd">⌘K</span>
+    </div>
+    <div style="position:absolute;left:50%;top:52%;transform:translate(-50%,-50%);width:62%">
+      <div class="bx" style="padding:7px 12px;font-family:var(--mono);font-size:9.5px;color:var(--char-dim);background:#fff;box-shadow:0 4px 12px rgba(31,27,20,.12)">▸ aller à… ORC-02, simuler, installer crewai…</div>
+    </div>
+  </div>
+  <div class="row top" style="gap:16px;margin-bottom:12px">
+    <div class="grow">
+      <div class="lbl" style="margin-bottom:4px">Vocabulaire</div>
+      <table class="tbl" style="font-size:11.5px">
+        <tr><td>hub</td><td class="mono">Pupitre</td></tr>
+        <tr><td>éditeur</td><td class="mono">Table de composition</td></tr>
+        <tr><td>compiler</td><td class="mono">Compiler</td></tr>
+        <tr><td>catalogue</td><td class="mono"><b>Codex</b></td></tr>
+      </table>
+    </div>
+    <div class="grow">
+      <div class="lbl" style="margin-bottom:6px">Traitement</div>
+      <div class="row" style="margin-bottom:8px">
+        <div class="swatch" style="background:#14161C"></div>
+        <div class="swatch" style="background:#1C1F27"></div>
+        <div class="swatch" style="background:#EFEAE0"></div>
+        <div class="swatch" style="background:#8B7CC8"></div>
+      </div>
+      <p style="font-size:11px;color:var(--char-soft);line-height:1.5">Ivoire sur ardoise, un serif d'apparat pour les titres de planches, filets fins, numérotation marginale (ORC-02 devient un vrai folio). Fiches pattern = planches.</p>
+    </div>
+  </div>
+  <div class="lbl" style="margin-bottom:4px">Concrètement</div>
+  <ul class="legend" style="margin-bottom:10px">
+    <li style="padding-left:14px"><span style="position:absolute;left:0">·</span>le catalogue devient la plus belle page du site — c'est l'argument de vente</li>
+    <li style="padding-left:14px"><span style="position:absolute;left:0">·</span>l'éditeur démarre par les use-cases : on compose « depuis le livre » (§4·C)</li>
+    <li style="padding-left:14px"><span style="position:absolute;left:0">·</span>⌘K devient le geste central — nav visible réduite au fil d'ariane</li>
+  </ul>
+  <p class="note">risque : contemplatif — beau à lire, lent à opérer ; et ⌘K seul exclut les nouveaux. À retenir pour la <b>pédagogie du catalogue</b>, pas pour piloter l'atelier.</p>
+</div>
+
+<!-- ═══ BANDE 3 · ACCUEIL PREMIER LANCEMENT ×3 ═══ -->
+<div class="band-label" style="left:80px;top:3060px"><span class="n">3</span> <b>Accueil premier lancement</b> · <span class="mono" style="text-transform:none">grimoire serve</span> sans projet — 3 variations</div>
+
+<!-- ── 3A · Console : le hall à trois portes ── -->
+<div class="wf" style="left:80px;top:3120px;width:1240px" data-screen-label="Accueil premier lancement — A Le hall à trois portes">
+  <div class="wf-tag"><span class="dot dot-a"></span> 3·A — Console</div>
+  <div class="wf-title">Le hall à trois portes</div>
+  <p class="wf-sub">La sidebar est déjà là, inerte : elle annonce l'outil qu'on va recevoir. Le centre ne pose qu'une question — par où commencer ?</p>
+  <div class="scr" style="height:520px;display:flex">
+    <div class="side" style="width:186px">
+      <div class="nav-i" style="border:1.2px solid var(--char-faint);background:#fff;justify-content:space-between;margin-bottom:6px;color:var(--char-dim)"><span>aucun projet</span></div>
+      <div class="nav-i on">Atelier</div>
+      <div class="nav-i dis">Blueprints</div>
+      <div class="nav-i dis">Extensions</div>
+      <div class="nav-sec">Comprendre</div>
+      <div class="nav-i">Patterns</div>
+      <div class="nav-i">Docs</div>
+      <div class="nav-sec">Observer</div>
+      <div class="nav-i dis">Observatoire</div>
+      <div class="nav-i dis">Mémoire · Kanban</div>
+      <div style="flex:1"></div>
+      <div class="nav-i" style="font-size:9px;color:var(--char-dim)">Vitrine ↗</div>
+    </div>
+    <div class="grow canvas-bg" style="padding:34px 40px;position:relative">
+      <span class="co" style="left:-10px;top:66px">2</span>
+      <div class="row" style="margin-bottom:20px">
+        <span class="chip"><span style="color:var(--ok)">●</span> API locale · :7431</span>
+        <span class="chip">~/dev/mon-app · git ✓</span>
+        <span class="chip">kit v3.16.0</span>
+        <span class="co" style="position:static">1</span>
+      </div>
+      <div style="font-size:21px;font-weight:600;margin-bottom:4px">Aucun projet Grimoire ici.</div>
+      <p style="font-size:12.5px;color:var(--char-soft);margin-bottom:22px">Trois façons de commencer — la troisième n'engage à rien.</p>
+      <div class="row top" style="gap:14px;margin-bottom:22px">
+        <div class="bx grow" style="padding:16px;border-width:1.6px;position:relative">
+          <span class="co" style="right:-9px;top:-9px">3</span>
+          <div class="lbl" style="color:var(--ann)">Recommandé</div>
+          <div style="font-size:14.5px;font-weight:600;margin:6px 0 4px">Créer un projet</div>
+          <p style="font-size:11px;color:var(--char-soft);line-height:1.5;margin-bottom:12px">Wizard en 3 étapes : nom &amp; chemin, profil de gouvernance, extensions de départ.</p>
+          <span class="btn pri">CRÉER →</span>
+        </div>
+        <div class="bx grow" style="padding:16px">
+          <div class="lbl">Sans engagement</div>
+          <div style="font-size:14.5px;font-weight:600;margin:6px 0 4px">Ouvrir l'exemple</div>
+          <p style="font-size:11px;color:var(--char-soft);line-height:1.5;margin-bottom:12px">« Onboarding d'un crew CrewAI gouverné » — 4 nodes, simulable, rejouable.</p>
+          <span class="btn">EXPLORER L'EXEMPLE</span>
+        </div>
+        <div class="bx grow" style="padding:16px">
+          <div class="lbl">Comprendre d'abord</div>
+          <div style="font-size:14.5px;font-weight:600;margin:6px 0 4px">Parcourir le catalogue</div>
+          <p style="font-size:11px;color:var(--char-soft);line-height:1.5;margin-bottom:12px">78 patterns, 8 familles, 50 use-cases — la matière de tout blueprint.</p>
+          <span class="btn">VOIR LES PATTERNS</span>
+        </div>
+      </div>
+      <div class="lbl" style="margin-bottom:6px">Projets récents sur cette machine</div>
+      <div class="bx soft" style="padding:10px 14px;position:relative">
+        <span class="co" style="right:-9px;top:10px">4</span>
+        <p class="mono" style="font-size:10.5px;color:var(--char-dim)">aucun — cette liste vit dans le registre local du kit, pas dans le navigateur</p>
+      </div>
+    </div>
+  </div>
+  <div class="row top" style="gap:26px;margin-top:14px">
+    <ul class="legend grow">
+      <li><span class="n">1</span><b>Contexte détecté affiché</b> — chemin courant, dépôt git, version : l'utilisateur vérifie qu'il est au bon endroit avant de créer quoi que ce soit.</li>
+      <li><span class="n">2</span><b>Sidebar inerte</b> — visible mais grisée : elle promet la suite sans offrir 11 sorties. Patterns et Docs restent actifs (consultation).</li>
+    </ul>
+    <ul class="legend grow">
+      <li><span class="n">3</span><b>Une seule action recommandée</b> — créer. Les deux autres portes sont des replis honnêtes, pas des concurrents.</li>
+      <li><span class="n">4</span><b>Reprise</b> — au 2ᵉ lancement, cette liste remplace le vide : on rouvre son projet en 1 clic.</li>
+    </ul>
+  </div>
+  <div class="lbl" style="margin:18px 0 6px">Le wizard (modal au-dessus de ce même écran)</div>
+  <div class="row top" style="gap:8px">
+    <div class="stepc"><span class="lbl">Étape 1 · Où</span><b>Nom &amp; chemin d'init</b><span style="font-size:11px">◉ dossier courant <span class="mono">~/dev/mon-app</span> (git ✓)<br>○ nouveau dossier…<br>○ cloner l'exemple</span></div>
+    <span class="arr">→</span>
+    <div class="stepc"><span class="lbl">Étape 2 · Comment</span><b>Profil de gouvernance</b><span style="font-size:11px">starter · <b>controlled ◉</b> · orchestrated · governed · production — 1 ligne d'explication chacun</span></div>
+    <span class="arr">→</span>
+    <div class="stepc"><span class="lbl">Étape 3 · Avec quoi</span><b>Extensions de départ</b><span style="font-size:11px">suggestions (crewai, langfuse) — <i>Passer</i> est un choix de premier rang</span></div>
+    <span class="arr">→</span>
+    <div class="stepc" style="border-color:var(--ann-bd)"><span class="lbl" style="color:var(--ann)">Fin</span><b>Créer</b><span class="mono" style="font-size:10px">grimoire init --profile controlled</span><span style="font-size:11px">la commande exécutée est montrée → CLI apprenable</span></div>
+  </div>
+</div>
+
+<!-- ── 3B · Établi : le terminal d'accueil ── -->
+<div class="wf" style="left:1460px;top:3120px;width:1240px" data-screen-label="Accueil premier lancement — B Le terminal d'accueil">
+  <div class="wf-tag"><span class="dot dot-b"></span> 3·B — Établi</div>
+  <div class="wf-title">Le terminal d'accueil</div>
+  <p class="wf-sub">Pas de chrome avant le projet : un écran-invite. Chaque bouton montre la commande CLI qu'il exécute — l'interface enseigne l'outil qu'elle pilote.</p>
+  <div class="scr" style="height:520px;position:relative">
+    <div class="tb" style="border-bottom:1px solid var(--char-faint)">
+      <span class="logo">GRIMOIRE <span style="color:var(--ann)">KIT</span></span>
+      <span class="grow"></span>
+      <span class="mono" style="font-size:9px;color:var(--char-dim)">Vitrine ↗ · Docs</span>
+    </div>
+    <div style="position:absolute;left:50%;top:54%;transform:translate(-50%,-50%);width:72%">
+      <span class="co" style="left:-30px;top:-6px">1</span>
+      <p class="mono" style="font-size:11px;color:var(--char-soft);margin-bottom:6px">$ grimoire serve</p>
+      <p class="mono" style="font-size:11px;margin-bottom:26px">↳ API locale prête · <b>aucun projet dans ~/dev/mon-app</b> (git détecté)</p>
+      <div class="col" style="gap:12px">
+        <div class="bx" style="padding:14px 18px;border-width:1.6px;display:flex;align-items:center;gap:16px;position:relative">
+          <span class="co" style="right:-9px;top:-9px">2</span>
+          <div class="grow"><div style="font-weight:600;font-size:14px">Créer un projet ici</div><div class="mono" style="font-size:9.5px;color:var(--char-dim);margin-top:3px">grimoire init --profile controlled</div></div>
+          <span class="btn pri lg">CRÉER →</span>
+        </div>
+        <div class="bx" style="padding:14px 18px;display:flex;align-items:center;gap:16px">
+          <div class="grow"><div style="font-weight:600;font-size:14px">Poser l'exemple sur l'établi</div><div class="mono" style="font-size:9.5px;color:var(--char-dim);margin-top:3px">grimoire ext add-blueprint onboarding-crew</div></div>
+          <span class="btn lg">OUVRIR L'EXEMPLE</span>
+        </div>
+        <div class="bx" style="padding:14px 18px;display:flex;align-items:center;gap:16px">
+          <div class="grow"><div style="font-weight:600;font-size:14px">Feuilleter les 78 patterns</div><div class="mono" style="font-size:9.5px;color:var(--char-dim);margin-top:3px">consultation — ne touche pas au dossier</div></div>
+          <span class="btn lg">CATALOGUE</span>
+        </div>
+      </div>
+      <p class="mono" style="font-size:9.5px;color:var(--char-dim);margin-top:22px;position:relative"><span class="co" style="left:-30px;top:-3px">3</span>l'interface et le CLI passent par la même API — tout geste appris ici est rejouable en script</p>
+    </div>
+  </div>
+  <div class="row top" style="gap:26px;margin-top:14px">
+    <ul class="legend grow">
+      <li><span class="n">1</span><b>L'écran répond au terminal</b> — on arrive depuis <span class="mono">grimoire serve</span> : l'UI reprend la conversation où le shell l'a laissée.</li>
+      <li><span class="n">2</span><b>Wizard inline</b> — « Créer » déplie les 3 étapes dans la page (pas de modal) ; l'invite reste visible au-dessus.</li>
+    </ul>
+    <ul class="legend grow">
+      <li><span class="n">3</span><b>Pédagogie CLI</b> — chaque action affiche sa commande : l'utilisateur peut quitter l'UI le jour où il n'en a plus besoin. C'est un argument de confiance, pas un gadget.</li>
+    </ul>
+  </div>
+  <p class="note" style="margin-top:10px">variante la plus « produit dev » — mais l'absence de sidebar cache ce qu'on obtiendra après création (contrairement à A)</p>
+</div>
+
+<!-- ── 3C · Codex : la visite par l'exemple ── -->
+<div class="wf" style="left:2840px;top:3120px;width:1240px" data-screen-label="Accueil premier lancement — C La visite par l'exemple">
+  <div class="wf-tag"><span class="dot dot-c"></span> 3·C — Codex</div>
+  <div class="wf-title">La visite par l'exemple</div>
+  <p class="wf-sub">Montrer le produit avant de demander un engagement : le blueprint d'exemple est déjà chargé derrière, estompé. On entre dans un outil qui travaille, pas dans un formulaire.</p>
+  <div class="scr canvas-bg" style="height:520px;position:relative;overflow:hidden">
+    <div class="tb" style="border-bottom:1px solid var(--char-faint);background:#fff">
+      <span class="logo">GRIMOIRE</span>
+      <span class="mono" style="font-size:9px;color:var(--char-dim)">premier lancement</span>
+      <span class="grow"></span><span class="kbd">⌘K</span>
+    </div>
+    <!-- graphe estompé -->
+    <div style="position:absolute;inset:40px 0 0 0;opacity:.38;filter:grayscale(.3)">
+      <div class="node" style="position:absolute;left:9%;top:26%"><span class="pin out"></span>GOV-01<small>policy engine</small></div>
+      <div class="node" style="position:absolute;left:38%;top:44%"><span class="pin in"></span><span class="pin out"></span>QUA-04<small>evidence pack</small></div>
+      <div class="node" style="position:absolute;left:70%;top:24%"><span class="pin in"></span>Crew<small>ext. crewai</small></div>
+      <svg style="position:absolute;inset:0;width:100%;height:100%" viewBox="0 0 1000 460" preserveAspectRatio="none"><path d="M 175 145 C 260 190, 300 230, 372 245" fill="none" stroke="#4A463D" stroke-width="1.6"/><path d="M 505 240 C 590 210, 630 160, 695 140" fill="none" stroke="#4A463D" stroke-width="1.6"/></svg>
+    </div>
+    <div style="position:absolute;left:50%;top:56%;transform:translate(-50%,-50%);width:430px;background:var(--paper);border:1.6px solid var(--char);border-radius:10px;padding:22px 24px;box-shadow:0 10px 30px rgba(31,27,20,.18)">
+      <span class="co" style="left:-10px;top:-10px">1</span>
+      <div class="lbl" style="margin-bottom:8px">Derrière ce panneau</div>
+      <div style="font-size:16.5px;font-weight:600;line-height:1.35;margin-bottom:6px">Un flow gouverné réel : policy engine → preuve → crew CrewAI.</div>
+      <p style="font-size:11.5px;color:var(--char-soft);line-height:1.55;margin-bottom:16px">Il se simule, se compile — il n'exécute rien. C'est toute la proposition de Grimoire, en trois nodes.</p>
+      <div class="col" style="gap:8px">
+        <span class="btn pri" style="justify-content:center">DISSÉQUER L'EXEMPLE →</span>
+        <div class="row" style="gap:8px">
+          <span class="btn grow" style="justify-content:center">CRÉER MON PROJET</span>
+          <span class="btn grow" style="justify-content:center">PARCOURIR LE CODEX</span>
+        </div>
+      </div>
+    </div>
+    <div class="statusbar" style="position:absolute;left:0;right:0;bottom:0;background:#fff"><span>● API locale</span><span>aucun projet — l'exemple vit en mémoire, rien n'est écrit sur le disque</span><span class="co" style="position:static;margin-left:auto">2</span></div>
+  </div>
+  <div class="row top" style="gap:26px;margin-top:14px">
+    <ul class="legend grow">
+      <li><span class="n">1</span><b>La dissection est l'action primaire</b> — cliquer un node ouvre sa fiche pattern ; le vocabulaire (node, pin, contrat) s'apprend sur un cas réel.</li>
+      <li><span class="n">2</span><b>Rien n'est écrit</b> — l'exemple tourne en mémoire tant qu'aucun projet n'existe ; « Créer mon projet » reste épinglé en haut pendant toute la dissection.</li>
+    </ul>
+    <p class="note" style="width:380px;flex:none">le plus séduisant des trois — mais il faut un rappel <b>permanent</b> vers la création, sinon on visite sans jamais emménager</p>
+  </div>
+</div>
+
+<!-- ═══ BANDE 4 · ÉDITEUR DE FLOWS ×3 (PRIORITÉ) ═══ -->
+<div class="band-label" style="left:80px;top:4240px"><span class="n">4</span> <b>Éditeur de flows</b> · l'écran prioritaire — 3 variations + grammaire d'interaction (4·D), onboarding intégré (§6)</div>
+
+<!-- ── 4A · Console : trois panneaux ── -->
+<div class="wf" style="left:80px;top:4300px;width:1380px" data-screen-label="Éditeur — A Trois panneaux">
+  <div class="wf-tag"><span class="dot dot-a"></span> 4·A — Console</div>
+  <div class="wf-title">Trois panneaux : palette · toile · inspecteur</div>
+  <p class="wf-sub">Le modèle mental des éditeurs de nodes que les devs connaissent déjà. L'onboarding vit <b>dans</b> la toolbar (jauge d'étapes) et <b>sur</b> la toile (coach marks) — jamais en overlay plein écran.</p>
+  <div class="scr" style="height:660px;display:flex;flex-direction:column">
+    <div class="tb">
+      <span class="chip" style="border-width:1.2px">◆ premier-flow ▾</span>
+      <span class="mono" style="font-size:9px;color:var(--char-dim)">sauvegardé ✓ auto</span>
+      <span class="grow"></span>
+      <span class="progress-chip" style="position:relative">PREMIER FLOW · ÉTAPE 3/4 <i style="font-style:normal;opacity:.6">· passer</i><span class="co" style="right:-11px;top:-11px">4</span></span>
+      <span class="grow"></span>
+      <span class="btn">VALIDER</span><span class="btn">SIMULER</span><span class="btn pacc" style="position:relative">COMPILER<span class="co" style="right:-10px;top:-10px">7</span></span><span class="btn gh">⋯</span>
+    </div>
+    <div class="grow" style="display:flex;min-height:0">
+      <div class="side" style="width:252px;position:relative">
+        <span class="co" style="right:-10px;top:12px">1</span>
+        <div class="bx" style="padding:6px 10px;font-family:var(--mono);font-size:10px;color:var(--char-dim);background:#fff;margin-bottom:10px">rechercher un pattern…</div>
+        <div class="nav-sec" style="color:var(--ann)">Compatibles avec QUA-04 · sortie handoff-packet</div>
+        <div class="bx" style="padding:7px 9px;margin:3px 0;font-size:10.5px;border-color:var(--ann-bd);background:#fff"><span class="mono">Crew</span> <span class="chip" style="font-size:7.5px;margin-left:4px">ext · crewai</span></div>
+        <div class="bx soft" style="padding:7px 9px;margin:3px 0;font-size:10.5px;background:#fff"><span class="mono">QUA-05</span> <span style="color:var(--char-dim);font-size:9.5px">evidence-driven transition</span></div>
+        <div class="nav-sec" style="margin-top:14px">Toutes les familles</div>
+        <div class="row wrap" style="gap:4px">
+          <span class="chip" style="font-size:8.5px"><span class="fd" style="background:var(--f-org)"></span>ORG 2</span>
+          <span class="chip" style="font-size:8.5px"><span class="fd" style="background:var(--f-orc)"></span>ORC 11</span>
+          <span class="chip" style="font-size:8.5px"><span class="fd" style="background:var(--f-gov)"></span>GOV 17</span>
+          <span class="chip" style="font-size:8.5px"><span class="fd" style="background:var(--f-mod)"></span>MOD 3</span>
+          <span class="chip" style="font-size:8.5px"><span class="fd" style="background:var(--f-qua)"></span>QUA 16</span>
+          <span class="chip" style="font-size:8.5px"><span class="fd" style="background:var(--f-kno)"></span>KNO 10</span>
+          <span class="chip" style="font-size:8.5px"><span class="fd" style="background:var(--f-run)"></span>RUN 15</span>
+          <span class="chip" style="font-size:8.5px"><span class="fd" style="background:var(--f-cog)"></span>COG 4</span>
+        </div>
+        <div style="flex:1"></div>
+        <p class="mono" style="font-size:8.5px;color:var(--char-dim);line-height:1.5;border-top:1px solid var(--char-faint);padding-top:8px">la palette EST le catalogue (même json), filtré pour l'action</p>
+      </div>
+      <div class="grow canvas-bg" style="position:relative">
+        <div class="coach" style="position:absolute;left:50%;top:18px;transform:translateX(-50%);width:330px;z-index:5">
+          <span class="co" style="left:-10px;top:-10px">3</span>
+          <span class="step">Premier flow · 3/4</span>
+          Reliez les deux nodes : glissez de la <b>sortie ○</b> de GOV-01 vers l'<b>entrée ○</b> de QUA-04.
+          <div class="row" style="margin-top:7px"><span class="btn" style="font-size:8.5px;padding:3px 8px">MONTRE-MOI</span><span class="btn gh" style="font-size:8.5px;padding:3px 8px">PASSER</span></div>
+        </div>
+        <div class="node" style="position:absolute;left:9%;top:44%">GOV-01<small>policy engine</small><span class="pin out hot"></span></div>
+        <div class="node sel" style="position:absolute;left:52%;top:60%">QUA-04<small>evidence pack &amp; verdict</small><span class="pin in hot"></span><span class="pin out"></span></div>
+        <svg style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none" viewBox="0 0 800 620" preserveAspectRatio="none"><path d="M 172 300 C 260 330, 320 370, 405 400" fill="none" stroke="#D9541E" stroke-width="1.8" stroke-dasharray="7 5"/></svg>
+        <div style="position:absolute;left:38%;top:56%;z-index:4"><span class="chip" style="border-color:var(--ann-bd);color:var(--ann);background:#fff;position:relative">task-envelope · compatible ✓<span class="co" style="right:-11px;top:-11px">2</span></span></div>
+        <div style="position:absolute;left:14px;bottom:12px" class="row">
+          <span class="chip" style="font-size:8.5px;color:var(--char-dim)">molette : zoom · glisser : déplacer · clic : détail</span>
+        </div>
+      </div>
+      <div style="width:300px;border-left:1.5px solid var(--char);display:flex;flex-direction:column;background:var(--paper-2)">
+        <div class="row" style="gap:0;border-bottom:1.2px solid var(--char-faint);position:relative">
+          <span class="co" style="left:-11px;top:8px">5</span>
+          <span style="padding:8px 12px;font-family:var(--mono);font-size:9.5px;font-weight:700;border-bottom:2px solid var(--char)">NODE</span>
+          <span style="padding:8px 12px;font-family:var(--mono);font-size:9.5px;color:var(--char-dim)">VALIDATION</span>
+          <span style="padding:8px 12px;font-family:var(--mono);font-size:9.5px;color:var(--char-dim)">SIMULATION</span>
+        </div>
+        <div style="padding:14px;display:flex;flex-direction:column;gap:10px">
+          <div><div class="lbl">Label</div><div class="bx" style="padding:6px 10px;font-family:var(--mono);font-size:10.5px;background:#fff;margin-top:4px">Evidence pack et verification verdict</div></div>
+          <div class="row sb"><div><div class="lbl">Référence</div><div class="mono" style="font-size:11px;margin-top:3px">QUA-04</div></div><span class="chip"><span class="fd" style="background:var(--f-qua)"></span>QUA · preuves</span></div>
+          <div style="position:relative">
+            <span class="co" style="right:-8px;top:-4px">6</span>
+            <div class="lbl">Pins — contrats <span style="color:var(--ann);text-transform:none;letter-spacing:0">· c'est quoi ? ⓘ</span></div>
+            <table class="tbl" style="font-size:10.5px;margin-top:4px">
+              <tr><td class="mono">in</td><td class="mono">task-envelope</td></tr>
+              <tr><td class="mono">out</td><td class="mono">handoff-packet</td></tr>
+            </table>
+          </div>
+          <span class="btn" style="justify-content:center">VOIR LA FICHE PATTERN →</span>
+          <span class="btn gh" style="justify-content:center">SUPPRIMER LE NODE</span>
+        </div>
+      </div>
+    </div>
+    <div class="statusbar"><span>● API locale</span><span>catalogue v1.0.0 · 53b2c34</span><span class="grow"></span><span>zoom 100 %</span></div>
+  </div>
+  <div class="row top" style="gap:26px;margin-top:14px">
+    <ul class="legend grow">
+      <li><span class="n">1</span><b>Palette triée par la sélection</b> — un node sélectionné fait remonter les patterns dont l'entrée accepte sa sortie. Le contrat typé devient une aide au choix, plus une contrainte subie.</li>
+      <li><span class="n">2</span><b>Le contrat se montre pendant le geste</b> — l'étiquette suit le fil ; pins incompatibles éteints pendant le drag.</li>
+      <li><span class="n">3</span><b>Coach marks séquentiels</b> — ancrés à l'élément concerné, jamais bloquants, « passer » toujours offert.</li>
+    </ul>
+    <ul class="legend grow">
+      <li><span class="n">4</span><b>La jauge d'étapes vit dans la toolbar</b> — visible, discrète, cliquable pour rejouer une étape.</li>
+      <li><span class="n">5</span><b>Simulation = onglet de l'inspecteur</b> — le verdict arrive là où on travaille, pas dans une autre page.</li>
+      <li><span class="n">6</span><b>Vocabulaire en contexte</b> — chaque terme (pin, contrat) porte un ⓘ → définition d'une phrase + lien fiche.</li>
+      <li><span class="n">7</span><b>Compiler est visible dès le départ</b> — actif seulement après une simulation passée : la fin du chemin est annoncée.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ── 4B · Établi : l'établi ── -->
+<div class="wf" style="left:1540px;top:4300px;width:1380px" data-screen-label="Éditeur — B L'établi">
+  <div class="wf-tag"><span class="dot dot-b"></span> 4·B — Établi</div>
+  <div class="wf-title">L'établi : la toile domine, les outils au tiroir</div>
+  <p class="wf-sub">Le graphe prend tout l'écran. Les patterns sont des outils rangés dans un tiroir en bas — on saisit, on pose. Le rituel valider → simuler → compiler est un rail permanent à droite.</p>
+  <div class="scr" style="height:660px;display:flex;flex-direction:column">
+    <div class="tb" style="padding:7px 14px">
+      <span class="logo" style="font-size:10px">KIT</span>
+      <span class="mono" style="font-size:9.5px;color:var(--char-dim)">blueprints / premier-flow</span>
+      <span class="grow"></span>
+      <span class="chip">◆ mon-projet</span>
+    </div>
+    <div class="grow" style="display:flex;min-height:0">
+      <div class="grow canvas-bg" style="position:relative">
+        <div class="node" style="position:absolute;left:16%;top:30%">GOV-01<small>policy engine</small><span class="pin out"></span></div>
+        <div class="node sel" style="position:absolute;left:47%;top:47%">QUA-04<small>evidence pack &amp; verdict</small><span class="pin in"></span><span class="pin out"></span></div>
+        <svg style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none" viewBox="0 0 900 470" preserveAspectRatio="none"><path d="M 265 165 C 340 190, 380 210, 440 240" fill="none" stroke="#4A463D" stroke-width="1.8"/></svg>
+        <span class="chip" style="position:absolute;left:36%;top:36%;background:#fff">task-envelope</span>
+        <!-- inspecteur flottant -->
+        <div style="position:absolute;right:20px;top:56px;width:210px;background:#fff;border:1.4px solid var(--char);border-radius:8px;padding:11px 13px;box-shadow:0 6px 18px rgba(31,27,20,.14)">
+          <span class="co" style="left:-10px;top:-10px">2</span>
+          <div class="row sb" style="margin-bottom:6px"><span class="mono" style="font-size:10.5px;font-weight:700">QUA-04</span><span class="mono" style="font-size:10px;color:var(--char-dim)">✕</span></div>
+          <table class="tbl" style="font-size:9.5px"><tr><td class="mono">in</td><td class="mono">task-envelope</td></tr><tr><td class="mono">out</td><td class="mono">handoff-packet</td></tr></table>
+          <span class="btn" style="font-size:8.5px;margin-top:8px;justify-content:center;width:100%">FICHE PATTERN →</span>
+        </div>
+        <!-- compagnon -->
+        <div class="coach" style="position:absolute;left:18px;bottom:14px;width:300px">
+          <span class="co" style="left:-10px;top:-10px">3</span>
+          <span class="step">Le compagnon · 3/4</span>
+          Bien. Maintenant, relie la sortie de <b>GOV-01</b> à l'entrée de <b>QUA-04</b> — attrape le pin ○ et tire le fil.
+          <div class="row" style="margin-top:7px"><span class="btn" style="font-size:8.5px;padding:3px 8px">MONTRE-MOI</span><span class="btn gh" style="font-size:8.5px;padding:3px 8px">PLUS TARD</span></div>
+        </div>
+      </div>
+      <div style="width:84px;border-left:1.5px solid var(--char);background:var(--paper-2);display:flex;flex-direction:column;gap:6px;padding:10px 8px;position:relative">
+        <span class="co" style="left:-11px;top:12px">4</span>
+        <span class="btn" style="font-size:8px;justify-content:center">VALIDER</span>
+        <span class="btn" style="font-size:8px;justify-content:center">SIMULER</span>
+        <span class="btn pacc" style="font-size:8px;justify-content:center">COMPILER</span>
+        <div style="flex:1"></div>
+        <span class="btn gh" style="font-size:8px;justify-content:center">REJOUER</span>
+      </div>
+    </div>
+    <div style="border-top:1.5px solid var(--char);background:var(--paper-2);padding:9px 14px;position:relative">
+      <span class="co" style="left:-10px;top:-10px">1</span>
+      <div class="row" style="margin-bottom:8px">
+        <span class="chip on" style="font-size:8.5px">TOUS</span>
+        <span class="chip" style="font-size:8.5px"><span class="fd" style="background:var(--f-gov)"></span>GOV</span>
+        <span class="chip" style="font-size:8.5px"><span class="fd" style="background:var(--f-qua)"></span>QUA</span>
+        <span class="chip" style="font-size:8.5px"><span class="fd" style="background:var(--f-orc)"></span>ORC</span>
+        <span class="chip" style="font-size:8.5px"><span class="fd" style="background:var(--f-kno)"></span>KNO</span>
+        <span class="chip" style="font-size:8.5px">+ 4 familles</span>
+        <span class="grow"></span>
+        <span class="bx" style="padding:4px 9px;font-family:var(--mono);font-size:9px;color:var(--char-dim);background:#fff">rechercher…</span>
+      </div>
+      <div class="row" style="gap:8px">
+        <div class="bx" style="padding:8px 10px;background:#fff;font-family:var(--mono);font-size:9.5px;line-height:1.4;width:150px"><span class="fd" style="display:inline-block;width:7px;height:7px;border-radius:2px;background:var(--f-gov)"></span> GOV-01<br><span style="color:var(--char-dim);font-size:8.5px">policy engine</span></div>
+        <div class="bx" style="padding:8px 10px;background:#fff;font-family:var(--mono);font-size:9.5px;line-height:1.4;width:150px"><span class="fd" style="display:inline-block;width:7px;height:7px;border-radius:2px;background:var(--f-qua)"></span> QUA-05<br><span style="color:var(--char-dim);font-size:8.5px">evidence transition</span></div>
+        <div class="bx" style="padding:8px 10px;background:#fff;font-family:var(--mono);font-size:9.5px;line-height:1.4;width:150px;border-style:dashed"><span style="color:var(--char-dim)">Crew · ext crewai</span><br><span style="color:var(--ann);font-size:8.5px">requiert l'extension →</span></div>
+        <div class="bx" style="padding:8px 10px;background:#fff;font-family:var(--mono);font-size:9.5px;line-height:1.4;width:150px"><span class="fd" style="display:inline-block;width:7px;height:7px;border-radius:2px;background:var(--f-orc)"></span> ORC-02<br><span style="color:var(--char-dim);font-size:8.5px">task envelope</span></div>
+        <span class="mono" style="font-size:8.5px;color:var(--char-dim)">→ glisser un outil sur l'établi pour le poser</span>
+      </div>
+    </div>
+  </div>
+  <div class="row top" style="gap:26px;margin-top:14px">
+    <ul class="legend grow">
+      <li><span class="n">1</span><b>Le tiroir d'outils</b> — palette horizontale par familles, grosses tuiles saisissables. Un pattern non disponible (extension manquante) reste visible, en pointillés, avec son chemin d'obtention.</li>
+      <li><span class="n">2</span><b>Inspecteur flottant</b> — s'ancre près du node sélectionné, se ferme d'un clic : le graphe garde toute la place.</li>
+    </ul>
+    <ul class="legend grow">
+      <li><span class="n">3</span><b>Le compagnon</b> — un panneau qui parle, en bas à gauche, une étape à la fois ; « montre-moi » anime le geste attendu sur la toile.</li>
+      <li><span class="n">4</span><b>Le rail d'actions</b> — l'ordre vertical valider → simuler → compiler matérialise le rituel ; compiler reste éteint tant que la simulation n'est pas passée.</li>
+    </ul>
+  </div>
+  <p class="note" style="margin-top:10px">le plus incarné — mais le tiroir bas coûte de la hauteur d'écran, et l'inspecteur flottant masque parfois le graphe : à réserver aux petits flows ou aux grands écrans</p>
+</div>
+
+<!-- ── 4C · Codex : la table de composition ── -->
+<div class="wf" style="left:3000px;top:4300px;width:1380px" data-screen-label="Éditeur — C La table de composition">
+  <div class="wf-tag"><span class="dot dot-c"></span> 4·C — Codex</div>
+  <div class="wf-title">La table de composition : partir du livre, remplir les emplacements</div>
+  <p class="wf-sub">Renverse la page blanche : on choisit un <b>use-case du catalogue</b>, qui pose un squelette d'emplacements typés. Composer = remplir des slots — la grammaire des familles s'apprend en jouant.</p>
+  <div class="scr" style="height:660px;display:flex;flex-direction:column">
+    <div class="tb">
+      <span class="mono" style="font-size:10px">table de composition · <b>premier-flow</b></span>
+      <span class="grow"></span>
+      <span class="btn">VALIDER</span><span class="btn">SIMULER</span><span class="btn pacc">COMPILER</span>
+    </div>
+    <div class="grow" style="display:flex;min-height:0">
+      <div style="width:318px;border-right:1.5px solid var(--char);background:var(--paper-2);padding:14px;display:flex;flex-direction:column;gap:10px">
+        <span class="co" style="left:-2px;top:-2px;position:relative;align-self:flex-start">1</span>
+        <div>
+          <div class="lbl">Point de départ · use-case du catalogue</div>
+          <div style="font-size:14px;font-weight:600;margin-top:5px;line-height:1.35">UC-12 · Crew gouverné avec preuve de complétion</div>
+          <p style="font-size:10.5px;color:var(--char-soft);line-height:1.5;margin-top:4px">Un des 50 use-cases — le squelette ci-contre vient du catalogue, pas d'un template opaque.</p>
+        </div>
+        <hr class="hr" style="margin:2px 0">
+        <div class="lbl">Emplacements — 2/3 remplis</div>
+        <div class="bx" style="padding:9px 11px;background:#fff;font-size:11px"><span class="tick">✓</span> <b>1 · Cadre de gouvernance</b><br><span class="mono" style="font-size:9.5px;color:var(--char-soft)">GOV-01 policy engine — posé</span></div>
+        <div class="bx" style="padding:9px 11px;border-color:var(--ann-bd);background:var(--ann-bg);font-size:11px;position:relative"><span class="co" style="right:-9px;top:-9px">2</span><span style="color:var(--ann)">●</span> <b>2 · Preuve de complétion</b><br><span class="mono" style="font-size:9.5px;color:var(--char-soft)">à remplir — famille QUA attendue</span></div>
+        <div class="bx soft" style="padding:9px 11px;background:#fff;font-size:11px;color:var(--char-soft)">○ <b>3 · Exécution déléguée</b><br><span class="mono" style="font-size:9.5px">Crew — requiert l'extension crewai</span></div>
+        <div style="flex:1"></div>
+        <span class="btn gh" style="justify-content:center">CHANGER DE POINT DE DÉPART</span>
+      </div>
+      <div class="grow canvas-bg" style="position:relative">
+        <div class="node" style="position:absolute;left:7%;top:36%">GOV-01<small>policy engine</small><span class="pin out"></span></div>
+        <div class="node ghost" style="position:absolute;left:39%;top:50%;padding:12px 16px">emplacement<small>preuve · QUA-*</small><span class="pin in off"></span><span class="pin out off"></span></div>
+        <div class="node" style="position:absolute;left:72%;top:34%">Crew<small>ext. crewai</small><span class="pin in"></span></div>
+        <svg style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none" viewBox="0 0 900 560" preserveAspectRatio="none"><path d="M 165 235 C 240 270, 290 300, 350 320" fill="none" stroke="#A9A395" stroke-width="1.6" stroke-dasharray="6 5"/><path d="M 490 315 C 570 285, 610 240, 660 220" fill="none" stroke="#A9A395" stroke-width="1.6" stroke-dasharray="6 5"/></svg>
+        <div style="position:absolute;left:31%;top:66%;width:330px" class="bx">
+          <div style="padding:9px 12px;position:relative">
+            <span class="co" style="left:-10px;top:-10px">3</span>
+            <div class="lbl" style="margin-bottom:6px">Pour cet emplacement</div>
+            <div class="row wrap" style="gap:5px">
+              <span class="chip" style="border-color:var(--ann-bd);color:var(--ann)">QUA-04 · recommandé ✦</span>
+              <span class="chip">QUA-05</span>
+              <span class="chip">QUA-12</span>
+              <span class="mono" style="font-size:9px;color:var(--char-dim)">pourquoi ? ⓘ</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="statusbar"><span>squelette : UC-12</span><span class="grow"></span><span>divergences avec le use-case : 0</span></div>
+  </div>
+  <div class="row top" style="gap:26px;margin-top:14px">
+    <ul class="legend grow">
+      <li><span class="n">1</span><b>Le livre fournit le squelette</b> — départ par use-case (ou blueprint publié) ; la page blanche devient un choix volontaire, plus un défaut.</li>
+      <li><span class="n">2</span><b>Emplacements typés</b> — chaque slot déclare la famille attendue : la grammaire du catalogue s'enseigne par la contrainte, pas par la doc.</li>
+    </ul>
+    <ul class="legend grow">
+      <li><span class="n">3</span><b>Suggestions bornées</b> — 3 candidats du catalogue, jamais une liste infinie ; « pourquoi ? » ouvre la fiche de la relation.</li>
+      <li><span class="n">·</span><b>Divergence assumée</b> — on peut sortir du squelette ; la barre d'état compte les écarts au use-case au lieu de les interdire.</li>
+    </ul>
+  </div>
+  <p class="note" style="margin-top:10px">le meilleur pour apprendre — à combiner avec A : la table de composition est un <b>mode de départ</b> de l'éditeur, pas un éditeur à part (cf. §6, étape 0)</p>
+</div>
+
+<!-- ── 4D · Grammaire d'interaction UE Blueprint ── -->
+<div class="wf" style="left:4460px;top:4300px;width:1600px" data-screen-label="Éditeur — D Grammaire d'interaction (école Unreal Blueprint)">
+  <div class="wf-tag"><span class="dot" style="background:var(--char)"></span> 4·D — transversal aux trois variations</div>
+  <div class="wf-title">La grammaire d'interaction : l'école Unreal Blueprint</div>
+  <p class="wf-sub">Le <b>fonctionnement</b> de l'éditeur reprend la grammaire éprouvée des éditeurs node-graph — Unreal Blueprint en référence principale — traduite dans les concepts Grimoire (patterns, contrats, familles). On prend les gestes, pas le look ; et pas les pins d'exécution : ici rien ne s'exécute, tout est flux de contrats.</p>
+  <div class="row top" style="gap:24px">
+    <div class="grow">
+      <div class="scr" style="height:600px;display:flex;flex-direction:column">
+        <div class="tb">
+          <span class="chip" style="border-width:1.2px">◆ premier-flow ▾</span>
+          <span class="mono" style="font-size:9px;color:var(--char-dim)">sauvegardé ✓</span>
+          <span class="grow"></span>
+          <span class="btn">VALIDER ✓</span><span class="btn">SIMULER</span>
+          <span class="btn pacc" style="position:relative">● COMPILER · MODIFIÉ<span class="co" style="right:-10px;top:-10px">5</span></span>
+        </div>
+        <div class="grow canvas-bg" style="position:relative;min-height:0">
+          <!-- zone de commentaire -->
+          <div style="position:absolute;left:3%;top:9%;width:52%;height:62%;border:1.6px dashed var(--char-dim);border-radius:10px;background:rgba(218,213,202,.18)">
+            <span class="lbl" style="position:absolute;left:10px;top:-9px;background:var(--paper);padding:0 7px">cadre de gouvernance</span>
+            <span class="co" style="left:-11px;top:-11px">3</span>
+            <span class="mono" style="position:absolute;right:8px;top:6px;font-size:8.5px;color:var(--char-dim)">plier ▾</span>
+          </div>
+          <div class="node" style="position:absolute;left:7%;top:24%">GOV-01<small>policy engine</small><span class="pin out" style="border-color:#0E7490;background:#CFF4FC"></span></div>
+          <div class="node" style="position:absolute;left:26%;top:48%">QUA-04<small>evidence pack &amp; verdict</small><span class="pin in" style="border-color:#0E7490;background:#CFF4FC"></span><span class="pin out" style="border-color:var(--ok);background:#DCEFE4"></span></div>
+          <svg style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none" viewBox="0 0 1000 560" preserveAspectRatio="none">
+            <path d="M 175 175 C 240 210, 250 250, 300 295" fill="none" stroke="#0E7490" stroke-width="1.8"/>
+            <path d="M 455 300 C 540 280, 560 200, 610 155" fill="none" stroke="#D9541E" stroke-width="1.8" stroke-dasharray="7 5"/>
+          </svg>
+          <span class="chip" style="position:absolute;left:17%;top:40%;background:#fff;font-size:8.5px;position:absolute"><span class="fd" style="background:#0E7490"></span>task-envelope<span class="co" style="right:-11px;top:-11px">2</span></span>
+          <!-- menu contextuel au lâcher de fil -->
+          <div style="position:absolute;left:61%;top:12%;width:265px;background:#fff;border:1.5px solid var(--char);border-radius:8px;box-shadow:0 8px 22px rgba(31,27,20,.16);z-index:5">
+            <span class="co" style="left:-11px;top:-11px">1</span>
+            <div style="padding:8px 10px;border-bottom:1px solid var(--line-w)">
+              <div class="bx soft" style="padding:4px 8px;font-family:var(--mono);font-size:9px;color:var(--char-dim)">rechercher un node…</div>
+              <label class="mono" style="font-size:8.5px;display:block;margin-top:5px">☑ compatibles seulement · sortie <b>handoff-packet</b></label>
+            </div>
+            <div style="padding:6px 8px;display:flex;flex-direction:column;gap:4px">
+              <div class="bx" style="padding:5px 8px;border-color:var(--ann-bd);font-size:9.5px"><span class="mono" style="font-weight:700">Crew</span> <span style="color:var(--ann);font-size:8.5px">✦ recommandé</span><br><span class="mono" style="font-size:8px;color:var(--char-dim)">ext. crewai · installée ✓</span></div>
+              <div class="bx soft" style="padding:5px 8px;font-size:9.5px"><span class="mono">ORC-03</span> <span style="font-size:8.5px;color:var(--char-soft)">dispatch</span></div>
+              <div class="bx soft" style="padding:5px 8px;font-size:9.5px"><span class="mono">QUA-05</span> <span style="font-size:8.5px;color:var(--char-soft)">evidence transition</span></div>
+            </div>
+            <div class="mono" style="padding:6px 10px;border-top:1px solid var(--line-w);font-size:8px;color:var(--char-dim)">78 patterns au total — décochez le filtre pour tout voir</div>
+          </div>
+          <!-- node en erreur -->
+          <div class="node" style="position:absolute;left:66%;top:66%;border-color:var(--warn)">ORC-02<small>task envelope</small><span class="pin in off"></span>
+            <span style="position:absolute;left:-6px;top:-12px;background:#FDEBD3;border:1.2px solid var(--warn);color:var(--warn);font-family:var(--mono);font-size:8px;padding:1px 6px;border-radius:3px;white-space:nowrap">⚠ entrée non connectée<span class="co" style="right:-11px;top:-11px">4</span></span>
+          </div>
+          <span class="chip" style="position:absolute;left:27%;top:74%;font-size:8.5px;color:var(--char-dim)">double-clic sur un node : sa fiche pattern<span class="co" style="right:-11px;top:-11px">6</span></span>
+          <div style="position:absolute;left:12px;bottom:10px" class="row">
+            <span class="chip" style="font-size:8.5px;color:var(--char-dim)">clic droit : tous les nodes · C : commentaire · F : recadrer · ⌘D : dupliquer</span>
+          </div>
+        </div>
+        <div class="statusbar"><span>● API locale</span><span>catalogue v1.0.0</span><span class="grow"></span><span>2 nodes sélectionnés · aligner ⏈</span></div>
+      </div>
+      <div class="row top" style="gap:26px;margin-top:14px">
+        <ul class="legend grow">
+          <li><span class="n">1</span><b>Le geste central, repris d'UE</b> — tirer un fil depuis un pin et lâcher dans le vide ouvre le menu des nodes <b>compatibles avec ce contrat</b> ; le node choisi arrive déjà connecté. Le filtre « compatibles » se décoche (equivalent du context sensitive).</li>
+          <li><span class="n">2</span><b>Pins et fils typés par couleur</b> — une couleur par contrat (étiquette exacte au survol) ; pendant un drag, les pins incompatibles s'éteignent.</li>
+          <li><span class="n">3</span><b>Zones de commentaire</b> — nommées, déplaçables avec leur contenu, pliables : elles structurent les grands flows.</li>
+        </ul>
+        <ul class="legend grow">
+          <li><span class="n">4</span><b>L'erreur vit sur le node</b> — badge ⚠ in situ + liste complète dans l'onglet Validation ; cliquer le badge centre la toile dessus.</li>
+          <li><span class="n">5</span><b>Compiler porte son état</b> — à jour ✓ / modifié depuis la dernière compilation / en erreur : le bouton est l'indicateur, jamais silencieux.</li>
+          <li><span class="n">6</span><b>Double-clic = définition</b> — comme UE ouvre la fonction, Grimoire ouvre la fiche pattern du catalogue.</li>
+        </ul>
+      </div>
+    </div>
+    <div style="width:520px;flex:none">
+      <div class="lbl" style="margin-bottom:6px">Transposition — geste UE → Grimoire Kit</div>
+      <table class="tbl" style="font-size:10.5px">
+        <tr><th>Unreal Blueprint</th><th>Ici</th></tr>
+        <tr><td>fil lâché dans le vide → menu contextuel</td><td>menu des patterns compatibles avec le contrat du pin</td></tr>
+        <tr><td>clic droit → recherche de tous les nodes</td><td>78 patterns + nodes d'extensions, recherche floue</td></tr>
+        <tr><td>couleur de pin = type de donnée</td><td>couleur = contrat (30 contrats typés)</td></tr>
+        <tr><td>bouton Compile avec état ✓/⚠/✕</td><td>COMPILER : à jour · modifié · erreurs</td></tr>
+        <tr><td>bandeau d'erreur sur le node</td><td>badge ⚠ + onglet Validation de l'inspecteur</td></tr>
+        <tr><td>comment boxes (C)</td><td>zones nommées, pliables, déplaçables avec contenu</td></tr>
+        <tr><td>double-clic → définition du node</td><td>fiche pattern du catalogue</td></tr>
+        <tr><td>watch values pendant le play</td><td><b>simulation pas-à-pas : les contrats transportés s'affichent sur les fils, étape par étape</b></td></tr>
+        <tr><td>reroute nodes sur les fils</td><td>poignées de cheminement — lisibilité des grands flows</td></tr>
+        <tr><td>collapse to function</td><td>replier une sélection en sous-blueprint — V2</td></tr>
+        <tr><td>node déprécié (hachuré)</td><td>pattern retiré du catalogue : hachures + chemin de migration</td></tr>
+        <tr><td>alignement / straighten (Q)</td><td>aligner · distribuer · redresser les fils, sur la sélection</td></tr>
+      </table>
+      <div class="lbl" style="margin:14px 0 6px">Ce qu'on ne transpose pas — et pourquoi</div>
+      <ul class="legend" style="font-size:11.5px">
+        <li style="padding-left:14px"><span style="position:absolute;left:0">·</span><b>les pins d'exécution</b> (flèche blanche, fil blanc) — un blueprint Grimoire n'exécute rien : il n'y a pas de flux d'exécution à dessiner, uniquement des flux de contrats</li>
+        <li style="padding-left:14px"><span style="position:absolute;left:0">·</span><b>le debug sur instance vivante</b> — remplacé par la simulation : statique, rejouable, sans risque</li>
+        <li style="padding-left:14px"><span style="position:absolute;left:0">·</span><b>le look</b> — la peau reste les tokens Grimoire ; on ne copie pas l'apparence d'UE, on adopte sa grammaire de gestes</li>
+      </ul>
+      <p class="note" style="margin-top:12px">pourquoi ça compte : cette grammaire est <b>déjà apprise</b> par toute personne ayant touché UE, Blender ou n8n — l'onboarding §6 n'enseigne alors que ce qui est propre à Grimoire : patterns, contrats, simulation</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ BANDE 5 · ÉCRANS PARTAGÉS (SYNTHÈSE RECOMMANDÉE) ═══ -->
+<div class="band-label" style="left:80px;top:5560px"><span class="n">5</span> <b>Écrans partagés</b> · dessinés dans la synthèse recommandée (structure A · gestes directs de B)</div>
+
+<!-- ── 5.1 Hub Atelier ── -->
+<div class="wf" style="left:80px;top:5620px;width:1240px" data-screen-label="Hub Atelier — ex-Setup">
+  <div class="wf-tag">5.1 · Atelier — le hub du projet <span class="mono" style="color:var(--ann)">(ex-Setup)</span></div>
+  <div class="wf-title">« Où j'en suis, que faire ensuite » — en 5 secondes</div>
+  <p class="wf-sub">Quatre zones, chacune avec sa prochaine action. Ce que « Setup » contenait (artefacts, extensions, création de projet) est là — mais ordonné par ce que l'utilisateur vient y chercher.</p>
+  <div class="scr" style="height:600px;display:flex">
+    <div class="side" style="width:178px">
+      <div class="nav-i" style="border:1.2px solid var(--char-faint);background:#fff;justify-content:space-between;margin-bottom:6px"><span>◆ mon-projet</span><span>▾</span></div>
+      <div class="nav-i on">Atelier</div>
+      <div class="nav-i">Blueprints</div>
+      <div class="nav-i">Extensions</div>
+      <div class="nav-sec">Comprendre</div>
+      <div class="nav-i">Patterns</div>
+      <div class="nav-i">Docs</div>
+      <div class="nav-sec">Observer</div>
+      <div class="nav-i">Observatoire</div>
+      <div class="nav-i">Mémoire · Kanban</div>
+    </div>
+    <div class="grow" style="padding:20px 24px;display:flex;flex-direction:column;gap:14px;min-width:0">
+      <div class="row" style="position:relative">
+        <span class="co" style="left:-34px;top:4px">1</span>
+        <div><div style="font-size:19px;font-weight:600">mon-projet</div><div class="mono" style="font-size:9.5px;color:var(--char-dim);margin-top:2px">~/dev/mon-app · git ✓ · profil controlled · kit v3.16.0 · catalogue v1.0.0 ✓</div></div>
+        <span class="grow"></span>
+        <span class="btn gh">⚙ CONFIG</span><span class="btn">NOUVEAU PROJET</span>
+      </div>
+      <div class="row" style="gap:8px">
+        <span class="chip">1 blueprint</span><span class="chip">2 extensions</span><span class="chip">7 artefacts</span><span class="chip" style="border-color:var(--ann-bd);color:var(--ann)">dernière compilation · 12 min</span>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;flex:1">
+        <div class="bx" style="padding:13px 15px;position:relative">
+          <span class="co" style="left:-10px;top:-10px">2</span>
+          <div class="row sb" style="margin-bottom:9px"><span class="lbl">Blueprints du projet</span><span class="btn" style="font-size:8.5px;padding:3px 8px">+ NOUVEAU</span></div>
+          <div class="bx soft" style="padding:9px 11px;background:var(--paper-2)">
+            <div class="row sb"><span class="mono" style="font-size:11px;font-weight:600">premier-flow</span><span class="mono" style="font-size:9px;color:var(--char-soft)">2 nodes · 1 lien</span></div>
+            <div class="row" style="gap:6px;margin-top:5px"><span class="st st-inst">validé ✓</span><span class="st st-inst">simulé ✓</span><span class="st st-maj">compilé · 12 min</span></div>
+          </div>
+        </div>
+        <div class="bx" style="padding:13px 15px">
+          <div class="row sb" style="margin-bottom:9px"><span class="lbl">Extensions installées</span><span class="btn" style="font-size:8.5px;padding:3px 8px">MARKETPLACE →</span></div>
+          <div class="row sb" style="padding:6px 2px;border-bottom:1px solid var(--line-w)"><span class="mono" style="font-size:10.5px">crewai <span style="color:var(--char-dim)">v0.1.1</span></span><span class="st st-inst">à jour ✓</span></div>
+          <div class="row sb" style="padding:6px 2px"><span class="mono" style="font-size:10.5px">langfuse <span style="color:var(--char-dim)">v0.1.1</span></span><span class="chip" style="font-size:8px">hooks · shadow</span></div>
+        </div>
+        <div class="bx" style="padding:13px 15px;position:relative">
+          <span class="co" style="left:-10px;top:-10px">3</span>
+          <div class="row sb" style="margin-bottom:9px"><span class="lbl">Artefacts compilés</span><span class="btn gh" style="font-size:8.5px;padding:3px 8px">OBSERVATOIRE →</span></div>
+          <table class="tbl" style="font-size:10.5px">
+            <tr><td class="mono">agents 2 · skills 3 · hooks 1 · workflows 1</td></tr>
+            <tr><td><span class="mono" style="color:var(--char-soft)">dernière compilation : premier-flow → 4 artefacts</span> <span class="chip" style="font-size:8px;border-color:var(--ann-bd);color:var(--ann)">récents</span></td></tr>
+          </table>
+        </div>
+        <div class="bx" style="padding:13px 15px">
+          <div class="lbl" style="margin-bottom:9px">Santé du projet</div>
+          <div class="row sb" style="padding:4px 2px"><span style="font-size:11px">Validation des blueprints</span><span class="tick mono" style="font-size:10px">1/1 ✓</span></div>
+          <div class="row sb" style="padding:4px 2px"><span style="font-size:11px">Manifestes d'extensions</span><span class="tick mono" style="font-size:10px">2/2 ✓</span></div>
+          <div class="row sb" style="padding:4px 2px"><span style="font-size:11px">Hooks en attente de promotion</span><span class="mono warn" style="font-size:10px">1 · shadow</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row top" style="gap:26px;margin-top:14px">
+    <ul class="legend grow">
+      <li><span class="n">1</span><b>L'identité du projet d'abord</b> — chemin, profil, versions : on sait où on est. « Nouveau projet » vit ici, pas dans la nav.</li>
+      <li><span class="n">2</span><b>Chaque zone finit par une action</b> — nouveau blueprint, marketplace, observatoire : le hub distribue, il ne stocke pas.</li>
+    </ul>
+    <ul class="legend grow">
+      <li><span class="n">3</span><b>La fraîcheur est un état</b> — « compilé · 12 min », « récents » : on voit d'un coup d'œil ce qui vient de bouger.</li>
+      <li><span class="n">·</span><b>État vide (premier jour)</b> — les 4 zones laissent place à « 3 prochaines actions » : installer une extension → composer un premier flow → compiler. Cf. §6.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ── 5.2 Marketplace liste ── -->
+<div class="wf" style="left:1460px;top:5620px;width:1300px" data-screen-label="Marketplace — liste des extensions">
+  <div class="wf-tag">5.2 · Extensions — la liste</div>
+  <div class="wf-title">Le statut d'abord, l'installation à sa place</div>
+  <p class="wf-sub">Trois populations (installées / disponibles / à l'étude) deviennent la structure de la page au lieu d'un badge perdu. Les blueprints publiés sortent du lot : ce sont des points de départ, pas des extensions.</p>
+  <div class="scr" style="height:600px;display:flex">
+    <div class="side" style="width:178px">
+      <div class="nav-i" style="border:1.2px solid var(--char-faint);background:#fff;justify-content:space-between;margin-bottom:6px"><span>◆ mon-projet</span><span>▾</span></div>
+      <div class="nav-i">Atelier</div>
+      <div class="nav-i">Blueprints</div>
+      <div class="nav-i on">Extensions</div>
+      <div class="nav-sec">Comprendre</div>
+      <div class="nav-i">Patterns</div>
+      <div class="nav-i">Docs</div>
+      <div class="nav-sec">Observer</div>
+      <div class="nav-i">Observatoire</div>
+      <div class="nav-i">Mémoire · Kanban</div>
+    </div>
+    <div class="grow" style="padding:18px 22px;display:flex;flex-direction:column;gap:12px;min-width:0">
+      <div class="row sb">
+        <div><div style="font-size:18px;font-weight:600">Extensions</div><div style="font-size:11px;color:var(--char-soft)">Chaque extension packe un framework public en artefacts gouvernés, ancrés sur le catalogue.</div></div>
+        <span class="bx" style="padding:5px 10px;font-family:var(--mono);font-size:9.5px;color:var(--char-dim);background:#fff">rechercher…</span>
+      </div>
+      <div class="row" style="position:relative">
+        <span class="co" style="left:-32px;top:0">1</span>
+        <span class="chip on">INSTALLÉES · 2</span><span class="chip">DISPONIBLES · 6</span><span class="chip">À L'ÉTUDE · 3</span>
+        <span style="width:14px"></span>
+        <span class="chip" style="border-style:dashed">POINTS DE DÉPART · 1</span>
+        <span class="grow"></span>
+        <span class="chip" style="font-size:8.5px">capability</span><span class="chip" style="font-size:8.5px">flow-adapter</span><span class="chip" style="font-size:8.5px">mcp-toolbox</span><span class="chip" style="font-size:8.5px">observability</span>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;flex:1;align-content:start">
+        <div class="bx" style="padding:12px 14px;position:relative">
+          <span class="co" style="right:-9px;top:-9px">2</span>
+          <div class="row sb"><span style="font-weight:600;font-size:13px">CrewAI Bridge</span><span class="st st-inst">installée ✓ v0.1.1</span></div>
+          <p style="font-size:10.5px;color:var(--char-soft);margin:5px 0 8px">Crews CrewAI exposés comme artefacts gouvernés — import en recipes, traces normalisées.</p>
+          <div class="row sb"><div class="row" style="gap:4px"><span class="chip" style="font-size:8px"><span class="fd" style="background:var(--f-orc)"></span>ORC-01</span><span class="chip" style="font-size:8px"><span class="fd" style="background:var(--f-orc)"></span>ORC-02</span><span class="chip" style="font-size:8px"><span class="fd" style="background:var(--f-gov)"></span>GOV-01</span></div><span class="btn gh" style="font-size:8.5px;padding:3px 8px">GÉRER →</span></div>
+        </div>
+        <div class="bx" style="padding:12px 14px">
+          <div class="row sb"><span style="font-weight:600;font-size:13px">Langfuse Observability</span><span class="st st-inst">installée ✓</span></div>
+          <p style="font-size:10.5px;color:var(--char-soft);margin:5px 0 8px">Télémétrie agentique locale exportée vers Langfuse, best-effort.</p>
+          <div class="row sb"><div class="row" style="gap:4px"><span class="chip" style="font-size:8px"><span class="fd" style="background:var(--f-qua)"></span>QUA-02</span><span class="chip" style="font-size:8px"><span class="fd" style="background:var(--f-qua)"></span>QUA-08</span><span class="chip" style="font-size:8px;border-color:var(--ann-bd);color:var(--ann)">hooks · shadow</span></div><span class="btn gh" style="font-size:8.5px;padding:3px 8px">GÉRER →</span></div>
+        </div>
+        <div class="bx" style="padding:12px 14px;position:relative">
+          <span class="co" style="right:-9px;top:-9px">3</span>
+          <div class="row sb"><span style="font-weight:600;font-size:13px">AutoGen Bridge</span><span class="st st-disp">disponible</span></div>
+          <p style="font-size:10.5px;color:var(--char-soft);margin:5px 0 8px">Conversations multi-agents exposées comme orchestrations gouvernées.</p>
+          <div class="row sb"><div class="row" style="gap:4px"><span class="chip" style="font-size:8px"><span class="fd" style="background:var(--f-orc)"></span>ORC-01</span><span class="chip" style="font-size:8px"><span class="fd" style="background:var(--f-gov)"></span>GOV-01</span><span class="mono" style="font-size:8.5px;color:var(--char-dim)">MIT</span></div><span class="btn" style="font-size:8.5px;padding:3px 10px">INSTALLER</span></div>
+        </div>
+        <div class="bx" style="padding:12px 14px">
+          <div class="row sb"><span style="font-weight:600;font-size:13px">LangGraph Bridge</span><span class="st st-disp">disponible</span></div>
+          <p style="font-size:10.5px;color:var(--char-soft);margin:5px 0 8px">Graphes d'agents à état persistant — reprises auditées, checkpoints tracés.</p>
+          <div class="row sb"><div class="row" style="gap:4px"><span class="chip" style="font-size:8px"><span class="fd" style="background:var(--f-orc)"></span>ORC-09</span><span class="chip" style="font-size:8px"><span class="fd" style="background:var(--f-orc)"></span>ORC-10</span><span class="mono" style="font-size:8.5px;color:var(--char-dim)">MIT</span></div><span class="btn" style="font-size:8.5px;padding:3px 10px">INSTALLER</span></div>
+        </div>
+        <div class="bx" style="padding:12px 14px;border-style:dashed;position:relative">
+          <span class="co" style="right:-9px;top:-9px">4</span>
+          <div class="row sb"><span style="font-weight:600;font-size:13px;color:var(--char-soft)">Mem0</span><span class="st st-etude">à l'étude</span></div>
+          <p style="font-size:10.5px;color:var(--char-dim);margin:5px 0 8px">Couche mémoire persistante pour agents — pas de manifeste, pas d'installation.</p>
+          <div class="row sb"><span class="mono" style="font-size:8.5px;color:var(--char-dim)">upstream ↗</span><span class="mono" style="font-size:8.5px;color:var(--char-dim)">suivre l'étude</span></div>
+        </div>
+        <div class="bx" style="padding:12px 14px;background:var(--paper-2)">
+          <div class="row sb"><span style="font-weight:600;font-size:13px">Onboarding d'un crew CrewAI</span><span class="chip" style="font-size:8px">point de départ</span></div>
+          <p style="font-size:10.5px;color:var(--char-soft);margin:5px 0 8px">Blueprint publié — 4 nodes, 4 liens · requiert crewai. S'ouvre dans l'éditeur.</p>
+          <div class="row sb"><span class="mono" style="font-size:8.5px;color:var(--char-dim)">s'installe comme modèle</span><span class="btn" style="font-size:8.5px;padding:3px 10px">OUVRIR DANS L'ÉDITEUR →</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row top" style="gap:26px;margin-top:14px">
+    <ul class="legend grow">
+      <li><span class="n">1</span><b>Le statut structure la page</b> — segments comptés ; « installée » se voit avant de lire quoi que ce soit d'autre.</li>
+      <li><span class="n">2</span><b>Installée ≠ fin de l'histoire</b> — GÉRER mène à la fiche : version, hooks à promouvoir, mise à jour, retrait.</li>
+    </ul>
+    <ul class="legend grow">
+      <li><span class="n">3</span><b>Installer, au bon endroit</b> — sur la carte et la fiche, en local. En vitrine, le même bouton devient la commande CLI copiable.</li>
+      <li><span class="n">4</span><b>À l'étude = honnête</b> — pointillés, pas de fausse promesse ; les blueprints publiés sont un objet distinct, ouverts dans l'éditeur.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ── 5.3 Détail extension ── -->
+<div class="wf" style="left:2900px;top:5620px;width:1300px" data-screen-label="Marketplace — fiche extension CrewAI Bridge">
+  <div class="wf-tag">5.3 · Extensions — la fiche <span class="mono" style="color:var(--ann)">(nouvelle page)</span></div>
+  <div class="wf-title">Une page par extension : le contrat avant le bouton</div>
+  <p class="wf-sub">La vue détail qui manque aujourd'hui. Tout ce que le manifeste déclare — patterns, artefacts, permissions, hooks — devient lisible <b>avant</b> d'installer.</p>
+  <div class="scr" style="height:600px;display:flex;flex-direction:column">
+    <div class="tb"><span class="mono" style="font-size:9.5px;color:var(--char-dim)">Extensions / crewai</span><span class="grow"></span><span class="chip">◆ mon-projet</span></div>
+    <div style="padding:16px 22px;border-bottom:1.2px solid var(--char-faint)">
+      <div class="row" style="position:relative">
+        <span class="co" style="left:-32px;top:6px">1</span>
+        <div class="grow"><div class="row" style="gap:10px"><span style="font-size:19px;font-weight:600">CrewAI Bridge</span><span class="chip">flow-adapter</span><span class="mono" style="font-size:9.5px;color:var(--char-dim)">v0.1.1 · MIT · upstream ↗</span></div>
+        <p style="font-size:11px;color:var(--char-soft);margin-top:4px">Expose les crews CrewAI comme artefacts Grimoire gouvernés via <span class="mono">grimoire.runtime.crewai_adapter</span>.</p></div>
+        <span class="st st-inst" style="align-self:center">installée ✓ · à jour</span>
+        <span class="btn gh" style="align-self:center">RETIRER ⋯</span>
+      </div>
+    </div>
+    <div class="grow" style="display:flex;min-height:0">
+      <div class="grow" style="padding:16px 22px;display:flex;flex-direction:column;gap:13px">
+        <div style="position:relative">
+          <span class="co" style="left:-32px;top:0">2</span>
+          <div class="lbl" style="margin-bottom:6px">Patterns implémentés — l'ancrage au catalogue</div>
+          <div class="row wrap" style="gap:5px">
+            <span class="chip"><span class="fd" style="background:var(--f-orc)"></span>ORC-01 · Entreprise-agent</span>
+            <span class="chip"><span class="fd" style="background:var(--f-orc)"></span>ORC-02 · Task envelope</span>
+            <span class="chip"><span class="fd" style="background:var(--f-orc)"></span>ORC-03</span>
+            <span class="chip"><span class="fd" style="background:var(--f-gov)"></span>GOV-01 · Policy engine</span>
+          </div>
+          <p class="mono" style="font-size:8.5px;color:var(--char-dim);margin-top:5px">chaque chip ouvre la fiche du pattern — une extension sans ancrage est refusée du registry</p>
+        </div>
+        <div>
+          <div class="lbl" style="margin-bottom:6px">Artefacts installés dans le projet</div>
+          <table class="tbl" style="font-size:10.5px">
+            <tr><td class="mono">agents 1 · skills 1 · workflows 1 · nodes 1</td><td style="text-align:right"><span class="mono" style="font-size:9px;color:var(--char-dim)">→ visibles dans l'Atelier</span></td></tr>
+            <tr><td class="mono">hooks 1 · PostToolUse</td><td style="text-align:right"><span class="chip" style="font-size:8px;border-color:var(--ann-bd);color:var(--ann)">shadow · promotion = votre décision</span></td></tr>
+          </table>
+        </div>
+        <div style="position:relative">
+          <span class="co" style="left:-32px;top:0">3</span>
+          <div class="lbl" style="margin-bottom:6px">Dans vos blueprints</div>
+          <div class="row sb" style="border:1.2px solid var(--char-faint);border-radius:6px;padding:8px 11px">
+            <span style="font-size:11px">Node <b class="mono">Crew</b> — utilisé par <span class="mono">premier-flow</span></span>
+            <span class="btn" style="font-size:8.5px;padding:3px 9px">UTILISER DANS UN BLUEPRINT →</span>
+          </div>
+        </div>
+        <div style="flex:1"></div>
+        <div style="position:relative">
+          <span class="co" style="left:-32px;top:-2px">4</span>
+          <div class="lbl" style="margin-bottom:6px">Installation — ce qui se passe, dans l'ordre</div>
+          <div class="row" style="gap:6px">
+            <span class="chip" style="font-size:8.5px">manifeste validé (schéma)</span><span class="arr" style="font-size:11px">→</span>
+            <span class="chip" style="font-size:8.5px">artefacts copiés dans le projet</span><span class="arr" style="font-size:11px">→</span>
+            <span class="chip" style="font-size:8.5px">hooks enregistrés en shadow</span><span class="arr" style="font-size:11px">→</span>
+            <span class="chip" style="font-size:8.5px;border-color:var(--ok);color:var(--ok)">installée ✓ · réversible</span>
+          </div>
+        </div>
+      </div>
+      <div style="width:300px;border-left:1.2px solid var(--char-faint);background:var(--paper-2);padding:16px;display:flex;flex-direction:column;gap:12px">
+        <div style="position:relative">
+          <span class="co" style="left:-27px;top:0">5</span>
+          <div class="lbl" style="margin-bottom:6px">Permissions déclarées</div>
+          <table class="tbl" style="font-size:10px">
+            <tr><td class="mono">fs:artifacts</td><td>écrit uniquement sous artifacts/</td></tr>
+            <tr><td class="mono">réseau</td><td>appels vers l'upstream CrewAI</td></tr>
+            <tr><td class="mono">hooks:PostToolUse</td><td>observe après chaque outil</td></tr>
+          </table>
+        </div>
+        <div>
+          <div class="lbl" style="margin-bottom:6px">Manifeste</div>
+          <div class="cli" style="font-size:9px;line-height:1.6">extension.json · schéma v1<br>chemins relatifs seulement<br>pas de remontée hors bundle</div>
+          <span class="btn gh" style="font-size:8.5px;margin-top:8px">VOIR LE MANIFESTE BRUT</span>
+        </div>
+        <div>
+          <div class="lbl" style="margin-bottom:6px">En vitrine (site public)</div>
+          <div class="cli" style="font-size:9px">$ grimoire ext add extensions/crewai <b>· copier</b></div>
+          <p class="mono" style="font-size:8.5px;color:var(--char-dim);margin-top:5px">même fiche, le bouton devient la commande</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row top" style="gap:26px;margin-top:14px">
+    <ul class="legend grow">
+      <li><span class="n">1</span><b>L'état d'installation dans le header</b> — installée / à jour / mise à jour disponible, avec l'action correspondante.</li>
+      <li><span class="n">2</span><b>L'ancrage patterns est le contenu principal</b> — c'est la différence avec un annuaire npm ; les chips relient marketplace et catalogue.</li>
+      <li><span class="n">3</span><b>Boucle vers l'éditeur</b> — l'extension montre où elle sert ; « utiliser dans un blueprint » ouvre l'éditeur avec le node prêt.</li>
+    </ul>
+    <ul class="legend grow">
+      <li><span class="n">4</span><b>Installer = procédure visible</b> — 4 étapes montrées avant le clic ; la réversibilité est écrite.</li>
+      <li><span class="n">5</span><b>Permissions traduites</b> — chaque scope a sa conséquence concrète en une phrase. La confiance se gagne ligne à ligne.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ── 5.4 Catalogue patterns ── -->
+<div class="wf" style="left:4340px;top:5620px;width:1340px" data-screen-label="Catalogue de patterns — page Patterns">
+  <div class="wf-tag">5.4 · Patterns — le catalogue <span class="mono" style="color:var(--ann)">(ex-Blueprint, moitié « viewer »)</span></div>
+  <div class="wf-title">Le codex : feuilleter d'abord, le graphe ensuite</div>
+  <p class="wf-sub">Le graphe complet (78 nodes, 141 liens) est un feu d'artifice, pas une entrée en matière. Par défaut : les 8 familles feuilletables. Le graphe devient un <b>mode</b>, avec les relations bruyantes coupées.</p>
+  <div class="scr" style="height:600px;display:flex;flex-direction:column">
+    <div class="tb">
+      <span class="mono" style="font-size:10px"><b>Patterns</b> · catalogue normatif</span>
+      <span class="chip" style="font-size:8.5px">78 patterns</span><span class="chip" style="font-size:8.5px">141 relations</span><span class="chip" style="font-size:8.5px">30 contrats</span><span class="chip" style="font-size:8.5px">50 use-cases</span>
+      <span class="grow"></span>
+      <span class="row" style="gap:0;position:relative"><span class="co" style="left:-30px;top:-2px">1</span><span class="chip on" style="border-radius:4px 0 0 4px">FAMILLES</span><span class="chip" style="border-radius:0">GRAPHE</span><span class="chip" style="border-radius:0 4px 4px 0">USE-CASES</span></span>
+      <span class="mono" style="font-size:8.5px;color:var(--char-dim)">v1.0.0 · 53b2c34</span>
+    </div>
+    <div class="grow" style="display:flex;min-height:0">
+      <div class="side" style="width:196px">
+        <div class="bx" style="padding:5px 9px;font-family:var(--mono);font-size:9.5px;color:var(--char-dim);background:#fff;margin-bottom:8px">ORC-02, envelope…</div>
+        <div class="nav-sec">Familles</div>
+        <div class="nav-i" style="font-size:9.5px;padding:4px 7px"><span class="fd" style="width:8px;height:8px;border-radius:2px;background:var(--f-org)"></span>ORG · Organisation <span style="margin-left:auto;color:var(--char-dim)">2</span></div>
+        <div class="nav-i" style="font-size:9.5px;padding:4px 7px"><span class="fd" style="width:8px;height:8px;border-radius:2px;background:var(--f-orc)"></span>ORC · Orchestration <span style="margin-left:auto;color:var(--char-dim)">11</span></div>
+        <div class="nav-i on" style="font-size:9.5px;padding:4px 7px"><span class="fd" style="width:8px;height:8px;border-radius:2px;background:var(--f-qua)"></span>QUA · Preuves <span style="margin-left:auto">16</span></div>
+        <div class="nav-i" style="font-size:9.5px;padding:4px 7px"><span class="fd" style="width:8px;height:8px;border-radius:2px;background:var(--f-gov)"></span>GOV · Gouvernance <span style="margin-left:auto;color:var(--char-dim)">17</span></div>
+        <div class="nav-i" style="font-size:9.5px;padding:4px 7px;color:var(--char-dim)">+ 4 familles…</div>
+        <div class="nav-sec" style="margin-top:12px;position:relative"><span class="co" style="left:-14px;top:-3px">2</span>Relations · en mode graphe</div>
+        <div class="nav-i" style="font-size:9.5px;padding:3px 7px">☑ fonde · dépend de · produit</div>
+        <div class="nav-i" style="font-size:9.5px;padding:3px 7px">☑ gouverne · déclenche</div>
+        <div class="nav-i dis" style="font-size:9.5px;padding:3px 7px">☐ apparenté <span style="margin-left:auto">48</span></div>
+        <p class="mono" style="font-size:8px;color:var(--char-dim);padding:6px 7px;line-height:1.5">« apparenté » = 48 des 141 liens — coupé par défaut, le graphe respire</p>
+      </div>
+      <div class="grow" style="padding:16px 18px;min-width:0">
+        <div class="lbl" style="margin-bottom:8px">QUA · Preuves et qualité — 16 patterns</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+          <div class="bx" style="padding:9px 11px;border-color:var(--char)"><span class="mono" style="font-size:10px;font-weight:700">QUA-04</span> <span style="font-size:11px">Evidence pack &amp; verification verdict</span><div class="tl w75" style="margin-top:7px"></div><div class="tl w45"></div></div>
+          <div class="bx soft" style="padding:9px 11px"><span class="mono" style="font-size:10px;font-weight:700">QUA-05</span> <span style="font-size:11px">Evidence-driven transition</span><div class="tl w75" style="margin-top:7px"></div><div class="tl w60"></div></div>
+          <div class="bx soft" style="padding:9px 11px"><span class="mono" style="font-size:10px;font-weight:700">QUA-11</span> <span style="font-size:11px">Browser evidence contract</span><div class="tl w60" style="margin-top:7px"></div><div class="tl w45"></div></div>
+          <div class="bx soft" style="padding:9px 11px"><span class="mono" style="font-size:10px;font-weight:700">QUA-12</span> <span style="font-size:11px">Visual evidence pack</span><div class="tl w75" style="margin-top:7px"></div><div class="tl w30"></div></div>
+        </div>
+        <div class="ph" style="height:120px;margin-top:10px"><span class="cap">…12 autres fiches QUA</span></div>
+      </div>
+      <div style="width:330px;border-left:1.5px solid var(--char);background:var(--paper-2);padding:15px;display:flex;flex-direction:column;gap:10px">
+        <div class="row sb" style="position:relative"><span class="co" style="left:-26px;top:0">3</span><span class="mono" style="font-size:12px;font-weight:700">QUA-04</span><span class="chip" style="font-size:8px"><span class="fd" style="background:var(--f-qua)"></span>QUA · preuves</span></div>
+        <div style="font-size:13.5px;font-weight:600;line-height:1.3">Evidence pack et verification verdict</div>
+        <div><div class="lbl">Intention</div><div class="tl w90" style="margin-top:5px"></div><div class="tl w75"></div></div>
+        <div><div class="lbl">Problème → Solution</div><div class="tl w90" style="margin-top:5px"></div><div class="tl w60"></div></div>
+        <div>
+          <div class="lbl" style="margin-bottom:4px">Contrats</div>
+          <table class="tbl" style="font-size:9.5px"><tr><td class="mono">in</td><td class="mono">task-envelope</td></tr><tr><td class="mono">out</td><td class="mono">handoff-packet</td></tr></table>
+        </div>
+        <div class="row sb"><span class="lbl">Maturité</span><div class="gauge" style="width:130px"><i style="width:66%"></i></div></div>
+        <div><div class="lbl" style="margin-bottom:4px">Implémenté par</div><span class="chip" style="font-size:8.5px">fennara-godot · mcp-toolbox</span></div>
+        <div style="flex:1"></div>
+        <span class="btn pri" style="justify-content:center;position:relative">UTILISER DANS UN BLUEPRINT →<span class="co" style="right:-10px;top:-10px">4</span></span>
+      </div>
+    </div>
+    <div class="statusbar"><span>vue familles</span><span class="grow"></span><span>en vitrine : page identique, sans le bouton « utiliser »</span></div>
+  </div>
+  <div class="row top" style="gap:26px;margin-top:14px">
+    <ul class="legend grow">
+      <li><span class="n">1</span><b>Trois vues, un défaut pédagogique</b> — familles (feuilleter) par défaut ; graphe (explorer les relations) ; use-cases (50 départs concrets).</li>
+      <li><span class="n">2</span><b>Le graphe respire</b> — « apparenté » (48 liens) coupé par défaut ; les relations structurantes restent.</li>
+    </ul>
+    <ul class="legend grow">
+      <li><span class="n">3</span><b>La fiche est la planche du codex</b> — intention, problème→solution, contrats, maturité, extensions qui l'implémentent : tout vient de <span class="mono">catalogue-export.json</span>.</li>
+      <li><span class="n">4</span><b>Le pont vers l'outil</b> — en local, chaque fiche débouche sur l'éditeur. En vitrine, le bouton disparaît — même page, capacités en moins.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ═══ BANDE 6 · STORYBOARD ONBOARDING PREMIER-FLOW ═══ -->
+<div class="band-label" style="left:80px;top:6800px"><span class="n">6</span> <b>Onboarding premier-flow</b> · « deux nodes, un lien, une simulation » en moins de 2 minutes — états vides compris</div>
+
+<!-- S0 -->
+<div class="wf" style="left:80px;top:6860px;width:660px" data-screen-label="Onboarding S0 — état vide">
+  <div class="wf-tag"><span class="tc">0:00</span> S0 · l'état vide qui oriente</div>
+  <div class="wf-title" style="font-size:16px">Jamais de toile blanche</div>
+  <div class="scr" style="height:300px;display:flex;flex-direction:column">
+    <div class="tb" style="padding:6px 10px;font-size:8.5px"><span class="chip" style="font-size:8px">◆ nouveau blueprint</span><span class="grow"></span><span class="btn" style="font-size:7.5px;padding:2px 7px">VALIDER</span><span class="btn" style="font-size:7.5px;padding:2px 7px">SIMULER</span><span class="btn pacc" style="font-size:7.5px;padding:2px 7px">COMPILER</span></div>
+    <div class="grow canvas-bg" style="display:flex;align-items:center;justify-content:center">
+      <div style="width:78%">
+        <div style="font-size:13.5px;font-weight:600;text-align:center;margin-bottom:3px">Par où commencer ?</div>
+        <p style="font-size:9.5px;color:var(--char-soft);text-align:center;margin-bottom:12px">Un blueprint <b>compose</b> des patterns ; il se valide, se simule, se compile — il n'exécute jamais rien.</p>
+        <div class="col" style="gap:7px">
+          <div class="bx" style="padding:8px 11px;display:flex;justify-content:space-between;align-items:center"><span style="font-size:10px"><b>Partir d'un modèle</b> — onboarding-crew · 4 nodes</span><span class="mono" style="font-size:8px;color:var(--char-dim)">→</span></div>
+          <div class="bx" style="padding:8px 11px;display:flex;justify-content:space-between;align-items:center"><span style="font-size:10px"><b>Partir d'un use-case</b> — 50 squelettes du catalogue</span><span class="mono" style="font-size:8px;color:var(--char-dim)">→</span></div>
+          <div class="bx" style="padding:8px 11px;display:flex;justify-content:space-between;align-items:center;border-color:var(--ann-bd)"><span style="font-size:10px;color:var(--ann)"><b>Toile vide, guidée</b> — 4 gestes, moins de 2 minutes</span><span class="mono" style="font-size:8px;color:var(--ann)">→</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="note" style="margin-top:10px">la définition d'un blueprint tient en une phrase, posée à l'endroit exact du doute — pas dans la doc</p>
+</div>
+
+<!-- S1 -->
+<div class="wf" style="left:820px;top:6860px;width:660px" data-screen-label="Onboarding S1 — premier node">
+  <div class="wf-tag"><span class="tc">0:10</span> S1 · geste 1/4 — poser un node</div>
+  <div class="wf-title" style="font-size:16px">La recherche est pré-remplie</div>
+  <div class="scr" style="height:300px;display:flex;flex-direction:column">
+    <div class="tb" style="padding:6px 10px;font-size:8.5px"><span class="progress-chip" style="font-size:7.5px;padding:2px 8px">PREMIER FLOW · 1/4</span><span class="grow"></span><span class="btn gh" style="font-size:7.5px;padding:2px 7px">PASSER</span></div>
+    <div class="grow" style="display:flex;min-height:0">
+      <div class="side" style="width:150px;padding:7px">
+        <div class="bx" style="padding:4px 8px;font-family:var(--mono);font-size:8.5px;background:#fff;border-color:var(--ann-bd)">policy<span style="opacity:.4">|</span></div>
+        <div class="bx" style="padding:6px 8px;margin-top:5px;background:#fff;border-color:var(--ann-bd)"><span class="mono" style="font-size:8.5px;font-weight:700">GOV-01</span><br><span style="font-size:8px;color:var(--char-soft)">policy engine</span><br><span class="btn" style="font-size:7px;padding:1px 6px;margin-top:4px">+ AJOUTER</span></div>
+        <div class="bx soft" style="padding:5px 8px;margin-top:4px;background:#fff"><span class="mono" style="font-size:8.5px">GOV-09</span> <span style="font-size:7.5px;color:var(--char-dim)">mcp trust gate</span></div>
+      </div>
+      <div class="grow canvas-bg" style="position:relative">
+        <div class="coach" style="position:absolute;left:12px;top:12px;width:230px;font-size:10px">
+          <span class="step">1/4 · ~15 s</span>
+          Tout flow commence par sa règle. <b>Ajoutez GOV-01 — policy engine</b> : la recherche est déjà remplie, cliquez « + ajouter ».
+        </div>
+        <div style="position:absolute;right:16px;bottom:12px" class="mono" title="" >
+          <span class="chip" style="font-size:8px;color:var(--char-dim)">la toile attend son premier node…</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="note" style="margin-top:10px">le coach désigne <b>un</b> pattern précis : choisir parmi 78 n'est pas la leçon du jour. « Passer » reste visible à chaque étape</p>
+</div>
+
+<!-- S2 -->
+<div class="wf" style="left:1560px;top:6860px;width:660px" data-screen-label="Onboarding S2 — deuxième node">
+  <div class="wf-tag"><span class="tc">0:30</span> S2 · geste 2/4 — le catalogue devient conseil</div>
+  <div class="wf-title" style="font-size:16px">« Compatibles avec sa sortie »</div>
+  <div class="scr" style="height:300px;display:flex;flex-direction:column">
+    <div class="tb" style="padding:6px 10px;font-size:8.5px"><span class="progress-chip" style="font-size:7.5px;padding:2px 8px">PREMIER FLOW · 2/4</span><span class="grow"></span><span class="btn gh" style="font-size:7.5px;padding:2px 7px">PASSER</span></div>
+    <div class="grow" style="display:flex;min-height:0">
+      <div class="side" style="width:150px;padding:7px">
+        <div class="nav-sec" style="color:var(--ann);margin-top:0">Compatibles avec GOV-01 · sortie task-envelope</div>
+        <div class="bx" style="padding:6px 8px;background:#fff;border-color:var(--ann-bd)"><span class="mono" style="font-size:8.5px;font-weight:700">QUA-04</span> <span style="font-size:7.5px;color:var(--ann)">✦ recommandé</span><br><span style="font-size:8px;color:var(--char-soft)">evidence pack &amp; verdict</span></div>
+        <div class="bx soft" style="padding:5px 8px;margin-top:4px;background:#fff"><span class="mono" style="font-size:8.5px">QUA-05</span></div>
+        <div class="bx soft" style="padding:5px 8px;margin-top:4px;background:#fff;border-style:dashed"><span class="mono" style="font-size:8.5px;color:var(--char-dim)">Crew · ext crewai</span></div>
+      </div>
+      <div class="grow canvas-bg" style="position:relative">
+        <div class="node" style="position:absolute;left:12%;top:40%;font-size:9px;padding:6px 10px">GOV-01<small>policy engine</small><span class="pin out"></span></div>
+        <div style="position:absolute;left:40%;top:26%;width:190px;background:#fff;border:1.2px solid var(--char-faint);border-radius:6px;padding:7px 9px;font-size:9px;box-shadow:0 4px 10px rgba(31,27,20,.1)">
+          <b class="mono" style="font-size:8.5px">pin ⓘ</b> — la prise typée d'un node : ce qu'il accepte (in) et ce qu'il produit (out).
+        </div>
+        <div class="coach" style="position:absolute;left:12px;bottom:12px;width:250px;font-size:10px">
+          <span class="step">2/4 · ~20 s</span>
+          Une règle sans preuve ne gouverne rien. La palette montre <b>ce qui se branche</b> sur GOV-01 — ajoutez QUA-04.
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="note" style="margin-top:10px">le contrat s'apprend <b>sans le mot</b> : la liste filtrée EST le contrat. Le ⓘ donne le nom à ceux qui le veulent — même geste en version experte : tirer un fil dans le vide ouvre ce menu (→ 4·D)</p>
+</div>
+
+<!-- S3 -->
+<div class="wf" style="left:2300px;top:6860px;width:660px" data-screen-label="Onboarding S3 — connecter">
+  <div class="wf-tag"><span class="tc">0:50</span> S3 · geste 3/4 — tirer le fil</div>
+  <div class="wf-title" style="font-size:16px">Pendant le drag, tout se tait sauf le possible</div>
+  <div class="scr" style="height:300px;display:flex;flex-direction:column">
+    <div class="tb" style="padding:6px 10px;font-size:8.5px"><span class="progress-chip" style="font-size:7.5px;padding:2px 8px">PREMIER FLOW · 3/4</span><span class="grow"></span><span class="btn gh" style="font-size:7.5px;padding:2px 7px">PASSER</span></div>
+    <div class="grow canvas-bg" style="position:relative">
+      <div class="node" style="position:absolute;left:10%;top:34%;font-size:9px;padding:6px 10px">GOV-01<small>policy engine</small><span class="pin out hot"></span></div>
+      <div class="node" style="position:absolute;left:56%;top:56%;font-size:9px;padding:6px 10px">QUA-04<small>evidence pack</small><span class="pin in hot"></span><span class="pin out off"></span></div>
+      <svg style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none" viewBox="0 0 620 260" preserveAspectRatio="none"><path d="M 120 105 C 210 130, 260 155, 345 165" fill="none" stroke="#D9541E" stroke-width="1.8" stroke-dasharray="6 4"/></svg>
+      <span class="chip" style="position:absolute;left:34%;top:38%;border-color:var(--ann-bd);color:var(--ann);background:#fff;font-size:8.5px">task-envelope · compatible ✓</span>
+      <div class="coach" style="position:absolute;left:12px;bottom:12px;width:270px;font-size:10px">
+        <span class="step">3/4 · ~15 s</span>
+        Attrapez le pin <b>sortie ○ de GOV-01</b> et lâchez-le sur l'<b>entrée ○ de QUA-04</b>.
+        <div class="row" style="margin-top:5px"><span class="btn" style="font-size:7.5px;padding:2px 7px">MONTRE-MOI</span></div>
+      </div>
+      <span class="chip" style="position:absolute;right:12px;top:12px;font-size:8px;color:var(--char-dim)">pins incompatibles : éteints pendant le geste</span>
+    </div>
+  </div>
+  <p class="note" style="margin-top:10px">l'étiquette de contrat suit le fil ; lâcher sur un pin incompatible est <b>impossible</b>, pas « en erreur »</p>
+</div>
+
+<!-- S4 -->
+<div class="wf" style="left:3040px;top:6860px;width:660px" data-screen-label="Onboarding S4 — le lien est un contrat">
+  <div class="wf-tag"><span class="tc">1:05</span> S4 · le mot arrive après le geste</div>
+  <div class="wf-title" style="font-size:16px">« Connecté via contrat task-envelope »</div>
+  <div class="scr" style="height:300px;display:flex;flex-direction:column">
+    <div class="tb" style="padding:6px 10px;font-size:8.5px"><span class="progress-chip" style="font-size:7.5px;padding:2px 8px">PREMIER FLOW · 3/4 ✓</span><span class="grow"></span><span class="btn" style="font-size:7.5px;padding:2px 7px">SIMULER</span></div>
+    <div class="grow canvas-bg" style="position:relative">
+      <div class="node" style="position:absolute;left:10%;top:34%;font-size:9px;padding:6px 10px">GOV-01<small>policy engine</small><span class="pin out"></span></div>
+      <div class="node" style="position:absolute;left:56%;top:56%;font-size:9px;padding:6px 10px">QUA-04<small>evidence pack</small><span class="pin in"></span><span class="pin out"></span></div>
+      <svg style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none" viewBox="0 0 620 260" preserveAspectRatio="none"><path d="M 120 105 C 210 130, 260 155, 345 165" fill="none" stroke="#35322B" stroke-width="1.8"/></svg>
+      <span class="chip" style="position:absolute;left:33%;top:37%;background:#fff;font-size:8.5px">task-envelope</span>
+      <div style="position:absolute;right:12px;bottom:12px;background:#fff;border:1.4px solid var(--ann-bd);border-left-width:4px;border-radius:6px;padding:8px 12px;font-size:10px;box-shadow:0 4px 12px rgba(31,27,20,.12)">
+        <b style="color:var(--ann)">Connecté via contrat task-envelope ✓</b><br>
+        <span style="color:var(--char-soft);font-size:9px">un contrat = la forme des données que le lien transporte · <span style="color:var(--ann)">en savoir plus ⓘ</span></span>
+      </div>
+    </div>
+  </div>
+  <p class="note" style="margin-top:10px">c'est le moment-clé du vocabulaire : le toast nomme ce que l'utilisateur <b>vient de réussir</b> — la définition colle au succès, elle est retenue</p>
+</div>
+
+<!-- S5 -->
+<div class="wf" style="left:80px;top:7590px;width:660px" data-screen-label="Onboarding S5 — simuler">
+  <div class="wf-tag"><span class="tc">1:15</span> S5 · geste 4/4 — simuler</div>
+  <div class="wf-title" style="font-size:16px">Le verdict, et un avertissement qui enseigne</div>
+  <div class="scr" style="height:300px;display:flex;flex-direction:column">
+    <div class="tb" style="padding:6px 10px;font-size:8.5px"><span class="progress-chip" style="font-size:7.5px;padding:2px 8px">PREMIER FLOW · 4/4</span><span class="grow"></span><span class="btn acc" style="font-size:7.5px;padding:2px 7px">SIMULER ◉</span></div>
+    <div class="grow" style="display:flex;min-height:0">
+      <div class="grow canvas-bg" style="position:relative">
+        <div class="node" style="position:absolute;left:8%;top:38%;font-size:8.5px;padding:5px 8px">GOV-01<span class="pin out"></span></div>
+        <div class="node" style="position:absolute;left:48%;top:58%;font-size:8.5px;padding:5px 8px">QUA-04<span class="pin in"></span></div>
+        <svg style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none" viewBox="0 0 340 260" preserveAspectRatio="none"><path d="M 70 110 C 120 130, 140 150, 170 165" fill="none" stroke="#35322B" stroke-width="1.6"/></svg>
+      </div>
+      <div style="width:225px;border-left:1.5px solid var(--char);background:var(--paper-2);padding:10px;display:flex;flex-direction:column;gap:7px">
+        <span class="chip" style="font-size:8px;border-color:var(--ok);color:var(--ok);align-self:flex-start">SIMULATION</span>
+        <div style="font-size:13px;font-weight:700">prêt à appliquer</div>
+        <div class="lbl" style="font-size:8px">Plan d'exécution</div>
+        <div class="mono" style="font-size:8.5px;line-height:1.6">1. Policy engine — appliquer le pattern<br>2. QUA-04 — sceller la preuve</div>
+        <div class="lbl" style="font-size:8px">Avertissement</div>
+        <div style="font-size:9px;line-height:1.45;background:#fff;border:1px solid var(--char-faint);border-radius:5px;padding:6px 8px">
+          Ce flow gouverne mais ne délègue rien — ajoutez un node d'exécution quand vous serez prêt.
+          <span class="btn" style="font-size:7px;padding:1px 6px;margin-top:4px">+ CREW (EXT. CREWAI)</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="note" style="margin-top:10px">l'avertissement n'est pas un reproche : il donne la <b>prochaine marche</b>, avec son bouton. Même mécanique que « risque d'anti-pattern Faux Done » du replay</p>
+</div>
+
+<!-- S6 -->
+<div class="wf" style="left:820px;top:7590px;width:660px" data-screen-label="Onboarding S6 — succès">
+  <div class="wf-tag"><span class="tc">1:35</span> S6 · succès — et la sortie est nommée</div>
+  <div class="wf-title" style="font-size:16px">Fin de visite : trois suites possibles</div>
+  <div class="scr" style="height:300px;display:flex;flex-direction:column">
+    <div class="tb" style="padding:6px 10px;font-size:8.5px"><span class="chip" style="font-size:8px">◆ premier-flow</span><span class="grow"></span><span class="btn" style="font-size:7.5px;padding:2px 7px">SIMULER ✓</span><span class="btn pacc" style="font-size:7.5px;padding:2px 7px">COMPILER</span></div>
+    <div class="grow canvas-bg" style="display:flex;align-items:center;justify-content:center">
+      <div style="width:80%;background:#fff;border:1.5px solid var(--char);border-radius:9px;padding:14px 16px;box-shadow:0 8px 20px rgba(31,27,20,.12)">
+        <div class="row" style="margin-bottom:4px"><span style="font-size:13px;font-weight:700">Premier flow simulé ✓</span><span class="chip" style="font-size:8px">1 min 35</span></div>
+        <p style="font-size:9.5px;color:var(--char-soft);margin-bottom:10px">Vous savez poser, brancher, simuler. <b>Compiler</b> produira les artefacts de ce blueprint dans votre projet — rien ne s'exécutera.</p>
+        <div class="col" style="gap:6px">
+          <span class="btn pri" style="font-size:8.5px;justify-content:center">COMPILER LE BLUEPRINT → artefacts dans l'Atelier</span>
+          <div class="row" style="gap:6px">
+            <span class="btn grow" style="font-size:8px;justify-content:center">AJOUTER UN NODE D'EXÉCUTION</span>
+            <span class="btn gh grow" style="font-size:8px;justify-content:center">PLUS TARD — TOUT EST SAUVÉ</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="note" style="margin-top:10px">l'invariant est répété au moment décisif : <b>compiler ne lance rien</b>. C'est ce qui autorise le débutant à oser le bouton</p>
+</div>
+
+<!-- S7 -->
+<div class="wf" style="left:1560px;top:7590px;width:660px" data-screen-label="Onboarding S7 — état vide extension manquante">
+  <div class="wf-tag">état vide · A — extension manquante</div>
+  <div class="wf-title" style="font-size:16px">Le marketplace vient à l'éditeur</div>
+  <div class="scr" style="height:300px;display:flex;flex-direction:column">
+    <div class="tb" style="padding:6px 10px;font-size:8.5px"><span class="chip" style="font-size:8px">◆ premier-flow</span><span class="grow"></span></div>
+    <div class="grow" style="display:flex;min-height:0">
+      <div class="side" style="width:150px;padding:7px">
+        <div class="bx soft" style="padding:6px 8px;background:#fff;border-style:dashed">
+          <span class="mono" style="font-size:8.5px;color:var(--char-dim)">Crew</span><br><span style="font-size:7.5px;color:var(--char-dim)">node fourni par l'extension crewai — non installée</span><br>
+          <span class="btn acc" style="font-size:7px;padding:1px 6px;margin-top:4px">INSTALLER · 1 CLIC</span>
+        </div>
+        <p class="mono" style="font-size:7.5px;color:var(--char-dim);margin-top:6px;line-height:1.5">visible quand même : on découvre ce qui existe, pas seulement ce qu'on possède</p>
+      </div>
+      <div class="grow canvas-bg" style="position:relative">
+        <div style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:76%;background:#fff;border:1.2px solid var(--char-faint);border-radius:7px;padding:9px 12px;font-size:9.5px;line-height:1.5">
+          <b>Installation de crewai…</b> manifeste validé ✓ · artefacts copiés ✓ · hooks en shadow ✓<br>
+          <span style="color:var(--char-soft)">retour ici automatique — le node Crew sera prêt à poser, votre toile n'a pas bougé.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="note" style="margin-top:10px">ne jamais éjecter vers le marketplace : l'installation se fait <b>depuis la palette</b>, le contexte de travail est sacré</p>
+</div>
+
+<!-- S8 -->
+<div class="wf" style="left:2300px;top:7590px;width:660px" data-screen-label="Onboarding S8 — garde-fous">
+  <div class="wf-tag">état vide · B — garde-fous</div>
+  <div class="wf-title" style="font-size:16px">Simuler sans lien, tout supprimer, revenir</div>
+  <div class="col" style="gap:8px">
+    <div class="bx" style="padding:9px 12px;font-size:10.5px;line-height:1.5">
+      <span class="lbl" style="font-size:8px">Simuler avec 2 nodes, 0 lien</span><br>
+      « 2 nodes posés, aucun lien — la simulation suit les liens. <b>Reliez d'abord</b> <span class="mono" style="font-size:9px;color:var(--ann)">[montre-moi]</span> » — le panneau simulation explique au lieu d'échouer en silence.
+    </div>
+    <div class="bx" style="padding:9px 12px;font-size:10.5px;line-height:1.5">
+      <span class="lbl" style="font-size:8px">Tout supprimer</span><br>
+      la toile redevient l'état S0 (trois départs) — jamais un vide nu. <span class="mono" style="font-size:9px">annuler ⌘Z</span> reste possible.
+    </div>
+    <div class="bx" style="padding:9px 12px;font-size:10.5px;line-height:1.5">
+      <span class="lbl" style="font-size:8px">Le « ? » permanent</span><br>
+      ouvre le <b>lexique</b> (§7.4) + « rejouer la visite guidée ». La visite jouée une fois n'est <b>jamais réimposée</b> — drapeau local, pas de nag.
+    </div>
+    <div class="bx" style="padding:9px 12px;font-size:10.5px;line-height:1.5">
+      <span class="lbl" style="font-size:8px">Reprise de session</span><br>
+      rouvrir l'éditeur recharge le dernier blueprint et la position de toile — on reprend, on ne recommence pas.
+    </div>
+  </div>
+</div>
+
+<!-- S9 principes -->
+<div class="wf" style="left:3040px;top:7590px;width:660px" data-screen-label="Onboarding — règles et budget temps">
+  <div class="wf-tag">règles du jeu</div>
+  <div class="wf-title" style="font-size:16px">Six règles, un chrono</div>
+  <ul class="legend" style="margin-bottom:12px">
+    <li style="padding-left:16px"><span style="position:absolute;left:0">1.</span>chaque étape = un <b>geste réel</b> sur le vrai éditeur — pas de tour en carton</li>
+    <li style="padding-left:16px"><span style="position:absolute;left:0">2.</span>jamais bloquant : passer / reprendre / rejouer, à tout moment</li>
+    <li style="padding-left:16px"><span style="position:absolute;left:0">3.</span>le vocabulaire arrive <b>après</b> le geste réussi, jamais avant</li>
+    <li style="padding-left:16px"><span style="position:absolute;left:0">4.</span>auto-suffisant : le flow GOV-01 → QUA-04 n'exige aucune extension</li>
+    <li style="padding-left:16px"><span style="position:absolute;left:0">5.</span>chaque avertissement embarque son action (+ ajouter, montre-moi)</li>
+    <li style="padding-left:16px"><span style="position:absolute;left:0">6.</span>l'invariant « compile, n'exécute pas » est répété aux moments décisifs (S0, S6)</li>
+  </ul>
+  <div class="lbl" style="margin-bottom:5px">Budget — objectif &lt; 2:00</div>
+  <table class="tbl" style="font-size:11px">
+    <tr><td class="mono">0:00</td><td>départ guidé choisi (S0)</td></tr>
+    <tr><td class="mono">0:10 → 0:50</td><td>node 1 · node 2 · fil tiré (S1–S3)</td></tr>
+    <tr><td class="mono">1:05</td><td>« contrat » nommé sur le succès (S4)</td></tr>
+    <tr><td class="mono">1:15 → 1:35</td><td>simulation, verdict, suites (S5–S6)</td></tr>
+    <tr><td class="mono ok">≈ 25 s de marge</td><td>hésitations comprises — mesurable via events.jsonl</td></tr>
+  </table>
+</div>
+
+<!-- ═══ BANDE 7 · RECOMMANDATIONS TRANCHÉES ═══ -->
+<div class="band-label" style="left:80px;top:8420px"><span class="n">7</span> <b>Recommandations tranchées</b> · naming · Game UI · scission · lexique · plan d'implémentation</div>
+
+<div class="wf" style="left:80px;top:8480px;width:820px" data-screen-label="Reco — nom du hub">
+  <div class="wf-tag">7.1 · Le nom du hub</div>
+  <div class="wf-title">Décision : « Atelier »</div>
+  <p class="wf-sub">Le test décisif est verbal : <i>« je retourne à l'atelier »</i> se dit naturellement — c'est le signe qu'un nom de lieu fonctionne. Il nomme aussi tout le mode local (« lancer l'atelier »), ce qui soude le CTA public et la page d'arrivée.</p>
+  <table class="tbl">
+    <tr><th>Candidat</th><th>Verdict</th><th>Pourquoi</th></tr>
+    <tr><td class="mono"><b>Atelier</b></td><td class="ok">✓ retenu</td><td>lieu de travail, français, s'étend au mode entier ; verbe naturel</td></tr>
+    <tr><td class="mono strike">Setup</td><td class="bad">écarté</td><td>promet une installation ponctuelle — la page est un lieu de vie</td></tr>
+    <tr><td class="mono strike">Cockpit</td><td class="bad">écarté</td><td>déjà réservé à la surface runtime du kit ; le CTA actuel promettait une page qui n'existe pas</td></tr>
+    <tr><td class="mono strike">Forge</td><td class="bad">écarté</td><td>aucune notion de forge dans grimoire-kit — mot hérité de la copy du site, à purger</td></tr>
+    <tr><td class="mono strike">Projet</td><td class="warn">réservé</td><td>juste mais fade — on le garde pour le sélecteur (◆ mon-projet ▾)</td></tr>
+    <tr><td class="mono strike">Établi</td><td class="warn">réservé</td><td>belle image, trop obscure en nav — on la garde pour la toile de l'éditeur en direction B</td></tr>
+  </table>
+  <p class="note" style="margin-top:12px">corollaire : le verbe est <b>compiler</b>, sans synonyme maison — « frapper » / « forger » sont de la copy de vitrine, pas des notions du produit</p>
+</div>
+
+<div class="wf" style="left:1040px;top:8480px;width:820px" data-screen-label="Reco — sort de Game UI">
+  <div class="wf-tag">7.2 · Le sort de Game UI</div>
+  <div class="wf-title">Décision : hors nav, pièce maîtresse des « Labs »</div>
+  <p class="wf-sub">C'est une démo d'intention — la traiter comme une feature la dévalorise ; la cacher la renie. On lui donne le statut qu'elle mérite : la preuve que Grimoire a une direction esthétique.</p>
+  <div class="lbl" style="margin-bottom:6px">Sur le Manifeste — section « Labs »</div>
+  <div class="scr" style="margin-bottom:12px">
+    <div style="padding:14px 18px">
+      <div class="lbl" style="color:var(--ann);margin-bottom:6px">Labs — ce qu'on explore</div>
+      <div class="row top" style="gap:12px">
+        <div class="ph" style="width:180px;height:90px;flex:none"><span class="cap">capture game ui</span></div>
+        <div class="grow">
+          <div class="row" style="gap:8px"><span style="font-size:13.5px;font-weight:600">Game UI — le runtime en pixel art</span><span class="chip" style="font-size:8px;border-color:var(--ann-bd);color:var(--ann)">démo d'intention</span></div>
+          <p style="font-size:11px;color:var(--char-soft);line-height:1.5;margin:5px 0 8px">Chaque agent un personnage, chaque tâche une scène. Pas une feature : la direction que prendra l'observabilité quand elle sera vivante.</p>
+          <span class="btn" style="font-size:8.5px">EXPLORER LA DÉMO →</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <table class="tbl">
+    <tr><td>Nav vitrine / atelier</td><td><b>absente</b> — ni feature, ni surface d'opération</td></tr>
+    <tr><td>Manifeste · Labs</td><td>carte dédiée (ci-dessus) + récit de la direction jeu</td></tr>
+    <tr><td>URL <span class="mono">game-ui.html</span></td><td>conservée — les liens existants survivent</td></tr>
+    <tr><td>Retour en nav</td><td>le jour où elle lit de vraies traces : elle rejoindra « Observer »</td></tr>
+  </table>
+</div>
+
+<div class="wf" style="left:2000px;top:8480px;width:820px" data-screen-label="Reco — scission catalogue / éditeur">
+  <div class="wf-tag">7.3 · Catalogue / éditeur</div>
+  <div class="wf-title">Décision : scission totale, donnée unique</div>
+  <p class="wf-sub">La page Blueprint actuelle sert un lecteur (comprendre le standard) et un opérateur (composer un flow) — deux postures incompatibles sur un même écran. On scinde les pages, jamais la donnée.</p>
+  <div class="bx fill" style="padding:16px;margin-bottom:12px">
+    <div class="row" style="justify-content:center;margin-bottom:12px">
+      <div class="bx" style="padding:8px 14px;background:#fff;font-family:var(--mono);font-size:10.5px;font-weight:700">catalogue-export.json · v1.0.0</div>
+    </div>
+    <div class="row" style="justify-content:center;gap:60px;margin-bottom:4px">
+      <span class="arr" style="transform:rotate(45deg)">↓</span><span class="arr" style="transform:rotate(-45deg)">↓</span>
+    </div>
+    <div class="row top" style="gap:14px">
+      <div class="bx" style="padding:10px 13px;background:#fff;flex:1">
+        <div class="lbl">Patterns — vitrine + atelier</div>
+        <p style="font-size:10.5px;color:var(--char-soft);line-height:1.5;margin-top:4px">le codex : familles, graphe, use-cases, fiches. Posture : <b>lire, comprendre</b>. → §5.4</p>
+      </div>
+      <div class="bx" style="padding:10px 13px;background:#fff;flex:1">
+        <div class="lbl">Blueprints — atelier</div>
+        <p style="font-size:10.5px;color:var(--char-soft);line-height:1.5;margin-top:4px">mes flows + l'éditeur ; la palette est le même catalogue, filtré pour l'action. Posture : <b>composer</b>. → §4</p>
+      </div>
+    </div>
+  </div>
+  <table class="tbl">
+    <tr><td>Fiche pattern → éditeur</td><td class="mono">« utiliser dans un blueprint → » (local)</td></tr>
+    <tr><td>Éditeur → fiche pattern</td><td class="mono">« voir la fiche pattern → » depuis l'inspecteur</td></tr>
+    <tr><td>Vitrine</td><td>Patterns visible, Blueprints absent — l'éditeur n'existe qu'avec l'API</td></tr>
+  </table>
+</div>
+
+<div class="wf" style="left:2960px;top:8480px;width:900px" data-screen-label="Reco — lexique">
+  <div class="wf-tag">7.4 · Lexique — servi en contexte</div>
+  <div class="wf-title">Dix mots, une phrase chacun</div>
+  <p class="wf-sub">Ce lexique ne vit pas dans une page « glossaire » : chaque définition apparaît en popover ⓘ à côté du mot, et le panneau « ? » de l'éditeur les regroupe.</p>
+  <table class="tbl" style="font-size:12px">
+    <tr><td class="mono"><b>pattern</b></td><td>une pratique normée du catalogue — 78, en 8 familles, avec contrôles et relations</td></tr>
+    <tr><td class="mono"><b>famille</b></td><td>le rayon du catalogue : ORG, ORC, GOV, MOD, QUA, KNO, RUN, COG</td></tr>
+    <tr><td class="mono"><b>blueprint</b></td><td>un flow composé de patterns ; il se valide, se simule, se compile — n'exécute jamais</td></tr>
+    <tr><td class="mono"><b>node</b></td><td>un pattern posé sur la toile (ou un artefact fourni par une extension)</td></tr>
+    <tr><td class="mono"><b>pin</b></td><td>la prise typée d'un node : entrée (ce qu'il accepte), sortie (ce qu'il produit)</td></tr>
+    <tr><td class="mono"><b>contrat</b></td><td>la forme des données qu'un lien transporte — 30 contrats typés, ex. task-envelope</td></tr>
+    <tr><td class="mono"><b>use-case</b></td><td>un squelette de flow issu du catalogue — 50 points de départ</td></tr>
+    <tr><td class="mono"><b>extension</b></td><td>un framework public packagé en artefacts gouvernés, ancré sur des patterns</td></tr>
+    <tr><td class="mono"><b>compilation</b></td><td>la transformation d'un blueprint en artefacts dans le projet — sans exécution</td></tr>
+    <tr><td class="mono"><b>artefact</b></td><td>ce que la compilation produit : agents, skills, hooks, workflows — versionnés, tracés</td></tr>
+  </table>
+</div>
+
+<div class="wf" style="left:4000px;top:8480px;width:1080px" data-screen-label="Reco — plan d'implémentation et risques">
+  <div class="wf-tag">7.5 · Plan d'implémentation — vanilla, incrémental</div>
+  <div class="wf-title">Six chantiers, aucun framework</div>
+  <p class="wf-sub">Chaque chantier livre seul. Cytoscape, les tokens et les données (<span class="mono">catalogue-export.json</span>, <span class="mono">extensions.json</span>, registry) suffisent — rien d'inventé, rien d'ajouté.</p>
+  <table class="tbl">
+    <tr><th></th><th>Chantier</th><th>Matière</th><th>Taille</th></tr>
+    <tr><td class="mono">1</td><td><b>Deux navs, un socle</b> — détection API (<span class="mono">fetch /api/health</span>), topbar vitrine / sidebar atelier</td><td class="mono">forge-nav.js</td><td>S</td></tr>
+    <tr><td class="mono">2</td><td><b>Scission Patterns / Blueprints</b> — le viewer actuel devient patterns.html ; l'éditeur reste seul sur sa page</td><td class="mono">blueprint.html → ×2</td><td>M</td></tr>
+    <tr><td class="mono">3</td><td><b>Accueil premier lancement + wizard</b> — 3 portes, chemin d'init, profil, extensions de départ</td><td class="mono">atelier.html (état vide)</td><td>M</td></tr>
+    <tr><td class="mono">4</td><td><b>Hub Atelier</b> — setup.html restructuré en 4 zones + santé projet</td><td class="mono">setup.html → atelier.html</td><td>M</td></tr>
+    <tr><td class="mono">5</td><td><b>Fiche extension</b> — template JS rendu depuis extensions.json (<span class="mono">extension.html?ext=crewai</span>)</td><td class="mono">extensions.html + fiche</td><td>M</td></tr>
+    <tr><td class="mono">6</td><td><b>Onboarding premier-flow</b> — coach marks, palette compatible, toasts contrat, drapeau localStorage</td><td class="mono">éditeur + overlay js</td><td>L</td></tr>
+  </table>
+  <div class="row top" style="gap:20px;margin-top:14px">
+    <div class="grow">
+      <div class="lbl" style="margin-bottom:6px">Risques à surveiller</div>
+      <ul class="legend" style="font-size:11.5px">
+        <li style="padding-left:14px"><span style="position:absolute;left:0">·</span>détection API hésitante → défaut = vitrine + bandeau « atelier détecté, ouvrir ? », jamais de flash de sidebar</li>
+        <li style="padding-left:14px"><span style="position:absolute;left:0">·</span>l'onboarding s'exécute sur le vrai éditeur → scénariser en tests (les 4 gestes rejouables)</li>
+        <li style="padding-left:14px"><span style="position:absolute;left:0">·</span>purger le vocabulaire hérité de la vitrine (« forge », « frapper », « cockpit ») de toutes les pages produit — un seul lexique (§7.4), tenu</li>
+      </ul>
+    </div>
+    <div style="width:330px;flex:none">
+      <div class="lbl" style="margin-bottom:6px">Invariants — intouchés partout</div>
+      <ul class="legend" style="font-size:11.5px">
+        <li style="padding-left:14px"><span style="position:absolute;left:0" class="tick">✓</span>le blueprint compile, n'exécute jamais — répété aux écrans décisifs</li>
+        <li style="padding-left:14px"><span style="position:absolute;left:0" class="tick">✓</span>toute extension reste ancrée sur des patterns du catalogue</li>
+        <li style="padding-left:14px"><span style="position:absolute;left:0" class="tick">✓</span>tout vient du registry et du catalogue — ces planches n'inventent aucune donnée</li>
+      </ul>
+      <p class="note" style="margin-top:10px">prochaine étape utile : maquette hi-fi de l'éditeur (structure §4·A, grammaire 4·D) dans les tokens, puis test des 2 minutes sur 3 personnes</p>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

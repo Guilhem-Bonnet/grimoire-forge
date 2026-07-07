@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="design_doc_mode" content="canvas">
+<title>Branchement Vitrine ↔ Atelier — 3 modèles</title>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600;700&family=Caveat:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="wireframe-kit.css">
+<style>
+  a{color:var(--ann);text-decoration:none}
+  a:hover{color:var(--ann-bd);text-decoration:underline}
+  .x2{font-family:var(--mono);font-size:8px;border:1px solid var(--ann-bd);color:var(--ann);border-radius:3px;padding:0 3px;margin-left:4px;vertical-align:1px}
+  .cross{font-family:var(--mono);font-size:10.5px;line-height:1.5}
+  .cross td{padding:6px 8px}
+  .modehalf{display:inline-block;width:9px;height:9px;border-radius:50%;border:1.2px solid var(--char);background:linear-gradient(90deg,var(--char) 50%,#fff 50%);vertical-align:-1px;margin-right:5px}
+
+  /* ── Simulateur ── */
+  .sim-chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+  .sim-chip{border:1.4px solid var(--char-faint);border-radius:7px;background:#fff;padding:8px 12px;cursor:pointer;text-align:left;font-family:var(--sans)}
+  .sim-chip b{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.06em}
+  .sim-chip span{font-size:10.5px;color:var(--char-soft)}
+  .sim-chip.on{border-color:var(--char);background:var(--char);color:var(--paper)}
+  .sim-chip.on span{color:#CFCABD}
+  .sim-scr{border:1.5px solid var(--char);border-radius:9px;background:#fff;overflow:hidden}
+  .sim-title{display:flex;align-items:center;gap:8px;padding:7px 12px;border-bottom:1.2px solid var(--char-faint);background:var(--paper-2);font-family:var(--mono);font-size:9.5px;color:var(--char-dim)}
+  .sim-title .wdot{width:8px;height:8px;border-radius:50%;background:var(--char-faint)}
+  .sim-stage{display:flex;height:396px}
+  .sim-top{display:flex;align-items:center;gap:7px;padding:8px 14px;border-bottom:1.5px solid var(--char);font-family:var(--mono);font-size:10px;background:#fff}
+  .sim-top .logo{font-weight:700;letter-spacing:.05em;margin-right:6px}
+  .sim-nav-t{padding:3px 8px;border-radius:4px;cursor:pointer;white-space:nowrap;color:var(--char-soft)}
+  .sim-nav-t:hover{background:var(--paper-2);color:var(--char)}
+  .sim-nav-t.on{background:var(--char);color:var(--paper)}
+  .sim-side{width:172px;flex:none;border-right:1.5px solid var(--char);background:var(--paper-2);padding:9px;display:flex;flex-direction:column;gap:2px;font-family:var(--mono);font-size:10px}
+  .sim-side .proj{border:1.2px solid var(--char-faint);background:#fff;border-radius:5px;padding:5px 8px;display:flex;justify-content:space-between;margin-bottom:7px}
+  .sim-nav-s{display:flex;align-items:center;gap:7px;padding:5px 8px;border-radius:5px;cursor:pointer;color:var(--char-soft);white-space:nowrap}
+  .sim-nav-s:hover{background:#fff;color:var(--char)}
+  .sim-nav-s.on{background:var(--char);color:var(--paper)}
+  .sim-nav-s .ico{width:11px;height:11px;border:1.2px solid currentColor;border-radius:3px;flex:none}
+  .sim-sec{font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:var(--char-dim);margin:9px 4px 2px}
+  .sim-foot{margin-top:auto;padding-top:8px;border-top:1.2px solid var(--char-faint)}
+  .sim-body{flex:1;min-width:0;display:flex;flex-direction:column}
+  .sim-content{flex:1;display:flex;align-items:center;justify-content:center;position:relative}
+  .sim-page{text-align:center}
+  .sim-page .big{font-size:22px;font-weight:600;letter-spacing:-.01em}
+  .sim-page .sub{font-family:var(--mono);font-size:9.5px;color:var(--char-dim);letter-spacing:.12em;text-transform:uppercase;margin-top:6px}
+  .sim-footer{border-top:1.2px solid var(--char-faint);padding:8px 14px;font-family:var(--mono);font-size:9px;color:var(--char-dim);display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+  .sim-footer .fl{cursor:pointer;text-decoration:underline;text-decoration-color:var(--char-faint)}
+  .sim-footer .fl:hover{color:var(--char)}
+  .sim-banner{position:absolute;top:0;left:0;right:0;background:var(--ann-bg);border-bottom:1.2px solid var(--ann-bd);color:var(--ann);font-family:var(--mono);font-size:9px;padding:4px 12px;letter-spacing:.08em}
+  .sim-cta{border:1.4px solid var(--ann-bd);background:var(--ann-bd);color:#fff;border-radius:5px;padding:4px 10px;font-weight:600;cursor:pointer;margin-left:auto;white-space:nowrap}
+  .sim-seuil{position:absolute;inset:0;background:rgba(53,50,43,.32);display:flex;align-items:center;justify-content:center}
+  .sim-seuil .box{background:#fff;border:1.5px solid var(--char);border-radius:9px;padding:16px 18px;width:280px;box-shadow:0 10px 30px rgba(31,27,20,.25)}
+  .sim-panel{width:200px;flex:none;border-left:1.5px solid var(--char);background:var(--paper-2);padding:12px;font-family:var(--mono);font-size:9.5px;display:flex;flex-direction:column;gap:8px}
+  .sim-splash{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;font-family:var(--mono);font-size:10.5px;color:var(--char-soft)}
+  .sim-mode{display:inline-flex;border:1.2px solid var(--char-faint);border-radius:5px;overflow:hidden;margin-left:auto;cursor:pointer}
+  .sim-mode span{padding:2px 8px;font-size:8.5px}
+  .sim-mode span.on{background:var(--char);color:var(--paper)}
+  .sim-log{margin-top:12px;display:flex;flex-direction:column;gap:5px}
+  .sim-log .l{font-family:var(--mono);font-size:10px;padding:6px 10px;border-radius:5px;border:1px solid var(--line-w);background:#fff;color:var(--char-dim)}
+  .sim-log .l:first-child{border-color:var(--char-faint);color:var(--char)}
+  .sim-log .l.bad{border-color:#E3B7B3;background:#FDF3F2;color:#B3261E}
+  .sim-log .l.good{border-color:#9CCDB4;background:#F0F8F3;color:var(--ok)}
+  .sim-log .l.warn{border-color:#EBC891;background:#FDF8EE;color:var(--warn)}
+  .spin{width:14px;height:14px;border:2px solid var(--char-faint);border-top-color:var(--char);border-radius:50%;animation:sp .7s linear infinite}
+  @keyframes sp{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+
+<!-- ═══ BANDE 0 · DIAGNOSTIC ═══ -->
+<div class="band-label" style="left:80px;top:44px"><span class="n">0</span> <b>Diagnostic</b> · le branchement actuel fuit dans les deux sens</div>
+
+<div class="wf" style="left:80px;top:104px;width:1240px" data-screen-label="Diagnostic — branchement actuel">
+  <div class="wf-tag">Branchement Vitrine ↔ Atelier · juillet 2026 · suite de la refonte §1</div>
+  <div class="wf-title" style="font-size:24px">Deux chromes, huit fuites.</div>
+  <p class="wf-sub" style="font-size:13.5px;max-width:78ch">La refonte a créé les deux espaces — mais les pages n'ont pas suivi. Chaque page porte un chrome <b>figé</b> (topbar OU sidebar), et les deux navs pointent vers des pages de l'autre monde. Résultat : on traverse la frontière <b>par accident</b>, sans sas, dans les deux sens.</p>
+  <div class="row top" style="gap:26px">
+    <div style="flex:1.05;min-width:0">
+      <div class="lbl" style="margin-bottom:8px">Qui porte quoi aujourd'hui</div>
+      <div class="bx fill" style="padding:11px 13px;margin-bottom:10px">
+        <div class="lbl" style="margin-bottom:7px">chrome vitrine · topbar + footer <span class="mono" style="text-transform:none;letter-spacing:0">forge-nav.js</span></div>
+        <div class="row wrap" style="gap:5px">
+          <span class="chip">Accueil</span><span class="chip">Démo</span><span class="chip">Portefeuille</span><span class="chip">Anatomie</span><span class="chip">Game UI</span>
+          <span class="chip" style="border-color:#B3261E;color:#B3261E">Docs</span>
+          <span class="chip" style="border-color:#B3261E;color:#B3261E">Observatoire</span>
+          <span class="chip" style="border-color:#B3261E;color:#B3261E">Mémoire</span>
+          <span class="chip" style="border-color:#B3261E;color:#B3261E">Kanban *</span>
+        </div>
+      </div>
+      <div class="bx" style="padding:11px 13px;border-color:var(--ann-bd)">
+        <div class="lbl" style="margin-bottom:7px;color:var(--ann)">chrome atelier · sidebar <span class="mono" style="text-transform:none;letter-spacing:0">atelier-nav.js</span></div>
+        <div class="row wrap" style="gap:5px">
+          <span class="chip">Atelier</span><span class="chip">Blueprints</span>
+          <span class="chip" style="border-color:#B3261E;color:#B3261E">Patterns</span>
+          <span class="chip" style="border-color:#B3261E;color:#B3261E">Extensions</span>
+        </div>
+      </div>
+      <p class="note" style="margin-top:12px">en rouge : les pages que l'<b>autre</b> nav référence — chaque clic dessus = changement de monde silencieux</p>
+      <p class="note-dim" style="margin-top:4px">* kanban a en plus sa propre copie statique de la topbar, codée en dur, sans footer</p>
+      <div class="coach" style="margin-top:14px">
+        <span class="step">Le vrai besoin, dit par toi</span>
+        « il y a plusieurs besoins distincts et très forts — la vitrine, la doc, l'observabilité, le blueprint. Il faut limite <b>une application web couplée à un site web</b>, comme un moteur de jeu ou un WordPress. »
+      </div>
+    </div>
+    <div style="flex:1;min-width:0">
+      <div class="lbl" style="margin-bottom:8px">Les huit fuites</div>
+      <table class="tbl cross">
+        <tr><th></th><th>Traversée</th><th>Effet</th></tr>
+        <tr><td class="mono">1</td><td>sidebar <b>Docs</b> → documentation.html</td><td class="bad">éjection atelier → vitrine</td></tr>
+        <tr><td class="mono">2</td><td>sidebar <b>Observatoire</b> → observability.html</td><td class="bad">éjection atelier → vitrine</td></tr>
+        <tr><td class="mono">3</td><td>sidebar <b>Mémoire</b> → memory.html</td><td class="bad">éjection atelier → vitrine</td></tr>
+        <tr><td class="mono">4</td><td>sidebar <b>Kanban</b> → kanban.html</td><td class="bad">éjection + nav statique en dur</td></tr>
+        <tr><td class="mono">5</td><td>topbar <b>PATTERNS</b> → patterns.html</td><td class="bad">éjection vitrine → atelier</td></tr>
+        <tr><td class="mono">6</td><td>topbar <b>EXTENSIONS</b> → extensions.html</td><td class="bad">éjection vitrine → atelier</td></tr>
+        <tr><td class="mono">7</td><td>footer public → Blueprints · Observatoire · Mémoire · Kanban</td><td class="warn">pages outil exposées au public, parfois sans projet</td></tr>
+        <tr><td class="mono">8</td><td>retour « Vitrine ↗ » discret, rien ne marque la bascule</td><td class="warn">frontière invisible dans les deux sens</td></tr>
+      </table>
+      <p class="wf-sub" style="margin-top:12px;margin-bottom:0;font-size:12.5px">Le symptôme (barre verticale ↔ barre horizontale qui alternent) n'est pas le problème. Le problème : <b>la frontière entre le site et l'application n'est pas un lieu</b> — on la franchit sans geste. Les trois modèles ci-dessous sont trois façons d'en faire un lieu.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ BANDE 1 · TROIS MODÈLES ═══ -->
+<div class="band-label" style="left:80px;top:900px"><span class="n">1</span> <b>Trois modèles de couplage</b> · site web + application web</div>
+
+<!-- ── MODÈLE A ── -->
+<div class="wf" style="left:80px;top:960px;width:730px" data-screen-label="Modèle A — Le Portail (WordPress)">
+  <div class="wf-tag"><span class="dot dot-a"></span> Modèle A · « le portail » — réf. WordPress / wp-admin</div>
+  <div class="wf-title">Deux mondes étanches, un pont par sens</div>
+  <p class="wf-sub">Deux ensembles de pages qui ne se référencent <b>jamais</b> entre eux. Les contenus communs (Patterns, Extensions, Docs) existent dans les deux mondes — même donnée, deux habillages. On ne traverse qu'aux ponts.</p>
+
+  <div class="row top" style="gap:10px;margin-bottom:14px">
+    <div class="bx fill" style="flex:1;padding:11px 12px">
+      <div class="lbl" style="margin-bottom:7px">Vitrine · topbar</div>
+      <div class="row wrap" style="gap:4px">
+        <span class="chip">Accueil</span><span class="chip">Démo</span><span class="chip">Portefeuille</span>
+        <span class="chip">Patterns<span class="x2">×2</span></span>
+        <span class="chip">Extensions<span class="x2">×2</span></span>
+        <span class="chip">Docs<span class="x2">×2</span></span>
+      </div>
+    </div>
+    <div class="col" style="flex:none;justify-content:center;gap:5px;padding-top:16px">
+      <span class="btn pacc" style="font-size:8.5px">LANCER L'ATELIER →</span>
+      <span class="btn gh" style="font-size:8.5px">← SITE PUBLIC</span>
+    </div>
+    <div class="bx" style="flex:1;padding:11px 12px;border-color:var(--ann-bd)">
+      <div class="lbl" style="margin-bottom:7px;color:var(--ann)">Atelier · sidebar partout</div>
+      <div class="row wrap" style="gap:4px">
+        <span class="chip">Atelier</span><span class="chip">Blueprints</span>
+        <span class="chip">Extensions<span class="x2">×2</span></span>
+        <span class="chip">Patterns<span class="x2">×2</span></span>
+        <span class="chip">Docs<span class="x2">×2</span></span>
+        <span class="chip">Observatoire</span><span class="chip">Mémoire</span><span class="chip">Kanban</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="lbl" style="margin-bottom:6px">Le moment signature — le seuil</div>
+  <div class="scr" style="margin-bottom:6px;padding:14px;display:flex;gap:14px;align-items:flex-start;background:var(--paper-2)">
+    <div class="bx" style="background:#fff;padding:12px 14px;width:250px;flex:none">
+      <div class="lbl" style="margin-bottom:6px">dans votre terminal</div>
+      <div class="cli" style="margin-bottom:4px"><b>pip install</b> grimoire-kit</div>
+      <div class="cli" style="margin-bottom:10px"><b>grimoire</b> serve</div>
+      <span class="btn pacc" style="font-size:9px">OUVRIR L'ATELIER →</span>
+    </div>
+    <p class="note" style="padding-top:8px">le panneau seuil existe déjà — il devient le <b>seul</b> passage. La traversée est un geste, plus un accident.</p>
+  </div>
+  <p class="note-dim" style="margin-bottom:12px">au retour : « Site public ↗ » en pied de sidebar, seul lien sortant de l'atelier</p>
+
+  <div class="lbl" style="margin-bottom:6px">Réglages par défaut</div>
+  <table class="tbl" style="font-size:11.5px">
+    <tr><td class="mono">observatoire · mémoire · kanban</td><td>passent en chrome atelier (sidebar), section « Observer »</td></tr>
+    <tr><td class="mono">page outil sans projet</td><td>renvoi vers atelier.html — premier lancement</td></tr>
+    <tr><td class="mono">footer public</td><td>colonnes Atelier/Surfaces retirées → un seul lien « Lancer l'atelier »</td></tr>
+    <tr><td class="mono">bascule</td><td>marquée par le seuil lui-même — pas de bandeau nécessaire</td></tr>
+  </table>
+  <div class="row top" style="gap:14px;margin-top:12px">
+    <p class="note grow">règle d'or : <b>aucune entrée de nav ne traverse</b>. Si un lien change de monde, c'est un pont, et il le dit.</p>
+    <p class="note-dim" style="width:220px;flex:none">coût : dual-chrome sur 3 pages partagées + bascule de 3 surfaces — pas de refactor</p>
+  </div>
+</div>
+
+<!-- ── MODÈLE B ── -->
+<div class="wf" style="left:860px;top:960px;width:730px" data-screen-label="Modèle B — L'Application (moteur de jeu)">
+  <div class="wf-tag"><span class="dot dot-b"></span> Modèle B · « l'application » — réf. moteur de jeu / éditeur</div>
+  <div class="wf-title">Le site vend, l'app est un shell unique</div>
+  <p class="wf-sub">L'atelier devient <b>une seule surface</b> : un shell applicatif où Blueprints, Extensions, Observatoire, Mémoire, Kanban sont des <b>vues internes</b> — on ne navigue plus entre pages. Patterns et Docs s'ouvrent en panneau de référence <b>dans</b> l'app, comme la doc intégrée d'un IDE.</p>
+
+  <div class="row top" style="gap:10px;margin-bottom:14px">
+    <div class="bx fill" style="width:170px;flex:none;padding:11px 12px">
+      <div class="lbl" style="margin-bottom:7px">Vitrine · topbar</div>
+      <div class="row wrap" style="gap:4px">
+        <span class="chip">Accueil</span><span class="chip">Démo</span><span class="chip">Patterns</span><span class="chip">Extensions</span><span class="chip">Docs</span>
+      </div>
+    </div>
+    <div class="col" style="flex:none;justify-content:center;padding-top:26px"><span class="btn pacc" style="font-size:8.5px">LANCER →</span></div>
+    <div class="bx" style="flex:1;padding:0;border-color:var(--ann-bd);overflow:hidden">
+      <div style="display:flex;align-items:center;gap:8px;padding:6px 10px;border-bottom:1.2px solid var(--ann-bd);background:var(--ann-bg);font-family:var(--mono);font-size:8.5px;color:var(--ann)">GRIMOIRE — ◆ mon-projet<span style="margin-left:auto">Quitter ↗</span></div>
+      <div style="display:flex">
+        <div style="width:96px;flex:none;border-right:1.2px solid var(--char-faint);padding:7px;display:flex;flex-direction:column;gap:2px">
+          <span class="chip on" style="font-size:8px">Atelier</span><span class="chip" style="font-size:8px">Blueprints</span><span class="chip" style="font-size:8px">Extensions</span><span class="chip" style="font-size:8px">Observatoire</span><span class="chip" style="font-size:8px">Mémoire</span><span class="chip" style="font-size:8px">Kanban</span>
+        </div>
+        <div class="ph" style="flex:1;margin:7px;min-height:104px"><span class="cap">vue courante</span></div>
+        <div style="width:78px;flex:none;border-left:1.2px dashed var(--char-faint);padding:7px;font-family:var(--mono);font-size:7.5px;color:var(--char-dim)">RÉFÉRENCE<br><br>Patterns<br>Docs<br><br><i>panneau,<br>jamais une<br>sortie</i></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="lbl" style="margin-bottom:6px">Le moment signature — le lancement</div>
+  <div class="scr" style="margin-bottom:12px;padding:18px;display:flex;gap:16px;align-items:center;background:var(--paper-2)">
+    <div class="bx" style="background:#fff;padding:14px 18px;flex:none;text-align:center;font-family:var(--mono);font-size:10px;color:var(--char-soft)">
+      ⟳ &nbsp;grimoire serve · projet détecté<br><b style="color:var(--char)">lancement de l'atelier…</b>
+    </div>
+    <p class="note">un vrai écran de lancement, court — comme ouvrir un éditeur. Après, on est <b>dedans</b> : l'état vit (graphe monté, simulation qui tourne pendant qu'on lit la doc).</p>
+  </div>
+
+  <div class="lbl" style="margin-bottom:6px">Réglages par défaut</div>
+  <table class="tbl" style="font-size:11.5px">
+    <tr><td class="mono">docs · patterns</td><td>panneau latéral dans l'app (la vitrine garde ses pages publiques)</td></tr>
+    <tr><td class="mono">sans projet</td><td>le shell affiche la vue premier-lancement — pas de redirection</td></tr>
+    <tr><td class="mono">footer public</td><td>nettoyé, idem A</td></tr>
+    <tr><td class="mono">sortie</td><td>« Quitter l'atelier ↗ » dans la barre d'app — geste unique</td></tr>
+  </table>
+  <div class="row top" style="gap:14px;margin-top:12px">
+    <p class="note grow">la sensation « application » maximale — c'est ton modèle moteur de jeu</p>
+    <p class="note-dim" style="width:230px;flex:none">coût : refactor des pages en vues + routing interne — le plus lourd des trois</p>
+  </div>
+</div>
+
+<!-- ── MODÈLE C ── -->
+<div class="wf" style="left:1640px;top:960px;width:730px" data-screen-label="Modèle C — Le Mode (Notion)">
+  <div class="wf-tag"><span class="dot dot-c"></span> Modèle C · « le mode » — réf. Notion / Linear</div>
+  <div class="wf-title">Mêmes pages, l'habillage suit le mode</div>
+  <p class="wf-sub">La philosophie actuelle de la refonte, câblée jusqu'au bout : <b>chaque page sait se rendre dans les deux chromes</b>. L'API locale (simulée ici) fixe le mode ; toutes les traversées deviennent cohérentes — mais elles restent libres.</p>
+
+  <div class="bx fill" style="padding:12px 13px;margin-bottom:10px">
+    <div class="lbl" style="margin-bottom:8px">Une seule liste de pages, deux rendus</div>
+    <div class="row wrap" style="gap:4px;margin-bottom:10px">
+      <span class="chip"><span class="modehalf"></span>Patterns</span>
+      <span class="chip"><span class="modehalf"></span>Extensions</span>
+      <span class="chip"><span class="modehalf"></span>Docs</span>
+      <span class="chip"><span class="modehalf"></span>Observatoire</span>
+      <span class="chip"><span class="modehalf"></span>Mémoire</span>
+      <span class="chip"><span class="modehalf"></span>Kanban</span>
+      <span class="chip">Accueil · Démo · Portefeuille <i style="font-style:normal;color:var(--char-dim)">(vitrine seule)</i></span>
+      <span class="chip">Atelier · Blueprints <i style="font-style:normal;color:var(--char-dim)">(atelier seul)</i></span>
+    </div>
+    <div class="row" style="gap:8px">
+      <span class="lbl">mode</span>
+      <span style="display:inline-flex;border:1.2px solid var(--char);border-radius:5px;overflow:hidden;font-family:var(--mono);font-size:9px"><span style="padding:3px 10px">VITRINE</span><span style="padding:3px 10px;background:var(--char);color:var(--paper)">ATELIER</span></span>
+      <span class="note-dim" style="font-size:15px">= l'API locale répond (réel) · un toggle (prototype)</span>
+    </div>
+  </div>
+
+  <div class="lbl" style="margin-bottom:6px">Le moment signature — la même page, deux peaux</div>
+  <div class="row" style="gap:10px;margin-bottom:12px">
+    <div class="scr" style="flex:1">
+      <div class="tb" style="border-bottom-width:1.2px;font-size:9px;padding:6px 10px"><span class="logo">GRIMOIRE KIT</span><span class="grow"></span><span>PATTERNS</span><span class="btn pacc" style="font-size:7.5px;padding:2px 7px">LANCER →</span></div>
+      <div class="ph" style="margin:8px;min-height:64px"><span class="cap">patterns · mode vitrine</span></div>
+    </div>
+    <div class="scr" style="flex:1;display:flex">
+      <div class="side" style="width:74px;padding:7px;gap:2px"><span class="chip" style="font-size:7.5px">Atelier</span><span class="chip on" style="font-size:7.5px">Patterns</span><span class="chip" style="font-size:7.5px">Docs</span></div>
+      <div class="ph" style="flex:1;margin:8px;min-height:64px"><span class="cap">patterns · mode atelier</span></div>
+    </div>
+  </div>
+
+  <div class="lbl" style="margin-bottom:6px">Réglages par défaut</div>
+  <table class="tbl" style="font-size:11.5px">
+    <tr><td class="mono">bascule</td><td>micro-bandeau « ● mode atelier · :7431 » tant que le mode est actif</td></tr>
+    <tr><td class="mono">page atelier en mode vitrine</td><td>bandeau « nécessite l'API locale » + commandes — pas de 404</td></tr>
+    <tr><td class="mono">sans projet</td><td>renvoi atelier.html, idem A</td></tr>
+    <tr><td class="mono">footer</td><td>suit le mode : public nettoyé, atelier complet</td></tr>
+  </table>
+  <div class="row top" style="gap:14px;margin-top:12px">
+    <p class="note grow">le plus fidèle au produit réel : <b>« le même site s'ouvre en mode atelier »</b> — zéro duplication</p>
+    <p class="note-dim" style="width:230px;flex:none">mais la frontière reste floue : on traverse toujours librement — ton malaise ne disparaît qu'à moitié</p>
+  </div>
+</div>
+
+<!-- ═══ BANDE 2 · SIMULATEUR ═══ -->
+<div class="band-label" style="left:80px;top:1980px"><span class="n">2</span> <b>Simulateur de traversée</b> · les mêmes clics, quatre comportements</div>
+
+<div class="wf" style="left:80px;top:2040px;width:1240px" data-screen-label="Simulateur de traversée">
+  <div class="wf-tag">Prototype cliquable</div>
+  <div class="wf-title">Clique dans la maquette — le journal te dit ce que chaque modèle fait de la frontière</div>
+  <p class="wf-sub">Parcours suggéré : <span class="mono">PATTERNS → LANCER L'ATELIER → Blueprints → Docs → Observatoire → sortie</span>. Refais-le dans chaque modèle.</p>
+  <div class="sim-chips" id="sim-chips"></div>
+  <div class="sim-scr">
+    <div class="sim-title"><span class="wdot"></span><span class="wdot"></span><span class="wdot"></span><span id="sim-url">grimoire.dev</span><span id="sim-modewrap" style="margin-left:auto"></span></div>
+    <div class="sim-stage" id="sim-stage"></div>
+  </div>
+  <div class="sim-log" id="sim-log"></div>
+</div>
+
+<div class="wf" style="left:1370px;top:2040px;width:440px" data-screen-label="Simulateur — lecture">
+  <div class="wf-tag">Lecture</div>
+  <div class="wf-title" style="font-size:16px">Ce qu'il faut sentir</div>
+  <ul class="legend" style="margin-top:10px">
+    <li><span class="n">1</span><b>ACTUEL</b> — clique <span class="mono">Docs</span> ou <span class="mono">Observatoire</span> depuis la sidebar : tu es éjecté vers la vitrine sans prévenir. Et <span class="mono">PATTERNS</span> depuis la topbar t'enfonce dans l'outil.</li>
+    <li><span class="n">2</span><b>A · Portail</b> — les mêmes clics ne traversent plus : Docs et Observatoire restent en sidebar. Le seul passage, c'est le seuil.</li>
+    <li><span class="n">3</span><b>B · Application</b> — après le lancement, plus aucune navigation de page : Docs s'ouvre en <b>panneau</b>, le reste sont des vues.</li>
+    <li><span class="n">4</span><b>C · Mode</b> — bascule le toggle VITRINE/ATELIER en haut à droite : la même page change de peau.</li>
+  </ul>
+  <p class="note" style="margin-top:14px">le journal sous la maquette est la vraie sortie du simulateur : <b style="color:#B3261E">rouge</b> = fuite, <b style="color:var(--ok)">vert</b> = geste explicite</p>
+</div>
+
+<!-- ═══ BANDE 3 · COMPARAISON ═══ -->
+<div class="band-label" style="left:80px;top:2900px"><span class="n">3</span> <b>Comparaison & recommandation</b></div>
+
+<div class="wf" style="left:80px;top:2960px;width:1240px" data-screen-label="Comparaison et recommandation">
+  <div class="wf-tag">Décision</div>
+  <div class="wf-title">A maintenant, B en trajectoire</div>
+  <div class="row top" style="gap:26px;margin-top:14px">
+    <div style="flex:1.15;min-width:0">
+      <table class="tbl">
+        <tr><th>Critère</th><th>Actuel</th><th><span class="dot dot-a" style="display:inline-block;vertical-align:-1px"></span> A · Portail</th><th><span class="dot dot-b" style="display:inline-block;vertical-align:-1px"></span> B · Application</th><th><span class="dot dot-c" style="display:inline-block;vertical-align:-1px"></span> C · Mode</th></tr>
+        <tr><td>Sensation « application couplée au site »</td><td class="bad">aucune</td><td><b>forte</b></td><td><b>maximale</b></td><td class="warn">faible</td></tr>
+        <tr><td>Étanchéité des parcours</td><td class="bad">8 fuites</td><td class="ok"><b>totale</b> — ponts nommés</td><td class="ok"><b>totale</b> — un shell</td><td class="warn">libre par design</td></tr>
+        <tr><td>Coût de câblage</td><td>—</td><td><b>M</b> · 6 chantiers, zéro refactor</td><td><b>L</b> · pages → vues + routing</td><td><b>M</b> · dual-chrome partout</td></tr>
+        <tr><td>Fidélité au réel (<span class="mono">grimoire serve</span> = même site)</td><td>—</td><td>bonne</td><td>moyenne</td><td class="ok">maximale</td></tr>
+        <tr><td>Évolutivité</td><td>—</td><td class="ok">peut devenir B sans casser l'IA</td><td>terminal</td><td>peut devenir A</td></tr>
+      </table>
+      <p class="wf-sub" style="margin-top:14px;margin-bottom:0;font-size:13px">La sensation d'application ne vient pas d'un refactor SPA. Elle vient de trois choses : <b>zéro fuite</b> (aucun lien de nav ne traverse), <b>un chrome persistant</b> (la sidebar ne disparaît jamais dans l'atelier), et des <b>rites d'entrée/sortie</b> (seuil, quitter). Le modèle A donne les trois tout de suite ; si l'atelier gagne un jour des états longs à préserver (simulation qui tourne, graphe lourd), le shell B devient rentable — et l'IA de A s'y transpose telle quelle.</p>
+    </div>
+    <div style="width:400px;flex:none">
+      <div class="lbl" style="margin-bottom:8px">Plan — six chantiers</div>
+      <table class="tbl" style="font-size:11.5px">
+        <tr><td class="mono">1</td><td><b>Observatoire · Mémoire · Kanban → sidebar</b> — remplacer forge-nav par atelier-nav, retirer la topbar en dur de kanban</td></tr>
+        <tr><td class="mono">2</td><td><b>Dual-chrome Patterns · Extensions · Docs</b> — habillage selon le monde d'entrée (flag <span class="mono">grimoire.mode</span>)</td></tr>
+        <tr><td class="mono">3</td><td><b>Footer public nettoyé</b> — colonnes Atelier/Surfaces → un lien « Lancer l'atelier »</td></tr>
+        <tr><td class="mono">4</td><td><b>Garde sans-projet</b> — Blueprints/Observatoire/Mémoire/Kanban sans projet → atelier.html</td></tr>
+        <tr><td class="mono">5</td><td><b>Sortie explicite</b> — « Site public ↗ » pied de sidebar + statusbar, seuls liens sortants</td></tr>
+        <tr><td class="mono">6</td><td><b>Rite d'entrée</b> — le panneau seuil devient l'unique passage vitrine → atelier</td></tr>
+      </table>
+      <p class="note" style="margin-top:12px">tes six « decide for me » sont réglés par les chantiers 1–6 — rien ne reste ouvert</p>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  'use strict';
+  const $ = (s) => document.querySelector(s);
+  const PAGES = {
+    accueil:{l:'Accueil'}, demo:{l:'Démo'}, portefeuille:{l:'Portefeuille'},
+    patterns:{l:'Patterns'}, extensions:{l:'Extensions'}, docs:{l:'Docs'},
+    atelier:{l:'Atelier'}, blueprints:{l:'Blueprints'},
+    observatoire:{l:'Observatoire'}, memoire:{l:'Mémoire'}, kanban:{l:'Kanban'}
+  };
+  // chrome réel des pages aujourd'hui : v = topbar vitrine, a = sidebar atelier
+  const NOW = {accueil:'v',demo:'v',portefeuille:'v',docs:'v',observatoire:'v',memoire:'v',kanban:'v',patterns:'a',extensions:'a',atelier:'a',blueprints:'a'};
+  const MODELS = [
+    {id:'now', name:'ACTUEL',          d:'les fuites telles quelles'},
+    {id:'A',   name:'A · PORTAIL',     d:'étanche, un pont par sens'},
+    {id:'B',   name:'B · APPLICATION', d:'shell unique, vues internes'},
+    {id:'C',   name:'C · MODE',        d:'même page, deux peaux'}
+  ];
+  const TOPNAV = ['demo','patterns','extensions','portefeuille','docs'];
+  const SIDESECS = [
+    {sec:null,items:['atelier','blueprints','extensions']},
+    {sec:'Comprendre',items:['patterns','docs']},
+    {sec:'Observer',items:['observatoire','memoire','kanban']}
+  ];
+  const APPVIEWS = ['atelier','blueprints','extensions','observatoire','memoire','kanban'];
+
+  const S = {model:'now', page:'accueil', world:'v', mode:'v', seuil:false, splash:false, panel:null, logs:[]};
+
+  function log(cls, msg){ S.logs.unshift({cls,msg}); S.logs = S.logs.slice(0,3); }
+
+  function chipsHtml(){
+    return MODELS.map(m=>`<button class="sim-chip${S.model===m.id?' on':''}" data-act="model" data-v="${m.id}"><b>${m.name}</b><span>${m.d}</span></button>`).join('');
+  }
+
+  function topbar(active, opts){
+    opts = opts||{};
+    const links = TOPNAV.map(p=>`<span class="sim-nav-t${active===p?' on':''}" data-act="go" data-p="${p}" data-via="top">${PAGES[p].l.toUpperCase()}</span>`).join('');
+    return `<div class="sim-top"><span class="logo" data-act="go" data-p="accueil" data-via="top" style="cursor:pointer">GRIMOIRE&nbsp;KIT</span>${links}<span class="sim-cta" data-act="cta">LANCER L'ATELIER →</span></div>`;
+  }
+  function footerHtml(){
+    if(S.model==='now'){
+      const t = ['blueprints','observatoire','memoire','kanban'].map(p=>`<span class="fl" data-act="go" data-p="${p}" data-via="footer">${PAGES[p].l}</span>`).join('');
+      return `<div class="sim-footer"><span>FOOTER PUBLIC —</span><span>ATELIER · SURFACES :</span>${t}</div>`;
+    }
+    return `<div class="sim-footer"><span>FOOTER PUBLIC —</span><span style="text-decoration:line-through">colonnes outil</span><span class="fl" data-act="cta">Lancer l'atelier →</span></div>`;
+  }
+  function sidebar(active, model){
+    let h = `<div class="proj"><span>◆ mon-projet</span><span>▾</span></div>`;
+    SIDESECS.forEach(s=>{
+      if(s.sec) h += `<div class="sim-sec">${s.sec}</div>`;
+      s.items.forEach(p=>{ h += `<div class="sim-nav-s${active===p?' on':''}" data-act="go" data-p="${p}" data-via="side"><span class="ico"></span>${PAGES[p].l}</div>`; });
+    });
+    const exit = model==='now' ? `<div class="sim-nav-s" data-act="exit" data-via="foot">Vitrine ↗</div>`
+               : `<div class="sim-nav-s" data-act="exit" data-via="foot"><b>Site public ↗</b></div>`;
+    return `<div class="sim-side">${h}<div class="sim-foot">${exit}</div></div>`;
+  }
+  function appSide(active){
+    let h = `<div class="proj"><span>◆ mon-projet</span><span>▾</span></div>`;
+    APPVIEWS.forEach(p=>{ h += `<div class="sim-nav-s${active===p?' on':''}" data-act="go" data-p="${p}" data-via="view"><span class="ico"></span>${PAGES[p].l}</div>`; });
+    h += `<div class="sim-sec">Référence</div>`;
+    h += `<div class="sim-nav-s${S.panel==='patterns'?' on':''}" data-act="panel" data-p="patterns"><span class="ico"></span>Patterns ⧉</div>`;
+    h += `<div class="sim-nav-s${S.panel==='docs'?' on':''}" data-act="panel" data-p="docs"><span class="ico"></span>Docs ⧉</div>`;
+    h += `<div class="sim-foot"><div class="sim-nav-s" data-act="exit">Quitter l'atelier ↗</div></div>`;
+    return `<div class="sim-side">${h}</div>`;
+  }
+  function content(extra){
+    const w = S.world;
+    const tag = w==='v' ? 'chrome vitrine · topbar' : (w==='app' ? 'application · vue interne' : 'chrome atelier · sidebar');
+    const banner = (S.model==='C' && S.mode==='a') ? `<div class="sim-banner">● mode atelier — API locale :7431</div>` : '';
+    return `<div class="sim-content">${banner}<div class="sim-page"><div class="big">${PAGES[S.page].l}</div><div class="sub">${tag}</div></div>${extra||''}</div>`;
+  }
+  function seuilHtml(){
+    return `<div class="sim-seuil"><div class="box">
+      <div class="lbl" style="margin-bottom:6px">dans votre terminal</div>
+      <div class="cli" style="margin-bottom:4px"><b>pip install</b> grimoire-kit</div>
+      <div class="cli" style="margin-bottom:10px"><b>grimoire</b> serve</div>
+      <span class="btn pacc" style="font-size:9.5px;cursor:pointer" data-act="enter">OUVRIR L'ATELIER →</span>
+      <span class="btn gh" style="font-size:9.5px;cursor:pointer;margin-left:6px" data-act="seuil-close">plus tard</span>
+    </div></div>`;
+  }
+  function panelHtml(){
+    if(!S.panel) return '';
+    return `<div class="sim-panel"><div class="row sb"><b style="font-size:10px">${PAGES[S.panel].l}</b><span style="cursor:pointer" data-act="panel-close">✕</span></div>
+      <div class="ph" style="min-height:70px"><span class="cap">${S.panel} · panneau</span></div>
+      <span style="color:var(--char-dim)">référence intégrée — le graphe reste monté derrière</span></div>`;
+  }
+
+  function stageHtml(){
+    if(S.splash) return `<div class="sim-splash"><div class="spin"></div>grimoire serve · projet détecté<br><b>lancement de l'atelier…</b></div>`;
+    if(S.world==='v'){
+      return `<div class="sim-body">${topbar(S.page)}${content(S.seuil?seuilHtml():'')}${footerHtml()}</div>`;
+    }
+    if(S.world==='app'){
+      return `${appSide(S.page)}<div class="sim-body" style="flex-direction:row"><div style="flex:1;display:flex;flex-direction:column">${content()}</div>${panelHtml()}</div>`;
+    }
+    return `${sidebar(S.page, S.model)}<div class="sim-body">${content()}<div class="sim-footer"><span>● API locale · :7431</span><span>kit v3.16.0</span></div></div>`;
+  }
+
+  function render(){
+    $('#sim-chips').innerHTML = chipsHtml();
+    $('#sim-stage').innerHTML = stageHtml();
+    $('#sim-url').textContent = S.world==='v' ? 'grimoire.dev — site public' : 'localhost:7431 — atelier';
+    $('#sim-modewrap').innerHTML = S.model==='C' ? `<span class="sim-mode" data-act="mode"><span class="${S.mode==='v'?'on':''}">VITRINE</span><span class="${S.mode==='a'?'on':''}">ATELIER</span></span>` : '';
+    $('#sim-log').innerHTML = S.logs.length
+      ? S.logs.map(x=>`<div class="l ${x.cls}">${x.msg}</div>`).join('')
+      : `<div class="l">journal — clique un lien de nav dans la maquette</div>`;
+  }
+
+  function go(p, via){
+    const from = S.world;
+    if(S.model==='now'){
+      const target = NOW[p];
+      if(via==='footer'){
+        log(target!==from?'bad':'warn', `footer public → ${PAGES[p].l} : page outil exposée au public${p==='blueprints'?' — et sans projet, elle est cassée':''}`);
+      } else if(target!==from){
+        log('bad', `⚠ éjection silencieuse — ${PAGES[p].l} vit en chrome ${target==='v'?'vitrine':'atelier'}, tu changes de monde sans prévenir`);
+      } else {
+        log('', `navigation normale → ${PAGES[p].l}`);
+      }
+      if(p==='kanban') log('bad', `kanban : copie statique de la topbar codée en dur — pas de footer, liens gelés`);
+      S.world = target; S.page = p;
+    }
+    else if(S.model==='A'){
+      S.page = p; // le monde ne change JAMAIS par la nav
+      if(from==='v' && (p==='patterns'||p==='extensions'||p==='docs')) log('', `${PAGES[p].l} en habillage vitrine — la version atelier existe à part (×2)`);
+      else if(from==='a' && (p==='patterns'||p==='extensions'||p==='docs')) log('', `${PAGES[p].l} en habillage atelier — même donnée que la version publique`);
+      else log('', `chrome conservé → ${PAGES[p].l} — traverser par accident est impossible`);
+    }
+    else if(S.model==='B'){
+      if(S.world==='app'){ S.page = p; log('good', `vue interne → ${PAGES[p].l} — zéro navigation de page, l'état vit`); }
+      else { S.page = p; log('', `vitrine → ${PAGES[p].l} (habillage public)`); }
+    }
+    else if(S.model==='C'){
+      S.page = p; S.world = S.mode;
+      log('', `${PAGES[p].l} rendu en mode ${S.mode==='v'?'vitrine':'atelier'} — l'habillage suit le mode, pas la page`);
+    }
+    render();
+  }
+
+  function reset(model){
+    S.model = model; S.page='accueil'; S.world='v'; S.mode='v'; S.seuil=false; S.splash=false; S.panel=null;
+    log('', `modèle ${MODELS.find(m=>m.id===model).name} — repart de l'accueil public`);
+    render();
+  }
+
+  document.addEventListener('click', (e)=>{
+    const t = e.target.closest('[data-act]');
+    if(!t || !t.closest('#sim-stage,#sim-chips,#sim-modewrap')) return;
+    const act = t.dataset.act;
+    if(act==='model') return reset(t.dataset.v);
+    if(act==='go') return go(t.dataset.p, t.dataset.via);
+    if(act==='cta'){
+      if(S.model==='now'){ S.world='a'; S.page='atelier'; log('warn','CTA → atelier : le seuil existe mais rien ne marque l\u2019arrivée'); }
+      else if(S.model==='A'){ S.seuil=true; log('good','seuil ouvert — la traversée devient un geste'); }
+      else if(S.model==='B'){ S.splash=true; log('good','écran de lancement — comme ouvrir un éditeur'); render(); setTimeout(()=>{ S.splash=false; S.world='app'; S.page='atelier'; log('good','application ouverte — tout est vue interne désormais'); render(); },800); return; }
+      else if(S.model==='C'){ S.mode='a'; S.world='a'; S.page='atelier'; log('good','mode atelier activé — micro-bandeau visible'); }
+      return render();
+    }
+    if(act==='enter'){ S.seuil=false; S.world='a'; S.page='atelier'; log('good','pont franchi — sidebar partout, aucune fuite possible'); return render(); }
+    if(act==='seuil-close'){ S.seuil=false; return render(); }
+    if(act==='exit'){
+      if(S.model==='now'){ S.world='v'; S.page='accueil'; log('warn','« Vitrine ↗ » — retour ok mais discret, rien ne marque la sortie'); }
+      else if(S.model==='B'){ S.world='v'; S.page='accueil'; S.panel=null; log('good','« Quitter l\u2019atelier » — geste de sortie unique'); }
+      else { S.world='v'; S.page='accueil'; log('good','« Site public ↗ » — pont retour, seul lien sortant'); }
+      return render();
+    }
+    if(act==='panel'){ S.panel = t.dataset.p; log('good',`${PAGES[S.panel].l} ouvert en panneau — on ne quitte pas l\u2019app pour lire la référence`); return render(); }
+    if(act==='panel-close'){ S.panel=null; return render(); }
+    if(act==='mode'){ S.mode = S.mode==='v'?'a':'v'; if(!(S.page in {accueil:1,demo:1,portefeuille:1}) || S.mode==='v') S.world=S.mode; if(S.mode==='a'&&(S.page==='accueil'||S.page==='demo'||S.page==='portefeuille')){S.page='atelier';S.world='a';} log('', `bascule de mode → ${S.mode==='v'?'vitrine':'atelier'} — la page change de peau, pas d\u2019URL`); return render(); }
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>
