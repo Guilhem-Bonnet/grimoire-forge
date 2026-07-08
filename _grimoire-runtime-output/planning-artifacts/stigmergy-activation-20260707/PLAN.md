@@ -3,6 +3,22 @@
 Date : 2026-07-07. Cible : dépôt public `Guilhem-Bonnet/Grimoire-kit`.
 Statut du concept : **R&D expérimental** (`docs/rnd.md`, hors contrat SemVer).
 
+## État d'avancement (2026-07-08)
+
+Branche `feat/site-atelier` (PR #64). **P0 à P3 (cœur) livrés et vérifiés E2E.**
+
+- **P0 livré** (`7c4f90d`) — commande `grimoire stigmergy` + test de parité
+  anti-dérive SDK ⧸ script autonome.
+- **P1+P2+P3 cœur livrés** (`0db237f`) — hooks non bloquants (SessionStart
+  sense, PostToolUse emit-renfort, Stop complete+purge) sous
+  `framework/tools/stigmergy_hooks/`, câblés par
+  `grimoire stigmergy install-hooks` (mode shadow). 19 tests.
+  Choix d'archi : **pas** une extension marketplace (la stigmergie ne s'ancre
+  honnêtement sur aucun pattern gouverné) ; hooks safe par construction.
+- **Reste** : P3 *surface visuelle observatoire* (fork à trancher : snapshot
+  via `gen-site-data` ⧸ live via endpoint `serve /api/stigmergy`) et **P4**
+  (critères de promotion R&D → cœur, gaté sur usage réel).
+
 ## Constat vérifié
 
 Ce qui **fonctionne déjà** (exécuté et confirmé) :
