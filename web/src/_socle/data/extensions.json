@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-03T13:26:46.985Z",
+  "generatedAt": "2026-07-03T16:11:48.389Z",
   "source": "registry",
   "registry": "https://github.com/Guilhem-Bonnet/grimoire-extensions-registry",
   "available": [
@@ -102,6 +102,31 @@
       "nodes": [
         "CrewAI Crew"
       ],
+      "status": "available"
+    },
+    {
+      "id": "fennara-godot",
+      "kind": "mcp-toolbox",
+      "name": "Fennara Godot Feedback",
+      "version": "0.1.0",
+      "description": "Boucle de feedback Godot réelle pour les agents via le serveur MCP Fennara : diagnostics, contexte scène/nœuds, screenshots, logs runtime et état éditeur — des preuves branchables sur les gates evidence-gated de l'archétype game-dev.",
+      "license": "MIT",
+      "upstream": "https://github.com/fennaraOfficial/fennara-godot-ai",
+      "upstreamKind": null,
+      "patterns": [
+        "QUA-12",
+        "QUA-04",
+        "RUN-08"
+      ],
+      "requires": [],
+      "permissions": {
+        "filesystem": "artifacts",
+        "network": true,
+        "hooks": [],
+        "memory": "none"
+      },
+      "provides": {},
+      "nodes": [],
       "status": "available"
     },
     {
