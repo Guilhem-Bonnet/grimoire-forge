@@ -15,9 +15,13 @@ Branche `feat/site-atelier` (PR #64). **P0 à P3 (cœur) livrés et vérifiés E
   `grimoire stigmergy install-hooks` (mode shadow). 19 tests.
   Choix d'archi : **pas** une extension marketplace (la stigmergie ne s'ancre
   honnêtement sur aucun pattern gouverné) ; hooks safe par construction.
-- **Reste** : P3 *surface visuelle observatoire* (fork à trancher : snapshot
-  via `gen-site-data` ⧸ live via endpoint `serve /api/stigmergy`) et **P4**
-  (critères de promotion R&D → cœur, gaté sur usage réel).
+- **P3 vue live livrée** (`e709613`) — endpoint `serve /api/stigmergy` +
+  bande observatoire qui poll en LIVE (vérifié navigateur). Choix : live via
+  serve, pas snapshot.
+- **P4 : brainstorm livré** — `BRAINSTORM-P4-promotion.md`. Recommandation :
+  **ne pas promouvoir maintenant, instrumenter d'abord** (mesurer si le board
+  change le comportement des agents), puis promotion **graduée** (CLI/board
+  stables d'abord, hooks ensuite). Déprécation acceptable si board désert.
 
 ## Constat vérifié
 
