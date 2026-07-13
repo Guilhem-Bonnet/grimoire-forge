@@ -1,1 +1,0 @@
-{"task":"grimoire: multi-llm-canary-validate","flow":"quality","kind":"task","status":"success","event":"task-finish","exitCode":0,"durationSeconds":6,"startedAt":"2026-04-14T03:37:56Z","finishedAt":"2026-04-14T03:38:02Z","cwd":"/mnt/Travail/Projets/Dev/bmad-custom/grimoire-kit","command":"npx -y promptfoo@latest validate --config evals/multi-llm/promptfooconfig.yaml"}

@@ -1,1 +1,0 @@
-{"task":"grimoire: hooks-smoke","flow":"hooks","kind":"task","status":"success","event":"task-finish","exitCode":0,"durationSeconds":0,"startedAt":"2026-04-16T20:36:50Z","finishedAt":"2026-04-16T20:36:50Z","cwd":"/mnt/Travail/Projets/Dev/Grimoire-Forge","command":"bash /mnt/Travail/Projets/Dev/Grimoire-Forge/.github/hooks/scripts/grimoire-hooks-smoke.sh"}

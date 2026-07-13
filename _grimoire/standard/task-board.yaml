@@ -105,3 +105,75 @@ tasks:
     context_bundle_ref: "_grimoire-output/context/r10-cockpit/context-bundle.yaml"
     decision_trace_ref: "_grimoire-output/decisions/r10-cockpit/decision-trace.yaml"
     evidence_pack_ref: "_grimoire-output/evidence/r10-cockpit/evidence-pack.md"
+  - task_id: "c1-board-transitions"
+    title: "C1 — Journal append-only des transitions kanban"
+    status: "review"
+    priority: "high"
+    owner: "grimoire-maintainers"
+    agent_roles:
+      - implementation-agent
+    acceptance_criteria:
+      - "Toute edition de task-board.yaml changeant un statut produit un event journalise par hook."
+      - "Une transition illegale fait echouer npm run quality."
+      - "grimoire-hooks-smoke.sh couvre le hook grimoire-board-transitions."
+    blockers: []
+    context_bundle_ref: "_grimoire-output/context/c1-board-transitions/context-bundle.yaml"
+    decision_trace_ref: "_grimoire-output/decisions/c1-board-transitions/decision-trace.yaml"
+    evidence_pack_ref: "_grimoire-output/evidence/c1-board-transitions/evidence-pack.md"
+  - task_id: "c2-evidence-reconcile"
+    title: "C2 — Reconciliateur evidence contre traces machine"
+    status: "review"
+    priority: "high"
+    owner: "grimoire-maintainers"
+    agent_roles:
+      - implementation-agent
+    acceptance_criteria:
+      - "Un claim de chemin absent du disque est classe CONTRADICTED et fait echouer la gate."
+      - "Les refs manquantes d'une tache en review sont detectees."
+      - "Les packs existants passent ou portent une requalification explicite."
+    blockers: []
+    context_bundle_ref: "_grimoire-output/context/c2-evidence-reconcile/context-bundle.yaml"
+    decision_trace_ref: "_grimoire-output/decisions/c2-evidence-reconcile/decision-trace.yaml"
+    evidence_pack_ref: "_grimoire-output/evidence/c2-evidence-reconcile/evidence-pack.md"
+  - task_id: "c3-step-proof"
+    title: "C3 — Preuve par step via workflow-state-manifest"
+    status: "review"
+    priority: "medium"
+    owner: "grimoire-maintainers"
+    agent_roles:
+      - implementation-agent
+    acceptance_criteria:
+      - "La suppression de l'artefact d'un step intermediaire fait echouer le checker."
+      - "La dette anterieure est exemptee explicitement, jamais silencieuse."
+    blockers: []
+    context_bundle_ref: "_grimoire-output/context/c3-step-proof/context-bundle.yaml"
+    decision_trace_ref: "_grimoire-output/decisions/c3-step-proof/decision-trace.yaml"
+    evidence_pack_ref: "_grimoire-output/evidence/c3-step-proof/evidence-pack.md"
+  - task_id: "c4-engagement-metric"
+    title: "C4 — Mesure d'engagement des workflows"
+    status: "review"
+    priority: "medium"
+    owner: "grimoire-maintainers"
+    agent_roles:
+      - implementation-agent
+    acceptance_criteria:
+      - "Chaque session produit des events d'engagement horodates."
+      - "Le rapport distingue jamais engage de engage sans effet."
+    blockers: []
+    context_bundle_ref: "_grimoire-output/context/c4-engagement-metric/context-bundle.yaml"
+    decision_trace_ref: "_grimoire-output/decisions/c4-engagement-metric/decision-trace.yaml"
+    evidence_pack_ref: "_grimoire-output/evidence/c4-engagement-metric/evidence-pack.md"
+  - task_id: "c5-golden-run"
+    title: "C5 — Golden run du workflow pilote"
+    status: "review"
+    priority: "low"
+    owner: "grimoire-maintainers"
+    agent_roles:
+      - implementation-agent
+    acceptance_criteria:
+      - "Un run degrade est signale par le diff sans audit manuel."
+      - "Le referentiel est versionne avec procedure de mise a jour documentee."
+    blockers: []
+    context_bundle_ref: "_grimoire-output/context/c5-golden-run/context-bundle.yaml"
+    decision_trace_ref: "_grimoire-output/decisions/c5-golden-run/decision-trace.yaml"
+    evidence_pack_ref: "_grimoire-output/evidence/c5-golden-run/evidence-pack.md"

@@ -1,1 +1,0 @@
-{"task":"smoke-trace-audit","flow":"verify","kind":"task","status":"success","event":"task-finish","exitCode":0,"durationSeconds":0,"startedAt":"2026-04-13T13:47:14Z","finishedAt":"2026-04-13T13:47:14Z","cwd":"/mnt/Travail/Projets/Dev/bmad-custom","command":"bash .github/hooks/scripts/grimoire-subagent-trace.sh --audit-only"}

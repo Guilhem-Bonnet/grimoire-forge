@@ -1,0 +1,2 @@
+{"artifact": "dev-story", "kind": "workflow", "signal": "slash-command", "ts": "2026-07-12T23:56:22Z", "session": "test-c4"}
+{"artifact": "task-board", "kind": "standard", "signal": "prompt-mention", "ts": "2026-07-12T23:56:22Z", "session": "test-c4"}
