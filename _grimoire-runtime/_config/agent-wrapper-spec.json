@@ -215,91 +215,10 @@
       "- If a same-goal L1/L2 follow-through is obvious, execute it before ending the exchange; reserve \"next steps\" for blocked, optional, exploratory, or L3+ work",
       "</sog-protocol>",
       "",
-      "<unified-dynamic-factory>",
-      "## Protocol UDF — Unified Dynamic Factory",
-      "",
-      "**Registry**: Load `{project-root}/_grimoire-runtime/_config/udf-registry.yaml` for artifact type conventions, paths, and templates.",
-      "",
-      "When NO existing artifact (agent, workflow, skill, instruction) adequately covers a user request,",
-      "the SOG creates one dynamically.",
-      "",
-      "### 1. Gap Detection & Type Classification",
-      "",
-      "Evaluate the request against all known artifacts. Classify the gap:",
-      "",
-      "| Signal | Artifact Type | Builder |",
-      "|---|---|---|",
-      "| \"Aucun agent n'a cette expertise\" | **Agent** | agent-builder |",
-      "| \"Aucun process multi-step pour ça\" | **Workflow** | workflow-builder |",
-      "| \"On fait ça souvent mais c'est pas packagé\" | **Skill** | workflow-builder + dev |",
-      "| \"On corrige toujours la même chose / convention\" | **Instruction** | tech-writer |",
-      "",
-      "### 2. Durability Triage — Éphémère ou Permanent ?",
-      "",
-      "Same grid for ALL artifact types:",
-      "",
-      "| Signal | Score |",
-      "|---|---|",
-      "| Le domaine est lié au stack technique du projet (ex: Python, Docker, CI/CD) | +2 |",
-      "| Le besoin a déjà été exprimé dans une session précédente | +2 |",
-      "| Le domaine est transversal (sécurité, performance, accessibilité, data) | +2 |",
-      "| Le besoin est récurrent dans le cycle de vie produit (release, migration, audit) | +1 |",
-      "| Le besoin est ponctuel/exploratoire (spike, test d'une idée, question unique) | -2 |",
-      "| Le domaine est très niche (outil obscur, format rare, API spécifique) | -1 |",
-      "",
-      "**Score ≥ 3 → Création permanente** | **Score < 3 → Création éphémère (expire 7j)**",
-      "",
-      "### 3. Création — Dispatch vers le builder approprié",
-      "",
-      "> **Légende** : DAF = Dynamic Agent Factory · DWF = Dynamic Workflow Factory · DSF = Dynamic Skill Factory · DIF = Dynamic Instruction Factory",
-      "",
-      "#### Agents (DAF)",
-      "- **Éphémère** → agent-builder (Rapid Mode) → `.github/agents/_dyn-{slug}.agent.md`",
-      "- **Permanent** → agent-builder (Full Mode) → `.github/agents/{slug}.agent.md` + `.github/prompts/{slug}.prompt.md`",
-      "",
-      "#### Workflows (DWF)",
-      "- **Éphémère** → workflow-builder (Rapid Mode) → `.github/prompts/_dyn-{slug}.prompt.md`",
-      "- **Permanent** → workflow-builder (Full Mode) → `.github/prompts/{slug}.prompt.md`",
-      "",
-      "#### Skills (DSF)",
-      "- **Éphémère** → workflow-builder designs the skill structure (Rapid Mode) → `.github/skills/_dyn-{slug}/SKILL.md`",
-      "- **Permanent** → workflow-builder designs the skill structure, then dev implements bundled assets → `.github/skills/{slug}/SKILL.md`",
-      "- **Orchestration** : le SOG dispatche d'abord au workflow-builder pour la structure (SKILL.md, process steps, agents involved), puis au dev pour les assets techniques éventuels (scripts, fixtures). Le workflow-builder est le lead, le dev est appelé uniquement si des assets codés sont nécessaires.",
-      "",
-      "#### Instructions (DIF)",
-      "- **Éphémère** → tech-writer (Rapid Mode) → `.github/instructions/_dyn-{slug}.instructions.md`",
-      "- **Permanent** → tech-writer (Full Mode) → `.github/instructions/{slug}.instructions.md`",
-      "",
-      "### 4. Invoke immediately",
-      "All artifacts are auto-discovered by VS Code once saved. Use immediately.",
-      "",
-      "**Usage tracking**: After each invocation of a `_dyn-*` artifact, update `_grimoire-runtime/_memory/udf-usage-tracker.json`:",
-      "- Key = artifact filename (e.g. `_dyn-perf-audit.prompt.md`)",
-      "- Fields: `type` (agent|workflow|skill|instruction), `count` (increment by 1), `last_used` (ISO date), `created` (ISO date from frontmatter)",
-      "- When `count >= 3`, flag the artifact as `promote: true` and notify the user at next opportunity",
-      "",
-      "### 5. Post-use assessment",
-      "",
-      "For **éphémère** artifacts:",
-      "- **PROMOTE** → reused 3+ times → recreate as permanent, delete `_dyn-` file",
-      "- **KEEP** → likely useful again → retain",
-      "- **EXPIRE** → leave for auto-cleanup (default, 7 days)",
-      "",
-      "For **permanent** artifacts:",
-      "- **VALIDATE** → verify quality via the responsible builder",
-      "- **ENRICH** → improve descriptions, add examples, refine triggers",
-      "- **REGISTER** → update manifests and copilot-instructions.md",
-      "",
-      "### Naming Convention",
-      "| Type | Éphémère | Permanent |",
-      "|---|---|---|",
-      "| Agent | `_dyn-{slug}.agent.md` | `{slug}.agent.md` |",
-      "| Workflow | `_dyn-{slug}.prompt.md` | `{slug}.prompt.md` |",
-      "| Skill | `_dyn-{slug}/SKILL.md` | `{slug}/SKILL.md` |",
-      "| Instruction | `_dyn-{slug}.instructions.md` | `{slug}.instructions.md` |",
-      "",
-      "All artifacts include `created: ISO-date` in frontmatter. Éphémère also includes `expires: ISO-date`.",
-      "</unified-dynamic-factory>"
+      "<artifact-creation>",
+      "Le mécanisme UDF (Unified Dynamic Factory, artefacts éphémères `_dyn-*`) est retiré depuis le 2026-07-12 (zéro usage constaté — voir `_grimoire-runtime-output/planning-artifacts/durcissement-agentique-20260712/`).",
+      "Toute création d'artefact est permanente : agents via agent-builder, workflows via workflow-builder, skills et hooks via grimoire-skill-forge (gate qualité grimoire-skill-analyzer, hooks toujours en `mode: shadow`), instructions via tech-writer. Conventions : section « Création d'artefacts » de `.github/copilot-instructions.md`.",
+      "</artifact-creation>"
     ],
     "expectedAgents": [
       "analyst",
@@ -343,8 +262,14 @@
   "wrappers": {
     "analyst": {
       "description": "Business Analyst sub-agent. Use when: requirements analysis, market research, domain research, business rules, stakeholder analysis, competitive analysis, user needs, feature scoping.",
-      "tools": ["read", "search"],
-      "handoffs": ["pm", "architect"],
+      "tools": [
+        "read",
+        "search"
+      ],
+      "handoffs": [
+        "pm",
+        "architect"
+      ],
       "userInvocable": false,
       "summary": "Sub-agent business analyst. Lecture seule — recherche, cadrage et analyse métier.",
       "extraSteps": [
@@ -353,8 +278,15 @@
     },
     "architect": {
       "description": "Architect sub-agent. Use when: architecture design, infrastructure decisions, ADR, system design, technical debt analysis, API design, data modeling, scalability.",
-      "tools": ["read", "edit", "search"],
-      "handoffs": ["dev", "sm"],
+      "tools": [
+        "read",
+        "edit",
+        "search"
+      ],
+      "handoffs": [
+        "dev",
+        "sm"
+      ],
       "userInvocable": false,
       "summary": "Sub-agent architecte. Conçoit des systèmes et cadre les décisions structurelles.",
       "extraSteps": [
@@ -364,7 +296,11 @@
     "agent-builder": {
       "template": "custom",
       "description": "Agent Builder — create, validate, edit Grimoire agents. Supports dynamic agent creation for the SOG orchestrator. Use when: créer un agent, modifier un agent, valider un agent, agent architecture, dynamic agent, create specialist.",
-      "tools": ["read", "edit", "search"],
+      "tools": [
+        "read",
+        "edit",
+        "search"
+      ],
       "userInvocable": false,
       "body": [
         "Sub-agent builder d'agents. Peut lire et écrire des fichiers agent, pas d'exécution terminal.",
@@ -376,22 +312,8 @@
         "4. Create and edit agent definitions following Grimoire standards",
         "5. Before concluding, chain obvious same-goal L1/L2 follow-through for agent assets: companion prompt updates, metadata consistency, linked instruction changes, and other safe adjacent fixes revealed by the edit",
         "",
-        "## Rapid Dynamic Mode (DAF — Éphémère)",
-        "When invoked with a dynamic agent creation request (score < 3):",
-        "1. Read the template from {project-root}/.github/agents/_templates/dynamic-agent.tpl.md",
-        "2. Fill in all placeholders:",
-        "   - `{NAME}`: domain-specific name (e.g. \"K8s Expert\", \"Data Pipeline Specialist\")",
-        "   - `{DESCRIPTION}`: keyword-rich description for agent discovery",
-        "   - `{TRIGGERS}`: comma-separated trigger phrases",
-        "   - `{TOOLS}`: minimal tool set needed — prefer `'read', 'search'` unless edit/execute required",
-        "   - `{DATE}`: current ISO date",
-        "   - `{EXPIRES}`: current date + 7 days",
-        "   - `{DOMAIN_DESCRIPTION}`: clear scope of expertise",
-        "3. Save to `.github/agents/_dyn-{slug}.agent.md`",
-        "4. Report back the agent name for immediate invocation",
-        "",
-        "## Full Creation Mode (DAF — Permanent)",
-        "When invoked with a permanent agent creation request (score ≥ 3):",
+        "## Creation Mode",
+        "When invoked with a permanent agent creation request:",
         "1. Read the template from {project-root}/.github/agents/_templates/permanent-agent.tpl.md",
         "2. Fill in all placeholders with higher quality standards:",
         "   - `{NAME}`: distinctive agent name with personality",
@@ -401,11 +323,11 @@
         "   - `{TOOLS}`: appropriate tool set for the domain",
         "   - `{DOMAIN_DESCRIPTION}`: detailed scope, boundaries, and expertise areas",
         "3. Add `handoffs` if the agent naturally chains to existing agents",
-        "4. Save to `.github/agents/{slug}.agent.md` (NO `_dyn-` prefix)",
+        "4. Save to `.github/agents/{slug}.agent.md`",
         "5. Do NOT create a companion prompt by default. Create `.github/prompts/{slug}.prompt.md` only if explicitly requested and justified as a prompt-native mission pack that is not better served by a skill, instruction, hook, or the agent alone",
         "6. Report back: agent name, tools, handoffs, trigger keywords, and whether a direct prompt was intentionally created",
         "",
-        "### Tool Selection Rules for Dynamic Agents",
+        "### Tool Selection Rules",
         "| Need | Tools |",
         "|---|---|",
         "| Analysis / research only | `read, search` |",
@@ -416,7 +338,11 @@
     },
     "art-director": {
       "description": "Art Director — direction artistique pixel, hero FX, room kits, palette governance. Use when: direction artistique 2D, FX hero, room kit, review de style, palette drift, polish visuel.",
-      "tools": ["read", "edit", "search"],
+      "tools": [
+        "read",
+        "edit",
+        "search"
+      ],
       "userInvocable": false,
       "summary": "Sub-agent direction artistique. Produit des briefs visuels, des reviews de style et des arbitrages de cohérence, pas de rendu bitmap direct.",
       "extraSteps": [
@@ -425,7 +351,10 @@
     },
     "brainstorming-coach": {
       "description": "Brainstorming Coach — brainstorming sessions, creative techniques, idea generation. Use when: brainstorm, generate ideas, creative session, ideation, divergent thinking, innovation workshop.",
-      "tools": ["read", "search"],
+      "tools": [
+        "read",
+        "search"
+      ],
       "userInvocable": false,
       "summary": "Sub-agent brainstorming (CIS module). Lecture seule — facilitation créative.",
       "extraSteps": [
@@ -434,7 +363,10 @@
     },
     "creative-problem-solver": {
       "description": "Creative Problem Solver — systematic problem solving, TRIZ, root cause analysis, Theory of Constraints. Use when: complex problem, stuck, root cause, systematic analysis, TRIZ, constraint analysis.",
-      "tools": ["read", "search"],
+      "tools": [
+        "read",
+        "search"
+      ],
       "userInvocable": false,
       "summary": "Sub-agent problem solver. Lecture seule — diagnostic systémique et résolution structurée.",
       "extraSteps": [
@@ -443,7 +375,10 @@
     },
     "design-thinking-coach": {
       "description": "Design Thinking Coach — human-centered design, empathy mapping, prototyping. Use when: design thinking, empathie utilisateur, prototypage, user research.",
-      "tools": ["read", "search"],
+      "tools": [
+        "read",
+        "search"
+      ],
       "userInvocable": false,
       "summary": "Sub-agent design thinking. Lecture seule — cadrage empathique, idéation et prototypage.",
       "extraSteps": [
@@ -452,8 +387,16 @@
     },
     "dev": {
       "description": "Developer — implémentation, TDD, coding, refactoring, bug fix. Use when: écrire du code, implémenter une feature, corriger un bug, TDD, refactoring.",
-      "tools": ["read", "edit", "search", "execute"],
-      "handoffs": ["qa", "tea"],
+      "tools": [
+        "read",
+        "edit",
+        "search",
+        "execute"
+      ],
+      "handoffs": [
+        "qa",
+        "tea"
+      ],
       "userInvocable": false,
       "summary": "Sub-agent développeur. Accès complet — code, tests, exécution.",
       "extraSteps": [
@@ -463,7 +406,10 @@
     },
     "innovation-strategist": {
       "description": "Innovation Strategist — disruptive innovation, business model, Blue Ocean, Jobs-to-be-Done. Use when: innovation strategy, business model innovation, disruption analysis, competitive strategy, JTBD.",
-      "tools": ["read", "search"],
+      "tools": [
+        "read",
+        "search"
+      ],
       "userInvocable": false,
       "summary": "Sub-agent stratégie d'innovation. Lecture seule — cadrage marché, JTBD et disruption.",
       "extraSteps": [
@@ -472,7 +418,11 @@
     },
     "module-builder": {
       "description": "Module Builder — create, configure, validate Grimoire modules. Use when: créer un module, configurer un module, module architecture.",
-      "tools": ["read", "edit", "search"],
+      "tools": [
+        "read",
+        "edit",
+        "search"
+      ],
       "userInvocable": false,
       "summary": "Sub-agent builder de modules. Peut lire et écrire des configs module, pas d'exécution terminal.",
       "extraSteps": [
@@ -482,8 +432,16 @@
     },
     "pm": {
       "description": "Product Manager — PRD, product brief, prioritisation, roadmap. Use when: créer un PRD, définir un produit, prioriser, roadmap, product strategy.",
-      "tools": ["read", "edit", "search"],
-      "handoffs": ["architect", "sm", "ux-designer"],
+      "tools": [
+        "read",
+        "edit",
+        "search"
+      ],
+      "handoffs": [
+        "architect",
+        "sm",
+        "ux-designer"
+      ],
       "userInvocable": false,
       "summary": "Sub-agent product manager. Peut rédiger des documents produit, pas d'exécution terminal.",
       "extraSteps": [
@@ -492,7 +450,11 @@
     },
     "presentation-master": {
       "description": "Presentation Master — visual communication, slides, pitch decks. Use when: créer une présentation, pitch deck, slides, visual storytelling.",
-      "tools": ["read", "edit", "search"],
+      "tools": [
+        "read",
+        "edit",
+        "search"
+      ],
       "userInvocable": false,
       "summary": "Sub-agent presentation master. Conçoit des supports visuels, des decks et des narrations de présentation.",
       "extraSteps": [
@@ -501,8 +463,16 @@
     },
     "qa": {
       "description": "QA Engineer — tests, quality assurance, test plans, test automation. Use when: écrire des tests, vérifier la qualité, plan de test, automatiser les tests, valider une story.",
-      "tools": ["read", "edit", "search", "execute"],
-      "handoffs": ["dev", "tech-writer"],
+      "tools": [
+        "read",
+        "edit",
+        "search",
+        "execute"
+      ],
+      "handoffs": [
+        "dev",
+        "tech-writer"
+      ],
       "userInvocable": false,
       "summary": "Sub-agent QA. Peut créer ou ajuster les tests et exécuter les validations, sans modifier le code produit hors délégation explicite.",
       "extraSteps": [
@@ -512,8 +482,15 @@
     },
     "quick-flow-solo-dev": {
       "description": "Quick Flow Solo Dev — rapid spec + implementation. Use when: quick prototype, rapid implementation, minimum ceremony, spike, quick dev, solo implementation, lean artifact.",
-      "tools": ["read", "edit", "search", "execute"],
-      "handoffs": ["qa"],
+      "tools": [
+        "read",
+        "edit",
+        "search",
+        "execute"
+      ],
+      "handoffs": [
+        "qa"
+      ],
       "userInvocable": false,
       "summary": "Sub-agent quick-flow. Accès complet — spec rapide + implémentation.",
       "extraSteps": [
@@ -523,7 +500,11 @@
     },
     "rodin": {
       "description": "Rodin — Sparring Partner Intellectuel. Débats socratiques, anti-chambre d'écho, steelmanning, philosophie politique, économie, sociologie. Use when: débattre d'un sujet, tester un argument, éviter l'écho, challenge intellectuel, discussion philosophique.",
-      "tools": ["read", "edit", "search"],
+      "tools": [
+        "read",
+        "edit",
+        "search"
+      ],
       "userInvocable": false,
       "summary": "Sub-agent sparring partner intellectuel (CIS module). Peut modifier biblio.md.",
       "extraSteps": [
@@ -532,8 +513,15 @@
     },
     "sm": {
       "description": "Scrum Master — sprint planning, backlog, stories, retrospective. Use when: planifier un sprint, gérer le backlog, créer des stories, rétrospective, velocity.",
-      "tools": ["read", "edit", "search"],
-      "handoffs": ["dev", "qa"],
+      "tools": [
+        "read",
+        "edit",
+        "search"
+      ],
+      "handoffs": [
+        "dev",
+        "qa"
+      ],
       "userInvocable": false,
       "summary": "Sub-agent scrum master. Clarifie les stories, le backlog et le flux d'exécution.",
       "extraSteps": [
@@ -542,7 +530,10 @@
     },
     "storyteller": {
       "description": "Storyteller — narrative strategy, brand storytelling, content creation. Use when: raconter une histoire, narrative produit, brand story, content marketing.",
-      "tools": ["read", "search"],
+      "tools": [
+        "read",
+        "search"
+      ],
       "userInvocable": false,
       "summary": "Sub-agent storyteller. Lecture seule — construit des narratifs.",
       "extraSteps": [
@@ -551,8 +542,15 @@
     },
     "tea": {
       "description": "Test Architect — risk-based testing, fixture architecture, ATDD, CI governance, scalable quality gates. Use when: test strategy, test architecture, test framework design, CI/CD quality gates, risk-based testing, advanced test design.",
-      "tools": ["read", "search", "execute"],
-      "handoffs": ["dev", "qa"],
+      "tools": [
+        "read",
+        "search",
+        "execute"
+      ],
+      "handoffs": [
+        "dev",
+        "qa"
+      ],
       "userInvocable": false,
       "summary": "Sub-agent test architect (TEA module). Accès complet — design et exécution de tests.",
       "extraSteps": [
@@ -562,7 +560,11 @@
     "tech-writer": {
       "template": "custom",
       "description": "Technical Writer — documentation, rédaction technique, standards doc, review éditoriale. Supports dynamic instruction creation for the SOG orchestrator. Use when: rédiger de la documentation, reviewer un document, appliquer les standards doc, créer des instructions, coding guidelines, convention.",
-      "tools": ["read", "edit", "search"],
+      "tools": [
+        "read",
+        "edit",
+        "search"
+      ],
       "userInvocable": false,
       "body": [
         "Sub-agent tech writer. Peut lire et écrire de la documentation, pas d'exécution terminal.",
@@ -574,20 +576,8 @@
         "4. Before any .md edit, load _grimoire-runtime/_memory/tech-writer-sidecar/documentation-standards.md",
         "5. Before concluding, complete obvious same-goal L1/L2 follow-through inside documentation scope: touched docs, related cross-links, consistency fixes, and required companion markdown updates. Reserve \"next steps\" for blocked, optional, exploratory, or out-of-scope work",
         "",
-        "## Rapid Dynamic Mode (DIF — Éphémère)",
-        "When invoked with a dynamic instruction creation request (score < 3):",
-        "1. Read the template from {project-root}/.github/agents/_templates/dynamic-instruction.tpl.md",
-        "2. Fill in all placeholders:",
-        "   - `{DESCRIPTION}`: what this instruction enforces",
-        "   - `{APPLY_TO_GLOB}`: file glob pattern (e.g. `**/*.py`, `src/api/**`)",
-        "   - `{DATE}`: current ISO date",
-        "   - `{EXPIRES}`: current date + 7 days",
-        "   - `{INSTRUCTION_CONTENT}`: clear, actionable instructions",
-        "3. Save to `.github/instructions/_dyn-{slug}.instructions.md`",
-        "4. Report back — instruction active immediately on matching files",
-        "",
-        "## Full Creation Mode (DIF — Permanent)",
-        "When invoked with a permanent instruction creation request (score ≥ 3):",
+        "## Creation Mode",
+        "When invoked with a permanent instruction creation request:",
         "1. Read the template from {project-root}/.github/agents/_templates/permanent-instruction.tpl.md",
         "2. Fill in all placeholders with production quality:",
         "   - `{NAME}`: instruction name",
@@ -603,7 +593,10 @@
     },
     "ux-designer": {
       "description": "UX Designer — design UX/UI, wireframes, user flows, personas, accessibility. Use when: designer une interface, wireframe, user flow, persona, design system.",
-      "tools": ["read", "search"],
+      "tools": [
+        "read",
+        "search"
+      ],
       "userInvocable": false,
       "summary": "Sub-agent UX designer. Lecture seule — analyses UX, wireframes et recommandations de parcours.",
       "extraSteps": [
@@ -613,7 +606,11 @@
     "workflow-builder": {
       "template": "custom",
       "description": "Workflow Builder — create, edit, validate Grimoire workflows. Supports dynamic workflow creation for the SOG orchestrator. Use when: créer un workflow, modifier un workflow, process design, workflow architecture, dynamic workflow, composer un process, pipeline.",
-      "tools": ["read", "edit", "search"],
+      "tools": [
+        "read",
+        "edit",
+        "search"
+      ],
       "userInvocable": false,
       "body": [
         "Sub-agent builder de workflows. Peut lire et écrire des fichiers workflow, pas d'exécution terminal.",
@@ -631,24 +628,8 @@
         "2. Only continue with DWF when the artifact is a manual, user-facing mission pack with explicit context, output format, and success criteria",
         "3. A workflow prompt must not be a thin wrapper around an existing runtime workflow, task, or agent",
         "",
-        "## Rapid Dynamic Mode (DWF — Éphémère)",
-        "When invoked with a dynamic workflow creation request (score < 3):",
-        "1. Confirm that the admission gate above passes",
-        "2. Read the template from {project-root}/.github/agents/_templates/dynamic-workflow.tpl.md",
-        "3. Fill in all placeholders:",
-        "   - `{NAME}`: workflow name (e.g. \"Perf Audit\", \"Migration Check\")",
-        "   - `{DESCRIPTION}`: keyword-rich description for slash command discovery",
-        "   - `{TRIGGERS}`: comma-separated trigger phrases",
-        "   - `{DATE}`: current ISO date",
-        "   - `{EXPIRES}`: current date + 7 days",
-        "   - `{WORKFLOW_DESCRIPTION}`: what this workflow accomplishes",
-        "   - `{STEPS}`: numbered steps with agent assignments (e.g. \"1. **architect** → analyze bottlenecks\")",
-        "   - `{OUTPUT_FORMAT}`: expected deliverable",
-        "4. Save to `.github/prompts/_dyn-{slug}.prompt.md`",
-        "5. Report back the workflow name — available immediately as `/dyn-{slug}`",
-        "",
-        "## Full Creation Mode (DWF — Permanent)",
-        "When invoked with a permanent workflow creation request (score ≥ 3):",
+        "## Creation Mode",
+        "When invoked with a permanent workflow creation request:",
         "1. Confirm that the admission gate above passes",
         "2. Read the template from {project-root}/.github/agents/_templates/permanent-workflow.tpl.md",
         "3. Fill in all placeholders with production quality:",
@@ -661,7 +642,7 @@
         "   - `{AGENT_CHAIN}`: which agents are involved and in what order",
         "   - `{OUTPUT_FORMAT}`: detailed deliverable format",
         "   - `{SUCCESS_CRITERIA}`: how to know the workflow succeeded",
-        "4. Save to `.github/prompts/{slug}.prompt.md` (NO `_dyn-` prefix)",
+        "4. Save to `.github/prompts/{slug}.prompt.md`",
         "5. Report back: workflow name, agent chain, slash command, and the justification for prompt-native admission",
         "",
         "### Workflow Composition Rules",

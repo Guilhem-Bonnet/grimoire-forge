@@ -1,6 +1,18 @@
 {
   "version": 1,
   "hooks": {
+    "grimoire-board-transitions": {
+      "event": "PostToolUse",
+      "target": ".github/hooks/scripts/grimoire-board-transitions.sh",
+      "controlFiles": [
+        ".github/hooks/grimoire-board-transitions.json",
+        ".github/hooks/scripts/grimoire-hook-gateway.sh",
+        "scripts/board-transitions-log.py"
+      ],
+      "mode": "shadow",
+      "validatedDigest": "1af85d39077e0c63caca1c519de7b1b2794a5eeb8be916f75e3812a1ab7079c0",
+      "validatedAt": "2026-07-13T00:01:16Z"
+    },
     "grimoire-control-surface-guard": {
       "event": "PreToolUse",
       "target": ".github/hooks/scripts/grimoire-control-surface-guard.sh",
@@ -13,8 +25,33 @@
         "grimoire-kit/framework/tools/guardrail-policy-rules.yaml"
       ],
       "mode": "enforced",
-      "validatedDigest": "b6bc9ccaee9149b21a92b3fa366fa28a319f5fa02299c1323d5ae1c51a5be295",
-      "validatedAt": "2026-04-16T20:36:50Z"
+      "validatedDigest": "0e85227d6124e61bc3f1053985efc204801ef505176c1b2747a134fc9aed067e",
+      "validatedAt": "2026-07-13T00:01:16Z"
+    },
+    "grimoire-doc-drift": {
+      "event": "PostToolUse",
+      "target": ".github/hooks/scripts/grimoire-doc-drift.sh",
+      "controlFiles": [
+        ".github/hooks/grimoire-doc-drift.json",
+        ".github/hooks/scripts/grimoire-hook-gateway.sh",
+        "grimoire-kit/framework/tools/doc-drift-detector.py",
+        "grimoire-kit/framework/tools/doc-manifest.yaml"
+      ],
+      "mode": "canary",
+      "validatedDigest": "7f6ac1bc4bc1c87d0064168edb6aba10585103d90321cc5c0818296309b68e0b",
+      "validatedAt": "2026-07-13T00:01:16Z"
+    },
+    "grimoire-engagement": {
+      "event": "UserPromptSubmit",
+      "target": ".github/hooks/scripts/grimoire-engagement.sh",
+      "controlFiles": [
+        ".github/hooks/grimoire-engagement.json",
+        ".github/hooks/scripts/grimoire-hook-gateway.sh",
+        "scripts/engagement-log.py"
+      ],
+      "mode": "shadow",
+      "validatedDigest": "1de2c0da497230edfb8c3a91bba9c51b25dc390097fd894d00720e0536f6a418",
+      "validatedAt": "2026-07-12T23:56:22Z"
     },
     "grimoire-master-stop-hook": {
       "event": "Stop",
@@ -28,126 +65,8 @@
         "grimoire-kit/framework/tools/guardrail-policy-rules.yaml"
       ],
       "mode": "enforced",
-      "validatedDigest": "051bd3f0360a9b92ebec5f0c311262d6fc5e8a8b0156ebeffa1ea5b5d8bed800",
-      "validatedAt": "2026-04-16T20:36:50Z"
-    },
-    "grimoire-memory-guard": {
-      "event": "PreToolUse",
-      "target": ".github/hooks/scripts/grimoire-memory-guard.sh",
-      "controlFiles": [
-        ".github/hooks/grimoire-memory-guard.json",
-        ".github/hooks/scripts/grimoire-hook-gateway.sh",
-        "grimoire-kit/framework/tools/guardrail-policy.py",
-        "grimoire-kit/framework/tools/guardrail-policy-rules.py",
-        "grimoire-kit/framework/tools/guardrail-policy-follow-through.py",
-        "grimoire-kit/framework/tools/guardrail-policy-rules.yaml"
-      ],
-      "mode": "enforced",
-      "validatedDigest": "9a8d717da991defcbd6991f1836e363d81fab5dfe94471e19b972623e37c2ee9",
-      "validatedAt": "2026-04-16T20:36:50Z"
-    },
-    "grimoire-post-edit": {
-      "event": "PostToolUse",
-      "target": ".github/hooks/scripts/grimoire-post-edit.sh",
-      "controlFiles": [
-        ".github/hooks/grimoire-post-edit.json",
-        ".github/hooks/scripts/grimoire-hook-gateway.sh",
-        "grimoire-kit/framework/tools/guardrail-policy.py",
-        "grimoire-kit/framework/tools/guardrail-policy-rules.py",
-        "grimoire-kit/framework/tools/guardrail-policy-follow-through.py",
-        "grimoire-kit/framework/tools/guardrail-policy-rules.yaml"
-      ],
-      "mode": "enforced",
-      "validatedDigest": "fcb971cb2db65183b779804f976247b4cf8fb8c5b161cee08282c42933b43e59",
-      "validatedAt": "2026-04-16T20:36:50Z"
-    },
-    "grimoire-pre-compact": {
-      "event": "PreCompact",
-      "target": ".github/hooks/scripts/grimoire-pre-compact.sh",
-      "controlFiles": [
-        ".github/hooks/grimoire-pre-compact.json",
-        ".github/hooks/scripts/grimoire-hook-gateway.sh",
-        "grimoire-kit/framework/tools/guardrail-policy.py",
-        "grimoire-kit/framework/tools/guardrail-policy-rules.py",
-        "grimoire-kit/framework/tools/guardrail-policy-follow-through.py",
-        "grimoire-kit/framework/tools/guardrail-policy-rules.yaml"
-      ],
-      "mode": "enforced",
-      "validatedDigest": "e8fec466b3694b8a76a044e991c5593a64a32ae1af5d03d05ec13f37caccde47",
-      "validatedAt": "2026-04-16T20:36:50Z"
-    },
-    "grimoire-prompt-submit": {
-      "event": "UserPromptSubmit",
-      "target": ".github/hooks/scripts/grimoire-prompt-submit.sh",
-      "controlFiles": [
-        ".github/hooks/grimoire-prompt-submit.json",
-        ".github/hooks/scripts/grimoire-hook-gateway.sh",
-        "grimoire-kit/framework/tools/guardrail-policy.py",
-        "grimoire-kit/framework/tools/guardrail-policy-rules.py",
-        "grimoire-kit/framework/tools/guardrail-policy-follow-through.py",
-        "grimoire-kit/framework/tools/guardrail-policy-rules.yaml"
-      ],
-      "mode": "enforced",
-      "validatedDigest": "2f48007374da68b63ab0e92df59e9a935129711fc2de401a6ed56b2aa69a4ec2",
-      "validatedAt": "2026-04-16T20:36:50Z"
-    },
-    "grimoire-session-start": {
-      "event": "SessionStart",
-      "target": ".github/hooks/scripts/grimoire-inject-context.sh",
-      "controlFiles": [
-        ".github/hooks/grimoire-session-start.json",
-        ".github/hooks/scripts/grimoire-hook-gateway.sh",
-        "grimoire-kit/framework/tools/guardrail-policy.py",
-        "grimoire-kit/framework/tools/guardrail-policy-rules.py",
-        "grimoire-kit/framework/tools/guardrail-policy-follow-through.py",
-        "grimoire-kit/framework/tools/guardrail-policy-rules.yaml"
-      ],
-      "mode": "enforced",
-      "validatedDigest": "07a41f7547ceaf78b51b59a5f8890e61256dfd3bbdbe35a86690d8e229acd714",
-      "validatedAt": "2026-04-16T20:36:50Z"
-    },
-    "grimoire-subagent-context": {
-      "event": "SubagentStart",
-      "target": ".github/hooks/scripts/grimoire-subagent-context.sh",
-      "controlFiles": [
-        ".github/hooks/grimoire-subagent-context.json",
-        ".github/hooks/scripts/grimoire-hook-gateway.sh",
-        "grimoire-kit/framework/tools/guardrail-policy.py",
-        "grimoire-kit/framework/tools/guardrail-policy-rules.py",
-        "grimoire-kit/framework/tools/guardrail-policy-follow-through.py",
-        "grimoire-kit/framework/tools/guardrail-policy-rules.yaml"
-      ],
-      "mode": "enforced",
-      "validatedDigest": "54b0a4679b6a85b904af0776fbffb00c5c534eb8a3c299ff3cdd4b8e370b8709",
-      "validatedAt": "2026-04-16T20:36:50Z"
-    },
-    "grimoire-subagent-trace": {
-      "event": "SubagentStart/Stop",
-      "target": ".github/hooks/scripts/grimoire-subagent-trace.sh",
-      "controlFiles": [
-        ".github/hooks/grimoire-subagent-trace.json",
-        ".github/hooks/scripts/grimoire-hook-gateway.sh",
-        "grimoire-kit/framework/tools/guardrail-policy.py",
-        "grimoire-kit/framework/tools/guardrail-policy-rules.py",
-        "grimoire-kit/framework/tools/guardrail-policy-follow-through.py",
-        "grimoire-kit/framework/tools/guardrail-policy-rules.yaml"
-      ],
-      "mode": "enforced",
-      "validatedDigest": "a0dafff976267d7298d7f75399b85f5be01d6f5159391285d998f71b266e2181",
-      "validatedAt": "2026-04-16T20:36:50Z"
-    },
-    "grimoire-doc-drift": {
-      "event": "PostToolUse",
-      "target": ".github/hooks/scripts/grimoire-doc-drift.sh",
-      "controlFiles": [
-        ".github/hooks/grimoire-doc-drift.json",
-        ".github/hooks/scripts/grimoire-hook-gateway.sh",
-        "grimoire-kit/framework/tools/doc-drift-detector.py",
-        "grimoire-kit/framework/tools/doc-manifest.yaml"
-      ],
-      "mode": "canary",
-      "validatedDigest": "c21ce2c8e99df8d8d1612aac7844c10471e1a49a27b1664acbac87653392e09e",
-      "validatedAt": "2026-04-22T18:07:58Z"
+      "validatedDigest": "1f0a42b48b66700f6eb25081fd86cc32d74222b9432c9a0521afe2fae99cef32",
+      "validatedAt": "2026-07-13T00:01:16Z"
     },
     "grimoire-memory-gate": {
       "event": "PostToolUse",
@@ -163,20 +82,81 @@
         "grimoire-kit/src/grimoire/memory/neo4j_graph.py"
       ],
       "mode": "enforced",
-      "validatedDigest": "7770c61dc4e4c9e8359a254d7e882b46d856f6e01373e4216743e0bac69f6e3d",
-      "validatedAt": "2026-05-27T12:57:56Z"
+      "validatedDigest": "7b0408c3302c39dc33539aa6d9659e6b1aec559a3fd1a0da36b1da6fc58c9922",
+      "validatedAt": "2026-07-13T00:01:16Z"
     },
-    "grimoire-terminal-guard": {
+    "grimoire-memory-guard": {
       "event": "PreToolUse",
-      "target": ".github/hooks/scripts/grimoire-terminal-guard.sh",
+      "target": ".github/hooks/scripts/grimoire-memory-guard.sh",
       "controlFiles": [
-        ".github/hooks/grimoire-terminal-guard.json",
+        ".github/hooks/grimoire-memory-guard.json",
         ".github/hooks/scripts/grimoire-hook-gateway.sh",
-        "grimoire-kit/framework/tools/terminal-guard-policy.py"
+        "grimoire-kit/framework/tools/guardrail-policy.py",
+        "grimoire-kit/framework/tools/guardrail-policy-rules.py",
+        "grimoire-kit/framework/tools/guardrail-policy-follow-through.py",
+        "grimoire-kit/framework/tools/guardrail-policy-rules.yaml"
+      ],
+      "mode": "enforced",
+      "validatedDigest": "4be03ce30c3159c38290f46ce28ddca8a7de38a332217be166b188057e6dcb3c",
+      "validatedAt": "2026-07-13T00:01:16Z"
+    },
+    "grimoire-pattern-consumption": {
+      "event": "SessionStart",
+      "target": ".github/hooks/scripts/grimoire-pattern-consumption.sh",
+      "controlFiles": [
+        ".github/hooks/grimoire-pattern-consumption.json",
+        ".github/hooks/scripts/grimoire-hook-gateway.sh",
+        ".github/hooks/scripts/grimoire-pattern-consumption-check.py",
+        "_grimoire-runtime/_config/pattern-consumption-manifest.json"
       ],
       "mode": "shadow",
-      "validatedDigest": "399fe6e58fff03306268c81e0fa53a8d050df9ef33847009099ad2d63f595e2e",
-      "validatedAt": "2026-05-08T00:00:00Z"
+      "validatedDigest": "c3325ae43bdaa8fe77cae750988e0761f7785c0903c03b262a94f397a2937570",
+      "validatedAt": "2026-07-12T23:58:22Z"
+    },
+    "grimoire-post-edit": {
+      "event": "PostToolUse",
+      "target": ".github/hooks/scripts/grimoire-post-edit.sh",
+      "controlFiles": [
+        ".github/hooks/grimoire-post-edit.json",
+        ".github/hooks/scripts/grimoire-hook-gateway.sh",
+        "grimoire-kit/framework/tools/guardrail-policy.py",
+        "grimoire-kit/framework/tools/guardrail-policy-rules.py",
+        "grimoire-kit/framework/tools/guardrail-policy-follow-through.py",
+        "grimoire-kit/framework/tools/guardrail-policy-rules.yaml"
+      ],
+      "mode": "enforced",
+      "validatedDigest": "2a46c5d325994ebf52057a4d605f2bdfb5530356b9ef00e2099088573571f25b",
+      "validatedAt": "2026-07-13T00:01:16Z"
+    },
+    "grimoire-pre-compact": {
+      "event": "PreCompact",
+      "target": ".github/hooks/scripts/grimoire-pre-compact.sh",
+      "controlFiles": [
+        ".github/hooks/grimoire-pre-compact.json",
+        ".github/hooks/scripts/grimoire-hook-gateway.sh",
+        "grimoire-kit/framework/tools/guardrail-policy.py",
+        "grimoire-kit/framework/tools/guardrail-policy-rules.py",
+        "grimoire-kit/framework/tools/guardrail-policy-follow-through.py",
+        "grimoire-kit/framework/tools/guardrail-policy-rules.yaml"
+      ],
+      "mode": "enforced",
+      "validatedDigest": "51623e0ece37058c957cf99b926e61505e3505640c7f08f8f4438e1296f2ffc9",
+      "validatedAt": "2026-07-13T00:01:16Z"
+    },
+    "grimoire-prompt-submit": {
+      "event": "UserPromptSubmit",
+      "target": ".github/hooks/scripts/grimoire-prompt-submit.sh",
+      "controlFiles": [
+        ".github/hooks/grimoire-prompt-submit.json",
+        ".github/hooks/scripts/grimoire-hook-gateway.sh",
+        "grimoire-kit/framework/tools/guardrail-policy.py",
+        "grimoire-kit/framework/tools/guardrail-policy-rules.py",
+        "grimoire-kit/framework/tools/guardrail-policy-follow-through.py",
+        "grimoire-kit/framework/tools/guardrail-policy-rules.yaml"
+      ],
+      "mode": "enforced",
+      "validatedDigest": "aba7e05815d55e383c674f5b002b40b6b2e5de57cb64c50b194ae47626fca6e1",
+      "validatedAt": "2026-07-13T00:01:16Z"
     },
     "grimoire-rtk-rewrite": {
       "event": "PreToolUse",
@@ -185,9 +165,54 @@
         ".github/hooks/grimoire-rtk-rewrite.json",
         ".github/hooks/scripts/grimoire-hook-gateway.sh"
       ],
+      "mode": "shadow",
+      "validatedDigest": "f9616daa74f5b5fe0ddd40eacdbf4f18c9ae1a5e7356d4f127112922de1cf2b1",
+      "validatedAt": "2026-07-12T23:54:12Z"
+    },
+    "grimoire-session-start": {
+      "event": "SessionStart",
+      "target": ".github/hooks/scripts/grimoire-inject-context.sh",
+      "controlFiles": [
+        ".github/hooks/grimoire-session-start.json",
+        ".github/hooks/scripts/grimoire-hook-gateway.sh",
+        "grimoire-kit/framework/tools/guardrail-policy.py",
+        "grimoire-kit/framework/tools/guardrail-policy-rules.py",
+        "grimoire-kit/framework/tools/guardrail-policy-follow-through.py",
+        "grimoire-kit/framework/tools/guardrail-policy-rules.yaml"
+      ],
       "mode": "enforced",
-      "validatedDigest": "0320cd36a3c7ad98f1931e6566d2e08e51319bacc3cb9b79eed9acc812070f3c",
-      "validatedAt": "2026-06-26T02:09:16Z"
+      "validatedDigest": "2892b3ed6d0d1bc80596a5f33c8c64f5fddbe8e12f080b4e11f64bf40fcf10bb",
+      "validatedAt": "2026-07-13T00:01:16Z"
+    },
+    "grimoire-subagent-context": {
+      "event": "SubagentStart",
+      "target": ".github/hooks/scripts/grimoire-subagent-context.sh",
+      "controlFiles": [
+        ".github/hooks/grimoire-subagent-context.json",
+        ".github/hooks/scripts/grimoire-hook-gateway.sh",
+        "grimoire-kit/framework/tools/guardrail-policy.py",
+        "grimoire-kit/framework/tools/guardrail-policy-rules.py",
+        "grimoire-kit/framework/tools/guardrail-policy-follow-through.py",
+        "grimoire-kit/framework/tools/guardrail-policy-rules.yaml"
+      ],
+      "mode": "enforced",
+      "validatedDigest": "c8567ad5e6f75622e5319f3ee245350c2066f5f2dc69f5c194f1fa3243d29973",
+      "validatedAt": "2026-07-13T00:01:16Z"
+    },
+    "grimoire-subagent-trace": {
+      "event": "SubagentStart/Stop",
+      "target": ".github/hooks/scripts/grimoire-subagent-trace.sh",
+      "controlFiles": [
+        ".github/hooks/grimoire-subagent-trace.json",
+        ".github/hooks/scripts/grimoire-hook-gateway.sh",
+        "grimoire-kit/framework/tools/guardrail-policy.py",
+        "grimoire-kit/framework/tools/guardrail-policy-rules.py",
+        "grimoire-kit/framework/tools/guardrail-policy-follow-through.py",
+        "grimoire-kit/framework/tools/guardrail-policy-rules.yaml"
+      ],
+      "mode": "enforced",
+      "validatedDigest": "f02b0e67b85e784b1bfe6d3543316568c6b552ad6bd0dfd2c3fd8dbf934e7e30",
+      "validatedAt": "2026-07-13T00:01:16Z"
     }
   }
 }

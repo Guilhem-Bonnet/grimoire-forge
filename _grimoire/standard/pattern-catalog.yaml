@@ -76,7 +76,7 @@ patterns:
     intent: "Route hooks through a policy gateway so tool mediation, traces and evidence gates stay auditable."
     required_artifacts: ["hook-registry.yaml", "rule-packs.yaml"]
     rule_refs: ["hooks.must-use-gateway", "hooks.no-destructive-bypass"]
-    hook_refs: ["hooks.gateway-required", "tools.terminal-guard"]
+    hook_refs: ["hooks.gateway-required"]
     check_refs: ["hooks.gateway_missing", "hooks.destructive_bypass"]
   - id: skill-classification-matrix
     category: orchestration
@@ -139,7 +139,7 @@ patterns:
     intent: "Mediate tool/MCP calls through a trust gate aligned with OWASP agentic threats before execution."
     required_artifacts: ["hook-registry.yaml", "rule-packs.yaml"]
     rule_refs: ["tools.mediated-before-use"]
-    hook_refs: ["tools.terminal-guard"]
+    hook_refs: []
     check_refs: ["tools.unmediated_call", "tools.threat_unmapped"]
   - id: provider-cost-slo
     category: provider

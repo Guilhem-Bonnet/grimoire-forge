@@ -1,0 +1,11 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "type": "command",
+        "command": ".github/hooks/scripts/grimoire-hook-gateway.sh --hook-id grimoire-pattern-consumption --event SessionStart --control-file .github/hooks/grimoire-pattern-consumption.json",
+        "timeout": 5
+      }
+    ]
+  }
+}

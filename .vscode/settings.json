@@ -70,10 +70,6 @@
       "approve": true,
       "matchCommandLine": true
     },
-    "/^(?:python|python3|\/.*\/python) .*vscode-terminal-prune\\.py\\b/": {
-      "approve": true,
-      "matchCommandLine": true
-    },
     "rm": false,
     "rmdir": false,
     "del": false,

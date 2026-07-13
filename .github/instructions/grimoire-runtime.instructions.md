@@ -45,5 +45,4 @@ Les variables `{project-root}`, `{user_name}`, `{communication_language}` sont s
 
 - `_grimoire-runtime/_memory/` est protégé par le hook `grimoire-memory-guard`
 - `shared-context.md` — contexte partagé entre sessions
-- `udf-usage-tracker.json` — tracking des artefacts dynamiques
 - Ne JAMAIS écrire dans `_grimoire-runtime/_memory/` sans confirmation utilisateur

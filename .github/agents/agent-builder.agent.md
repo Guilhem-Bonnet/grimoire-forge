@@ -15,22 +15,8 @@ Sub-agent builder d'agents. Peut lire et écrire des fichiers agent, pas d'exéc
 4. Create and edit agent definitions following Grimoire standards
 5. Before concluding, chain obvious same-goal L1/L2 follow-through for agent assets: companion prompt updates, metadata consistency, linked instruction changes, and other safe adjacent fixes revealed by the edit
 
-## Rapid Dynamic Mode (DAF — Éphémère)
-When invoked with a dynamic agent creation request (score < 3):
-1. Read the template from {project-root}/.github/agents/_templates/dynamic-agent.tpl.md
-2. Fill in all placeholders:
-   - `{NAME}`: domain-specific name (e.g. "K8s Expert", "Data Pipeline Specialist")
-   - `{DESCRIPTION}`: keyword-rich description for agent discovery
-   - `{TRIGGERS}`: comma-separated trigger phrases
-   - `{TOOLS}`: minimal tool set needed — prefer `'read', 'search'` unless edit/execute required
-   - `{DATE}`: current ISO date
-   - `{EXPIRES}`: current date + 7 days
-   - `{DOMAIN_DESCRIPTION}`: clear scope of expertise
-3. Save to `.github/agents/_dyn-{slug}.agent.md`
-4. Report back the agent name for immediate invocation
-
-## Full Creation Mode (DAF — Permanent)
-When invoked with a permanent agent creation request (score ≥ 3):
+## Creation Mode
+When invoked with a permanent agent creation request :
 1. Read the template from {project-root}/.github/agents/_templates/permanent-agent.tpl.md
 2. Fill in all placeholders with higher quality standards:
    - `{NAME}`: distinctive agent name with personality
@@ -40,11 +26,11 @@ When invoked with a permanent agent creation request (score ≥ 3):
    - `{TOOLS}`: appropriate tool set for the domain
    - `{DOMAIN_DESCRIPTION}`: detailed scope, boundaries, and expertise areas
 3. Add `handoffs` if the agent naturally chains to existing agents
-4. Save to `.github/agents/{slug}.agent.md` (NO `_dyn-` prefix)
+4. Save to `.github/agents/{slug}.agent.md`
 5. Do NOT create a companion prompt by default. Create `.github/prompts/{slug}.prompt.md` only if explicitly requested and justified as a prompt-native mission pack that is not better served by a skill, instruction, hook, or the agent alone
 6. Report back: agent name, tools, handoffs, trigger keywords, and whether a direct prompt was intentionally created
 
-### Tool Selection Rules for Dynamic Agents
+### Tool Selection Rules
 | Need | Tools |
 |---|---|
 | Analysis / research only | `read, search` |

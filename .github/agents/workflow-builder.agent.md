@@ -21,24 +21,8 @@ Before creating any `.prompt.md` workflow artifact:
 2. Only continue with DWF when the artifact is a manual, user-facing mission pack with explicit context, output format, and success criteria
 3. A workflow prompt must not be a thin wrapper around an existing runtime workflow, task, or agent
 
-## Rapid Dynamic Mode (DWF — Éphémère)
-When invoked with a dynamic workflow creation request (score < 3):
-1. Confirm that the admission gate above passes
-2. Read the template from {project-root}/.github/agents/_templates/dynamic-workflow.tpl.md
-3. Fill in all placeholders:
-   - `{NAME}`: workflow name (e.g. "Perf Audit", "Migration Check")
-   - `{DESCRIPTION}`: keyword-rich description for slash command discovery
-   - `{TRIGGERS}`: comma-separated trigger phrases
-   - `{DATE}`: current ISO date
-   - `{EXPIRES}`: current date + 7 days
-   - `{WORKFLOW_DESCRIPTION}`: what this workflow accomplishes
-   - `{STEPS}`: numbered steps with agent assignments (e.g. "1. **architect** → analyze bottlenecks")
-   - `{OUTPUT_FORMAT}`: expected deliverable
-4. Save to `.github/prompts/_dyn-{slug}.prompt.md`
-5. Report back the workflow name — available immediately as `/dyn-{slug}`
-
-## Full Creation Mode (DWF — Permanent)
-When invoked with a permanent workflow creation request (score ≥ 3):
+## Creation Mode
+When invoked with a permanent workflow creation request :
 1. Confirm that the admission gate above passes
 2. Read the template from {project-root}/.github/agents/_templates/permanent-workflow.tpl.md
 3. Fill in all placeholders with production quality:
@@ -51,7 +35,7 @@ When invoked with a permanent workflow creation request (score ≥ 3):
    - `{AGENT_CHAIN}`: which agents are involved and in what order
    - `{OUTPUT_FORMAT}`: detailed deliverable format
    - `{SUCCESS_CRITERIA}`: how to know the workflow succeeded
-4. Save to `.github/prompts/{slug}.prompt.md` (NO `_dyn-` prefix)
+4. Save to `.github/prompts/{slug}.prompt.md`
 5. Report back: workflow name, agent chain, slash command, and the justification for prompt-native admission
 
 ### Workflow Composition Rules

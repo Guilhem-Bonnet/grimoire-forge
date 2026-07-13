@@ -15,7 +15,6 @@ findings classés, et un verdict `pass` / `revise` / `reject`. Sert de gate qual
 - Validation d'une skill nouvellement générée par `grimoire-skill-forge` avant écriture définitive.
 - Audit d'un hook (`.github/hooks/*.json` + script associé).
 - Comparaison de plusieurs skills pour repérer les sous-qualifiées.
-- Pré-promotion d'un artefact `_dyn-*` vers permanent.
 
 ## Inputs attendus
 
