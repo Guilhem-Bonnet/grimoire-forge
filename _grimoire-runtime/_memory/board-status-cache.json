@@ -1,0 +1,11 @@
+{
+  "c1-board-transitions": "review",
+  "c2-evidence-reconcile": "review",
+  "c3-step-proof": "review",
+  "c4-engagement-metric": "review",
+  "c5-golden-run": "review",
+  "r10-cockpit": "review",
+  "r7-forge-kit-adoption": "in_progress",
+  "r8-redis-adapter": "review",
+  "r9-hooks-skills": "review"
+}

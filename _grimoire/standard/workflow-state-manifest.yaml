@@ -1,0 +1,46 @@
+$schema: "grimoire-agentic-standard-workflow-state-manifest/v1"
+metadata:
+  project: "Grimoire-Forge"
+  generated_by: "chantier C3 — preuve par step"
+  purpose: "Contrat d'artefacts par step, verifie par scripts/workflow-step-check.py."
+states:
+  - pending
+  - running
+  - done
+  - failed
+initial_state: pending
+transitions:
+  - from: pending
+    to: running
+  - from: running
+    to: done
+  - from: running
+    to: failed
+workflows:
+  - id: deliverable-package
+    description: >
+      Package livrable sous planning-artifacts. Chaque step doit laisser un
+      artefact verifiable sans faire confiance a l'agent (chantier C3).
+      Les globs de step sont relatifs au dossier d'instance.
+    instance_glob: "_grimoire-runtime-output/planning-artifacts/*"
+    exempt_instances:
+      # Dette anterieure au chantier C3, actee explicitement le 2026-07-12.
+      # Toute sortie d'exemption passe par la mise en conformite du package.
+      - "contracts"
+      - "grimoire-game"
+      - "rework-site-20260707"
+      - "stigmergy-activation-20260707"
+      - "ux-audit-cockpit-v16"
+      - "ux-audit-pixel-agents-v1"
+      - "ux-audit-switchboard-v1"
+      - "V4-concepts-durcissement"
+    steps:
+      - id: contenu
+        expected_artifact: "*.md"
+        description: "Au moins un livrable markdown dans le package."
+      - id: doc-technique
+        expected_artifact: "DOC-TECHNIQUE-*.md"
+        description: "Compagnon technique obligatoire (charte documentaire)."
+      - id: guide-utilisation
+        expected_artifact: "GUIDE-utilisation-*.md"
+        description: "Compagnon d'usage obligatoire (charte documentaire)."

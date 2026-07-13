@@ -25,7 +25,7 @@
 set -uo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-cd "$ROOT_DIR"
+cd "$ROOT_DIR" || exit 1
 
 KIT_DIR="${GRIMOIRE_KIT_DIR:-grimoire-kit}"
 
@@ -67,7 +67,7 @@ discover_cli() {
 }
 
 # 1. Lint
-section "1/5 Lint"
+section "1/6 Lint"
 # 1a. ShellCheck sur les scripts du dépôt
 if command -v shellcheck >/dev/null 2>&1; then
   mapfile -t _scripts < <(repo_scripts)
@@ -107,7 +107,7 @@ else
 fi
 
 # 2. Tests
-section "2/5 Tests — moteur grimoire-kit"
+section "2/6 Tests — moteur grimoire-kit"
 if [[ "${QUALITY_SKIP_TESTS:-0}" == "1" ]]; then
   skip "Tests" "QUALITY_SKIP_TESTS=1"
 elif kit_present && [[ -d "$KIT_DIR/tests/unit" ]]; then
@@ -121,7 +121,7 @@ else
 fi
 
 # 3. Préflight
-section "3/5 Préflight — preflight-check.py"
+section "3/6 Préflight — preflight-check.py"
 if kit_present && [[ -f "$KIT_DIR/framework/tools/preflight-check.py" ]]; then
   if (cd "$KIT_DIR" && .venv/bin/python framework/tools/preflight-check.py --project-root . --quiet); then
     pass "preflight-check (moteur)"
@@ -133,7 +133,7 @@ else
 fi
 
 # 4. Memory-lint
-section "4/5 Memory-lint — memory-lint.py"
+section "4/6 Memory-lint — memory-lint.py"
 if kit_present && [[ -f "$KIT_DIR/framework/tools/memory-lint.py" ]]; then
   if (cd "$KIT_DIR" && .venv/bin/python framework/tools/memory-lint.py --project-root .); then
     pass "memory-lint (moteur)"
@@ -145,7 +145,7 @@ else
 fi
 
 # 5. Gouvernance — standard verify
-section "5/5 Gouvernance — standard verify"
+section "5/6 Gouvernance — standard verify"
 if cli=$(discover_cli standard); then
   if bash scripts/run-standard.sh verify; then
     pass "standard verify ($cli)"
@@ -154,6 +154,28 @@ if cli=$(discover_cli standard); then
   fi
 else
   skip "Gouvernance" "aucun CLI grimoire avec la commande 'standard'"
+fi
+
+# 6. Preuve — chaine de preuve des workflows (chantiers C1-C3)
+section "6/6 Preuve — transitions kanban, evidence, steps"
+if kit_present; then
+  if "$KIT_PY" scripts/board-transitions-log.py --project-root . check; then
+    pass "board-transitions check"
+  else
+    fail "board-transitions check"
+  fi
+  if "$KIT_PY" scripts/evidence-reconcile.py --project-root .; then
+    pass "evidence-reconcile"
+  else
+    fail "evidence-reconcile"
+  fi
+  if "$KIT_PY" scripts/workflow-step-check.py --project-root .; then
+    pass "workflow-step-check"
+  else
+    fail "workflow-step-check"
+  fi
+else
+  skip "Preuve" "moteur grimoire-kit absent (loader YAML requis)"
 fi
 
 # Synthèse

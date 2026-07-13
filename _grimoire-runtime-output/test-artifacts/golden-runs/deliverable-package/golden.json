@@ -1,0 +1,49 @@
+{
+  "$schema": "grimoire-golden-run/v1",
+  "workflow": "deliverable-package",
+  "reference_instance": "_grimoire-runtime-output/planning-artifacts/preuve-workflows-20260712",
+  "captured_at": "2026-07-12T23:57:14Z",
+  "audit_statement": "Referentiel capture apres audit manuel de l'instance de reference.",
+  "steps": {
+    "contenu": {
+      "pattern": "*.md",
+      "files": [
+        {
+          "name": "DOC-TECHNIQUE-preuve-workflows.md",
+          "size": 4665,
+          "sha256": "f43b6bcb2a91022e34db3e2dd0467a050b5f75529d3a2f907e73ba32d92d1d5b"
+        },
+        {
+          "name": "GUIDE-utilisation-preuve-workflows.md",
+          "size": 1854,
+          "sha256": "b3df9808df3c50e9c57e4a1f65ea6e162a8d935bd0a3839dc78e85f8b1c8ecd5"
+        },
+        {
+          "name": "PLAN-preuve-workflows.md",
+          "size": 12852,
+          "sha256": "6362cabdc1717382d1fb2af7089b277de90584832bd63bd8fa3952ecc793c8f9"
+        }
+      ]
+    },
+    "doc-technique": {
+      "pattern": "DOC-TECHNIQUE-*.md",
+      "files": [
+        {
+          "name": "DOC-TECHNIQUE-preuve-workflows.md",
+          "size": 4665,
+          "sha256": "f43b6bcb2a91022e34db3e2dd0467a050b5f75529d3a2f907e73ba32d92d1d5b"
+        }
+      ]
+    },
+    "guide-utilisation": {
+      "pattern": "GUIDE-utilisation-*.md",
+      "files": [
+        {
+          "name": "GUIDE-utilisation-preuve-workflows.md",
+          "size": 1854,
+          "sha256": "b3df9808df3c50e9c57e4a1f65ea6e162a8d935bd0a3839dc78e85f8b1c8ecd5"
+        }
+      ]
+    }
+  }
+}
