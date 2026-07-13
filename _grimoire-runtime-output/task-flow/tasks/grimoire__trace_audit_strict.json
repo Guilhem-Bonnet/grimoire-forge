@@ -1,1 +1,0 @@
-{"task":"grimoire: trace-audit-strict","flow":"trace","kind":"task","status":"success","event":"task-finish","exitCode":0,"durationSeconds":0,"startedAt":"2026-04-14T03:44:17Z","finishedAt":"2026-04-14T03:44:17Z","cwd":"/mnt/Travail/Projets/Dev/bmad-custom","command":"bash .github/hooks/scripts/grimoire-subagent-trace.sh --audit-strict"}

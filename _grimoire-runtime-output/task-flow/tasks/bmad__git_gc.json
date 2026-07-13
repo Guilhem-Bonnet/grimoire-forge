@@ -1,1 +1,0 @@
-{"task":"bmad: git-gc","flow":"maintenance","kind":"task","status":"success","event":"task-finish","exitCode":0,"durationSeconds":0,"startedAt":"2026-04-14T03:44:22Z","finishedAt":"2026-04-14T03:44:22Z","cwd":"/mnt/Travail/Projets/Dev/bmad-custom","command":"bash -c git\\ gc\\ \\&\\&\\ cd\\ grimoire-kit\\ \\&\\&\\ git\\ gc"}
