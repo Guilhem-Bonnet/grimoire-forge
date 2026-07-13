@@ -38,7 +38,7 @@
 - The `{project-root}` variable resolves to the workspace root at runtime
 - **Documentation charter**: Avant de créer ou modifier un fichier `.md`, charger `_grimoire-runtime/_memory/tech-writer-sidecar/documentation-standards.md` et respecter la charte (CommonMark, style guide, quality checklist)
 - **Documentation companions**: Tout package de livrable sous `_grimoire-runtime-output/planning-artifacts/` doit inclure une `DOC-TECHNIQUE-<slug>.md` et une `GUIDE-utilisation-<slug>.md`; toute modification de package doit revalider ces deux compagnons avant cloture.
-- **Autonomy protocols**: L'orchestrateur applique ALS (Autonomy Level System), AORA (boucle d'itération autonome), PIP (initiative proactive), DCF (confiance contextuelle), Session Momentum, et Friction Budget. Voir `grimoire-kit/framework/agent-base.md` et `grimoire-kit/framework/orchestrator-gateway.md`.
+- **Autonomy protocols**: L'orchestrateur applique ALS (Autonomy Level System), Session Momentum, et Friction Budget. Voir `grimoire-kit/framework/agent-base.md` et `grimoire-kit/framework/orchestrator-gateway.md`. PIP (initiative proactive) est en statut observer-only (non instrumenté — cartographie 2026-04-21) ; AORA et DCF sont retirés (aucun artefact exécutable, purge du 2026-07-12, voir `_grimoire-runtime-output/planning-artifacts/durcissement-agentique-20260712/`).
 - **Completion discipline**: Si une tâche révèle une suite logique alignée avec l'objectif courant et restant en risque L1/L2, l'agent doit l'exécuter dans le même tour. Ne proposer des prochaines étapes qu'en cas de blocage, de changement d'objectif, ou pour du travail optionnel, exploratoire, ou L3+.
 - **Activation SOG**: Si le premier message utilisateur contient déjà une demande actionable, le master ne doit pas afficher le menu ni attendre une sélection; il doit traiter la demande directement. Le menu n'est montré que lors d'une activation sans tâche explicite.
 - **Stability guard**: Pour éviter les crashs de l'extension host VSCode, respecter ces limites : jamais de grep_search sans `includePattern` ciblé, toujours un timeout raisonnable sur les commandes terminal. Le file watcher est configuré pour exclure `.venv`, `__pycache__`, `.pytest_cache`, `.ruff_cache` etc. (voir `.vscode/settings.json`).
@@ -55,7 +55,7 @@
 
 | Agent | Persona | Title | Capabilities |
 |---|---|---|---|
-| grimoire-master | Grimoire Master | Smart Orchestrator Gateway — Point d'entrée unique | orchestration SOG, dispatch intelligent, anti-hallucination HUP, escalation QEC, validation CVTL, party mode PCE, autonomy ALS, iteration AORA, proactive PIP, confidence DCF |
+| grimoire-master | Grimoire Master | Smart Orchestrator Gateway — Point d'entrée unique | orchestration SOG, dispatch intelligent, anti-hallucination HUP, escalation QEC, validation CVTL, party mode PCE, autonomy ALS |
 
 ### Sub-agents internes (invisibles à l'utilisateur)
 
@@ -163,46 +163,21 @@ Note: la disponibilité des modèles varie selon plan Copilot, client IDE et ré
 - Compléter avec Process Explorer (`Help > Open Process Explorer`) et Running Extensions si besoin.
 - Archiver les diagnostics dans `_grimoire-runtime-output/test-artifacts/` pour traçabilité.
 
-## Unified Dynamic Factory (UDF)
+## Création d'artefacts
 
-L'orchestrateur peut créer dynamiquement 4 types d'artefacts quand aucun existant ne couvre le besoin.
+> Le mécanisme UDF (Unified Dynamic Factory, artefacts éphémères `_dyn-*`) est retiré depuis le 2026-07-12 : zéro usage constaté sur toute sa durée de vie (tracker vide, aucun artefact créé). Décision et archive : `_grimoire-runtime-output/planning-artifacts/durcissement-agentique-20260712/`.
 
-**Registre centralisé** : `_grimoire-runtime/_config/udf-registry.yaml` — source de vérité pour les conventions (paths, templates, seuils) de chaque type d'artefact.
+Toute création d'artefact est permanente et passe par le builder approprié :
 
-### Types d'artefacts
-
-| Type | Builder | Éphémère | Permanent | Emplacement |
-|---|---|---|---|---|
-| Agent | agent-builder | `_dyn-*.agent.md` | `{slug}.agent.md` | `.github/agents/` |
-| Workflow prompt | workflow-builder | `_dyn-*.prompt.md` | `{slug}.prompt.md` | `.github/prompts/` |
-| Skill | grimoire-skill-forge (gated by grimoire-skill-analyzer) | `_dyn-*/SKILL.md` | `{slug}/SKILL.md` | `.github/skills/` |
-| Hook | grimoire-skill-forge (gated by grimoire-skill-analyzer) | — (toujours `shadow`) | `{hook-id}.json` + script | `.github/hooks/` |
-| Instruction | tech-writer | `_dyn-*.instructions.md` | `{slug}.instructions.md` | `.github/instructions/` |
+| Type | Builder | Emplacement |
+|---|---|---|
+| Agent | agent-builder | `.github/agents/{slug}.agent.md` |
+| Workflow prompt | workflow-builder | `.github/prompts/{slug}.prompt.md` |
+| Skill | grimoire-skill-forge (gated by grimoire-skill-analyzer) | `.github/skills/{slug}/SKILL.md` |
+| Hook | grimoire-skill-forge (gated by grimoire-skill-analyzer) | `.github/hooks/{hook-id}.json` + script |
+| Instruction | tech-writer | `.github/instructions/{slug}.instructions.md` |
 
 Par defaut, une capacite multi-etapes recurrente devient un skill. Le type `Workflow prompt` est reserve aux mission packs user-facing, manuels, avec un contrat de sortie explicite. La création de skills et de hooks passe obligatoirement par `grimoire-skill-forge`, qui invoque `grimoire-skill-analyzer` comme gate qualité bloquant (score minimum 75/100, ≥90 en mode strict). Les hooks démarrent toujours en `mode: shadow` dans `hook-safety-registry.json`.
-
-### Processus
-
-1. **Gap detection** : le SOG analyse la requête et identifie qu'aucun artefact existant ne correspond
-2. **Type classification** : le SOG détermine le type d'artefact nécessaire (agent, workflow, skill, instruction)
-3. **Triage de durabilité** : score de durabilité pour décider entre création éphémère ou permanente
-4. **Création** : dispatch vers le builder approprié en mode Rapid (éphémère) ou Full (permanent)
-5. **Post-use** : promotion automatique des éphémères réutilisés 3+ fois
-
-### Triage de durabilité
-
-| Signal | Score |
-|---|---|
-| Domaine lié au stack technique du projet | +2 |
-| Besoin déjà exprimé dans une session précédente | +2 |
-| Domaine transversal (sécurité, performance, accessibilité, data) | +2 |
-| Besoin récurrent dans le cycle de vie produit | +1 |
-| Besoin ponctuel/exploratoire | -2 |
-| Domaine très niche | -1 |
-
-- **Score ≥ 3** → Création permanente via template `permanent-*.tpl.md`
-- **Score < 3** → Création éphémère via template `dynamic-*.tpl.md` (expire 7j)
-- **Nettoyage** : task `grimoire: cleanup-dynamic-artifacts` nettoie tous les artefacts expirés
 
 ## File-Specific Instructions
 

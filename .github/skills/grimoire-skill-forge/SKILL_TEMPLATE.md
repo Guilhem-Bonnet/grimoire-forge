@@ -17,7 +17,6 @@ plafond strict 500.
 name: {{slug}}
 description: "{{quoi_action}}. Use when: {{trigger_1}}, {{trigger_2}}, {{trigger_3}}, {{trigger_4_5_optional}}."
 created: "{{iso_date}}"
-# expires: "{{iso_date_plus_7d}}"   # uniquement en mode rapid (_dyn-*)
 ---
 ```
 

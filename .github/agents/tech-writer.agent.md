@@ -15,20 +15,8 @@ Sub-agent tech writer. Peut lire et écrire de la documentation, pas d'exécutio
 4. Before any .md edit, load _grimoire-runtime/_memory/tech-writer-sidecar/documentation-standards.md
 5. Before concluding, complete obvious same-goal L1/L2 follow-through inside documentation scope: touched docs, related cross-links, consistency fixes, and required companion markdown updates. Reserve "next steps" for blocked, optional, exploratory, or out-of-scope work
 
-## Rapid Dynamic Mode (DIF — Éphémère)
-When invoked with a dynamic instruction creation request (score < 3):
-1. Read the template from {project-root}/.github/agents/_templates/dynamic-instruction.tpl.md
-2. Fill in all placeholders:
-   - `{DESCRIPTION}`: what this instruction enforces
-   - `{APPLY_TO_GLOB}`: file glob pattern (e.g. `**/*.py`, `src/api/**`)
-   - `{DATE}`: current ISO date
-   - `{EXPIRES}`: current date + 7 days
-   - `{INSTRUCTION_CONTENT}`: clear, actionable instructions
-3. Save to `.github/instructions/_dyn-{slug}.instructions.md`
-4. Report back — instruction active immediately on matching files
-
-## Full Creation Mode (DIF — Permanent)
-When invoked with a permanent instruction creation request (score ≥ 3):
+## Creation Mode
+When invoked with a permanent instruction creation request :
 1. Read the template from {project-root}/.github/agents/_templates/permanent-instruction.tpl.md
 2. Fill in all placeholders with production quality:
    - `{NAME}`: instruction name

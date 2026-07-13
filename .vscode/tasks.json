@@ -559,6 +559,20 @@
       "dependsOrder": "sequence"
     },
     {
+      "label": "grimoire: pattern-consumption-check",
+      "type": "shell",
+      "command": "bash ${workspaceFolder}/.github/hooks/scripts/grimoire-task-flow.sh --task 'grimoire: pattern-consumption-check' --flow quality -- python3 ${workspaceFolder}/.github/hooks/scripts/grimoire-pattern-consumption-check.py",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "close": true
+      },
+      "problemMatcher": []
+    },
+    {
       "label": "grimoire: hooks-smoke",
       "type": "shell",
       "command": "bash ${workspaceFolder}/.github/hooks/scripts/grimoire-task-flow.sh --task 'grimoire: hooks-smoke' --flow hooks -- bash ${workspaceFolder}/.github/hooks/scripts/grimoire-hooks-smoke.sh",
@@ -759,110 +773,6 @@
       "label": "grimoire: vscode-disable-hw-accel",
       "type": "shell",
       "command": "bash ${workspaceFolder}/.github/hooks/scripts/grimoire-task-flow.sh --task 'grimoire: vscode-disable-hw-accel' --flow runtime -- bash -c 'ARG=\"$HOME/.config/Code/argv.json\"; mkdir -p \"$(dirname \"$ARG\")\"; [ -f \"$ARG\" ] && cp \"$ARG\" \"$ARG.bak.$(date +%Y%m%d-%H%M%S)\"; python3 - <<\"PY\"\nimport json\nfrom pathlib import Path\narg = Path.home() / \".config/Code/argv.json\"\nif arg.exists():\n    data = json.loads(arg.read_text(encoding=\"utf-8\"))\n    if not isinstance(data, dict):\n        data = {}\nelse:\n    data = {}\ndata[\"disable-hardware-acceleration\"] = True\narg.write_text(json.dumps(data, indent=2, ensure_ascii=False) + \"\\n\", encoding=\"utf-8\")\nprint(f\"Updated {arg}\")\nPY'",
-      "presentation": {
-        "reveal": "always",
-        "panel": "shared",
-        "close": true
-      },
-      "problemMatcher": []
-    },
-    {
-      "label": "grimoire: vscode-agent-terminals-list",
-      "type": "shell",
-      "command": "bash ${workspaceFolder}/.github/hooks/scripts/grimoire-task-flow.sh --task 'grimoire: vscode-agent-terminals-list' --flow runtime -- bash -c 'PY=${workspaceFolder}/grimoire-kit/.venv/bin/python; if [ -x \"$PY\" ]; then \"$PY\" ${workspaceFolder}/grimoire-kit/framework/tools/vscode-terminal-prune.py --list --min-idle-seconds 1200 --max-shells 4; else python3 ${workspaceFolder}/grimoire-kit/framework/tools/vscode-terminal-prune.py --list --min-idle-seconds 1200 --max-shells 4; fi'",
-      "presentation": {
-        "reveal": "always",
-        "panel": "shared",
-        "close": true
-      },
-      "problemMatcher": []
-    },
-    {
-      "label": "grimoire: vscode-agent-terminals-prune",
-      "type": "shell",
-      "command": "bash ${workspaceFolder}/.github/hooks/scripts/grimoire-task-flow.sh --task 'grimoire: vscode-agent-terminals-prune' --flow runtime -- bash -c 'PY=${workspaceFolder}/grimoire-kit/.venv/bin/python; if [ -x \"$PY\" ]; then \"$PY\" ${workspaceFolder}/grimoire-kit/framework/tools/vscode-terminal-prune.py --apply --min-idle-seconds 1200 --max-shells 4; else python3 ${workspaceFolder}/grimoire-kit/framework/tools/vscode-terminal-prune.py --apply --min-idle-seconds 1200 --max-shells 4; fi'",
-      "presentation": {
-        "reveal": "always",
-        "panel": "shared",
-        "close": true
-      },
-      "problemMatcher": []
-    },
-    {
-      "label": "grimoire: vscode-agent-terminals-maintenance",
-      "type": "shell",
-      "command": "bash ${workspaceFolder}/.github/hooks/scripts/grimoire-task-flow.sh --task 'grimoire: vscode-agent-terminals-maintenance' --flow runtime -- bash -c 'OUT=${workspaceFolder}/_grimoire-runtime-output/test-artifacts/vscode; mkdir -p \"$OUT\"; TS=$(date +%Y%m%d-%H%M%S); REPORT=\"$OUT/terminal-prune-$TS.json\"; PY=${workspaceFolder}/grimoire-kit/.venv/bin/python; if [ -x \"$PY\" ]; then \"$PY\" ${workspaceFolder}/grimoire-kit/framework/tools/vscode-terminal-prune.py --apply --min-idle-seconds 1200 --max-shells 4 --report-file \"$REPORT\"; else python3 ${workspaceFolder}/grimoire-kit/framework/tools/vscode-terminal-prune.py --apply --min-idle-seconds 1200 --max-shells 4 --report-file \"$REPORT\"; fi; echo \"Report: $REPORT\"'",
-      "presentation": {
-        "reveal": "always",
-        "panel": "shared",
-        "close": true
-      },
-      "problemMatcher": []
-    },
-    {
-      "label": "grimoire: vscode-agent-terminals-autoprune",
-      "type": "shell",
-      "command": "bash ${workspaceFolder}/.github/hooks/scripts/grimoire-task-flow.sh --task 'grimoire: vscode-agent-terminals-autoprune' --flow runtime -- bash -c 'PY=${workspaceFolder}/grimoire-kit/.venv/bin/python; if [ -x \"$PY\" ]; then \"$PY\" ${workspaceFolder}/grimoire-kit/framework/tools/vscode-terminal-prune.py --apply --min-idle-seconds 600 --max-shells 4; else python3 ${workspaceFolder}/grimoire-kit/framework/tools/vscode-terminal-prune.py --apply --min-idle-seconds 600 --max-shells 4; fi'",
-      "runOptions": {
-        "runOn": "folderOpen",
-        "instanceLimit": 1,
-        "instancePolicy": "silent"
-      },
-      "hide": true,
-      "presentation": {
-        "reveal": "never",
-        "focus": false,
-        "echo": false,
-        "showReuseMessage": false,
-        "panel": "dedicated",
-        "clear": true,
-        "close": true
-      },
-      "problemMatcher": []
-    },
-    {
-      "label": "bmad: vscode-agent-terminals-list",
-      "dependsOn": "grimoire: vscode-agent-terminals-list",
-      "dependsOrder": "sequence"
-    },
-    {
-      "label": "bmad: vscode-agent-terminals-prune",
-      "dependsOn": "grimoire: vscode-agent-terminals-prune",
-      "dependsOrder": "sequence"
-    },
-    {
-      "label": "bmad: vscode-agent-terminals-maintenance",
-      "dependsOn": "grimoire: vscode-agent-terminals-maintenance",
-      "dependsOrder": "sequence"
-    },
-    {
-      "label": "bmad: vscode-agent-terminals-autoprune",
-      "dependsOn": "grimoire: vscode-agent-terminals-autoprune",
-      "dependsOrder": "sequence",
-      "hide": true
-    },
-    // ── Dynamic Artifact Cleanup ─────────────────────────────────────
-    {
-      "label": "grimoire: cleanup-dynamic-artifacts",
-      "type": "shell",
-      "command": "bash ${workspaceFolder}/.github/hooks/scripts/grimoire-task-flow.sh --task 'grimoire: cleanup-dynamic-artifacts' --flow maintenance -- bash ${workspaceFolder}/.github/hooks/scripts/grimoire-cleanup-dynamic-artifacts.sh",
-      "options": {
-        "cwd": "${workspaceFolder}"
-      },
-      "presentation": {
-        "reveal": "always",
-        "panel": "shared",
-        "close": true
-      },
-      "problemMatcher": []
-    },
-    {
-      "label": "bmad: cleanup-dynamic-artifacts",
-      "type": "shell",
-      "command": "bash ${workspaceFolder}/.github/hooks/scripts/grimoire-task-flow.sh --task 'bmad: cleanup-dynamic-artifacts' --flow maintenance -- bash ${workspaceFolder}/.github/hooks/scripts/grimoire-cleanup-dynamic-artifacts.sh",
-      "options": {
-        "cwd": "${workspaceFolder}"
-      },
       "presentation": {
         "reveal": "always",
         "panel": "shared",

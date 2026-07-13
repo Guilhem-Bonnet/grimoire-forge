@@ -114,7 +114,7 @@ consumer: architecture-review
 # Distillat : Projet Grimoire
 
 ## Abréviations
-- GK: Grimoire Kit | SOG: Smart Orchestrator Gateway | UDF: Unified Dynamic Factory
+- GK: Grimoire Kit | SOG: Smart Orchestrator Gateway
 
 ## Architecture
 - Stack: Python 3.12+ / VS Code Copilot agents / Markdown-as-protocol

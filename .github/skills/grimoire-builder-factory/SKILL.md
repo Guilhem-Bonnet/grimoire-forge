@@ -1,6 +1,6 @@
 ---
 name: grimoire-builder-factory
-description: "Creation, edition et validation d'artefacts Grimoire via BMB. Use when: create agent, edit agent, validate agent, create module, edit module, validate module, create workflow, edit workflow, validate workflow, builder factory, UDF artifact design."
+description: "Creation, edition et validation d'artefacts Grimoire via BMB. Use when: create agent, edit agent, validate agent, create module, edit module, validate module, create workflow, edit workflow, validate workflow, builder factory, artifact design."
 created: "2026-04-14"
 ---
 
@@ -22,7 +22,6 @@ Cette skill remplace la grappe de wrappers BMB et applique la nouvelle politique
 ## Pre-requisites
 
 - Lire `.github/instructions/artefact-governance.instructions.md`.
-- Lire `_grimoire-runtime/_config/udf-registry.yaml`.
 - Identifier la primitive minimale suffisante avant de toucher un template.
 
 ## Process
@@ -46,7 +45,6 @@ Cette skill remplace la grappe de wrappers BMB et applique la nouvelle politique
 - `_grimoire-runtime/bmb/workflows/module/`
 - `_grimoire-runtime/bmb/workflows/workflow/`
 - `.github/instructions/artefact-governance.instructions.md`
-- `_grimoire-runtime/_config/udf-registry.yaml`
 
 ## Output Format
 

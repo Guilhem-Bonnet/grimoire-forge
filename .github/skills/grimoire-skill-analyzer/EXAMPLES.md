@@ -49,7 +49,6 @@ review skills. Score partiel sur A5.
 
 - Audit d'une skill existante avant un commit.
 - Validation d'une skill nouvellement générée par grimoire-skill-forge.
-- Pré-promotion d'un artefact `_dyn-*` vers permanent.
 - Comparaison de plusieurs skills pour repérer les sous-qualifiées.
 ```
 

@@ -12,7 +12,6 @@ Aucun artefact n'est écrit définitivement tant que le score qualité requis n'
 ## Quand utiliser
 
 - L'utilisateur veut créer une nouvelle skill ou un nouveau hook.
-- Promotion d'un artefact `_dyn-*` vers permanent (UDF).
 - Refactor majeur d'une skill existante (réécriture > 50%).
 - Design d'un hook lifecycle agent avec garde-fous sécurité.
 
@@ -28,7 +27,6 @@ Aucun artefact n'est écrit définitivement tant que le score qualité requis n'
 |---|---|
 | `artifact_kind` | `skill` ou `hook` |
 | `intent` | 1-2 phrases : que doit faire l'artefact ? |
-| `mode` | `rapid` (éphémère `_dyn-*`, expire 7j) ou `full` (permanent) |
 | `strict` | si `true`, exige score ≥ 90 ; sinon ≥ 75 |
 
 Si l'un de ces inputs manque → **HALT** et batcher les questions (max 4 d'un coup).
@@ -51,8 +49,7 @@ graph TD
 
 Avant de toucher un template, valider que la primitive est bien un skill ou un hook :
 
-1. Lire `_grimoire-runtime/_config/udf-registry.yaml`.
-2. Lire `.github/instructions/artefact-governance.instructions.md`.
+1. Lire `.github/instructions/artefact-governance.instructions.md`.
 3. Lister `.github/skills/` (ou `.github/hooks/`) et chercher un chevauchement >40% par n-gram
    sur le slug et l'intent.
 4. Si chevauchement détecté → **HALT** et proposer d'éditer l'existant plutôt que créer.
@@ -161,17 +158,8 @@ l'utilisateur insiste, refuser et expliquer.
 
 #### Skill
 
-Selon `mode` :
-
-| Mode | Path | Frontmatter additionnel |
-|---|---|---|
-| `rapid` | `.github/skills/_dyn-{slug}/SKILL.md` | `created: <ISO>`, `expires: <ISO+7d>` |
-| `full` | `.github/skills/{slug}/SKILL.md` | `created: <ISO>` |
-
+Path : `.github/skills/{slug}/SKILL.md`, frontmatter avec `created: <ISO>`.
 Bundled files (`RUBRIC.md`, `EXAMPLES.md`, etc.) au même niveau, jamais imbriqués.
-
-Mettre à jour `_grimoire-runtime/_memory/udf-usage-tracker.json` avec une entrée initiale
-`count: 0`, `created`, et `type: skill`.
 
 #### Hook
 
@@ -211,8 +199,7 @@ Présenter à l'utilisateur :
 - **Hook mode initial** : shadow (si applicable)
 - **Top findings résiduels** : <liste, severity minor/nit acceptables>
 - **Prochaine action recommandée** :
-  - Skill : invoquer en conditions réelles, observer triggers ;
-    promotion auto si count ≥ 3 (voir UDF tracker).
+  - Skill : invoquer en conditions réelles, observer triggers.
   - Hook : observer en mode shadow ≥ 3 sessions ; promouvoir via
     `grimoire: hooks-promote {hook-id}` quand stable.
 ```
@@ -261,16 +248,13 @@ Avant Step 7, présenter :
 - [ ] Hook : entrée dans `hook-safety-registry.json` avec `mode: shadow`.
 - [ ] Hook : script passe par `grimoire-hook-gateway.sh`.
 - [ ] Hook : `timeout` déclaré.
-- [ ] UDF tracker mis à jour (skills uniquement).
-- [ ] Pas de `_dyn-*` orphelin.
 
 ## Intégration
 
-- Gate inviolable de la Dynamic Skill Factory (DSF) du protocole UDF.
+- Gate inviolable de la création de skills et de hooks.
 - Consomme `grimoire-skill-analyzer` (gate qualité, fail-closed).
 - Templates : [SKILL_TEMPLATE.md](SKILL_TEMPLATE.md), [HOOK_TEMPLATE.md](HOOK_TEMPLATE.md).
 - Sécurité : [SECURITY_GUARDRAILS.md](SECURITY_GUARDRAILS.md).
-- Promotion auto via `udf-usage-tracker.json` (count ≥ 3 → flag `promote: true`).
 - Hooks promus via `grimoire: hooks-promote`.
 
 ## References
@@ -278,5 +262,4 @@ Avant Step 7, présenter :
 - [Anthropic skill authoring best practices](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices)
 - [grimoire-skill-analyzer](../grimoire-skill-analyzer/SKILL.md)
 - `.github/instructions/artefact-governance.instructions.md`
-- `_grimoire-runtime/_config/udf-registry.yaml`
 - `_grimoire-runtime/_config/hook-safety-registry.json`

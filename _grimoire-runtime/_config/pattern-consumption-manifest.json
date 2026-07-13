@@ -1,0 +1,57 @@
+{
+  "version": 1,
+  "description": "Manifeste de gouvernance des sigles de protocoles agentiques. Consomme par grimoire-pattern-consumption-check.py (lot 4 du plan durcissement-agentique-20260712). Tout sigle present dans les instructions doit exister ici ; un sigle 'executable' doit pointer un artefact existant ; un sigle 'retired' ne peut apparaitre que dans une phrase de retrait.",
+  "updated": "2026-07-12",
+  "statuses": ["executable", "prose-pending-lot3", "observer-only", "retired"],
+  "patterns": {
+    "SOG": {
+      "status": "executable",
+      "artifact": "_grimoire-runtime/core/agents/grimoire-master.md",
+      "note": "Smart Orchestrator Gateway (BM-53) : protocole embarque dans l'agent maitre, charge a chaque activation via grimoire-master.agent.md. Source : plan durcissement-agentique-20260712."
+    },
+    "HUP": {
+      "status": "prose-pending-lot3",
+      "note": "Hallucination filter (BM-50). Audit 2026-04-21 : preuve declarative seulement, aucun declenchement instrumente. Sort decide au lot 3 du plan durcissement-agentique-20260712 (verdict campagne bras active)."
+    },
+    "QEC": {
+      "status": "prose-pending-lot3",
+      "note": "Question batching (BM-51). Audit 2026-04-21 : preuve declarative seulement. Sort decide au lot 3 du plan durcissement-agentique-20260712."
+    },
+    "CVTL": {
+      "status": "prose-pending-lot3",
+      "note": "Cross-validation (BM-52). Audit 2026-04-21 : preuve declarative seulement. Candidat lot 3a (conversion en hook SubagentStop) ou lot 3b (archivage) selon le verdict du lot 2."
+    },
+    "PCE": {
+      "status": "prose-pending-lot3",
+      "note": "Party mode debates (BM-54). Audit 2026-04-21 : preuve declarative seulement. Sort decide au lot 3 du plan durcissement-agentique-20260712."
+    },
+    "ALS": {
+      "status": "prose-pending-lot3",
+      "note": "Autonomy Level System. Audit 2026-04-21 : preuve declarative seulement. Sort decide au lot 3 du plan durcissement-agentique-20260712."
+    },
+    "ARG": {
+      "status": "prose-pending-lot3",
+      "note": "Agent Relationship Graph (BM-57). Audit 2026-04-21 : preuve declarative seulement. Sort decide au lot 3 du plan durcissement-agentique-20260712."
+    },
+    "PIP": {
+      "status": "observer-only",
+      "note": "Proactive Initiative Protocol. Statut observer-only acte (cartographie 2026-04-21, lot 1 item 1.4 du plan durcissement-agentique-20260712) : non instrumente, aucune obligation d'artefact."
+    },
+    "AORA": {
+      "status": "retired",
+      "note": "Boucle d'iteration autonome. Retire le 2026-07-12 (lot 1 item 1.1) : aucun artefact executable sous ce sigle. Archive : _grimoire-runtime-output/planning-artifacts/durcissement-agentique-20260712/."
+    },
+    "DCF": {
+      "status": "retired",
+      "note": "Confiance contextuelle. Retire le 2026-07-12 (lot 1 item 1.1) : aucun artefact executable sous ce sigle. Archive : _grimoire-runtime-output/planning-artifacts/durcissement-agentique-20260712/."
+    },
+    "ELSS": {
+      "status": "retired",
+      "note": "Archive (verdict cartographie 2026-04-21, acte au lot 1 item 1.4 du plan durcissement-agentique-20260712)."
+    },
+    "UDF": {
+      "status": "retired",
+      "note": "Unified Dynamic Factory. Retire le 2026-07-12 (lot 1 item 1.2) : tracker vide, zero artefact _dyn-* cree sur toute sa duree de vie. Archive : _grimoire-runtime-output/planning-artifacts/durcissement-agentique-20260712/."
+    }
+  }
+}
