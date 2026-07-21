@@ -1075,6 +1075,19 @@
         "close": true
       },
       "problemMatcher": []
+    },
+    // ── Repo Context Pack (C4.3) ─────────────────────────────────────
+    {
+      "label": "grimoire: repo-context",
+      "type": "shell",
+      "command": "${workspaceFolder}/grimoire-kit/.venv/bin/python ${workspaceFolder}/.github/hooks/scripts/grimoire-repo-context.py --root ${workspaceFolder}",
+      "options": { "cwd": "${workspaceFolder}" },
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "close": true
+      },
+      "problemMatcher": []
     }
   ]
 }
