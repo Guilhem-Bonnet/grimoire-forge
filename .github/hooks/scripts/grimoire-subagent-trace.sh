@@ -451,4 +451,13 @@ if ! output=$(printf '%s' "$input" | "$POLICY_PYTHON" "$POLICY_SCRIPT" subagent-
   exit 0
 fi
 
+# Handoff-packet ORC-03 (C4.4) : dériver un handoff conforme de la capsule
+# subagent-stop qui vient d'être écrite. Best-effort et déterministe — le helper
+# s'auto-garde (no-op si la capsule n'est pas un SubagentStop) et ne casse jamais
+# le hook.
+"$POLICY_PYTHON" "$PROJECT_ROOT/.github/hooks/scripts/grimoire-subagent-handoff.py" \
+  "$SUBAGENT_STOP_LATEST_FILE" \
+  "$SUBAGENT_STOP_DIR/handoff-latest.json" \
+  "$SUBAGENT_STOP_DIR/handoff-events.jsonl" 2>/dev/null || true
+
 printf '%s\n' "$output"
