@@ -1,15 +1,13 @@
 #!/usr/bin/env python3
-"""Produit un handoff-packet (ORC-03) à chaque SubagentStop (C4.4).
+"""Glue I/O du handoff-packet à SubagentStop (C4.4, recâblé sur le kit).
 
-Le seul handoff runtime effectif était la trace subagent brute. Ce helper en
-dérive un ``handoff-packet`` conforme au contrat du catalogue (ORC-03), de
-façon **déterministe** : il lit la capsule ``subagent-stop/latest.json`` que le
-hook de trace vient d'écrire et en produit un digest structuré, sans dépendre
-d'un moteur LLM. ``context-summarizer.py`` réveillé pourra plus tard enrichir le
-champ ``digest`` ; ici on garantit au moins un handoff au bon format.
+La logique de dérivation (contrat ORC-03) vit désormais dans le produit :
+``grimoire.tools.handoff`` (rapatriée de l'atelier vers grimoire-kit). Ce script
+d'atelier n'est plus qu'une glue : il lit la capsule ``subagent-stop/latest.json``
+et écrit le handoff produit par le kit. Source de vérité unique.
 
-Best-effort : toute erreur (fichier absent, JSON invalide) est silencieuse et
-n'émet rien — un hook ne doit jamais casser le cycle agent.
+Best-effort : toute erreur (kit absent, JSON invalide) est silencieuse — un hook
+ne doit jamais casser le cycle agent.
 """
 
 from __future__ import annotations
@@ -17,44 +15,30 @@ from __future__ import annotations
 import json
 import sys
 from pathlib import Path
+from typing import Any
 
-HANDOFF_SCHEMA_VERSION = "grimoire-handoff-packet/v1"
-_PREVIEW_MAX = 600
+try:
+    from grimoire.tools.handoff import build_handoff, is_subagent_stop
+except ImportError:
+    # Kit indisponible (venv absent) : no-op silencieux.
+    def build_handoff(capsule: dict[str, Any]) -> dict[str, Any]:  # type: ignore[misc]
+        return {}
 
-
-def build_handoff(latest: dict[str, object]) -> dict[str, object]:
-    """Dérive un handoff-packet ORC-03 d'une capsule subagent-stop."""
-    failed = bool(latest.get("explicitFailure"))
-    preview = str(latest.get("outputPreview") or "").strip()
-    task = str(latest.get("task") or "").strip()
-    digest = preview or (f"(pas d'aperçu de sortie) tâche : {task}" if task else "")
-    return {
-        "schemaVersion": HANDOFF_SCHEMA_VERSION,
-        "contract": "handoff-packet",
-        "pattern": "ORC-03",
-        "from": {"agent": latest.get("agent") or "unknown", "role": "subagent"},
-        "task": task,
-        "taskType": latest.get("taskType") or "",
-        "digest": digest[:_PREVIEW_MAX],
-        "status": "failed" if failed else "ok",
-        "producedAt": latest.get("timestamp") or "",
-    }
+    def is_subagent_stop(capsule: dict[str, Any]) -> bool:  # type: ignore[misc]
+        return False
 
 
 def main() -> int:
-    # Args : <latest.json> <handoff-latest.json> <handoff-events.jsonl>
     if len(sys.argv) < 4:
         return 0
-    latest_path = Path(sys.argv[1])
-    out_latest = Path(sys.argv[2])
-    out_events = Path(sys.argv[3])
+    latest_path, out_latest, out_events = (Path(sys.argv[i]) for i in (1, 2, 3))
     try:
-        latest = json.loads(latest_path.read_text(encoding="utf-8"))
+        capsule = json.loads(latest_path.read_text(encoding="utf-8"))
     except (OSError, ValueError):
         return 0
-    if not isinstance(latest, dict) or latest.get("event") != "SubagentStop":
+    if not is_subagent_stop(capsule):
         return 0
-    packet = build_handoff(latest)
+    packet = build_handoff(capsule)
     try:
         out_latest.parent.mkdir(parents=True, exist_ok=True)
         out_latest.write_text(

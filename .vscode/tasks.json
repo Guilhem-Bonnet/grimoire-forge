@@ -1076,11 +1076,11 @@
       },
       "problemMatcher": []
     },
-    // ── Repo Context Pack (C4.3) ─────────────────────────────────────
+    // ── Repo Context Pack (C4.3, recâblé sur la commande kit) ────────
     {
       "label": "grimoire: repo-context",
       "type": "shell",
-      "command": "${workspaceFolder}/grimoire-kit/.venv/bin/python ${workspaceFolder}/.github/hooks/scripts/grimoire-repo-context.py --root ${workspaceFolder}",
+      "command": "${workspaceFolder}/grimoire-kit/.venv/bin/python -m grimoire.cli.app context-pack ${workspaceFolder} --out ${workspaceFolder}/_grimoire-runtime-output/repo-contexts/Grimoire-Forge.context-pack.json",
       "options": { "cwd": "${workspaceFolder}" },
       "presentation": {
         "reveal": "always",
