@@ -16,6 +16,16 @@ project instructions already exposed through `CLAUDE.md` and GitHub Copilot.
 6. If the first user message is already actionable, skip any menu/bootstrap and
    execute the request directly.
 
+## Doctrine
+
+- La Forge (ce repo) est un atelier, pas un projet a developper. Le produit est
+  grimoire-kit (repo `Grimoire-kit`, clone local `grimoire-kit/`).
+- Un chantier n'existe que s'il change ce que recoit un utilisateur de
+  grimoire-kit ; son planning vit dans le repo Grimoire-kit.
+- Ameliorer la Forge elle-meme est interdit par defaut : maintenance corrective
+  uniquement, ou deblocage d'un chantier produit nomme, avec confirmation
+  explicite de l'utilisateur.
+
 ## Project Defaults
 
 - Communication language: Francais
