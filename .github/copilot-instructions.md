@@ -13,6 +13,18 @@
 - **Implementation Artifacts**: {project-root}/_grimoire-runtime-output/implementation-artifacts
 - **Project Knowledge**: {project-root}/docs
 
+## Doctrine — la Forge est un atelier, Grimoire est le produit
+
+La Forge (ce repo) n'est pas un projet à développer. C'est l'atelier qui sert à créer Grimoire.
+Le produit est **grimoire-kit** (repo `Grimoire-kit`, cloné localement en `grimoire-kit/`) : c'est là que vivent le code produit, ses issues et son planning.
+
+Règles opposables à tout agent et à toute session :
+
+1. **Un chantier n'existe que s'il change ce que reçoit un utilisateur de grimoire-kit.** Le planning produit vit dans le repo Grimoire-kit, pas dans `planning-artifacts/`.
+2. **Améliorer la Forge elle-même est interdit par défaut** (hooks, task-flow, runtime, patterns d'atelier, preuve, stigmergie…). On touche la Forge uniquement en maintenance corrective : quand elle casse, ou quand elle bloque un chantier produit identifiable.
+3. **Verrou de triage** : avant tout nouveau chantier ou dispatch, répondre à « cible = produit ou atelier ? ». Cible atelier → confirmation explicite de Guilhem obligatoire, avec le chantier produit bloqué nommé. Pas de réponse → pas de travail.
+4. Les plans d'atelier existants sont gelés ou archivés dans `_grimoire-runtime-output/planning-artifacts/deprecated-plans-registry.yaml` — ne pas les rouvrir sans demande explicite.
+
 ## Grimoire Runtime Structure
 
 - **Agent definitions**: `_grimoire-runtime/bmm/agents/` (BMM module) and `_grimoire-runtime/core/agents/` (core)

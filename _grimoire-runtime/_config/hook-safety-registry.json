@@ -9,9 +9,9 @@
         ".github/hooks/scripts/grimoire-hook-gateway.sh",
         "scripts/board-transitions-log.py"
       ],
-      "mode": "shadow",
+      "mode": "enforced",
       "validatedDigest": "1af85d39077e0c63caca1c519de7b1b2794a5eeb8be916f75e3812a1ab7079c0",
-      "validatedAt": "2026-07-13T00:01:16Z"
+      "validatedAt": "2026-07-13T02:39:38Z"
     },
     "grimoire-control-surface-guard": {
       "event": "PreToolUse",
@@ -49,9 +49,9 @@
         ".github/hooks/scripts/grimoire-hook-gateway.sh",
         "scripts/engagement-log.py"
       ],
-      "mode": "shadow",
+      "mode": "enforced",
       "validatedDigest": "1de2c0da497230edfb8c3a91bba9c51b25dc390097fd894d00720e0536f6a418",
-      "validatedAt": "2026-07-12T23:56:22Z"
+      "validatedAt": "2026-07-13T02:39:38Z"
     },
     "grimoire-master-stop-hook": {
       "event": "Stop",

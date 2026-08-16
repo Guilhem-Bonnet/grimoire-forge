@@ -1,8 +1,9 @@
 ---
 # Registre des plans — statuts et mappings vers le plan cible
-# Statuts: active | absorbed | archive | incubator
+# Statuts: active | absorbed | archive | incubator | migrated
 # absorbed_by: chemin relatif depuis planning-artifacts/
-# updated: 2026-05-08
+# migrated: le plan concerne le produit grimoire-kit; son planning continue dans le repo Grimoire-kit
+# updated: 2026-07-12 (tri doctrine atelier — la Forge n'est plus un projet à développer)
 
 schema_version: "grimoire.plans-registry.v1"
 target_plan: "cahier-des-charges-projet-cible-grimoire-agent-os-20260508"
@@ -139,6 +140,53 @@ plans:
     status: absorbed
     absorbed_by: "cahier-des-charges-projet-cible-grimoire-agent-os-20260508"
     absorbed_lots: ["LOT-A", "LOT-M"]
+
+  # ── Tri doctrine atelier (2026-07-12) ───────────────────────────────────────
+  # La Forge est un atelier, pas un projet. Les chantiers d'auto-développement
+  # de l'atelier sont gelés (incubator) ; les chantiers produit migrent vers le
+  # repo Grimoire-kit (migrated). Ne pas rouvrir sans demande explicite.
+
+  - id: durcissement-agentique-20260712
+    path: "durcissement-agentique-20260712"
+    title: "Durcissement agentique (2026-07-12)"
+    status: incubator
+    note: >-
+      Auto-développement de l'atelier. Les lots déjà exécutés (purge UDF,
+      retrait AORA/DCF, PIP observer-only, PR Forge #20) restent acquis.
+      Les lots restants côté atelier sont gelés ; ce qui touche le produit
+      (kit PR #78, campagne evals) se pilote depuis le repo Grimoire-kit.
+
+  - id: preuve-workflows-20260712
+    path: "preuve-workflows-20260712"
+    title: "Preuve workflows C1-C5 (2026-07-12)"
+    status: incubator
+    note: >-
+      Auto-développement de l'atelier (task-flow, evidence). C1-C5 implémentés
+      le 2026-07-12 ; l'existant reste en l'état (hooks en shadow, pas de
+      promotion). Gelé : maintenance corrective uniquement.
+
+  - id: stigmergy-activation-20260707
+    path: "stigmergy-activation-20260707"
+    title: "Activation stigmergie (2026-07-07)"
+    status: incubator
+    note: "Auto-développement de l'atelier. Gelé."
+
+  - id: retrieval-unifie-20260708
+    path: "retrieval-unifie-20260708"
+    title: "Retrieval unifié (2026-07-08)"
+    status: migrated
+    note: >-
+      Feature produit grimoire-kit. Phase 1 livrée (branche
+      feat/lexical-retrieval-fts5-tantivy). Le planning des phases 2-4
+      continue dans le repo Grimoire-kit ; ce package devient archive locale.
+
+  - id: rework-site-20260707
+    path: "rework-site-20260707"
+    title: "Rework site vitrine (2026-07-07)"
+    status: migrated
+    note: >-
+      Vitrine du produit (web/ du clone bridge). Le planning continue dans le
+      repo Grimoire-kit ; ce package devient archive locale.
 
   # ── Archives (rapports, analyses, audits) ───────────────────────────────────
 
