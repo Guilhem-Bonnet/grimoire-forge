@@ -11,7 +11,7 @@
       ],
       "mode": "enforced",
       "validatedDigest": "1af85d39077e0c63caca1c519de7b1b2794a5eeb8be916f75e3812a1ab7079c0",
-      "validatedAt": "2026-07-13T02:39:38Z"
+      "validatedAt": "2026-08-27T21:05:35Z"
     },
     "grimoire-control-surface-guard": {
       "event": "PreToolUse",
@@ -25,8 +25,8 @@
         "grimoire-kit/framework/tools/guardrail-policy-rules.yaml"
       ],
       "mode": "enforced",
-      "validatedDigest": "0e85227d6124e61bc3f1053985efc204801ef505176c1b2747a134fc9aed067e",
-      "validatedAt": "2026-07-13T00:01:16Z"
+      "validatedDigest": "b9a5d183137acb8fcf6ff084e48f5d44b9c1a19bac36207b63f5159666b8032b",
+      "validatedAt": "2026-08-27T21:05:35Z"
     },
     "grimoire-doc-drift": {
       "event": "PostToolUse",
@@ -39,7 +39,7 @@
       ],
       "mode": "canary",
       "validatedDigest": "7f6ac1bc4bc1c87d0064168edb6aba10585103d90321cc5c0818296309b68e0b",
-      "validatedAt": "2026-07-13T00:01:16Z"
+      "validatedAt": "2026-08-27T21:06:02Z"
     },
     "grimoire-engagement": {
       "event": "UserPromptSubmit",
@@ -51,7 +51,7 @@
       ],
       "mode": "enforced",
       "validatedDigest": "1de2c0da497230edfb8c3a91bba9c51b25dc390097fd894d00720e0536f6a418",
-      "validatedAt": "2026-07-13T02:39:38Z"
+      "validatedAt": "2026-08-27T21:05:35Z"
     },
     "grimoire-master-stop-hook": {
       "event": "Stop",
@@ -65,8 +65,8 @@
         "grimoire-kit/framework/tools/guardrail-policy-rules.yaml"
       ],
       "mode": "enforced",
-      "validatedDigest": "1f0a42b48b66700f6eb25081fd86cc32d74222b9432c9a0521afe2fae99cef32",
-      "validatedAt": "2026-07-13T00:01:16Z"
+      "validatedDigest": "5886ebf362bba84593d753a89576d8b9666c90564972389ead25ad30b468fe28",
+      "validatedAt": "2026-08-27T21:05:35Z"
     },
     "grimoire-memory-gate": {
       "event": "PostToolUse",
@@ -82,8 +82,8 @@
         "grimoire-kit/src/grimoire/memory/neo4j_graph.py"
       ],
       "mode": "enforced",
-      "validatedDigest": "7b0408c3302c39dc33539aa6d9659e6b1aec559a3fd1a0da36b1da6fc58c9922",
-      "validatedAt": "2026-07-13T00:01:16Z"
+      "validatedDigest": "b95ebc65ddcd4e0d4b676ebda2a684c8d4078d4e0af91153b427f1b632227fa8",
+      "validatedAt": "2026-08-27T21:05:35Z"
     },
     "grimoire-memory-guard": {
       "event": "PreToolUse",
@@ -97,8 +97,8 @@
         "grimoire-kit/framework/tools/guardrail-policy-rules.yaml"
       ],
       "mode": "enforced",
-      "validatedDigest": "4be03ce30c3159c38290f46ce28ddca8a7de38a332217be166b188057e6dcb3c",
-      "validatedAt": "2026-07-13T00:01:16Z"
+      "validatedDigest": "12a6aae97e1f357098db6a25bb9e6cbb5c1bc36149d3c314f75b7197bfed94de",
+      "validatedAt": "2026-08-27T21:05:35Z"
     },
     "grimoire-pattern-consumption": {
       "event": "SessionStart",
@@ -111,7 +111,7 @@
       ],
       "mode": "shadow",
       "validatedDigest": "c3325ae43bdaa8fe77cae750988e0761f7785c0903c03b262a94f397a2937570",
-      "validatedAt": "2026-07-12T23:58:22Z"
+      "validatedAt": "2026-08-27T21:06:02Z"
     },
     "grimoire-post-edit": {
       "event": "PostToolUse",
@@ -125,8 +125,8 @@
         "grimoire-kit/framework/tools/guardrail-policy-rules.yaml"
       ],
       "mode": "enforced",
-      "validatedDigest": "2a46c5d325994ebf52057a4d605f2bdfb5530356b9ef00e2099088573571f25b",
-      "validatedAt": "2026-07-13T00:01:16Z"
+      "validatedDigest": "5c16039f749dbbfcc06ad287b689d86bb13599008ca3a582779644cf18e9a1ae",
+      "validatedAt": "2026-08-27T21:05:35Z"
     },
     "grimoire-pre-compact": {
       "event": "PreCompact",
@@ -140,8 +140,8 @@
         "grimoire-kit/framework/tools/guardrail-policy-rules.yaml"
       ],
       "mode": "enforced",
-      "validatedDigest": "51623e0ece37058c957cf99b926e61505e3505640c7f08f8f4438e1296f2ffc9",
-      "validatedAt": "2026-07-13T00:01:16Z"
+      "validatedDigest": "675b916ef5d5fa74b973b364390fc62911fdf0ae7362d3b3f34d9376d6b4e896",
+      "validatedAt": "2026-08-27T21:05:35Z"
     },
     "grimoire-prompt-submit": {
       "event": "UserPromptSubmit",
@@ -155,8 +155,8 @@
         "grimoire-kit/framework/tools/guardrail-policy-rules.yaml"
       ],
       "mode": "enforced",
-      "validatedDigest": "aba7e05815d55e383c674f5b002b40b6b2e5de57cb64c50b194ae47626fca6e1",
-      "validatedAt": "2026-07-13T00:01:16Z"
+      "validatedDigest": "803a689bd71e26b78fe5f4d4b23f889cde30074c942562bb02b05170645940ed",
+      "validatedAt": "2026-08-27T21:05:35Z"
     },
     "grimoire-rtk-rewrite": {
       "event": "PreToolUse",
@@ -165,9 +165,9 @@
         ".github/hooks/grimoire-rtk-rewrite.json",
         ".github/hooks/scripts/grimoire-hook-gateway.sh"
       ],
-      "mode": "shadow",
+      "mode": "enforced",
       "validatedDigest": "f9616daa74f5b5fe0ddd40eacdbf4f18c9ae1a5e7356d4f127112922de1cf2b1",
-      "validatedAt": "2026-07-12T23:54:12Z"
+      "validatedAt": "2026-08-27T21:05:35Z"
     },
     "grimoire-session-start": {
       "event": "SessionStart",
@@ -181,8 +181,8 @@
         "grimoire-kit/framework/tools/guardrail-policy-rules.yaml"
       ],
       "mode": "enforced",
-      "validatedDigest": "2892b3ed6d0d1bc80596a5f33c8c64f5fddbe8e12f080b4e11f64bf40fcf10bb",
-      "validatedAt": "2026-07-13T00:01:16Z"
+      "validatedDigest": "4e1b8d04805b9766b602a081d20c85d7ad2cc69efb18bb7f08695b510c3e9d77",
+      "validatedAt": "2026-08-27T21:05:35Z"
     },
     "grimoire-subagent-context": {
       "event": "SubagentStart",
@@ -196,8 +196,8 @@
         "grimoire-kit/framework/tools/guardrail-policy-rules.yaml"
       ],
       "mode": "enforced",
-      "validatedDigest": "c8567ad5e6f75622e5319f3ee245350c2066f5f2dc69f5c194f1fa3243d29973",
-      "validatedAt": "2026-07-13T00:01:16Z"
+      "validatedDigest": "b458b84c333f1e8a89dae75f2c7bff27767f593e93c4926a041f64b61329e946",
+      "validatedAt": "2026-08-27T21:05:35Z"
     },
     "grimoire-subagent-trace": {
       "event": "SubagentStart/Stop",
@@ -211,8 +211,8 @@
         "grimoire-kit/framework/tools/guardrail-policy-rules.yaml"
       ],
       "mode": "enforced",
-      "validatedDigest": "f02b0e67b85e784b1bfe6d3543316568c6b552ad6bd0dfd2c3fd8dbf934e7e30",
-      "validatedAt": "2026-07-13T00:01:16Z"
+      "validatedDigest": "b1bfe71db7f35b68cf6d41c152a18c936b6fe772e415f99037cf2199ea0d2a6a",
+      "validatedAt": "2026-08-27T21:05:35Z"
     }
   }
 }
