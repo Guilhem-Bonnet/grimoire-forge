@@ -235,7 +235,14 @@ plans:
   - id: adr-007-mission-board-control-plane-causal
     path: "ADR-007-mission-board-control-plane-causal.md"
     title: "ADR-007 Mission board control plane causal"
-    status: archive
+    status: migrated
+    note: >-
+      Decision produit, pas atelier : elle arbitre le modele de taches du kit
+      (MissionLedger source, task-board.yaml projection). Elle etait marquee
+      archive ici alors qu'un chantier produit vivant en dependait (issue #136,
+      EPIC #142). La ratification et la suite se font dans le repo Grimoire-kit,
+      cote docs/adr-*, conformement a la doctrine. Ce fichier reste archive
+      locale, ne plus l'editer.
 
   - id: livrable-final-mission-board
     path: "LIVRABLE-FINAL-mission-board-grimoire.md"
@@ -333,3 +340,15 @@ plans:
     title: "PRD Grimoire Init Onboarding"
     status: incubator
     note: "Candidat LOT-L1 CLI refinement."
+
+  - id: atelier-c4-ledger-bounding-20260827
+    path: "(branche git, sans package de planning)"
+    title: "Chantier atelier C4.2-C4.4 — bornage des ledgers, context-pack, handoff-packet"
+    status: archive
+    note: >-
+      Cinq commits feat(atelier) sur les hooks, tasks.json et le registre de
+      surete : amelioration de la Forge, pas maintenance corrective. Rien
+      n'etait casse, aucun chantier produit n'etait bloque, donc gele au titre
+      de la regle 2 de la doctrine. Contenu recuperable par le tag
+      archive/atelier-c4-ledger-bounding-20260827 ; branche supprimee locale et
+      distante le 2026-08-27.
