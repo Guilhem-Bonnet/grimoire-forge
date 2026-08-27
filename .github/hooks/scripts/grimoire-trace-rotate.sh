@@ -13,6 +13,7 @@ mkdir -p "${ARCHIVE_DIR}"
 
 rotate_if_large() {
   local file="$1"
+  local prefix="${2:-}"
   local ext="${file##*.}"
   [[ -f "${file}" ]] || return 0
   local size
@@ -22,6 +23,7 @@ rotate_if_large() {
     ts=$(date +%Y%m%d-%H%M%S)
     local base
     base=$(basename "${file}" ".${ext}")
+    [[ -n "${prefix}" ]] && base="${prefix}-${base}"
     local dest="${ARCHIVE_DIR}/${base}-${ts}.${ext}"
     mv "${file}" "${dest}"
     touch "${file}"
@@ -32,6 +34,12 @@ rotate_if_large() {
 rotate_if_large "${TRACE_DIR}/GRIMOIRE_TRACE.md"
 rotate_if_large "${TRACE_DIR}/GRIMOIRE_TRACE.jsonl"
 rotate_if_large "${TRACE_DIR}/GRIMOIRE_TRACE.legacy.txt"
+
+# Ledgers de contexte bornes (audit "tout-indexer" — KNO-01/RUN-02,
+# SPEC-ingenierie-contexte C4.2) : memes seuil et purge que la trace.
+rotate_if_large "${TRACE_DIR}/hook-runtime/precompact/events.jsonl" "precompact"
+rotate_if_large "${TRACE_DIR}/hook-runtime/subagent-stop/events.jsonl" "subagent-stop"
+rotate_if_large "${ROOT_DIR}/_grimoire-runtime/_memory/activity.jsonl" "activity"
 
 # Purge archives older than 30 days
 find "${ARCHIVE_DIR}" -maxdepth 1 -type f -mtime +30 -delete 2>/dev/null || true
