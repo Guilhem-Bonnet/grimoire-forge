@@ -3,7 +3,7 @@
 
 ## Project Configuration
 
-- **Project**: grimoire-forge
+- **Project**: Grimoire-Forge
 - **User**: Guilhem
 - **Communication Language**: Français
 - **Document Output Language**: Français
