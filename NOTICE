@@ -1,9 +1,11 @@
 Grimoire Forge
 Copyright (c) 2025 Guilhem Bonnet
 
-Ce dépôt est distribué sous licence MIT (voir LICENSE). Il redistribue des
-travaux tiers, dont la notice de licence est reproduite ci-dessous comme
-l'exige cette licence.
+Ce dépôt est distribué sous licence MIT (voir LICENSE). Il redistribue aussi
+des travaux tiers, sous leur propre licence. La notice de chacun est
+reproduite ci-dessous parce que leur licence amont l'exige — c'est une
+obligation qui pèse sur les composants redistribués, distincte de la licence
+de ce dépôt.
 
 --------------------------------------------------------------------------------
 BMAD-METHOD
@@ -13,8 +15,8 @@ Portions de ce dépôt dérivent de BMAD-METHOD.
 
   Source amont : https://github.com/bmad-code-org/BMAD-METHOD
   Licence      : MIT
-  Périmètre    : _grimoire-runtime/bmm/   (194 fichiers)
-                 _grimoire-runtime/tea/   (223 fichiers)
+  Périmètre    : _grimoire-runtime/bmm/
+                 _grimoire-runtime/tea/
 
 Ces répertoires portent les modules de méthode et d'architecture de test de
 l'amont, adaptés au vocabulaire Grimoire. Certains fichiers conservent des
@@ -23,7 +25,8 @@ invocations `bmad` littérales, trace directe de cette origine.
 Le produit — le paquet grimoire-kit, dépôt Grimoire-kit — ne contient aucune
 portion dérivée de BMAD-METHOD.
 
-Texte de licence de l'amont, reproduit intégralement :
+Texte de licence de l'amont, reproduit intégralement. Le « CONTRIBUTORS.md »
+qu'il mentionne est celui du dépôt amont, pas de celui-ci :
 
     MIT License
 
