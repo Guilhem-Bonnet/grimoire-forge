@@ -55,7 +55,8 @@ tâche là où elle avait été laissée.
 |---|---|---|---|
 | `GRIMOIRE_NEO4J_PASSWORD` | Aucun : la variable était déjà exportée par `~/.zshrc` depuis le 2026-08-27, et le mot de passe est validé contre le conteneur (`cypher-shell` retourne `ok`). L'avertissement venait de `memory.neo4j_uri` vide ; il est tombé avec sa correction. | — | clos |
 | `grimoire setup` propage les options vers `copilot-instructions.md` sans écrire la source de vérité, puis annonce « in sync » | Défaut du kit, reproduit sur un projet neuf : `setup --check` contredit le `setup` qui vient de tourner. | repo produit Grimoire-kit | issue #216 |
-| Surfaces Copilot désynchronisées, collision sur `art-director.agent.md` | Choix d'atelier non tranché. | Guilhem | ouvert |
+| Surfaces Copilot non projetées | Tranché : la projection est refusée tant que `host sync` reste tout-ou-rien. Elle apporterait six agents, trois compétences et cinq prompts, mais écraserait `grimoire-session-start.json` et `grimoire-pre-compact.json`, qui passent par `grimoire-hook-gateway.sh` et son registre de promotion. `art-director.agent.md` est préservé sans `--force`, les hooks non. | repo produit Grimoire-kit | issue #218 |
+| Artefacts régénérables non ignorés | Index `_grimoire/_memory/*.sqlite3` et context-packs de `repo-contexts/` sortis du suivi git. | — | clos |
 
 ## Suites exécutées
 
@@ -64,3 +65,4 @@ tâche là où elle avait été laissée.
 | Publication de la branche | `git push` | `6898cab..a9260c1`, hook `pre-push` vert sans bypass |
 | Défaut kit qualifié puis remonté | `gh issue create` | [Grimoire-kit#216](https://github.com/Guilhem-Bonnet/Grimoire-kit/issues/216), reproduction minimale et lecture du code jointes |
 | Projet de reproduction retiré du cockpit | `grimoire cockpit remove repro` | registre rendu à son état d'avant le test |
+| Asymétrie du sync qualifiée puis remontée | `host sync --host copilot` sur un projet jetable portant un hook maison | le hook est remplacé sans `[!]` ni `--force` ; [Grimoire-kit#218](https://github.com/Guilhem-Bonnet/Grimoire-kit/issues/218) |
