@@ -204,6 +204,7 @@ Details dans [web/README.md](web/README.md).
 - Securite: [SECURITY.md](SECURITY.md)
 - Runtime Grimoire (agents, workflows, config): [_grimoire-runtime/](_grimoire-runtime/)
 - Kit implementation: [grimoire-kit/](grimoire-kit/)
+- Licence et attributions amont: [LICENSE](LICENSE), [NOTICE](NOTICE)
 
 ## Statut
 
