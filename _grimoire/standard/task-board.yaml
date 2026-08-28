@@ -49,7 +49,7 @@ tasks:
       - orchestrator
       - implementation-agent
     acceptance_criteria:
-      - "grimoire-kit/.venv installs canonical Kit (v3.4.4+) via editable path."
+      - "The Forge venv installs the published grimoire-kit release (>= 3.34.2) from PyPI, not an editable working tree."
       - "grimoire standard verify passes from Forge root."
       - "Forge standard artifacts aligned with Memory OS contract."
     blockers: []
