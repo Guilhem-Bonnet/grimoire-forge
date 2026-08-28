@@ -51,8 +51,16 @@ tâche là où elle avait été laissée.
 
 ## Restes connus
 
-| Reste | Nature | Porteur |
+| Reste | Nature | Porteur | État |
+|---|---|---|---|
+| `GRIMOIRE_NEO4J_PASSWORD` | Aucun : la variable était déjà exportée par `~/.zshrc` depuis le 2026-08-27, et le mot de passe est validé contre le conteneur (`cypher-shell` retourne `ok`). L'avertissement venait de `memory.neo4j_uri` vide ; il est tombé avec sa correction. | — | clos |
+| `grimoire setup` propage les options vers `copilot-instructions.md` sans écrire la source de vérité, puis annonce « in sync » | Défaut du kit, reproduit sur un projet neuf : `setup --check` contredit le `setup` qui vient de tourner. | repo produit Grimoire-kit | issue #216 |
+| Surfaces Copilot désynchronisées, collision sur `art-director.agent.md` | Choix d'atelier non tranché. | Guilhem | ouvert |
+
+## Suites exécutées
+
+| Action | Commande | Résultat |
 |---|---|---|
-| `GRIMOIRE_NEO4J_PASSWORD` non exporté | Environnement du poste, hors dépôt. | Guilhem |
-| `grimoire status` ignore l'identité que `grimoire setup` déclare synchronisée | Défaut du kit, deux commandes lisent des sources différentes. | repo produit Grimoire-kit |
-| Surfaces Copilot désynchronisées, collision sur `art-director.agent.md` | Choix d'atelier non tranché. | Guilhem |
+| Publication de la branche | `git push` | `6898cab..a9260c1`, hook `pre-push` vert sans bypass |
+| Défaut kit qualifié puis remonté | `gh issue create` | [Grimoire-kit#216](https://github.com/Guilhem-Bonnet/Grimoire-kit/issues/216), reproduction minimale et lecture du code jointes |
+| Projet de reproduction retiré du cockpit | `grimoire cockpit remove repro` | registre rendu à son état d'avant le test |
