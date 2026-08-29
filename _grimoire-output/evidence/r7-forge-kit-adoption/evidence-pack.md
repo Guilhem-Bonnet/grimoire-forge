@@ -49,6 +49,22 @@ tâche là où elle avait été laissée.
 | Double pile agentique BMM / kit | Laissée en l'état. | Les 22 wrappers `_grimoire-runtime/` fonctionnent ; fusionner relève d'un chantier d'atelier sans blocage produit derrière. |
 | Registre cockpit | 57 entrées d'évals conservées. | `cockpit prune` les déclare vivantes ; les retirer à la main risquerait d'effacer une campagne d'une autre session. |
 
+## Connaissance mutuelle des deux piles
+
+Les 23 agents BMM et les 7 agents du kit vivaient sur deux hôtes sans registre commun.
+Rien ne disait qui existe, qui passe la main à qui, ni quels agents faisaient doublon.
+
+| Evidence | Location | Produced by | Result |
+|---|---|---|---|
+| Carte unique des deux piles | `.github/copilot-instructions.md`, entre marqueurs | `scripts/agent-index.py` | 30 agents, 4 ponts, 2 doublons arbitrés, graphe Mermaid des relations |
+| Point d'écriture atteignant les deux hôtes | `.github/copilot-instructions.md` | — | chargé nativement par Copilot, importé par `CLAUDE.md` pour Claude Code |
+| Ponts déclarés à la main | `_grimoire-runtime/_config/agent-bridges.yaml` | — | les agents du kit étant régénérés, ils ne peuvent rien déclarer : la relation qui traverse la frontière vit là |
+| Roster de l'orchestrateur exploité | frontmatter `agents:` de `grimoire-master.agent.md` | `agent-index.py` | 21 agents dispatchables ; seul `bmad-master`, alias de compatibilité, est hors roster |
+| Frontmatter du master réparé | `.github/agents/grimoire-master.agent.md` | — | 8 lignes indentées à la tabulation, YAML invalide au sens strict, illisible par tout parseur |
+| Garde de cohérence | `.github/hooks/git/pre-commit` | `agent-index.py --check` | bloque un commit qui touche un agent sans régénérer la carte |
+| Garde éprouvé sur trois cassures | session | handoff fantôme, pont orphelin, agent renommé | `exit=2` sur chacune, `exit=0` au retour |
+| Faux registre supprimé | `_grimoire-runtime-output/.agent-graph.yaml` | — | métriques inventées (« US-042 », trust 87, sprint-5), figé depuis mars 2026, ni lu ni écrit par quoi que ce soit |
+
 ## Restes connus
 
 | Reste | Nature | Porteur | État |
