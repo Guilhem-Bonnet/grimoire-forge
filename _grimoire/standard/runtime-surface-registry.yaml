@@ -1,0 +1,163 @@
+$schema: "grimoire-agentic-standard-runtime-surface-registry/v1"
+metadata:
+  project: "Grimoire-Forge"
+  generated_by: "grimoire standard init"
+  purpose: "Registre des surfaces runtime : ce qui contrôle les agents, ce qu'ils produisent, ce qui a dérivé, ce qui a été nettoyé."
+
+# Surfaces de contrôle : prompts, skills, agents, workflows, hooks, policies, MCP.
+# Chaque surface porte un owner, un mode de déploiement et un statut.
+control_surfaces:
+  - id: CTRL-001
+    surface: ".claude/settings.json"
+    type: hook
+    owner: "Guilhem"
+    mode: enforced
+    risk: élevé
+    validation: "PreToolUse refuse un rm -rf de test ; Stop bloque tant que les gates de la tâche sont rouges (cycle 2026-08-28)"
+    status: active
+  - id: CTRL-002
+    surface: ".claude/agents/*.md (7 sous-agents du kit, générés par host sync)"
+    type: agent
+    owner: "Guilhem"
+    mode: enforced
+    risk: moyen
+    validation: "grimoire host status --host claude-code : à jour"
+    status: active
+  - id: CTRL-003
+    surface: ".claude/skills/grimoire-{agent-dispatch,evidence,memory}"
+    type: skill
+    owner: "Guilhem"
+    mode: enforced
+    risk: faible
+    validation: "chargés dans la session Claude Code sans redémarrage"
+    status: active
+  - id: CTRL-004
+    surface: ".claude/commands/grimoire-*.md (12 commandes)"
+    type: prompt
+    owner: "Guilhem"
+    mode: enforced
+    risk: faible
+    validation: "grimoire host status --host claude-code : à jour"
+    status: active
+  - id: CTRL-005
+    surface: ".github/hooks/*.json (14 hooks maison, via grimoire-hook-gateway.sh)"
+    type: hook
+    owner: "Guilhem"
+    mode: enforced
+    risk: élevé
+    validation: "_grimoire-runtime/_config/hook-safety-registry.json (13 enforced, 1 canary, 1 shadow) ; sans effet en session Claude Code"
+    status: active
+  - id: CTRL-006
+    surface: ".github/agents/*.agent.md (23 wrappers BMM)"
+    type: agent
+    owner: "Guilhem"
+    mode: enforced
+    risk: moyen
+    validation: "scripts/agent-index.py --check au pre-commit ; 14 jamais activés selon GRIMOIRE_TRACE.jsonl"
+    status: active
+  - id: CTRL-007
+    surface: ".mcp.json (grimoire, context7, playwright, github)"
+    type: mcp
+    owner: "Guilhem"
+    mode: enforced
+    risk: moyen
+    validation: "grimoire doctor : les quatre serveurs résolvent"
+    status: active
+# - id: CTRL-001
+#   surface: ".claude/settings.json"
+#   type: hook            # prompt | skill | agent | workflow | hook | policy | mcp
+#   owner: ""
+#   mode: enforced        # draft | shadow | canary | enforced | retired
+#   risk: moyen           # faible | moyen | élevé | critique
+#   validation: ""        # ce qui a prouvé que la surface fait ce qu'elle dit
+#   status: active        # active | archived | superseded | obsolete
+
+# Surfaces de sortie : ce que les agents écrivent, avec rétention et indexation.
+output_surfaces:
+  - id: OUT-001
+    artifact: "_grimoire-output/evidence/<task>/"
+    type: preuve
+    mission: "standard agentique, profil governed"
+    sensitivity: interne
+    retention: durable
+    indexable: true
+    expires_at: ""
+    status: active
+  - id: OUT-002
+    artifact: "_grimoire-output/events/runtime-journal.jsonl"
+    type: trace
+    mission: "gouvernance des hooks du kit"
+    sensitivity: interne
+    retention: projet
+    indexable: false
+    expires_at: ""
+    status: active
+  - id: OUT-003
+    artifact: "_grimoire-runtime-output/GRIMOIRE_TRACE.jsonl"
+    type: trace
+    mission: "activations des sous-agents Copilot"
+    sensitivity: interne
+    retention: projet
+    indexable: false
+    expires_at: ""
+    status: obsolete
+  - id: OUT-004
+    artifact: "_grimoire/_memory/*.sqlite3"
+    type: mémoire
+    mission: "index lexical et sidecar du Memory OS"
+    sensitivity: interne
+    retention: purge
+    indexable: false
+    expires_at: ""
+    status: active
+# - id: OUT-001
+#   artifact: "_grimoire-output/evidence/"
+#   type: preuve          # plan | preuve | trace | rapport | capture | log | mémoire
+#   mission: ""
+#   sensitivity: interne  # public | interne | confidentiel | secret
+#   retention: projet     # durable | projet | court terme | purge
+#   indexable: true
+#   expires_at: ""
+#   status: active
+
+# Dérive constatée entre ce qu'une surface déclare et ce qui s'exécute.
+drift:
+  - id: DRIFT-001
+    source: "_grimoire-runtime/_config/hook-safety-registry.json (grimoire-subagent-trace: enforced)"
+    target: "_grimoire-runtime-output/GRIMOIRE_TRACE.jsonl"
+    drift: "le hook est déclaré armé, la trace s'arrête le 2026-04-26 : l'usage est passé à Claude Code où ces hooks Copilot ne s'exécutent pas"
+    impact: "aucune mesure d'activation des agents depuis quatre mois"
+    action: corriger runtime
+# - id: DRIFT-001
+#   source: ""
+#   target: ""
+#   drift: ""
+#   impact: ""
+#   action: corriger runtime   # corriger doc | corriger runtime | archiver | purger
+
+# Journal des nettoyages : chaque décision de conserver, archiver, désindexer ou purger.
+cleanup:
+  - date: "2026-09-03"
+    surface: "_grimoire-runtime-output/.agent-graph.yaml"
+    action: purger
+    justification: "métriques inventées, figé depuis mars, ni lu ni écrit"
+    validation: "commit 0c1ab9c"
+  - date: "2026-09-03"
+    surface: "registre cockpit ~/.grimoire/cockpit/registry.json"
+    action: purger
+    justification: "71 entrées d'évals pointant sous /tmp"
+    validation: "grimoire cockpit prune -y"
+# - date: ""
+#   surface: ""
+#   action: archiver      # conserver | archiver | désindexer | purger
+#   justification: ""
+#   validation: ""
+
+allowed:
+  types: [prompt, skill, agent, workflow, hook, policy, mcp]
+  modes: [draft, shadow, canary, enforced, retired]
+  risks: [faible, moyen, élevé, critique]
+  statuses: [active, archived, superseded, obsolete]
+  output_types: [plan, preuve, trace, rapport, capture, log, mémoire]
+  sensitivities: [public, interne, confidentiel, secret]
+  retentions: [durable, projet, "court terme", purge]

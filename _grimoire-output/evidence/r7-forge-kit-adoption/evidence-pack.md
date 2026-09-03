@@ -74,6 +74,22 @@ publiée (PR #249, tag `v3.36.0`, PyPI et GitHub Release verts), puis consommée
 |---|---|---|---|
 | Release 3.36.0 consommée | `.venv/` | `uv pip install --upgrade grimoire-kit==3.36.0` | `grimoire --version` 3.36.0 ; `doctor` 24/24 ; `host status --host claude-code` à jour ; `standard verify` vert ; `workflows list -k orchestration` : 6 |
 
+## Release 3.37.0 (2026-09-03, soir)
+
+Dix PR fusionnées sur le produit (#250 à #259), release recousue, validée par le
+nouveau garde de couverture du changelog, publiée (PR #260, tag `v3.37.0`, PyPI et
+GitHub Release verts), puis consommée ici.
+
+| Evidence | Location | Produced by | Result |
+|---|---|---|---|
+| Release consommée | `.venv/` | `uv pip install --upgrade grimoire-kit==3.37.0` | `grimoire --version` 3.37.0 ; `doctor` 24/24 |
+| Artefacts obligatoires de la norme générés | `_grimoire-output/evidence/bootstrap/claim-ledger.md`, `_grimoire/standard/runtime-surface-registry.yaml` | `grimoire standard fix --apply` | `verify` passait de FAIL (2 artefacts manquants) à OK |
+| Claim ledger rempli | `claim-ledger.md` | main | 8 affirmations du cycle, chacune avec sa preuve ; une contredite (CL-003, #231), une hypothèse (CL-008, usage des agents) |
+| Registre des surfaces rempli | `runtime-surface-registry.yaml` | main | 7 surfaces de contrôle, 4 de sortie, 1 dérive (trace Copilot arrêtée le 2026-04-26 sous un hook déclaré enforced), 2 nettoyages |
+| Manifeste aligné | `_grimoire/standard/standard-profile.yaml` | main | `required_artifacts` porte les deux nouveaux artefacts |
+| Traçabilité vers la norme | session | `grimoire standard traceability --profile governed` | niveau N4, 38 exigences couvertes, 17 trous listés |
+| Standard épinglé à jour | session | `grimoire standard upstream` | tête distante identique (53b2c342) |
+
 ## Errata (2026-09-03)
 
 | Point | Constat |
