@@ -65,6 +65,15 @@ Rien ne disait qui existe, qui passe la main à qui, ni quels agents faisaient d
 | Garde éprouvé sur trois cassures | session | handoff fantôme, pont orphelin, agent renommé | `exit=2` sur chacune, `exit=0` au retour |
 | Faux registre supprimé | `_grimoire-runtime-output/.agent-graph.yaml` | — | métriques inventées (« US-042 », trust 87, sprint-5), figé depuis mars 2026, ni lu ni écrit par quoi que ce soit |
 
+## Release 3.36.0 (2026-09-03)
+
+Quatre PR fusionnées sur le produit (#232, #233, #225, #248), release recousue et
+publiée (PR #249, tag `v3.36.0`, PyPI et GitHub Release verts), puis consommée ici.
+
+| Evidence | Location | Produced by | Result |
+|---|---|---|---|
+| Release 3.36.0 consommée | `.venv/` | `uv pip install --upgrade grimoire-kit==3.36.0` | `grimoire --version` 3.36.0 ; `doctor` 24/24 ; `host status --host claude-code` à jour ; `standard verify` vert ; `workflows list -k orchestration` : 6 |
+
 ## Errata (2026-09-03)
 
 | Point | Constat |
