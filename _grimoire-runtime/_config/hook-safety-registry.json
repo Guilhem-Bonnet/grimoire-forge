@@ -11,7 +11,7 @@
       ],
       "mode": "enforced",
       "validatedDigest": "51961362ba40b549449f0c7c2b3f642eca3e364b9b73ca0408c7df355fc711ec",
-      "validatedAt": "2026-09-04T20:13:59Z"
+      "validatedAt": "2026-09-04T20:20:46Z"
     },
     "grimoire-control-surface-guard": {
       "event": "PreToolUse",
@@ -26,7 +26,7 @@
       ],
       "mode": "enforced",
       "validatedDigest": "bf7e8ccb7fc26a62a498da717c205fd6019957284b0daa08f9f9488580d73445",
-      "validatedAt": "2026-09-04T20:13:59Z"
+      "validatedAt": "2026-09-04T20:20:46Z"
     },
     "grimoire-doc-drift": {
       "event": "PostToolUse",
@@ -39,7 +39,7 @@
       ],
       "mode": "canary",
       "validatedDigest": "0977a5b8bb9a80dc0cdd27181a91a57cbfaca4cd322d0ca58d17119a9343b08a",
-      "validatedAt": "2026-09-04T20:13:59Z"
+      "validatedAt": "2026-09-04T20:20:46Z"
     },
     "grimoire-engagement": {
       "event": "UserPromptSubmit",
@@ -51,7 +51,7 @@
       ],
       "mode": "enforced",
       "validatedDigest": "abaaf1d9370761b17a3256d2082805272ccb4f6856c87f7231a8b1669aae18fb",
-      "validatedAt": "2026-09-04T20:13:59Z"
+      "validatedAt": "2026-09-04T20:20:46Z"
     },
     "grimoire-master-stop-hook": {
       "event": "Stop",
@@ -66,7 +66,7 @@
       ],
       "mode": "enforced",
       "validatedDigest": "fa301a620ab35b14f16ca512d908346766a55f763aa6196cd510b6e169906caa",
-      "validatedAt": "2026-09-04T20:13:59Z"
+      "validatedAt": "2026-09-04T20:20:46Z"
     },
     "grimoire-memory-gate": {
       "event": "PostToolUse",
@@ -82,8 +82,8 @@
         "grimoire-kit/src/grimoire/memory/neo4j_graph.py"
       ],
       "mode": "enforced",
-      "validatedDigest": "e0ea4874944b0342b883fac2cfcf4125d6ee333950efc984845b58e0bf3a6c99",
-      "validatedAt": "2026-09-04T20:13:59Z"
+      "validatedDigest": "68cdc272a12beeb50ecc00aec6e437557e02b150a208a685b799b230bf71ad6a",
+      "validatedAt": "2026-09-04T20:20:46Z"
     },
     "grimoire-memory-guard": {
       "event": "PreToolUse",
@@ -98,7 +98,7 @@
       ],
       "mode": "enforced",
       "validatedDigest": "5390e150f24112e13e337bf1b80ee725fc3582ba8f0b7c81b9d288892d0af546",
-      "validatedAt": "2026-09-04T20:13:59Z"
+      "validatedAt": "2026-09-04T20:20:46Z"
     },
     "grimoire-pattern-consumption": {
       "event": "SessionStart",
@@ -111,7 +111,7 @@
       ],
       "mode": "shadow",
       "validatedDigest": "c059b1975174adaae194941d64d78da1577ecdb000db17f6053590d15a8e02f2",
-      "validatedAt": "2026-09-04T20:13:59Z"
+      "validatedAt": "2026-09-04T20:20:46Z"
     },
     "grimoire-post-edit": {
       "event": "PostToolUse",
@@ -126,7 +126,7 @@
       ],
       "mode": "enforced",
       "validatedDigest": "366a8e42ec7b9b3a265f389f9e4a527ba95d6d17ba97dd72a54586bf324eb3cc",
-      "validatedAt": "2026-09-04T20:13:59Z"
+      "validatedAt": "2026-09-04T20:20:46Z"
     },
     "grimoire-pre-compact": {
       "event": "PreCompact",
@@ -141,7 +141,7 @@
       ],
       "mode": "enforced",
       "validatedDigest": "e8fd0a59b7db3161df672ca186163bea4e006df63b87771cd2edf5a1eccc58e5",
-      "validatedAt": "2026-09-04T20:13:59Z"
+      "validatedAt": "2026-09-04T20:20:46Z"
     },
     "grimoire-prompt-submit": {
       "event": "UserPromptSubmit",
@@ -156,7 +156,7 @@
       ],
       "mode": "enforced",
       "validatedDigest": "738e93795bf498e9c720be7e0739f6638ee504171b508f9dfde9399b9a3ace63",
-      "validatedAt": "2026-09-04T20:13:59Z"
+      "validatedAt": "2026-09-04T20:20:46Z"
     },
     "grimoire-rtk-rewrite": {
       "event": "PreToolUse",
@@ -167,7 +167,7 @@
       ],
       "mode": "enforced",
       "validatedDigest": "cf3901c0d06724ecca110bd65e8855f889033fbf0e1bb0c88ce08c9daf11a91b",
-      "validatedAt": "2026-09-04T20:13:59Z"
+      "validatedAt": "2026-09-04T20:20:46Z"
     },
     "grimoire-session-start": {
       "event": "SessionStart",
@@ -182,7 +182,7 @@
       ],
       "mode": "enforced",
       "validatedDigest": "0cf7632df253be59e155125cddf7fc54caa22144d3c4621b28ba134bc10b49d8",
-      "validatedAt": "2026-09-04T20:13:59Z"
+      "validatedAt": "2026-09-04T20:20:46Z"
     },
     "grimoire-subagent-context": {
       "event": "SubagentStart",
@@ -197,7 +197,7 @@
       ],
       "mode": "enforced",
       "validatedDigest": "b1fbd06c3c76fe9f6b41d58c03947db6e7fd8169026d8cda5490fa3404d0cef7",
-      "validatedAt": "2026-09-04T20:13:59Z"
+      "validatedAt": "2026-09-04T20:20:46Z"
     },
     "grimoire-subagent-trace": {
       "event": "SubagentStart/Stop",
@@ -212,7 +212,7 @@
       ],
       "mode": "enforced",
       "validatedDigest": "75e96f1c3a3b1331cc4071dfd2211bad98b208e36700a13f97ac3a35520aa9ff",
-      "validatedAt": "2026-09-04T20:13:59Z"
+      "validatedAt": "2026-09-04T20:20:46Z"
     }
   }
 }
