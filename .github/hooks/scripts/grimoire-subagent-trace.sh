@@ -20,8 +20,8 @@ PROMPT_STATE_FILE="$HOOK_STATE_DIR/user-prompt-latest.json"
 SUBAGENT_STOP_LATEST_FILE="$SUBAGENT_STOP_DIR/latest.json"
 SUBAGENT_STOP_EVENTS_FILE="$SUBAGENT_STOP_DIR/events.jsonl"
 SUBAGENT_STOP_COUNTER_FILE="$SUBAGENT_STOP_DIR/repetition-counters.json"
-POLICY_SCRIPT="$PROJECT_ROOT/grimoire-kit/framework/tools/guardrail-policy.py"
-POLICY_PYTHON="$PROJECT_ROOT/grimoire-kit/.venv/bin/python"
+POLICY_SCRIPT="$PROJECT_ROOT/.github/hooks/lib/guardrail-policy.py"
+POLICY_PYTHON="$PROJECT_ROOT/.venv/bin/python"
 RUNTIME_ENTRY_BASH_REGEX='^- `([0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2})` \*\*([^*]+)\*\* → `([^`]+)`$'
 
 json_escape() {

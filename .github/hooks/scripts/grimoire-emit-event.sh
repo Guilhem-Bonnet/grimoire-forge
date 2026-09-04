@@ -24,7 +24,7 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 PROJECT_ROOT="$(cd "$SCRIPT_DIR/../../.." && pwd)"
-PYTHON_BIN="$PROJECT_ROOT/grimoire-kit/.venv/bin/python"
+PYTHON_BIN="$PROJECT_ROOT/.venv/bin/python"
 LEDGER="$PROJECT_ROOT/_grimoire-runtime/_memory/activity.jsonl"
 ERROR_LOG="$PROJECT_ROOT/_grimoire-runtime-output/hook-runtime/events-errors.jsonl"
 
@@ -39,7 +39,7 @@ fi
 
 # Forward all args to events CLI.  stdout = JSONL ready to append.
 set +e
-output="$("$PYTHON_BIN" -m grimoire.tools.events emit "$@" 2>/dev/null)"
+output="$("$PYTHON_BIN" "$PROJECT_ROOT/.github/hooks/lib/grimoire_tools/events.py" emit "$@" 2>/dev/null)"
 rc=$?
 set -e
 

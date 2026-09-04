@@ -9,7 +9,7 @@ project_root="$(cd "$(dirname "$0")/../../.." && pwd)"
 hook_dir="$project_root/.github/hooks"
 script_dir="$hook_dir/scripts"
 settings_file="$project_root/.vscode/settings.json"
-gate_python="$project_root/grimoire-kit/.venv/bin/python"
+gate_python="$project_root/.venv/bin/python"
 
 if [[ ! -x "$gate_python" ]]; then
     gate_python="$(command -v python3 || true)"
@@ -71,7 +71,7 @@ for script in "$script_dir"/*.sh; do
 done
 
 echo "[hooks-smoke] inspect hook promotion registry"
-"$gate_python" "$project_root/grimoire-kit/framework/tools/hook-safety-gate.py" --project-root "$project_root" status
+"$gate_python" "$project_root/.github/hooks/lib/hook-safety-gate.py" --project-root "$project_root" status
 
 echo "[hooks-smoke] validate workspace settings flags"
 grep -q '"chat.useCustomizationsInParentRepositories": true' "$settings_file"

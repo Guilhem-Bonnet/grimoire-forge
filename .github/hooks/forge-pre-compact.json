@@ -1,0 +1,11 @@
+{
+  "hooks": {
+    "PreCompact": [
+      {
+        "type": "command",
+        "command": ".github/hooks/scripts/grimoire-hook-gateway.sh --hook-id grimoire-pre-compact --event PreCompact --control-file .github/hooks/forge-pre-compact.json",
+        "timeout": 10
+      }
+    ]
+  }
+}

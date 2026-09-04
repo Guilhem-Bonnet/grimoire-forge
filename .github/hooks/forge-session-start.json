@@ -1,0 +1,11 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "type": "command",
+        "command": ".github/hooks/scripts/grimoire-hook-gateway.sh --hook-id grimoire-session-start --event SessionStart --control-file .github/hooks/forge-session-start.json",
+        "timeout": 10
+      }
+    ]
+  }
+}

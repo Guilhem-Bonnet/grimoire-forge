@@ -9,8 +9,8 @@ project_root="$(cd "$(dirname "$0")/../../.." && pwd)"
 config_file="$project_root/_grimoire-runtime/core/config.yaml"
 shared_context_file="$project_root/_grimoire-runtime/_memory/shared-context.md"
 latest_file="$project_root/_grimoire-runtime-output/hook-runtime/session-start-latest.json"
-policy_script="$project_root/grimoire-kit/framework/tools/guardrail-policy.py"
-policy_python="$project_root/grimoire-kit/.venv/bin/python"
+policy_script="$project_root/.github/hooks/lib/guardrail-policy.py"
+policy_python="$project_root/.venv/bin/python"
 
 if [[ ! -x "$policy_python" ]]; then
   policy_python="$(command -v python3 || true)"
