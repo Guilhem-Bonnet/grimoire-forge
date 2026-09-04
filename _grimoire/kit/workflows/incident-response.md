@@ -1,23 +1,25 @@
+---
+kind: orchestration
+description: "Réponse aux incidents et génération de post-mortems structurés"
+triggers:
+  - alerte critique résolue
+  - incident infra détecté
+  - incident sécurité détecté
+team: team-ops
+---
 <p align="right"><a href="../../README.md">README</a> · <a href="../../docs">Docs</a></p>
 
-name: incident-response
-description: Workflow partagé de réponse aux incidents et génération de post-mortems structurés
-triggers:
- - alerte critique résolue
- - incident infra détecté
- - incident sécurité détecté
-
-<!--
+<!-- grimoire:legend
 Ces {{placeholders}} sont résolus à l'installation depuis les agents réellement
 présents dans le projet ; un rôle sans agent installé rend « aucun ».
- aucun - Agent infrastructure/provisioning (ex: Forge)
- aucun - Agent sécurité (ex: Vault)
- aucun - Agent observabilité (ex: Hawk)
- aucun - Agent kubernetes/orchestration (ex: Helm)
- aucun - Agent backup/DR (ex: Phoenix)
- aucun - Agent CI/CD (ex: Flow)
- aucun - Agent debugging système (ex: Probe)
-  - Nom de l'utilisateur principal
+ {{ops_agent}} - Agent infrastructure/provisioning (ex: Forge)
+ {{security_agent}} - Agent sécurité (ex: Vault)
+ {{monitoring_agent}} - Agent observabilité (ex: Hawk)
+ {{k8s_agent}} - Agent kubernetes/orchestration (ex: Helm)
+ {{backup_agent}} - Agent backup/DR (ex: Phoenix)
+ {{cicd_agent}} - Agent CI/CD (ex: Flow)
+ {{debug_agent}} - Agent debugging système (ex: Probe)
+ {{user_name}} - Nom de l'utilisateur principal
 -->
 
 # <img src="../../docs/assets/icons/shield-pulse.svg" width="32" height="32" alt=""> Workflow Incident Response
@@ -56,7 +58,7 @@ Recueillir immédiatement :
 
 | Sévérité | Action |
 |----------|--------|
-| CRITIQUE | Contenir immédiatement (isoler le composant), notifier  si hors-heures |
+| CRITIQUE | Contenir immédiatement (isoler le composant), notifier Guilhem si hors-heures |
 | HAUTE | Diagnostiquer en priorité, documenter au fil de l'eau |
 | MOYENNE | Planifier dans la session courante |
 | BASSE | Logger pour traitement ultérieur |

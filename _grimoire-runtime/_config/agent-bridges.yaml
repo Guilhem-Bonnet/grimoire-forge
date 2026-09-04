@@ -22,9 +22,12 @@ duplicates:
   - names: ["grimoire-master", "concierge"]
     piles: ["bmm", "kit"]
     resolution: >-
-      Même fonction de triage et de routage. Le master SOG est le point d'entrée
-      de ce projet ; le concierge du kit ne s'active pas ici, sauf pour une
-      session Claude Code sans master chargé.
+      Même fonction de triage et de routage, et les deux sont désormais chargés
+      en même temps sous Claude Code : le master SOG par l'import de CLAUDE.md,
+      le concierge par le hook SessionStart du kit, qui injecte la persona
+      d'entrée dans la boucle principale (Grimoire-kit#233). Sous Copilot, seul
+      le master SOG est chargé. En cas de désaccord, le master SOG tranche : le
+      concierge apporte le protocole de triage, pas la doctrine d'atelier.
 
 # Relations réelles entre les deux piles : qui va chercher quoi de l'autre côté.
 bridges:

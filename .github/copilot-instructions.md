@@ -130,7 +130,7 @@ qu'il ne nomme pas ne lui sont pas accessibles par dispatch :
 | Noms | Piles | Arbitrage |
 |---|---|---|
 | `art-director` / `art-director` | bmm / kit | La version BMM est spécialisée pixel art, hero FX et room kits, et lit grimoire-game-assets/. La version kit est l'archétype générique d'identité visuelle. Sur ce projet, la version BMM prime ; la version kit ne sert que de repli hors contexte jeu. |
-| `grimoire-master` / `concierge` | bmm / kit | Même fonction de triage et de routage. Le master SOG est le point d'entrée de ce projet ; le concierge du kit ne s'active pas ici, sauf pour une session Claude Code sans master chargé. |
+| `grimoire-master` / `concierge` | bmm / kit | Même fonction de triage et de routage, et les deux sont désormais chargés en même temps sous Claude Code : le master SOG par l'import de CLAUDE.md, le concierge par le hook SessionStart du kit, qui injecte la persona d'entrée dans la boucle principale (Grimoire-kit#233). Sous Copilot, seul le master SOG est chargé. En cas de désaccord, le master SOG tranche : le concierge apporte le protocole de triage, pas la doctrine d'atelier. |
 
 ### Graphe des relations
 

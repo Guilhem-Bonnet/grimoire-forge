@@ -3,8 +3,8 @@
     "SessionStart": [
       {
         "type": "command",
-        "command": ".github/hooks/scripts/grimoire-hook-gateway.sh --hook-id grimoire-session-start --event SessionStart --control-file .github/hooks/grimoire-session-start.json",
-        "timeout": 10
+        "command": "grimoire-hook --host copilot --event SessionStart",
+        "timeout": 30
       }
     ]
   }

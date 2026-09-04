@@ -1,11 +1,12 @@
-<p align="right"><a href="../../README.md">README</a> · <a href="../../docs">Docs</a></p>
-
-name: party-mode
-description: Discussion multi-agents sur un même sujet — chaque persona parle depuis sa spécialité, l'utilisateur arbitre
+---
+kind: orchestration
+description: "Discussion multi-agents sur un même sujet — chaque persona parle depuis sa spécialité, l'utilisateur arbitre"
 triggers:
- - décision qui engage plusieurs domaines
- - avis contradictoires attendus
- - cadrage flou avant de choisir une direction
+  - décision qui engage plusieurs domaines
+  - avis contradictoires attendus
+  - cadrage flou avant de choisir une direction
+---
+<p align="right"><a href="../../README.md">README</a> · <a href="../../docs">Docs</a></p>
 
 # <img src="../../docs/assets/icons/team.svg" width="32" height="32" alt=""> Workflow Party Mode
 
@@ -29,7 +30,7 @@ Annoncer : `[PARTY MODE] Sujet : [question]`
 
 ### 2. Composer le panel
 
-Lire `_grimoire/_config/agent-manifest.csv` et retenir **3 à 5 agents** dont la spécialité touche réellement le sujet. Écarter les agents qui n'auraient rien à dire de spécifique — un panel de complaisance produit un consensus vide.
+Lire `_grimoire/kit/agent-manifest.csv` et retenir **3 à 5 agents** dont la spécialité touche réellement le sujet. Écarter les agents qui n'auraient rien à dire de spécifique — un panel de complaisance produit un consensus vide.
 
 Annoncer la composition et pourquoi chaque agent est là :
 
@@ -69,7 +70,7 @@ Ne pas moyenner les positions. Restituer :
 
 ### 6. Arbitrage
 
-L'arbitrage revient à , jamais au panel. Présenter les options numérotées et attendre.
+L'arbitrage revient à Guilhem, jamais au panel. Présenter les options numérotées et attendre.
 
 Une fois la décision prise, l'écrire dans `_grimoire/_memory/decisions-log.md` :
 
@@ -84,7 +85,7 @@ Une fois la décision prise, l'écrire dans `_grimoire/_memory/decisions-log.md`
 | 3 à 5 agents, pas plus | Au-delà, les interventions se diluent et se répètent |
 | Premier tour sans lecture croisée | Un panel qui se lit converge et perd sa raison d'être |
 | Pas de vote | Compter les voix remplace l'argument par la majorité |
-| Aucun agent ne tranche | Le panel éclaire,  décide |
+| Aucun agent ne tranche | Le panel éclaire, Guilhem décide |
 | Désaccord nul = le dire | Un faux consensus coûte le temps du panel sans rien produire |
 
 ## <img src="../../docs/assets/icons/puzzle.svg" width="28" height="28" alt=""> Sortie attendue
