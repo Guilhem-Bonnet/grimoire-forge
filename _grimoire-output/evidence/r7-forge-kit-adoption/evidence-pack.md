@@ -460,3 +460,53 @@ présent ».
 | Solde | `git rm` × 5 + 2 corrections de texte | — |
 | État final | `grimoire doctor .` | **24/24**, « tous les chemins du kit cités se résolvent », carte cohérente |
 | Standard | `grimoire standard verify .` | 0 erreur, 0 avertissement |
+
+## Audit inter-sessions (2026-09-04)
+
+Demande de Guilhem : orchestrer les sessions Claude du projet, auditer, planifier.
+Aucune modification de code ; lecture seule sur les deux dépôts.
+
+| Evidence | Location | Produced by | Result |
+|---|---|---|---|
+| Sessions interrogées | `ListAgents` + `SendMessage` | session | 22 visibles, 9 sessions Forge actives ont répondu, 3 sessions PC hors périmètre, 1 cloud sans réponse possible |
+| Rapports recoupés | `gh pr view`, `gh issue view`, `git tag`, `pip index versions` | session | 6 rapports sur 9 périmés (PR #164, #226, #230, #232 fusionnées ; 3.33.0 absorbée par 3.34.0) |
+| Santé de l'atelier | `grimoire doctor`, `standard verify .`, `gate check --task-id r7-forge-kit-adoption --strict`, `host status` | session | 24/24, 0 erreur 0 avertissement, `OK evidence gates`, Claude Code à jour |
+| Protection de `main` du kit | `gh api repos/.../branches/main/protection` | session | 404 « Branch not protected » |
+| Dépendance des hooks Forge | `grep` sur `.github/hooks/scripts/` | session | 11 scripts référencent `grimoire-kit/framework/tools/*.py`, untracked dans le clone partagé ; non déployés par 3.37.0 (`_grimoire/kit/tools/` = 5 autres outils) |
+| Worktrees du kit | `git worktree list` + `rev-list --left-right` | session | 8 worktrees, 7 sur des branches fusionnées, fermées ou absorbées |
+| Livrable | artefact « Audit Grimoire du 4 septembre » | session | état vérifié, constats transverses, plan en trois blocs, cinq décisions attendues |
+
+## Exécution du plan du 2026-09-04 — bloc « cette semaine »
+
+Guilhem a validé les cinq décisions et ajouté deux demandes : la Forge intègre
+tout ce que le kit projette, et une revue de direction artistique de
+`grimoire serve` / cockpit entre au plan.
+
+### Dépôt produit
+
+| Evidence | Location | Produced by | Result |
+|---|---|---|---|
+| #245 en conflit avec `main` | `gh pr view 245` | session | `CONFLICTING`, 2 commits / 16 en retard ; conflits sur `CHANGELOG.md` et la table de préfixes de `agentic_standard.py` |
+| Rebase dans un worktree jetable | `scratchpad/kit-245`, branche `fix/standard-check-registry-p03-p04` | `git rebase origin/main` | 2 conflits résolus ; 17 checks `claims.*` et `surfaces.*` arrivés avec 3.37.0 déclarés au registre (le test `test_every_emitted_check_is_registered` les nommait) |
+| Tests | venv dédié au worktree | `pytest tests/test_agentic_standard.py tests/unit/test_runtime.py tests/unit/test_gascity_converter.py` puis `pytest tests/unit --maxfail=5` | 124 passés, puis suite unitaire verte |
+| Types et lint | idem | `mypy --strict registry.py adapter_base.py` ; `ruff check` | 0 erreur mypy ; 2 erreurs ruff préexistantes sur `runtime/recipes.py`, hors périmètre |
+| PR de remplacement | [Grimoire-kit#261](https://github.com/Guilhem-Bonnet/Grimoire-kit/pull/261) | `gh pr create` | ouverte ; #245 fermée avec renvoi |
+| `main` protégée | `gh api PUT branches/main/protection` | session | 12 contextes requis, `enforce_admins`, push forcé et suppression interdits ; relu par `GET` |
+| Stash étranger consommé puis restauré | dépôt `Grimoire-kit` | `git stash pop` par erreur (worktree propre, stash d'une autre session), puis `git fsck --unreachable` et `git stash store 7296e9f7` | `stash@{0}` « WIP on (no branch): 300ecd38 … lot P0.2 » de retour, contenu intact |
+| Écriture accidentelle dans le clone partagé | `grimoire-kit/` | cwd du shell resté dans le clone : `grimoire up` et `host sync --host copilot` y ont écrit | 35 fichiers créés supprimés par liste explicite ; `.gitignore` et `copilot-instructions.md` réécrits depuis l'index ; les fichiers de `_grimoire/kit/` régénérés à la 3.37.0 sont laissés (état non suivi, antérieur à l'incident) |
+
+### Atelier
+
+| Evidence | Location | Produced by | Result |
+|---|---|---|---|
+| Gardes des hooks versionnées | `.github/hooks/lib/` (9 fichiers, 320 Ko) | copie depuis les untracked du clone ; `resolve_rules_file` préfère le YAML voisin | 15 scripts, `tasks.json` et les 40 `controlFiles` du registre repointés ; plus aucune référence à `grimoire-kit/framework/tools/` ni à `grimoire-kit/.venv` dans `.github/hooks/scripts/` |
+| Même verdict qu'avant | payloads `PreToolUse` | script d'origine (python du clone) et script vendorisé (python de la Forge, 3.14) | `permissionDecision: ask` identiques sur un `rm -rf` de `_grimoire-runtime/_memory` ; `{}` sur `ls` |
+| Le gateway refuse de nouveau | `grimoire-hook-gateway.sh` | après `hook-safety-gate.py promote` | même décision `ask` à travers le gateway ; `{}` tant que les hooks étaient `modified` |
+| Kit régénéré sur la Forge | `_grimoire/kit/` | `grimoire up` | 18 artefacts mis à jour, 18 fichiers projet préservés |
+| Copilot projeté | `.github/` | `grimoire host sync --host copilot` | 22 fichiers : 6 agents du kit, 3 skills, 5 prompts, 7 hooks, README ; `art-director.agent.md` maison préservé |
+| Deux hooks maison renommés | `.github/hooks/forge-session-start.json`, `forge-pre-compact.json` | session | la projection écrasait les deux fichiers homonymes ; les hooks du gateway vivent sous `forge-*`, ceux du kit sous `grimoire-*` ; les deux piles tournent sous Copilot |
+| Le smoke accepte le binaire du kit | `.github/hooks/lib/hook-safety-gate.py` | `is_kit_host_hook()` | `grimoire-hook --host copilot --event …` reconnu comme passerelle gouvernée ; les 7 manifestes du kit ne sont plus « bypass du gateway » |
+| Registre re-promu | `hook-safety-registry.json` | `promote`, puis `set-mode canary grimoire-doc-drift`, `set-mode shadow grimoire-pattern-consumption` | `total=15 enforced=13 canary=1 shadow=1`, smoke `ok` |
+| Board soldé | `_grimoire/standard/task-board.yaml` | session | `r7` → `accepted` (gates vertes) ; `r8`, `r9`, `r10`, `c1` à `c5` → `archived` avec motif (gate `missing task_envelope` sur les huit) |
+| Carte des agents | `.github/copilot-instructions.md` | `scripts/agent-index.py --check` | à jour, 30 agents, 4 ponts |
+| Santé | session | `grimoire doctor`, `standard verify .`, `gate check --task-id r7-forge-kit-adoption --strict` | 24/24 ; 0 erreur 0 avertissement ; `OK evidence gates` |
