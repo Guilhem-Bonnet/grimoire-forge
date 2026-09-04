@@ -40,6 +40,21 @@ transitions:
       - blocker_reason
       - remediation_plan
 tasks:
+  - task_id: "bootstrap"
+    title: "Bootstrap — baseline du standard agentique sur la Forge"
+    status: "accepted"
+    priority: "high"
+    owner: "grimoire-maintainers"
+    agent_roles:
+      - orchestrator
+    acceptance_criteria:
+      - "grimoire standard verify passe sans erreur depuis la racine de la Forge."
+      - "Les artefacts du profil sont générés, remplis et vérifiés."
+    blockers: []
+    context_bundle_ref: "_grimoire-output/context/bootstrap/context-bundle.yaml"
+    decision_trace_ref: "_grimoire-output/decisions/bootstrap/decision-trace.yaml"
+    evidence_pack_ref: "_grimoire-output/evidence/bootstrap/evidence-pack.md"
+    remediation_ref: "_grimoire/standard/remediation-plan.yaml"
   - task_id: "r7-forge-kit-adoption"
     title: "R7 — Forge adopts canonical grimoire-kit"
     status: "accepted"

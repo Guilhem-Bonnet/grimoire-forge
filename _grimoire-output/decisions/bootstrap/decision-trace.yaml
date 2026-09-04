@@ -1,0 +1,12 @@
+$schema: "grimoire-retro-qualification/v1"
+task_id: "bootstrap"
+artifact: "decision-trace"
+retro_qualified: true
+qualified_at: "2026-09-04"
+statement: >
+  Tâche de départ du standard sur la Forge (profil orchestrated à l'époque,
+  governed aujourd'hui). Elle est aussi la tâche que le kit évalue par défaut
+  quand aucune tâche n'est en cours sur le board. Son enveloppe et son pack de
+  preuve existaient ; son entrée au board et ce fichier compagnon manquaient,
+  donc le gate de sortie de session la déclarait rouge. Ajoutés le 2026-09-04
+  sans reconstituer un contenu d'époque : la preuve est dans evidence-pack.md.
