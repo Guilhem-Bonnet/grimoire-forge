@@ -13,7 +13,7 @@ check_script="$project_root/.github/hooks/scripts/grimoire-pattern-consumption-c
 # Consommer stdin (contrat hook JSON) sans l'utiliser.
 cat >/dev/null || true
 
-python_bin="$project_root/grimoire-kit/.venv/bin/python"
+python_bin="$project_root/.venv/bin/python"
 if [[ ! -x "$python_bin" ]]; then
   python_bin="$(command -v python3 || true)"
 fi

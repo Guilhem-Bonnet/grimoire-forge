@@ -13,8 +13,8 @@ set -euo pipefail
 input=$(cat)
 project_root="$(cd "$(dirname "$0")/../../.." && pwd)"
 kit_root="$project_root/grimoire-kit"
-detector="$kit_root/framework/tools/doc-drift-detector.py"
-python_bin="$kit_root/.venv/bin/python"
+detector="$project_root/.github/hooks/lib/doc-drift-detector.py"
+python_bin="$project_root/.venv/bin/python"
 
 if [[ ! -x "$python_bin" ]]; then
   python_bin="$(command -v python3 || true)"

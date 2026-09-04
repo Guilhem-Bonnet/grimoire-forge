@@ -5,8 +5,8 @@
 set -euo pipefail
 
 project_root="$(cd "$(dirname "$0")/../../.." && pwd)"
-policy_script="$project_root/grimoire-kit/framework/tools/guardrail-policy.py"
-policy_python="$project_root/grimoire-kit/.venv/bin/python"
+policy_script="$project_root/.github/hooks/lib/guardrail-policy.py"
+policy_python="$project_root/.venv/bin/python"
 input=$(cat)
 
 if [[ ! -x "$policy_python" ]]; then

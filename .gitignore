@@ -31,6 +31,8 @@ qdrant_data/
 _grimoire/_memory/*.json
 _grimoire/_memory/*.jsonl
 _grimoire/_memory/qdrant_data/
+# Index locaux du Memory OS — regeneres a la demande, propres a la machine.
+_grimoire/_memory/*.sqlite3
 _grimoire/_memory/backends/__pycache__/
 
 # Grimoire output runtime
@@ -55,6 +57,8 @@ _grimoire/memory/
 
 # Télémétrie runtime (streams d'événements, jamais committée)
 _grimoire-runtime-output/hook-runtime/
+# Context-packs regeneres par `grimoire context-pack` — artefact machine, jamais un livrable.
+_grimoire-runtime-output/repo-contexts/
 _grimoire-runtime-output/task-flow/
 _grimoire-runtime/_memory/activity.jsonl
 _grimoire-runtime-output/.qdrant_data/
@@ -80,3 +84,9 @@ site/
 
 # Stray shell redirects (e.g. `cmd > e` typo)
 /e
+
+# --- Grimoire Kit ---
+# Session runs — ephemeral runtime data
+_grimoire-output/.runs/
+# Memory archives — compressed old sessions
+_grimoire/_memory/archives/

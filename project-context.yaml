@@ -3,6 +3,12 @@ project:
   description: "Grimoire R&D forge — agentic runtime, memory OS, and standard adoption workspace."
   type: "library"
 
+user:
+  name: "Guilhem"
+  language: "Français"
+  document_language: "Français"
+  skill_level: "expert"
+
 memory:
   # --- Option de setup : avec ou sans base de données vectorielle ---
   # true  : recherche sémantique via DB vectorielle (weaviate-server / qdrant / ollama).
@@ -15,8 +21,8 @@ memory:
   # --- Mémoire chaude (contrat R8, optionnelle) ---
   short_term_backend: "sqlite"
   redis_url: ""
+  neo4j_uri: "bolt://localhost:7687"
   knowledge_graph: "neo4j"
-  semantic_memory: "weaviate-server"
   memory_graph: "neo4j"
   code_graph: "neo4j"
   task_memory: "neo4j"

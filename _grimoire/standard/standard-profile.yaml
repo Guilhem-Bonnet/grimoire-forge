@@ -42,6 +42,7 @@ required_artifacts:
 - task_board
 - task_envelope
 - evidence_pack
+- claim_ledger
 - knowledge_source_registry
 - llm_provider_registry
 - compliance_declaration
@@ -50,6 +51,7 @@ required_artifacts:
 - decision_graph
 - rule_packs
 - hook_registry
+- runtime_surface_registry
 - orchestration_policy
 - evidence_gates
 - pattern_catalog

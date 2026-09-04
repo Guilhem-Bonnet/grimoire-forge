@@ -43,7 +43,7 @@ deux concepts différents selon les couches).
 | BM-19 | Stigmergy signals | partiel | `stigmergy.py` présent, consumers absents |
 | BM-20 | Pheromone board | partiel | `pheromone-board.json` non exploité par surfaces |
 | BM-21 | Dream consolidation offline | observable | skill `grimoire-dream` |
-| BM-22 | Qdrant structured memory | partiel | `mem0-bridge.py` présent, Qdrant off par défaut |
+| BM-22 | Qdrant structured memory | partiel | CLI `grimoire memory` (le pont `mem0-bridge.py` est retiré depuis 3.35.0), Qdrant off par défaut |
 | BM-23 (historique : Semantic routing) | **ambigu** — voir §Ambiguïtés | archivé (sémantique) / actif (extension) | réassigné |
 | BM-24 | — | réservé | — |
 | BM-25 | Agent memory | actif | `_grimoire-runtime/_memory/` |

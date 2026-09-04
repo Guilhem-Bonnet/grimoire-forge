@@ -44,6 +44,23 @@ for f in "${staged[@]}"; do
   fi
 done
 
+# ── Carte des agents ───────────────────────────────────────────────────────
+# Les deux piles d'agents ne se connaissent que par la carte generee dans
+# copilot-instructions.md. Si un agent, un handoff ou un pont bouge sans que la
+# carte suive, les agents se routent vers des noms qui n'existent plus.
+agent_index="$repo_root/scripts/agent-index.py"
+if [[ -f "$agent_index" && -n "$python_bin" ]]; then
+  if printf '%s\n' "${staged[@]}" | grep -qE '^(\.github/agents/|\.claude/agents/|_grimoire-runtime/_config/agent-(bridges\.yaml|manifest\.csv)|\.github/copilot-instructions\.md)'; then
+    if ! "$python_bin" "$agent_index" --check; then
+      echo "" >&2
+      echo "pre-commit: la carte des agents ne correspond plus aux fichiers." >&2
+      echo "  Corriger  : python3 scripts/agent-index.py" >&2
+      echo "  Contourner: git commit --no-verify (a n'utiliser que sciemment)" >&2
+      exit 1
+    fi
+  fi
+fi
+
 # Invoquer le detecteur en mode explicit-files (exit 2 si blocking).
 set +e
 output=$(cd "$kit_root" && "$python_bin" "$detector" --project-root . --files "${mapped[@]}" 2>/dev/null)

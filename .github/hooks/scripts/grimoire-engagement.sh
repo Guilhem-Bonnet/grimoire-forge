@@ -9,7 +9,7 @@ set -euo pipefail
 input=$(cat)
 project_root="$(cd "$(dirname "$0")/../../.." && pwd)"
 logger_script="$project_root/scripts/engagement-log.py"
-logger_python="$project_root/grimoire-kit/.venv/bin/python"
+logger_python="$project_root/.venv/bin/python"
 
 if [[ ! -x "$logger_python" ]]; then
   logger_python="$(command -v python3 || true)"

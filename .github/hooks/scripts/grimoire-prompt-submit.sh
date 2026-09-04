@@ -9,9 +9,9 @@ project_root="$(cd "$(dirname "$0")/../../.." && pwd)"
 hook_state_dir="$project_root/_grimoire-runtime-output/hook-runtime"
 latest_file="$hook_state_dir/user-prompt-latest.json"
 events_file="$hook_state_dir/user-prompts.jsonl"
-policy_script="$project_root/grimoire-kit/framework/tools/guardrail-policy.py"
-accelerator_script="$project_root/grimoire-kit/framework/tools/compiled-flow.py"
-policy_python="$project_root/grimoire-kit/.venv/bin/python"
+policy_script="$project_root/.github/hooks/lib/guardrail-policy.py"
+accelerator_script="$project_root/.github/hooks/lib/compiled-flow.py"
+policy_python="$project_root/.venv/bin/python"
 input=$(cat)
 
 mkdir -p "$hook_state_dir"
