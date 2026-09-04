@@ -510,3 +510,11 @@ tout ce que le kit projette, et une revue de direction artistique de
 | Board soldé | `_grimoire/standard/task-board.yaml` | session | `r7` → `accepted` (gates vertes) ; `r8`, `r9`, `r10`, `c1` à `c5` → `archived` avec motif (gate `missing task_envelope` sur les huit) |
 | Carte des agents | `.github/copilot-instructions.md` | `scripts/agent-index.py --check` | à jour, 30 agents, 4 ponts |
 | Santé | session | `grimoire doctor`, `standard verify .`, `gate check --task-id r7-forge-kit-adoption --strict` | 24/24 ; 0 erreur 0 avertissement ; `OK evidence gates` |
+
+### Tâche par défaut du kit rendue évaluable
+
+| Evidence | Location | Produced by | Result |
+|---|---|---|---|
+| Le gate de sortie retombait sur `bootstrap` | `grimoire-hook --event Stop` | `active_task_id()` : `GRIMOIRE_TASK_ID`, sinon la tâche `in_progress` unique, sinon `bootstrap` | r7 passée en `accepted` : plus aucune tâche en cours, le hook évaluait `bootstrap`, absente du board (`gate.task_not_on_board`) |
+| Entrée au board et compagnons | `task-board.yaml`, `_grimoire-output/context/bootstrap/`, `_grimoire-output/decisions/bootstrap/` | session | `bootstrap` en `accepted` ; context-bundle et decision-trace en rétro-qualification datée du 2026-09-04, sans contenu d'époque inventé |
+| Vérification | session | `gate check --task-id bootstrap --strict`, `standard verify .`, hook `Stop` simulé | `OK evidence gates` ; 0 erreur 0 avertissement ; `{}` (clôture autorisée) |
