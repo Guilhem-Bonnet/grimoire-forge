@@ -51,6 +51,12 @@
 | Cross-project reads | explicit-allowlist | Workspace memory type requires explicit allowlist declaration. |
 | Sidecar isolation | declared | SQLite sidecar stays within project root. |
 
+## Traceability
+
+- Matrix: `grimoire standard traceability .` — requirement, control, evidence and verdict for every required artifact
+- Level reached: N4 (profil governed, matrice rendue le 2026-09-04 après adoption de la 3.38.0)
+- Last verdict: `grimoire standard verify .` OK, 0 erreur, le 2026-09-04
+
 ## Non-conformities
 
 | Item | Severity | Remediation | Owner |

@@ -43,6 +43,12 @@ required_artifacts:
 - task_envelope
 - evidence_pack
 - claim_ledger
+- acceptance_record
+- retention_registry
+- tool_registry
+- incident_registry
+- risk_control_matrix
+- capability_registry
 - knowledge_source_registry
 - llm_provider_registry
 - compliance_declaration
