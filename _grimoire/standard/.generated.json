@@ -1,12 +1,18 @@
 {
  "schema": "grimoire-standard-generation/v1",
  "artifacts": {
+  "_grimoire-output/evidence/bootstrap/acceptance-record.md": "ab42b1cb598b541800db471cdc25df7487b33a808ae9d19663020d1d03b9ac64",
   "_grimoire-output/evidence/bootstrap/claim-ledger.md": "f5dd59cc2eba171379b42ec6864839b8fd0a46ee6a62286b14f8f4e9d4c31c6e",
   "_grimoire/standard/accepted-risks.yaml": "5db815f54ef078a6effc0bad328f28bbe64a7551bb14d96d5f57b51b5875d17e",
+  "_grimoire/standard/capability-registry.yaml": "15c905eb122e029799655977b0b9af37c2df0f0f4587fc6a1803ef44400b16bf",
   "_grimoire/standard/decision-graph.yaml": "e0e6d7103dc12176abf788a0f2d568fa9767d8337ca2853fd789317e512e4c09",
+  "_grimoire/standard/incident-registry.yaml": "0553d56bda6e2f95635b0f980bc829f8f7e50f2feb22ae5ea405e0260d4c54b4",
   "_grimoire/standard/orchestration-policy.yaml": "f8e85b853abc8f63ec50b66f450b7eb1b1b1f910b3a00d710eace513469e032d",
   "_grimoire/standard/remediation-plan.yaml": "7095510e8873a9876d0926dd002f2451b1d3d7ae6f212f6c04e05dc12f0e215a",
+  "_grimoire/standard/retention-registry.yaml": "63721867041500b2c543f2dbc74cb3f4a773e2854abd743589d4536405fc85ce",
+  "_grimoire/standard/risk-control-matrix.yaml": "a8257f14bb0362a4e74b92630a2d16139aa34b9886ee41766acf962d5fc407e4",
   "_grimoire/standard/runtime-surface-registry.yaml": "3db13df7eb7dc4c3fc0e8ac3e1f677546e8653705849ef6d2d0703a74b84ee39",
+  "_grimoire/standard/tool-registry.yaml": "77a929db7ab27d485342ea8dfcb655c6744f7427d114a7950c97534a53b15aed",
   "_grimoire/standard/waivers.yaml": "d10db50f3ea232112e1ed6a6769c86e612813d561f8d1a49a3d985bd63da6f22"
  }
 }

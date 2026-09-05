@@ -518,3 +518,33 @@ tout ce que le kit projette, et une revue de direction artistique de
 | Le gate de sortie retombait sur `bootstrap` | `grimoire-hook --event Stop` | `active_task_id()` : `GRIMOIRE_TASK_ID`, sinon la tâche `in_progress` unique, sinon `bootstrap` | r7 passée en `accepted` : plus aucune tâche en cours, le hook évaluait `bootstrap`, absente du board (`gate.task_not_on_board`) |
 | Entrée au board et compagnons | `task-board.yaml`, `_grimoire-output/context/bootstrap/`, `_grimoire-output/decisions/bootstrap/` | session | `bootstrap` en `accepted` ; context-bundle et decision-trace en rétro-qualification datée du 2026-09-04, sans contenu d'époque inventé |
 | Vérification | session | `gate check --task-id bootstrap --strict`, `standard verify .`, hook `Stop` simulé | `OK evidence gates` ; 0 erreur 0 avertissement ; `{}` (clôture autorisée) |
+
+### Bloc suivant lancé (2026-09-04, soir)
+
+Guilhem : « ok go tu peux lancer le tout ». Cinq chantiers produit dispatchés en
+parallèle, un sous-agent par chantier, chacun dans son worktree sous
+`/mnt/Travail/Projets/Dev/grimoire-kit-<chantier>` avec venv dédié, jamais dans le
+clone partagé.
+
+| Chantier | Worktree | Livrable attendu |
+|---|---|---|
+| Campagne enforced contre activated, règle A2, plafond 60 USD | `grimoire-kit-evals` | `evals/reports/2026-09-04/`, PR `test(evals)` |
+| L3 #138 puis L4 #139 | `grimoire-kit-l3` | outils MCP `task_*`, `grimoire task trace`, PR `feat(mcp)` puis `feat(task)` |
+| Gardes silencieuses | `grimoire-kit-guards` | une PR par famille, issues pour `framework/` gelé |
+| Revue DA serve / cockpit | `grimoire-kit-da` | `web/DESIGN-REVIEW-2026-09.md`, maquettes Claude Design, aucune PR CSS avant validation |
+| Hygiène #246, #195, #174 | `grimoire-kit-hygiene` | trois PR |
+
+### Bloc suivant — résultats (2026-09-04, nuit)
+
+| Chantier | Résultat vérifié |
+|---|---|
+| L3 #138 | PR #266 fusionnée : outils MCP `task_*` sur un `TaskService` partagé avec le CLI ; tâche courante résolue depuis le claim actif ; le vrai défaut était `.claude/activation-context.md` écrit avec `bootstrap` en dur par `standard init` |
+| L4 #139 | PR #276 fusionnée : `task_id` porté par chaque refus de policy, gate rouge tracé, `grimoire task trace <id>` |
+| Gardes silencieuses | 6 PR fusionnées (#262 #267 #270 #273 #274 #277), 16 contrôles négatifs, 9 gardes réelles qui échouaient ouvert corrigées ; issues #264 #265 (framework gelé) et #275 (17 accesseurs sans appelant) |
+| Hygiène | #269 (six artefacts, 0 trou N1-N5), #271 (TestPyPI retiré, `make wheel-check`), #272 (borne chromadb gardée, re-waiver 2027-02-28) fusionnées |
+| Revue DA | #263 fusionnée : `web/DESIGN-REVIEW-2026-09.md`, 14 captures, maquettes Claude Design, 7 décisions à Guilhem |
+| Campagne enforced vs activated | #278 fusionnée : 24 runs/bras, 0 régression dure enforced contre 1, bundle 23/24 contre 0/24, +39 % de tours, 45,58 USD, verdict A2 « non démontré, indicatif » (n = 3 < 5, limite mensuelle du compte) |
+| CI du kit | #268 : filtres de chemin retirés sur `pull_request` (les checks requis restaient muets sur une PR docs) ; auto-merge activé sur le dépôt |
+| Release | PR #279 `chore: release 3.38.0`, guards verts en local, tag et publication en cours |
+
+Incidents : trois sessions coupées par la limite mensuelle de dépense, reprises avec leur contexte ; la session campagne a réinstallé Go 1.22.12 et le CLI global `claude` en 2.1.101 (signalé à Guilhem) ; fuite d'entrées jetables dans le registre cockpit réel par `grimoire init` sans `GRIMOIRE_COCKPIT_HOME`.
