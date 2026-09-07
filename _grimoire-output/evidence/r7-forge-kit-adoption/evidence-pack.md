@@ -548,3 +548,18 @@ clone partagé.
 | Release | PR #279 `chore: release 3.38.0`, guards verts en local, tag et publication en cours |
 
 Incidents : trois sessions coupées par la limite mensuelle de dépense, reprises avec leur contexte ; la session campagne a réinstallé Go 1.22.12 et le CLI global `claude` en 2.1.101 (signalé à Guilhem) ; fuite d'entrées jetables dans le registre cockpit réel par `grimoire init` sans `GRIMOIRE_COCKPIT_HOME`.
+
+### Vue de travail du kit (2026-09-05)
+
+| Evidence | Location | Produced by | Result |
+|---|---|---|---|
+| Brainstorm et direction validés | artefact Claude Design « Vue de travail Grimoire » (14 planches, 4 pages) | session | direction A hybride, Source, Encre, cinq surfaces, rayons 3 px validés par Guilhem |
+| Spécification versionnée | Grimoire-kit PR #281 `web/DESIGN-SPEC-workspace-2026-09.md` + `web/design/workspace-2026-09/` | session | auto-merge armé |
+| Backlog IntelliSense | Grimoire-kit #280 | `gh issue create` | ouvert |
+| Lot 0 architecture | sous-agent opus, worktree `grimoire-kit-arch`, branche `feat/workspace-shell-skeleton` | dispatch | en cours |
+| Lots 0 à 5 | Grimoire-kit PR #282 #283 #284 #286 #287 #285 | six sous-agents (opus puis sonnet), worktrees jetables | tous fusionnés le 2026-09-06 ; CI complète verte ; e2e Playwright locaux verts (47 + 11 + 8 + 5) |
+| QA et intégration | branche `feat/workspace-integration` | sous-agent sonnet | en cours : recette §6, branchements, basculement, e2e en CI |
+| QA et intégration | Grimoire-kit PR #289 | sous-agent sonnet | fusionnée : deux branchements corrigés avec test, basculement pas 2, job e2e Chromium bloquant en CI, issue #288 pour le reste mineur |
+| Contre-vérification indépendante | worktree neuf `grimoire-kit-rel39` | session | `tests/unit` et `tests/e2e` verts ; smoke sur projet neuf : dix pages redirigent, API et console en liste blanche répondent ; défaut trouvé : `/` servait encore la vitrine → PR #291 (test de contrat mis à jour) |
+| Release 3.39.0 | Grimoire-kit PR #290, tag `v3.39.0` | session | `publish.yml` succès, GitHub Release publiée, PyPI 3.39.0 |
+| Forge en 3.39.0 | `.venv` | `uv pip install grimoire-kit==3.39.0`, `grimoire up`, `host sync` | étage kit déjà à jour, 24 fichiers Claude Code inchangés, doctor 24/24, verify 0/0, gate bootstrap OK |
