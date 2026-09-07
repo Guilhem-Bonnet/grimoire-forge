@@ -563,3 +563,9 @@ Incidents : trois sessions coupées par la limite mensuelle de dépense, reprise
 | Contre-vérification indépendante | worktree neuf `grimoire-kit-rel39` | session | `tests/unit` et `tests/e2e` verts ; smoke sur projet neuf : dix pages redirigent, API et console en liste blanche répondent ; défaut trouvé : `/` servait encore la vitrine → PR #291 (test de contrat mis à jour) |
 | Release 3.39.0 | Grimoire-kit PR #290, tag `v3.39.0` | session | `publish.yml` succès, GitHub Release publiée, PyPI 3.39.0 |
 | Forge en 3.39.0 | `.venv` | `uv pip install grimoire-kit==3.39.0`, `grimoire up`, `host sync` | étage kit déjà à jour, 24 fichiers Claude Code inchangés, doctor 24/24, verify 0/0, gate bootstrap OK |
+| Passage consommateur | projets réels Terraform et Investissement (copies) | sous-agent sonnet | issues #292 à #297 ; projet réel et registre cockpit intacts |
+| Hotfix #292 | Grimoire-kit PR #299 | session | reproduit sur venv nu, corrigé via `load_yaml`, 2 tests ; release 3.39.1 (PR #302, tag, publish succès) |
+| L6 | Grimoire-kit PR #301 | sous-agent sonnet | fusionnée ; #141 fermée |
+| Hygiène | Grimoire-kit PR #298 #300 #304 | sous-agent sonnet | fusionnées ; #246 fermée ; traçabilité sans trou sur 5 profils |
+| IntelliSense Source | Grimoire-kit PR #303 | sous-agent sonnet | fusionnée ; 32 tests unitaires + 5 e2e ; #280 ouvert pour la voie LLM local |
+| Release 3.40.0 | Grimoire-kit PR #306, tag `v3.40.0` | session | `publish.yml` succès, PyPI 3.40.0, Forge en 3.40.0, doctor 24/24 ; registre cockpit réel nettoyé, issue #305 |
