@@ -538,14 +538,14 @@ clone partagé.
 
 | Chantier | Résultat vérifié |
 |---|---|
-| L3 #138 | PR #266 fusionnée : outils MCP `task_*` sur un `TaskService` partagé avec le CLI ; tâche courante résolue depuis le claim actif ; le vrai défaut était `.claude/activation-context.md` écrit avec `bootstrap` en dur par `standard init` |
-| L4 #139 | PR #276 fusionnée : `task_id` porté par chaque refus de policy, gate rouge tracé, `grimoire task trace <id>` |
-| Gardes silencieuses | 6 PR fusionnées (#262 #267 #270 #273 #274 #277), 16 contrôles négatifs, 9 gardes réelles qui échouaient ouvert corrigées ; issues #264 #265 (framework gelé) et #275 (17 accesseurs sans appelant) |
-| Hygiène | #269 (six artefacts, 0 trou N1-N5), #271 (TestPyPI retiré, `make wheel-check`), #272 (borne chromadb gardée, re-waiver 2027-02-28) fusionnées |
-| Revue DA | #263 fusionnée : `web/DESIGN-REVIEW-2026-09.md`, 14 captures, maquettes Claude Design, 7 décisions à Guilhem |
-| Campagne enforced vs activated | #278 fusionnée : 24 runs/bras, 0 régression dure enforced contre 1, bundle 23/24 contre 0/24, +39 % de tours, 45,58 USD, verdict A2 « non démontré, indicatif » (n = 3 < 5, limite mensuelle du compte) |
-| CI du kit | #268 : filtres de chemin retirés sur `pull_request` (les checks requis restaient muets sur une PR docs) ; auto-merge activé sur le dépôt |
-| Release | PR #279 `chore: release 3.38.0`, guards verts en local, tag et publication en cours |
+| L3 Grimoire-kit#138 | Grimoire-kit PR #266 fusionnée : outils MCP `task_*` sur un `TaskService` partagé avec le CLI ; tâche courante résolue depuis le claim actif ; le vrai défaut était `.claude/activation-context.md` écrit avec `bootstrap` en dur par `standard init` |
+| L4 Grimoire-kit#139 | Grimoire-kit PR #276 fusionnée : `task_id` porté par chaque refus de policy, gate rouge tracé, `grimoire task trace <id>` |
+| Gardes silencieuses | 6 PR fusionnées (Grimoire-kit#262 Grimoire-kit#267 Grimoire-kit#270 Grimoire-kit#273 Grimoire-kit#274 Grimoire-kit#277), 16 contrôles négatifs, 9 gardes réelles qui échouaient ouvert corrigées ; issues Grimoire-kit#264 Grimoire-kit#265 (framework gelé) et Grimoire-kit#275 (17 accesseurs sans appelant) |
+| Hygiène | Grimoire-kit#269 (six artefacts, 0 trou N1-N5), Grimoire-kit#271 (TestPyPI retiré, `make wheel-check`), Grimoire-kit#272 (borne chromadb gardée, re-waiver 2027-02-28) fusionnées |
+| Revue DA | Grimoire-kit#263 fusionnée : `web/DESIGN-REVIEW-2026-09.md`, 14 captures, maquettes Claude Design, 7 décisions à Guilhem |
+| Campagne enforced vs activated | Grimoire-kit#278 fusionnée : 24 runs/bras, 0 régression dure enforced contre 1, bundle 23/24 contre 0/24, +39 % de tours, 45,58 USD, verdict A2 « non démontré, indicatif » (n = 3 < 5, limite mensuelle du compte) |
+| CI du kit | Grimoire-kit#268 : filtres de chemin retirés sur `pull_request` (les checks requis restaient muets sur une PR docs) ; auto-merge activé sur le dépôt |
+| Release | Grimoire-kit PR #279 `chore: release 3.38.0`, guards verts en local, tag et publication en cours |
 
 Incidents : trois sessions coupées par la limite mensuelle de dépense, reprises avec leur contexte ; la session campagne a réinstallé Go 1.22.12 et le CLI global `claude` en 2.1.101 (signalé à Guilhem) ; fuite d'entrées jetables dans le registre cockpit réel par `grimoire init` sans `GRIMOIRE_COCKPIT_HOME`.
 
@@ -554,12 +554,18 @@ Incidents : trois sessions coupées par la limite mensuelle de dépense, reprise
 | Evidence | Location | Produced by | Result |
 |---|---|---|---|
 | Brainstorm et direction validés | artefact Claude Design « Vue de travail Grimoire » (14 planches, 4 pages) | session | direction A hybride, Source, Encre, cinq surfaces, rayons 3 px validés par Guilhem |
-| Spécification versionnée | Grimoire-kit PR #281 `web/DESIGN-SPEC-workspace-2026-09.md` + `web/design/workspace-2026-09/` | session | auto-merge armé |
-| Backlog IntelliSense | Grimoire-kit #280 | `gh issue create` | ouvert |
+| Spécification versionnée | Grimoire-kit Grimoire-kit PR #281 `web/DESIGN-SPEC-workspace-2026-09.md` + `web/design/workspace-2026-09/` | session | auto-merge armé |
+| Backlog IntelliSense | Grimoire-kit Grimoire-kit#280 | `gh issue create` | ouvert |
 | Lot 0 architecture | sous-agent opus, worktree `grimoire-kit-arch`, branche `feat/workspace-shell-skeleton` | dispatch | en cours |
-| Lots 0 à 5 | Grimoire-kit PR #282 #283 #284 #286 #287 #285 | six sous-agents (opus puis sonnet), worktrees jetables | tous fusionnés le 2026-09-06 ; CI complète verte ; e2e Playwright locaux verts (47 + 11 + 8 + 5) |
+| Lots 0 à 5 | Grimoire-kit Grimoire-kit PR #282 Grimoire-kit#283 Grimoire-kit#284 Grimoire-kit#286 Grimoire-kit#287 Grimoire-kit#285 | six sous-agents (opus puis sonnet), worktrees jetables | tous fusionnés le 2026-09-06 ; CI complète verte ; e2e Playwright locaux verts (47 + 11 + 8 + 5) |
 | QA et intégration | branche `feat/workspace-integration` | sous-agent sonnet | en cours : recette §6, branchements, basculement, e2e en CI |
-| QA et intégration | Grimoire-kit PR #289 | sous-agent sonnet | fusionnée : deux branchements corrigés avec test, basculement pas 2, job e2e Chromium bloquant en CI, issue #288 pour le reste mineur |
-| Contre-vérification indépendante | worktree neuf `grimoire-kit-rel39` | session | `tests/unit` et `tests/e2e` verts ; smoke sur projet neuf : dix pages redirigent, API et console en liste blanche répondent ; défaut trouvé : `/` servait encore la vitrine → PR #291 (test de contrat mis à jour) |
-| Release 3.39.0 | Grimoire-kit PR #290, tag `v3.39.0` | session | `publish.yml` succès, GitHub Release publiée, PyPI 3.39.0 |
+| QA et intégration | Grimoire-kit Grimoire-kit PR #289 | sous-agent sonnet | fusionnée : deux branchements corrigés avec test, basculement pas 2, job e2e Chromium bloquant en CI, issue Grimoire-kit#288 pour le reste mineur |
+| Contre-vérification indépendante | worktree neuf `grimoire-kit-rel39` | session | `tests/unit` et `tests/e2e` verts ; smoke sur projet neuf : dix pages redirigent, API et console en liste blanche répondent ; défaut trouvé : `/` servait encore la vitrine → Grimoire-kit PR #291 (test de contrat mis à jour) |
+| Release 3.39.0 | Grimoire-kit Grimoire-kit PR #290, tag `v3.39.0` | session | `publish.yml` succès, GitHub Release publiée, PyPI 3.39.0 |
 | Forge en 3.39.0 | `.venv` | `uv pip install grimoire-kit==3.39.0`, `grimoire up`, `host sync` | étage kit déjà à jour, 24 fichiers Claude Code inchangés, doctor 24/24, verify 0/0, gate bootstrap OK |
+| Passage consommateur | projets réels Terraform et Investissement (copies) | sous-agent sonnet | issues Grimoire-kit#292 à Grimoire-kit#297 ; projet réel et registre cockpit intacts |
+| Hotfix Grimoire-kit#292 | Grimoire-kit Grimoire-kit PR #299 | session | reproduit sur venv nu, corrigé via `load_yaml`, 2 tests ; release 3.39.1 (Grimoire-kit PR #302, tag, publish succès) |
+| L6 | Grimoire-kit Grimoire-kit PR #301 | sous-agent sonnet | fusionnée ; Grimoire-kit#141 fermée |
+| Hygiène | Grimoire-kit Grimoire-kit PR #298 Grimoire-kit#300 Grimoire-kit#304 | sous-agent sonnet | fusionnées ; Grimoire-kit#246 fermée ; traçabilité sans trou sur 5 profils |
+| IntelliSense Source | Grimoire-kit Grimoire-kit PR #303 | sous-agent sonnet | fusionnée ; 32 tests unitaires + 5 e2e ; Grimoire-kit#280 ouvert pour la voie LLM local |
+| Release 3.40.0 | Grimoire-kit Grimoire-kit PR #306, tag `v3.40.0` | session | `publish.yml` succès, PyPI 3.40.0, Forge en 3.40.0, doctor 24/24 ; registre cockpit réel nettoyé, issue Grimoire-kit#305 |
