@@ -101,3 +101,9 @@ The bootstrap task is complete for the orchestrated profile baseline when `stand
 | Relisibilité du diff + incertitudes déclarées | `Grimoire-kit#334` (issues #327, #328) | sous-agent Sonnet + surfaces génériques | 883 tests verts, mergée (27 checks) |
 | Lot 4, palier de départ par historique | `Grimoire-kit#335` (issue #312) | sous-agent Sonnet + verrou de plancher | 910 tests verts, mergée |
 | Lot 3, exécuteur dispatch dans flow run | `Grimoire-kit#336` (issue #311) | sous-agent Sonnet + correctif import mypy strict | mypy strict 217 fichiers propre, tests verts, mergée |
+| Kit #319 mergée (0f2761ca) + correctif #333 (70df7249, typo ; régénération du registre de hachages refusée à raison : elle aurait attribué du contenu non publié à la 3.40.0) | intendant Sonnet | fils Copilot traités | main vert |
+| Kit #320 mergée (99298a27) après correction : plafonds vérifiés avant émission, `cost` négatif refusé, `yaml.YAMLError` attrapée | intendant Sonnet | fils résolus | main vert |
+| Kit #321 mergée (b88ec0df) après correction : `is_expired()` sur horodatage naïf, timestamp invalide traité comme expiré et journalisé | intendant Sonnet | conflit résolu | main vert |
+| Kit #322 mergée (0c21ccbf) ; `pass_hat_k` porté dans `evals/pass_hat_k.py` car main a supprimé le paquet legacy | intendant Sonnet | conflit modify/delete résolu | main vert (Validate, SDK, E2E) |
+| Kit #324 : CI verte sur e2e80363 après alignement sur mcp 2.2.0 (la CI ne résout pas comme le venv local) et trois tours CodeQL ; conflit avec main en cours de résolution par le codeur | codeur Opus | 26 jobs pass, 0 alerte CodeQL | en cours |
+| Release 3.41.0 | `Grimoire-kit#337`, tag v3.41.0, PyPI 3.41.0 | sous-agent Sonnet, décision repli changelog par numéro de PR | workflows release et publish verts |
