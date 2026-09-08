@@ -18,13 +18,9 @@ project instructions already exposed through `CLAUDE.md` and GitHub Copilot.
 
 ## Doctrine
 
-- La Forge (ce repo) est un atelier, pas un projet a developper. Le produit est
-  grimoire-kit (repo `Grimoire-kit`, clone local `grimoire-kit/`).
-- Un chantier n'existe que s'il change ce que recoit un utilisateur de
-  grimoire-kit ; son planning vit dans le repo Grimoire-kit.
-- Ameliorer la Forge elle-meme est interdit par defaut : maintenance corrective
-  uniquement, ou deblocage d'un chantier produit nomme, avec confirmation
-  explicite de l'utilisateur.
+La doctrine atelier/produit (la Forge est l'atelier, grimoire-kit est le produit,
+verrou de triage avant tout chantier) vit uniquement dans la section « Doctrine »
+de `.github/copilot-instructions.md` ; ne pas la recopier ici, l'appliquer telle quelle.
 
 ## Project Defaults
 
