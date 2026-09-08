@@ -3,6 +3,9 @@ name: 'creative-toolsmith'
 description: 'Creative Toolsmith — Tool design, framework extension, automation patterns'
 tools: 'Read, Glob, Grep, Edit, Write, Bash'
 model: 'inherit'
+effort: 'low'
+maxTurns: 30
+background: true
 ---
 <!-- grimoire:managed — régénéré par `grimoire host sync`; éditez la source, pas ce fichier. -->
 

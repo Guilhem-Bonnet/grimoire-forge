@@ -115,7 +115,7 @@ mcp_servers:
     command: "npx --package=hostinger-api-mcp@latest hostinger-hosting-mcp"
     scope: user
     out_of_scope: true
-    reason: "portée utilisateur, sans rapport avec Grimoire-Forge ; compte Hostinger personnel de l'utilisateur"
+    out_of_scope_reason: "portée utilisateur, sans rapport avec Grimoire-Forge ; compte Hostinger personnel de l'utilisateur"
     owner: "guilhem (compte Hostinger personnel)"
     scopes: ["gestion de sites/fichiers/bases de données d'hébergement Hostinger"]
     timeout_s: 30
@@ -133,7 +133,7 @@ mcp_servers:
     command: "npx --package=hostinger-api-mcp@latest hostinger-wordpress-mcp"
     scope: user
     out_of_scope: true
-    reason: "portée utilisateur, sans rapport avec Grimoire-Forge ; compte Hostinger personnel de l'utilisateur"
+    out_of_scope_reason: "portée utilisateur, sans rapport avec Grimoire-Forge ; compte Hostinger personnel de l'utilisateur"
     owner: "guilhem (compte Hostinger personnel)"
     scopes: ["administration WordPress (plugins, thèmes, cache) sur l'hébergement Hostinger"]
     timeout_s: 30
@@ -151,7 +151,7 @@ mcp_servers:
     command: "npx --package=hostinger-api-mcp@latest hostinger-agency-hosting-mcp"
     scope: user
     out_of_scope: true
-    reason: "portée utilisateur, sans rapport avec Grimoire-Forge ; compte Hostinger personnel de l'utilisateur"
+    out_of_scope_reason: "portée utilisateur, sans rapport avec Grimoire-Forge ; compte Hostinger personnel de l'utilisateur"
     owner: "guilhem (compte Hostinger personnel)"
     scopes: ["création/suppression de sites, déploiement d'archives, gestion multi-sites agence"]
     timeout_s: 30
@@ -169,7 +169,7 @@ mcp_servers:
     command: "npx --package=hostinger-api-mcp@latest hostinger-domains-mcp"
     scope: user
     out_of_scope: true
-    reason: "portée utilisateur, sans rapport avec Grimoire-Forge ; compte Hostinger personnel de l'utilisateur"
+    out_of_scope_reason: "portée utilisateur, sans rapport avec Grimoire-Forge ; compte Hostinger personnel de l'utilisateur"
     owner: "guilhem (compte Hostinger personnel)"
     scopes: ["achat/transfert de noms de domaine, WHOIS, verrouillage, forwarding"]
     timeout_s: 30
@@ -187,7 +187,7 @@ mcp_servers:
     command: "npx --package=hostinger-api-mcp@latest hostinger-dns-mcp"
     scope: user
     out_of_scope: true
-    reason: "portée utilisateur, sans rapport avec Grimoire-Forge ; compte Hostinger personnel de l'utilisateur"
+    out_of_scope_reason: "portée utilisateur, sans rapport avec Grimoire-Forge ; compte Hostinger personnel de l'utilisateur"
     owner: "guilhem (compte Hostinger personnel)"
     scopes: ["lecture/écriture d'enregistrements DNS, restauration de snapshots DNS"]
     timeout_s: 30
@@ -205,7 +205,7 @@ mcp_servers:
     command: "npx --package=hostinger-api-mcp@latest hostinger-billing-mcp"
     scope: user
     out_of_scope: true
-    reason: "portée utilisateur, sans rapport avec Grimoire-Forge ; compte Hostinger personnel de l'utilisateur"
+    out_of_scope_reason: "portée utilisateur, sans rapport avec Grimoire-Forge ; compte Hostinger personnel de l'utilisateur"
     owner: "guilhem (compte Hostinger personnel)"
     scopes: ["moyens de paiement, bons de commande, renouvellements — impact financier direct"]
     timeout_s: 30
@@ -223,7 +223,7 @@ mcp_servers:
     command: "npx --package=hostinger-api-mcp@latest hostinger-reach-mcp"
     scope: user
     out_of_scope: true
-    reason: "portée utilisateur, sans rapport avec Grimoire-Forge ; compte Hostinger personnel de l'utilisateur"
+    out_of_scope_reason: "portée utilisateur, sans rapport avec Grimoire-Forge ; compte Hostinger personnel de l'utilisateur"
     owner: "guilhem (compte Hostinger personnel)"
     scopes: ["campagnes email marketing, contacts, segments — atteint des tiers réels"]
     timeout_s: 30
@@ -241,7 +241,7 @@ mcp_servers:
     command: "npx --package=hostinger-api-mcp@latest hostinger-vps-mcp"
     scope: user
     out_of_scope: true
-    reason: "portée utilisateur, sans rapport avec Grimoire-Forge ; compte Hostinger personnel de l'utilisateur"
+    out_of_scope_reason: "portée utilisateur, sans rapport avec Grimoire-Forge ; compte Hostinger personnel de l'utilisateur"
     owner: "guilhem (compte Hostinger personnel)"
     scopes: ["cycle de vie VPS, pare-feu, mots de passe root, snapshots — infrastructure live"]
     timeout_s: 30

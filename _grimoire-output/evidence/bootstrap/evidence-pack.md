@@ -48,3 +48,66 @@
 ## Completion statement
 
 The bootstrap task is complete for the orchestrated profile baseline when `standard:verify` returns zero errors and no unresolved placeholder warnings for provider, knowledge, evidence, or compliance artifacts.
+
+## Addendum 2026-09-08 — référence agentique industrielle
+
+| Evidence | Location | Produced by | Result |
+|---|---|---|---|
+| Référence agentique industrielle livrée au produit | `grimoire-kit@9d5ca9f6`, PR Grimoire-kit#315 | session Claude Code | `framework/agentic-industry-reference.md` + `_PROTOCOL_DOCS` + pointeurs socle + test |
+| Détail de la tâche | `_grimoire-output/evidence/agentic-industry-reference/` | session Claude Code | task-envelope et evidence-pack complets |
+| Audit d'écart Grimoire contre la référence | `_grimoire-output/evidence/bootstrap/audit-ecarts-reference-agentique-20260908.md` | cinq sous-agents Sonnet + vérification manuelle | 8 écarts bloquants confirmés, 15 actions, aucun fichier modifié |
+
+| Check | Command or method | Result | Notes |
+|---|---|---|---|
+| Kit | pytest ciblé (47 passed), ruff, ratchet | pass | depuis un worktree jetable sur origin/main 3.40.0 |
+
+## Routage par vérifiabilité du kit (2026-09-08)
+
+| Evidence | Location | Produced by | Result |
+|---|---|---|---|
+| Épic et sous-issues | `Grimoire-kit#307`, `#308`-`#313` | session Claude Code | cadrage produit déposé dans le repo kit |
+| Émetteurs reasoning × cost | `Grimoire-kit#314` (squash `c4a9d275`) | sous-agent Sonnet, relu et rejoué | 98 tests hôtes verts, CI 26/26 |
+| Classe de vérifiabilité V0/V1/V2 | `Grimoire-kit#316` (squash `ad4b20c9`) | sous-agent Sonnet + resserrement vocabulaire | 128 tests missions/mcp verts, CI 26/26 |
+| Registre par palier + état runtime | `Grimoire-kit#317` (squash `1747b85b`) | sous-agent Sonnet + correctif test MCP | suites cli/core/missions/mcp vertes, CI 26/26 |
+| Prototype lot 0, verdict GO | `Grimoire-kit#308` commentaire 5588081621 | campagne `claude -p` × 20 tâches × 5 ouvriers, recomptée | haiku 20/20, cascade 0,1226 $ vs opus 0,5692 $ par tâche |
+
+## Addendum 2026-09-08 — exécution du plan d'écarts (vague 0)
+
+| Evidence | Location | Produced by | Result |
+|---|---|---|---|
+| Plan d'exécution relu (Opus GO avec amendements, fiche de faisabilité Sonnet) | `_grimoire-output/evidence/bootstrap/plan-execution-ecarts-20260908.md` section 7 | concierge | amendements intégrés |
+| Issue épique produit | https://github.com/Guilhem-Bonnet/Grimoire-kit/issues/318 | gh | ouverte |
+| Lot F (socle AORA/DCF retirés, PIP observer-only, docs obsolètes) | PR Grimoire-kit#319, worktree kit-lotF | codeur Sonnet | vérificateur Haiku : CONFORME (tests ciblés 100 %, ratchet OK, zéro lien mort, charte respectée) |
+| Lot B11 (plafonds kernel, garde P2P) | PR Grimoire-kit#320, worktree kit-lotB11 | codeur Sonnet | vérificateur Haiku : CONFORME (87 tests verts, ruff, ratchet, état REFUSED avec checkpoint et événement, garde P2P 4/5/reset) |
+| Lot A (gardes fail-closed, budget de tokens, hook shadow, registre MCP) | PR Grimoire-Forge#32, worktree forge-lotA | codeur Sonnet | test bash 8/8 vert et 8/8 rouge sur l'ancien code ; vérificateur Haiku : CONFORME (8/8 tests bash, 7/7 pytest, verify et gate OK rejoués) ; hooks dépendant de guardrail-policy.py auto-dégradés en shadow, `hooks-promote` requis après merge |
+| Lot C (claims exclusifs avec expiration, sous-agents bornés, événements SubagentStart et PostToolUseFailure) | PR Grimoire-kit#321, worktree kit-lotC | codeur Sonnet | vérificateur Haiku : CONFORME (refus nommé fichier/tâche/acteur, expiration, frontmatter stable, événements câblés, ruff, ratchet) ; note : comparaison exacte par chemin, un claim sur un répertoire ne couvre pas ses fichiers |
+| Lot E (export OTel GenAI corrigé et unifié, pass^k, catégories d'évals) | PR Grimoire-kit#322, worktree kit-lotE | codeur Sonnet | vérificateur Haiku : CONFORME (77 tests rejoués, spans invoke_agent/execute_tool, horodatages réels, export grimoire.otel.v2, fixtures synthétiques, aucun chevauchement avec #321) |
+| Lot F-Forge (instructions chargées 332 → 129 lignes, doctrine en source unique, script `scripts/instructions-budget.py`) | PR Grimoire-Forge#33, worktree forge-lotF | codeur Sonnet | vérificateur Haiku : CONFORME (129/200 rejoué, onze règles opposables présentes, doctrine en source unique, agent-index --check OK, verify 0 erreur) |
+| Lot B (validation des écritures mémoire, contrat MCP annoté avec isError, contenu externe marqué, vérificateur tools.mediated-before-use) | PR Grimoire-kit#324, worktree kit-lotB | codeur Opus | 6 506 tests verts, ruff, ratchet, smoke stdio 22 outils annotés selon le codeur ; vérification Haiku : CONFORME ; revue adversariale Sonnet : trois trous réels (remember() sans validation, enveloppe untrusted sans appelant en production, source MCP illisible ignorée) et une annotation readOnly fausse sur task_context ; deux tours de correctifs Opus (six chemins d'écriture validés, normalisation NFKC, trois annotations corrigées, source MCP illisible signalée, `grimoire web fetch` câblé dans le resolver livré sans ligne ajoutée à la zone gelée) ; re-contrôles adversariaux 2 et 3 : TIENT sur tous les points, prêt à merger ; 6 572 tests verts |
+| Lot 2b, `grimoire task dispatch` en cascade | `Grimoire-kit#325` (issue #323) | sous-agent Sonnet + distinction error/rate_limit | suites missions/cli/providers/mcp vertes, auto-merge armé |
+| #204 moteur de flow, couche d'étape | `Grimoire-kit#326` (prototype jetable puis implémentation) | deux sous-agents Sonnet + renommage `--result` | suite `tests/unit` entière verte hors mémoire, auto-merge armé |
+
+| Gates Forge après campagne | `grimoire standard gate check --task-id bootstrap --strict` ; `grimoire standard verify .` | concierge | voir ci-dessous |
+
+## Addendum 2026-09-08 — merges
+
+| Evidence | Location | Produced by | Result |
+|---|---|---|---|
+| Forge #32 mergée (squash f74cba63) après quatre correctifs Copilot dont le relayage de `systemMessage` sur le chemin Stop | https://github.com/Guilhem-Bonnet/grimoire-forge/pull/32 | codeur-intendant Sonnet | CI 18/18, fils résolus |
+| Forge #33 mergée (squash 279bec45) après conversion des URL en liens inline | https://github.com/Guilhem-Bonnet/grimoire-forge/pull/33 | codeur-intendant Sonnet | budget 129/200, fils résolus |
+| Branche de travail fusionnée avec main, six hooks re-promus par identifiant | `_grimoire-runtime/_config/hook-safety-registry.json` | concierge | `hook-safety-gate.py status` : 12 enforced, 2 shadow, 1 canary ; hooks-smoke ok ; gate bootstrap OK ; verify governed 0 erreur |
+| `grimoire providers audit` sans dépenser | `Grimoire-kit#331` (issue #330) | sous-agent Sonnet | 92 tests verts, mergée |
+| Politique de dispatch émise aux hôtes | `Grimoire-kit#332` (issue #329) | sous-agent Sonnet | 102 tests hôtes verts, mergée |
+| Relisibilité du diff + incertitudes déclarées | `Grimoire-kit#334` (issues #327, #328) | sous-agent Sonnet + surfaces génériques | 883 tests verts, mergée (27 checks) |
+| Lot 4, palier de départ par historique | `Grimoire-kit#335` (issue #312) | sous-agent Sonnet + verrou de plancher | 910 tests verts, mergée |
+| Lot 3, exécuteur dispatch dans flow run | `Grimoire-kit#336` (issue #311) | sous-agent Sonnet + correctif import mypy strict | mypy strict 217 fichiers propre, tests verts, mergée |
+| Kit #319 mergée (0f2761ca) + correctif #333 (70df7249, typo ; régénération du registre de hachages refusée à raison : elle aurait attribué du contenu non publié à la 3.40.0) | intendant Sonnet | fils Copilot traités | main vert |
+| Kit #320 mergée (99298a27) après correction : plafonds vérifiés avant émission, `cost` négatif refusé, `yaml.YAMLError` attrapée | intendant Sonnet | fils résolus | main vert |
+| Kit #321 mergée (b88ec0df) après correction : `is_expired()` sur horodatage naïf, timestamp invalide traité comme expiré et journalisé | intendant Sonnet | conflit résolu | main vert |
+| Kit #322 mergée (0c21ccbf) ; `pass_hat_k` porté dans `evals/pass_hat_k.py` car main a supprimé le paquet legacy | intendant Sonnet | conflit modify/delete résolu | main vert (Validate, SDK, E2E) |
+| Kit #324 : CI verte sur e2e80363 après alignement sur mcp 2.2.0 (la CI ne résout pas comme le venv local) et trois tours CodeQL ; conflit avec main en cours de résolution par le codeur | codeur Opus | 26 jobs pass, 0 alerte CodeQL | en cours |
+| Release 3.41.0 | `Grimoire-kit#337`, tag v3.41.0, PyPI 3.41.0 | sous-agent Sonnet, décision repli changelog par numéro de PR | workflows release et publish verts |
+| Kit #324 mergée (e28d68e9) après résolution d'un conflit sur `docs/cli-reference.md` ; main six runs verts | codeur Opus | 26 jobs pass, 0 alerte CodeQL nouvelle | main vert |
+| Release grimoire-kit 3.41.0 : PR #337 squash 72bcc7cf, tag v3.41.0, publish.yml et release.yml verts, PyPI et release GitHub confirmés | intendant Sonnet | trois rouges tracés à leur cause (venv non aligné sur ruff CI, garde changelog cassé depuis 3.39.1, précondition E2E) et corrigés sans contournement | publié |
+| Forge consomme 3.41.0 : venv mis à niveau, `host sync` + `grimoire up` (agents avec effort/maxTurns, référence livrée dans `_grimoire/kit/framework/`, resolver vers `grimoire web fetch`), hook `grimoire-subagent-context` re-promu (13 enforced), `out_of_scope_reason` sur huit entrées MCP | commit ac1bf67 | intendant Sonnet | hooks-smoke ok, doctor 23/24 (playwright préexistant), gate OK |
+| Artefacts que la 3.41.0 exige au profil governed : bloc `write_validation` dans `memory-policy.yaml`, `prompt-firewall.yaml` (trois sources en quarantaine) | `_grimoire/standard/` | concierge | `standard verify` 0 erreur 0 avertissement ; gate bootstrap OK |
