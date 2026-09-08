@@ -98,4 +98,4 @@ The bootstrap task is complete for the orchestrated profile baseline when `stand
 | Branche de travail fusionnée avec main, six hooks re-promus par identifiant | `_grimoire-runtime/_config/hook-safety-registry.json` | concierge | `hook-safety-gate.py status` : 12 enforced, 2 shadow, 1 canary ; hooks-smoke ok ; gate bootstrap OK ; verify governed 0 erreur |
 | `grimoire providers audit` sans dépenser | `Grimoire-kit#331` (issue #330) | sous-agent Sonnet | 92 tests verts, mergée |
 | Politique de dispatch émise aux hôtes | `Grimoire-kit#332` (issue #329) | sous-agent Sonnet | 102 tests hôtes verts, mergée |
-| Relisibilité du diff + incertitudes déclarées | `Grimoire-kit#334` (issues #327, #328) | sous-agent Sonnet + surfaces génériques | 883 tests verts, auto-merge armé |
+| Relisibilité du diff + incertitudes déclarées | `Grimoire-kit#334` (issues #327, #328) | sous-agent Sonnet + surfaces génériques | 883 tests verts, mergée (27 checks) |
