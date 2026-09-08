@@ -25,8 +25,8 @@
         ".github/hooks/lib/guardrail-policy-rules.yaml"
       ],
       "mode": "enforced",
-      "validatedDigest": "bf7e8ccb7fc26a62a498da717c205fd6019957284b0daa08f9f9488580d73445",
-      "validatedAt": "2026-09-04T20:20:46Z"
+      "validatedDigest": "6d9f78b928157288d1106f0a90d4f5ab0a7161e8f43a3958b0195f5a9091d2b7",
+      "validatedAt": "2026-09-08T16:23:47Z"
     },
     "grimoire-doc-drift": {
       "event": "PostToolUse",
@@ -65,8 +65,8 @@
         ".github/hooks/lib/guardrail-policy-rules.yaml"
       ],
       "mode": "enforced",
-      "validatedDigest": "fa301a620ab35b14f16ca512d908346766a55f763aa6196cd510b6e169906caa",
-      "validatedAt": "2026-09-04T20:20:46Z"
+      "validatedDigest": "91fb6c18a5964af7b8c95891889eb201017f47a1cba5f287f89a0971d72e5c1a",
+      "validatedAt": "2026-09-08T16:23:47Z"
     },
     "grimoire-memory-gate": {
       "event": "PostToolUse",
@@ -97,8 +97,8 @@
         ".github/hooks/lib/guardrail-policy-rules.yaml"
       ],
       "mode": "enforced",
-      "validatedDigest": "5390e150f24112e13e337bf1b80ee725fc3582ba8f0b7c81b9d288892d0af546",
-      "validatedAt": "2026-09-04T20:20:46Z"
+      "validatedDigest": "f9e99d606b09a8225bcaafb0a9168b9856522a877789ac5c4373ab16e1fd1c05",
+      "validatedAt": "2026-09-08T16:23:47Z"
     },
     "grimoire-pattern-consumption": {
       "event": "SessionStart",
@@ -195,9 +195,10 @@
         ".github/hooks/lib/guardrail-policy-follow-through.py",
         ".github/hooks/lib/guardrail-policy-rules.yaml"
       ],
-      "mode": "enforced",
-      "validatedDigest": "b1fbd06c3c76fe9f6b41d58c03947db6e7fd8169026d8cda5490fa3404d0cef7",
-      "validatedAt": "2026-09-04T20:20:46Z"
+      "mode": "shadow",
+      "validatedDigest": "3f82d8b867f5d802a813516b611c8f3d03ef3703589f6a5f76d1650d9fb7c28c",
+      "validatedAt": "2026-09-08T16:23:50Z",
+      "note": "Retrograde en shadow le 2026-09-08 (ecart B8, audit-ecarts-reference-agentique-20260908.md) : SubagentStart est enforced dans ce registre mais cet evenement n'est pas emis par host sync cote Claude Code (le kit ne le connait pas encore, cf. src/grimoire/hosts/surface.py). Un hook enforced sur un evenement non cable est un hook mort qui donne une fausse impression de garde active. Repasser en enforced (hook-safety-gate.py promote grimoire-subagent-context) a la release du kit qui ajoute SubagentStart a la famille Claude Code (lot C du plan d'execution)."
     },
     "grimoire-subagent-trace": {
       "event": "SubagentStart/Stop",

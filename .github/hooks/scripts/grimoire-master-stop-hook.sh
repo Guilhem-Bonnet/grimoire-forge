@@ -27,6 +27,7 @@ stop_hook_active="false"
 stop_additional_context=""
 stop_decision=""
 stop_reason=""
+stop_system_message=""
 
 mkdir -p "$stop_dir"
 
@@ -47,6 +48,10 @@ if [[ -n "$policy_python" && -f "$policy_script" ]]; then
     stop_additional_context=$(printf '%s' "$stop_closure_output" | "$policy_python" -c 'import json,sys; payload=json.load(sys.stdin); print(payload.get("hookSpecificOutput", {}).get("additionalContext", ""))' 2>/dev/null || true)
     stop_decision=$(printf '%s' "$stop_closure_output" | "$policy_python" -c 'import json,sys; payload=json.load(sys.stdin); print(payload.get("hookSpecificOutput", {}).get("decision", ""))' 2>/dev/null || true)
     stop_reason=$(printf '%s' "$stop_closure_output" | "$policy_python" -c 'import json,sys; payload=json.load(sys.stdin); print(payload.get("hookSpecificOutput", {}).get("reason", ""))' 2>/dev/null || true)
+    # systemMessage porte le signal d'enforcement du budget de tokens
+    # (enforcementRecommended, ecart B2) : aucun hote ne lit additionalContext
+    # sur un evenement Stop, donc ce champ doit etre transmis a part.
+    stop_system_message=$(printf '%s' "$stop_closure_output" | "$policy_python" -c 'import json,sys; payload=json.load(sys.stdin); print(payload.get("systemMessage", ""))' 2>/dev/null || true)
   fi
 fi
 
@@ -62,16 +67,42 @@ if [[ "$stop_hook_active" == "true" ]]; then
 fi
 
 if [[ "$stop_decision" == "block" && -n "$stop_reason" ]]; then
-  if [[ -n "$stop_additional_context" ]]; then
-    "$policy_python" -c "import json, sys; print(json.dumps({'hookSpecificOutput': {'hookEventName': 'Stop', 'decision': 'block', 'reason': sys.argv[1], 'additionalContext': sys.argv[2]}}))" "$stop_reason" "$stop_additional_context"
-  else
-    "$policy_python" -c "import json, sys; print(json.dumps({'hookSpecificOutput': {'hookEventName': 'Stop', 'decision': 'block', 'reason': sys.argv[1]}}))" "$stop_reason"
-  fi
+  "$policy_python" -c "
+import json, sys
+reason = sys.argv[1]
+additional_context = sys.argv[2]
+system_message = sys.argv[3]
+specific = {'hookEventName': 'Stop', 'decision': 'block', 'reason': reason}
+if additional_context:
+    specific['additionalContext'] = additional_context
+payload = {'hookSpecificOutput': specific}
+if system_message:
+    payload['systemMessage'] = system_message
+print(json.dumps(payload))
+" "$stop_reason" "$stop_additional_context" "$stop_system_message"
   exit 0
 fi
 
-if [[ -n "$stop_additional_context" ]]; then
-  "$policy_python" -c "import json, sys; print(json.dumps({'hookSpecificOutput': {'hookEventName': 'Stop', 'decision': 'block', 'reason': \"Avant de conclure, demande a l'utilisateur sa prochaine demande en une phrase concise et attends sa reponse dans cette conversation. N'affiche pas le menu si cette nouvelle demande est deja actionable.\", 'additionalContext': sys.argv[1]}}))" "$stop_additional_context"
+# systemMessage doit etre relaye des qu'il est present, meme sans
+# additionalContext : guardrail-policy.py peut renvoyer un payload Stop ne
+# portant que l'enforcement du budget de tokens (systemMessage seul).
+if [[ -n "$stop_additional_context" || -n "$stop_system_message" ]]; then
+  "$policy_python" -c "
+import json, sys
+additional_context = sys.argv[1]
+system_message = sys.argv[2]
+specific = {
+    'hookEventName': 'Stop',
+    'decision': 'block',
+    'reason': \"Avant de conclure, demande a l'utilisateur sa prochaine demande en une phrase concise et attends sa reponse dans cette conversation. N'affiche pas le menu si cette nouvelle demande est deja actionable.\",
+}
+if additional_context:
+    specific['additionalContext'] = additional_context
+payload = {'hookSpecificOutput': specific}
+if system_message:
+    payload['systemMessage'] = system_message
+print(json.dumps(payload))
+" "$stop_additional_context" "$stop_system_message"
   exit 0
 fi
 
