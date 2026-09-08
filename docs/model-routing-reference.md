@@ -8,8 +8,8 @@ VS Code wiki (Getting Started + Performance & Diagnostics).
 **Architecture SOG pur + Auto-first** — les agents n'ont pas de `model:` dans leur frontmatter. Le routing est géré entièrement par le SOG, avec fallback dynamique.
 Source de vérité complète : `_grimoire-runtime/_config/model-routing.yaml`
 Base de décision :
-- `https://docs.github.com/en/copilot/reference/ai-models/supported-models`
-- `https://docs.github.com/en/copilot/reference/ai-models/model-comparison`
+- [Supported models](https://docs.github.com/en/copilot/reference/ai-models/supported-models)
+- [Model comparison](https://docs.github.com/en/copilot/reference/ai-models/model-comparison)
 Commande override session : `/set-model <agent|all|reset> <model-id|auto>` — ex: `/set-model dev gpt-5.3-codex`
 
 | Profil de routing | Primary | Preferred (ordre de fallback) | Agents par défaut |
