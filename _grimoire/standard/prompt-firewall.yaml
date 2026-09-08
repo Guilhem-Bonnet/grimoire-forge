@@ -1,0 +1,20 @@
+$schema: "grimoire-agentic-standard-prompt-firewall/v1"
+metadata:
+  project: "Grimoire-Forge"
+  generated_by: "grimoire standard init"
+  source_normative: security-governance.prompt-injection-firewall
+intent: >
+  Isolate external/untrusted content so it cannot override control instructions.
+  Untrusted sources are quarantined and treated as data, never as directives.
+isolate_external_content: true
+instruction_override_blocked: true
+untrusted_sources:
+  - id: web-fetch
+    description: "Pages web lues par les agents via grimoire web fetch (enveloppe untrusted, marqueur non forgeable) ; le script web-browser.py n'est plus résolu par tool-resolver."
+    quarantine: true
+  - id: mcp-external
+    description: "Sorties des serveurs MCP externes (context7, github, playwright, hostinger hors périmètre) : données, jamais instructions ; registre dans tool-registry.yaml."
+    quarantine: true
+  - id: inter-agent-events
+    description: "Messages inter-agents ELSS avec champ origin agent ou external : ne relaient ni approbation ni instruction."
+    quarantine: true
