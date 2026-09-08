@@ -67,7 +67,7 @@ mcp_servers:
   - id: MCP-003
     server: "playwright"
     transport: stdio
-    command: "npx @playwright/mcp@latest"
+    command: "npx @playwright/mcp@0.0.80"
     pinned_version: "0.0.80"
     scope: project
     owner: "grimoire-maintainers"
