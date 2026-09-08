@@ -26,6 +26,12 @@ scripts_dir="$repo_root/.github/hooks/scripts"
 
 failures=0
 
+# Fichier d'erreur temporaire et reentrant (au lieu d'un chemin fixe sous
+# /tmp) : deux executions concurrentes de ce test ne doivent pas se
+# marcher dessus.
+err_file="$(mktemp)"
+trap 'rm -f "$err_file"' EXIT
+
 fail() {
   echo "FAIL: $1" >&2
   failures=$((failures + 1))
@@ -108,8 +114,8 @@ if decision != "ask":
 if not spec.get("permissionDecisionReason"):
     print("permissionDecisionReason manquante ou vide", file=sys.stderr)
     sys.exit(1)
-' 2>/tmp/test-guards-fail-closed.err; then
-    fail "$(basename "$script_path") ($mode): $(cat /tmp/test-guards-fail-closed.err) — sortie: ${output}"
+' 2>"$err_file"; then
+    fail "$(basename "$script_path") ($mode): $(cat "$err_file") — sortie: ${output}"
     return 1
   fi
 
@@ -122,8 +128,6 @@ for mode in missing-script failing-call invalid-json empty-json; do
   assert_ask_decision "$tmp_root/.github/hooks/scripts/grimoire-memory-guard.sh" "$mode"
   rm -rf "$tmp_root"
 done
-
-rm -f /tmp/test-guards-fail-closed.err
 
 if [[ "$failures" -gt 0 ]]; then
   echo "test-guards-fail-closed: ${failures} assertion(s) en echec" >&2
