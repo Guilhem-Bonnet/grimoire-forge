@@ -2,7 +2,28 @@ $schema: "grimoire-agentic-standard-accepted-risks/v1"
 metadata:
   project: "Grimoire-Forge"
   generated_by: "grimoire standard init"
-risks: []
+risks:
+  - risk_id: RISK-001
+    description: >-
+      Identité par agent absente (OWASP Agentic AI Top 10 ASI03) : toutes les
+      décisions PreToolUse/hooks portent un actor_id générique unique
+      (grimoire-master), sans distinction par sous-agent, tant que les agents
+      restent locaux à cette machine.
+    accepted_by: "Guilhem"
+    reason: >-
+      Les sous-agents Grimoire s'exécutent aujourd'hui dans le même
+      processus/session que l'orchestrateur, sur un poste unique, sans agent
+      distant ni identité fédérée à faire respecter. Introduire une identité
+      par agent avant qu'un agent distant existe ajouterait de la complexité
+      sans réduire de surface d'attaque réelle (voir plan-execution-ecarts-20260908.md,
+      section 7, décision par défaut #4).
+    date_accepted: "2026-09-08"
+    review_trigger: "premier agent distant (hors session locale unique)"
+    expires_at: "événement déclencheur — pas de date calendaire fixe, voir review_trigger"
+    evidence_refs:
+      - "_grimoire-output/evidence/bootstrap/audit-ecarts-reference-agentique-20260908.md#section-4"
+      - "_grimoire-output/evidence/bootstrap/plan-execution-ecarts-20260908.md#7-amendements-après-relecture"
+    score_impact: "aucun (risque explicitement accepté, hors périmètre tant que le déclencheur n'est pas atteint)"
 required_fields:
   - risk_id
   - description

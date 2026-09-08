@@ -1029,16 +1029,25 @@ def load_tool_module(filename: str, cache_key: str) -> Any | None:
     if not module_path.exists():
         return None
 
+    module_name = f"_guardrail_{cache_key}"
     try:
-        spec = importlib.util.spec_from_file_location(f"_guardrail_{cache_key}", module_path)
+        spec = importlib.util.spec_from_file_location(module_name, module_path)
         if spec is None or spec.loader is None:
             return None
         module = importlib.util.module_from_spec(spec)
         _TOOL_MODULE_CACHE[cache_key] = module
+        # Python >= 3.12 resolves dataclass field types via
+        # sys.modules[cls.__module__] at class-definition time (PEP 563/649
+        # fallout). A module built by importlib.util but never registered in
+        # sys.modules crashes exec_module() on the first @dataclass it
+        # defines — silently caught below and returned as None, which is
+        # exactly how assess_token_budget() became a no-op (ecart B2).
+        sys.modules[module_name] = module
         spec.loader.exec_module(module)
         return module
     except Exception:
         _TOOL_MODULE_CACHE.pop(cache_key, None)
+        sys.modules.pop(module_name, None)
         return None
 
 
@@ -2097,6 +2106,22 @@ def format_token_budget_note(token_budget: dict[str, Any]) -> str:
     recommendations = list(token_budget.get("recommendations", []) or [])
     tail = f" {recommendations[0]}" if recommendations else ""
     return f"Budget token {level} ({usage_pct}%).{tail}".strip()
+
+
+def format_token_budget_enforcement_message(token_budget: dict[str, Any]) -> str:
+    """Message nommant le dépassement quand ``enforcementRecommended`` est vrai.
+
+    ``enforcementRecommended`` (calculé par :func:`assess_token_budget`) n'était
+    lu par personne avant ce câblage (écart B2 de l'audit 2026-09-08) : le
+    signal existait mais ne surfaçait jamais. Retourne une chaîne vide si
+    l'enforcement n'est pas recommandé.
+    """
+    if not isinstance(token_budget, dict) or not token_budget.get("enforcementRecommended"):
+        return ""
+    return (
+        "[Grimoire] budget de tokens en dépassement — "
+        f"{format_token_budget_note(token_budget)} Enforcement recommandé avant de poursuivre."
+    )
 
 
 def detect_proposal_challenge(prompt_lower: str) -> dict[str, Any]:
@@ -6081,8 +6106,20 @@ def command_stop_closure(args: argparse.Namespace) -> int:
             f"dans cet ordre: {tasks_preview}."
         )
 
+    output_payload: dict[str, Any] = {}
     if len(hook_specific_output) > 1:
-        print(json.dumps({"hookSpecificOutput": hook_specific_output}, ensure_ascii=True))
+        output_payload["hookSpecificOutput"] = hook_specific_output
+
+    enforcement_message = format_token_budget_enforcement_message(token_budget)
+    if enforcement_message:
+        # additionalContext n'est lu par aucun hôte sur un évènement Stop
+        # (voir hosts/runtime.py côté produit) : un signal d'enforcement qui
+        # n'y vivait que là n'était vu par personne. systemMessage est le
+        # canal que les hôtes affichent réellement.
+        output_payload["systemMessage"] = enforcement_message
+
+    if output_payload:
+        print(json.dumps(output_payload, ensure_ascii=True))
         return 0
 
     print("{}")

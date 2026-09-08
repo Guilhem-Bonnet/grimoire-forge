@@ -20,19 +20,238 @@ tools:
     owner: "grimoire-maintainers"
 
 # Serveurs MCP : owner, scopes minimaux, timeout, journalisation.
-mcp_servers: []
-# - id: MCP-001
-#   server: ""
-#   owner: "grimoire-maintainers"
-#   scopes: []              # allowlist minimale : lecture, écriture, cibles
-#   timeout_s: 30
-#   logging:
-#     requests: true
-#     errors: true
-#     secrets_masked: true
-#   environment: local      # local | staging | production | externe
-#   risk: moyen
-#   human_validation: "écriture, production ou données sensibles"
+# Périmètre (écart B6, audit-ecarts-reference-agentique-20260908.md) : tout
+# serveur MCP réellement résolu par l'hôte, pas seulement .mcp.json — les
+# serveurs de portée utilisateur (~/.claude.json) comptent aussi, faute de
+# quoi ce vérificateur naît fail-open. `scope` distingue project (.mcp.json,
+# ce dépôt) de user (~/.claude.json, transverse à tous les projets de
+# l'utilisateur) ; `risk` ici suit read-only | write | external-side-effects
+# (capacité réelle de l'outil), distinct du risk faible/moyen/élevé/critique
+# des `tools` ci-dessus. `out_of_scope: true` marque un serveur user hors
+# périmètre de ce projet — jamais un serveur non déclaré du tout.
+mcp_servers:
+  - id: MCP-001
+    server: "context7"
+    transport: streamable-http
+    url: "https://mcp.context7.com/mcp"
+    scope: project
+    owner: "grimoire-maintainers"
+    scopes: ["lecture de documentation de bibliothèques/frameworks tiers (context7.com)"]
+    timeout_s: 30
+    logging:
+      requests: true
+      errors: true
+      secrets_masked: true
+    environment: externe
+    risk: read-only
+    human_validation: "aucune (lecture seule)"
+
+  - id: MCP-002
+    server: "github"
+    transport: streamable-http
+    url: "https://api.githubcopilot.com/mcp/"
+    scope: project
+    owner: "grimoire-maintainers"
+    scopes:
+      - "issues, pull requests, commentaires, contenu de dépôt selon le token OAuth GitHub Copilot de la session"
+    timeout_s: 30
+    logging:
+      requests: true
+      errors: true
+      secrets_masked: true
+    environment: externe
+    risk: write
+    human_validation: "toute écriture (issue, PR, commentaire, merge)"
+    note: "authentification OAuth requise via /mcp en session interactive ; non autorisé dans une session non interactive."
+
+  - id: MCP-003
+    server: "playwright"
+    transport: stdio
+    command: "npx @playwright/mcp@0.0.80"
+    pinned_version: "0.0.80"
+    scope: project
+    owner: "grimoire-maintainers"
+    scopes:
+      - "navigation web, clic, saisie, upload de fichier sur des pages réelles (hors bac à sable)"
+      - "exécution de code arbitraire côté page (browser_evaluate, browser_run_code_unsafe)"
+      - "capture d'écran et lecture réseau (browser_network_requests)"
+    timeout_s: 60
+    logging:
+      requests: true
+      errors: true
+      secrets_masked: true
+    environment: local
+    risk: external-side-effects
+    human_validation: "navigation vers un domaine non prévu par la tâche, soumission de formulaire, browser_run_code_unsafe"
+
+  - id: MCP-004
+    server: "grimoire"
+    transport: stdio
+    command: ".codex/mcp/grimoire-mcp.sh"
+    scope: project
+    owner: "grimoire-maintainers"
+    scopes:
+      - "task board : task_claim, task_update (état projet, verrous de fichiers)"
+      - "mémoire projet : grimoire_memory_store, grimoire_memory_search (Qdrant local, GRIMOIRE_QDRANT_URL=http://localhost:6333)"
+      - "grimoire_command : invoque des sous-commandes CLI grimoire arbitraires"
+      - "grimoire_standard_audit/gate/score/verify : lecture et évaluation du pack de preuve"
+    timeout_s: 30
+    logging:
+      requests: true
+      errors: true
+      secrets_masked: true
+    environment: local
+    risk: write
+    human_validation: "grimoire_command avec une sous-commande destructive, écriture mémoire hors schéma déclaré"
+
+  # Portée utilisateur (~/.claude.json, mcpServers) — hors périmètre de ce
+  # projet : gestion d'hébergement Hostinger personnelle de l'utilisateur,
+  # sans rapport avec Grimoire-Forge. Déclarés pour que le vérificateur
+  # tools.mediated-before-use (kit, lot D) ne les découvre pas comme des
+  # serveurs non déclarés — pas pour les autoriser sur ce projet.
+  - id: MCP-005
+    server: "hostinger-hosting"
+    transport: stdio
+    command: "npx --package=hostinger-api-mcp@latest hostinger-hosting-mcp"
+    scope: user
+    out_of_scope: true
+    reason: "portée utilisateur, sans rapport avec Grimoire-Forge ; compte Hostinger personnel de l'utilisateur"
+    owner: "guilhem (compte Hostinger personnel)"
+    scopes: ["gestion de sites/fichiers/bases de données d'hébergement Hostinger"]
+    timeout_s: 30
+    logging:
+      requests: false
+      errors: false
+      secrets_masked: true
+    environment: externe
+    risk: external-side-effects
+    human_validation: "hors périmètre — jamais invoqué depuis ce projet"
+
+  - id: MCP-006
+    server: "hostinger-wordpress"
+    transport: stdio
+    command: "npx --package=hostinger-api-mcp@latest hostinger-wordpress-mcp"
+    scope: user
+    out_of_scope: true
+    reason: "portée utilisateur, sans rapport avec Grimoire-Forge ; compte Hostinger personnel de l'utilisateur"
+    owner: "guilhem (compte Hostinger personnel)"
+    scopes: ["administration WordPress (plugins, thèmes, cache) sur l'hébergement Hostinger"]
+    timeout_s: 30
+    logging:
+      requests: false
+      errors: false
+      secrets_masked: true
+    environment: externe
+    risk: external-side-effects
+    human_validation: "hors périmètre — jamais invoqué depuis ce projet"
+
+  - id: MCP-007
+    server: "hostinger-agency-hosting"
+    transport: stdio
+    command: "npx --package=hostinger-api-mcp@latest hostinger-agency-hosting-mcp"
+    scope: user
+    out_of_scope: true
+    reason: "portée utilisateur, sans rapport avec Grimoire-Forge ; compte Hostinger personnel de l'utilisateur"
+    owner: "guilhem (compte Hostinger personnel)"
+    scopes: ["création/suppression de sites, déploiement d'archives, gestion multi-sites agence"]
+    timeout_s: 30
+    logging:
+      requests: false
+      errors: false
+      secrets_masked: true
+    environment: externe
+    risk: external-side-effects
+    human_validation: "hors périmètre — jamais invoqué depuis ce projet"
+
+  - id: MCP-008
+    server: "hostinger-domains"
+    transport: stdio
+    command: "npx --package=hostinger-api-mcp@latest hostinger-domains-mcp"
+    scope: user
+    out_of_scope: true
+    reason: "portée utilisateur, sans rapport avec Grimoire-Forge ; compte Hostinger personnel de l'utilisateur"
+    owner: "guilhem (compte Hostinger personnel)"
+    scopes: ["achat/transfert de noms de domaine, WHOIS, verrouillage, forwarding"]
+    timeout_s: 30
+    logging:
+      requests: false
+      errors: false
+      secrets_masked: true
+    environment: externe
+    risk: external-side-effects
+    human_validation: "hors périmètre — jamais invoqué depuis ce projet"
+
+  - id: MCP-009
+    server: "hostinger-dns"
+    transport: stdio
+    command: "npx --package=hostinger-api-mcp@latest hostinger-dns-mcp"
+    scope: user
+    out_of_scope: true
+    reason: "portée utilisateur, sans rapport avec Grimoire-Forge ; compte Hostinger personnel de l'utilisateur"
+    owner: "guilhem (compte Hostinger personnel)"
+    scopes: ["lecture/écriture d'enregistrements DNS, restauration de snapshots DNS"]
+    timeout_s: 30
+    logging:
+      requests: false
+      errors: false
+      secrets_masked: true
+    environment: externe
+    risk: external-side-effects
+    human_validation: "hors périmètre — jamais invoqué depuis ce projet"
+
+  - id: MCP-010
+    server: "hostinger-billing"
+    transport: stdio
+    command: "npx --package=hostinger-api-mcp@latest hostinger-billing-mcp"
+    scope: user
+    out_of_scope: true
+    reason: "portée utilisateur, sans rapport avec Grimoire-Forge ; compte Hostinger personnel de l'utilisateur"
+    owner: "guilhem (compte Hostinger personnel)"
+    scopes: ["moyens de paiement, bons de commande, renouvellements — impact financier direct"]
+    timeout_s: 30
+    logging:
+      requests: false
+      errors: false
+      secrets_masked: true
+    environment: externe
+    risk: external-side-effects
+    human_validation: "hors périmètre — jamais invoqué depuis ce projet"
+
+  - id: MCP-011
+    server: "hostinger-reach"
+    transport: stdio
+    command: "npx --package=hostinger-api-mcp@latest hostinger-reach-mcp"
+    scope: user
+    out_of_scope: true
+    reason: "portée utilisateur, sans rapport avec Grimoire-Forge ; compte Hostinger personnel de l'utilisateur"
+    owner: "guilhem (compte Hostinger personnel)"
+    scopes: ["campagnes email marketing, contacts, segments — atteint des tiers réels"]
+    timeout_s: 30
+    logging:
+      requests: false
+      errors: false
+      secrets_masked: true
+    environment: externe
+    risk: external-side-effects
+    human_validation: "hors périmètre — jamais invoqué depuis ce projet"
+
+  - id: MCP-012
+    server: "hostinger-vps"
+    transport: stdio
+    command: "npx --package=hostinger-api-mcp@latest hostinger-vps-mcp"
+    scope: user
+    out_of_scope: true
+    reason: "portée utilisateur, sans rapport avec Grimoire-Forge ; compte Hostinger personnel de l'utilisateur"
+    owner: "guilhem (compte Hostinger personnel)"
+    scopes: ["cycle de vie VPS, pare-feu, mots de passe root, snapshots — infrastructure live"]
+    timeout_s: 30
+    logging:
+      requests: false
+      errors: false
+      secrets_masked: true
+    environment: externe
+    risk: external-side-effects
+    human_validation: "hors périmètre — jamais invoqué depuis ce projet"
 
 # Erreurs d'outil : preuve par défaut, incident à partir d'une gravité.
 error_capture:
