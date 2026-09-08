@@ -70,3 +70,19 @@ The bootstrap task is complete for the orchestrated profile baseline when `stand
 | Classe de vérifiabilité V0/V1/V2 | `Grimoire-kit#316` (squash `ad4b20c9`) | sous-agent Sonnet + resserrement vocabulaire | 128 tests missions/mcp verts, CI 26/26 |
 | Registre par palier + état runtime | `Grimoire-kit#317` (squash `1747b85b`) | sous-agent Sonnet + correctif test MCP | suites cli/core/missions/mcp vertes, CI 26/26 |
 | Prototype lot 0, verdict GO | `Grimoire-kit#308` commentaire 5588081621 | campagne `claude -p` × 20 tâches × 5 ouvriers, recomptée | haiku 20/20, cascade 0,1226 $ vs opus 0,5692 $ par tâche |
+
+## Addendum 2026-09-08 — exécution du plan d'écarts (vague 0)
+
+| Evidence | Location | Produced by | Result |
+|---|---|---|---|
+| Plan d'exécution relu (Opus GO avec amendements, fiche de faisabilité Sonnet) | `_grimoire-output/evidence/bootstrap/plan-execution-ecarts-20260908.md` section 7 | concierge | amendements intégrés |
+| Issue épique produit | https://github.com/Guilhem-Bonnet/Grimoire-kit/issues/318 | gh | ouverte |
+| Lot F (socle AORA/DCF retirés, PIP observer-only, docs obsolètes) | PR Grimoire-kit#319, worktree kit-lotF | codeur Sonnet | vérificateur Haiku : CONFORME (tests ciblés 100 %, ratchet OK, zéro lien mort, charte respectée) |
+| Lot B11 (plafonds kernel, garde P2P) | PR Grimoire-kit#320, worktree kit-lotB11 | codeur Sonnet | vérificateur Haiku : CONFORME (87 tests verts, ruff, ratchet, état REFUSED avec checkpoint et événement, garde P2P 4/5/reset) |
+| Lot A (gardes fail-closed, budget de tokens, hook shadow, registre MCP) | PR Grimoire-Forge#32, worktree forge-lotA | codeur Sonnet | test bash 8/8 vert et 8/8 rouge sur l'ancien code ; vérificateur Haiku : CONFORME (8/8 tests bash, 7/7 pytest, verify et gate OK rejoués) ; hooks dépendant de guardrail-policy.py auto-dégradés en shadow, `hooks-promote` requis après merge |
+| Lot C (claims exclusifs avec expiration, sous-agents bornés, événements SubagentStart et PostToolUseFailure) | PR Grimoire-kit#321, worktree kit-lotC | codeur Sonnet | vérificateur Haiku : CONFORME (refus nommé fichier/tâche/acteur, expiration, frontmatter stable, événements câblés, ruff, ratchet) ; note : comparaison exacte par chemin, un claim sur un répertoire ne couvre pas ses fichiers |
+| Lot E (export OTel GenAI corrigé et unifié, pass^k, catégories d'évals) | PR Grimoire-kit#322, worktree kit-lotE | codeur Sonnet | vérificateur Haiku : CONFORME (77 tests rejoués, spans invoke_agent/execute_tool, horodatages réels, export grimoire.otel.v2, fixtures synthétiques, aucun chevauchement avec #321) |
+| Lot F-Forge (instructions chargées 332 → 129 lignes, doctrine en source unique, script `scripts/instructions-budget.py`) | PR Grimoire-Forge#33, worktree forge-lotF | codeur Sonnet | vérificateur Haiku : CONFORME (129/200 rejoué, onze règles opposables présentes, doctrine en source unique, agent-index --check OK, verify 0 erreur) |
+| Lot B (validation des écritures mémoire, contrat MCP annoté avec isError, contenu externe marqué, vérificateur tools.mediated-before-use) | PR Grimoire-kit#324, worktree kit-lotB | codeur Opus | 6 506 tests verts, ruff, ratchet, smoke stdio 22 outils annotés selon le codeur ; revue adversariale Sonnet et vérification Haiku en cours |
+| Lot 2b, `grimoire task dispatch` en cascade | `Grimoire-kit#325` (issue #323) | sous-agent Sonnet + distinction error/rate_limit | suites missions/cli/providers/mcp vertes, auto-merge armé |
+| #204 moteur de flow, couche d'étape | `Grimoire-kit#326` (prototype jetable puis implémentation) | deux sous-agents Sonnet + renommage `--result` | suite `tests/unit` entière verte hors mémoire, auto-merge armé |
