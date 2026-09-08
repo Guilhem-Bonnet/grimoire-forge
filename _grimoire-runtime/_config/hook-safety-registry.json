@@ -65,8 +65,8 @@
         ".github/hooks/lib/guardrail-policy-rules.yaml"
       ],
       "mode": "enforced",
-      "validatedDigest": "91fb6c18a5964af7b8c95891889eb201017f47a1cba5f287f89a0971d72e5c1a",
-      "validatedAt": "2026-09-08T16:23:47Z"
+      "validatedDigest": "6658278d9809b28cb16c5074d66d6dc859f16da0474ffeb7345276011050f956",
+      "validatedAt": "2026-09-08T18:23:03Z"
     },
     "grimoire-memory-gate": {
       "event": "PostToolUse",
@@ -125,8 +125,8 @@
         ".github/hooks/lib/guardrail-policy-rules.yaml"
       ],
       "mode": "enforced",
-      "validatedDigest": "366a8e42ec7b9b3a265f389f9e4a527ba95d6d17ba97dd72a54586bf324eb3cc",
-      "validatedAt": "2026-09-04T20:20:46Z"
+      "validatedDigest": "8bad7c0955c1fa14f039f3608ef3a1e68cc3166e87498534f710d06c77b3c0a1",
+      "validatedAt": "2026-09-08T18:23:03Z"
     },
     "grimoire-pre-compact": {
       "event": "PreCompact",
@@ -140,8 +140,8 @@
         ".github/hooks/lib/guardrail-policy-rules.yaml"
       ],
       "mode": "enforced",
-      "validatedDigest": "e8fd0a59b7db3161df672ca186163bea4e006df63b87771cd2edf5a1eccc58e5",
-      "validatedAt": "2026-09-04T20:20:46Z"
+      "validatedDigest": "70296129d56bc873244eb24aaef38e99834e5b67a3538a09e4c4492940b0bacf",
+      "validatedAt": "2026-09-08T18:23:03Z"
     },
     "grimoire-prompt-submit": {
       "event": "UserPromptSubmit",
@@ -155,8 +155,8 @@
         ".github/hooks/lib/guardrail-policy-rules.yaml"
       ],
       "mode": "enforced",
-      "validatedDigest": "738e93795bf498e9c720be7e0739f6638ee504171b508f9dfde9399b9a3ace63",
-      "validatedAt": "2026-09-04T20:20:46Z"
+      "validatedDigest": "4d5e9009148eca25d37b3bf1e9c5e692a0072fbe7795506ea604b3ec0f89402b",
+      "validatedAt": "2026-09-08T18:23:03Z"
     },
     "grimoire-rtk-rewrite": {
       "event": "PreToolUse",
@@ -181,8 +181,8 @@
         ".github/hooks/lib/guardrail-policy-rules.yaml"
       ],
       "mode": "enforced",
-      "validatedDigest": "0cf7632df253be59e155125cddf7fc54caa22144d3c4621b28ba134bc10b49d8",
-      "validatedAt": "2026-09-04T20:20:46Z"
+      "validatedDigest": "9d1c61f05275aaaddbcac9366fa6ae303ba731bff8adc5760017dc4b74329db5",
+      "validatedAt": "2026-09-08T18:23:03Z"
     },
     "grimoire-subagent-context": {
       "event": "SubagentStart",
@@ -212,8 +212,8 @@
         ".github/hooks/lib/guardrail-policy-rules.yaml"
       ],
       "mode": "enforced",
-      "validatedDigest": "75e96f1c3a3b1331cc4071dfd2211bad98b208e36700a13f97ac3a35520aa9ff",
-      "validatedAt": "2026-09-04T20:20:46Z"
+      "validatedDigest": "44c03cb3ce0be96adeb4d7a43aabd32100675f9673bda9a15758c7ffa8e1c166",
+      "validatedAt": "2026-09-08T18:23:03Z"
     }
   }
 }

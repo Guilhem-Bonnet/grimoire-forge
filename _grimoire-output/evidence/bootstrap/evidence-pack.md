@@ -88,3 +88,11 @@ The bootstrap task is complete for the orchestrated profile baseline when `stand
 | #204 moteur de flow, couche d'étape | `Grimoire-kit#326` (prototype jetable puis implémentation) | deux sous-agents Sonnet + renommage `--result` | suite `tests/unit` entière verte hors mémoire, auto-merge armé |
 
 | Gates Forge après campagne | `grimoire standard gate check --task-id bootstrap --strict` ; `grimoire standard verify .` | concierge | voir ci-dessous |
+
+## Addendum 2026-09-08 — merges
+
+| Evidence | Location | Produced by | Result |
+|---|---|---|---|
+| Forge #32 mergée (squash f74cba63) après quatre correctifs Copilot dont le relayage de `systemMessage` sur le chemin Stop | https://github.com/Guilhem-Bonnet/grimoire-forge/pull/32 | codeur-intendant Sonnet | CI 18/18, fils résolus |
+| Forge #33 mergée (squash 279bec45) après conversion des URL en liens inline | https://github.com/Guilhem-Bonnet/grimoire-forge/pull/33 | codeur-intendant Sonnet | budget 129/200, fils résolus |
+| Branche de travail fusionnée avec main, six hooks re-promus par identifiant | `_grimoire-runtime/_config/hook-safety-registry.json` | concierge | `hook-safety-gate.py status` : 12 enforced, 2 shadow, 1 canary ; hooks-smoke ok ; gate bootstrap OK ; verify governed 0 erreur |
