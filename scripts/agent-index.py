@@ -7,9 +7,13 @@ La Forge expose deux piles qui s'ignorent : les wrappers BMM de ``.github/agents
 incapables de déclarer quoi que ce soit). Les relations qui traversent la frontière
 vivent dans ``_grimoire-runtime/_config/agent-bridges.yaml``.
 
-La carte est écrite dans ``.github/copilot-instructions.md``, entre marqueurs : c'est
-le seul fichier que Copilot charge nativement et que ``CLAUDE.md`` importe, donc le
-seul endroit où une écriture atteint les deux piles à la fois.
+La carte est écrite dans ``docs/agent-map.md``, entre marqueurs, et référencée par une
+ligne de renvoi depuis ``.github/copilot-instructions.md`` (que Copilot charge
+nativement et que ``CLAUDE.md`` importe). Elle vivait auparavant dans
+``copilot-instructions.md`` lui-même ; le budget d'instructions chargées (B15, cible
+sous 200 lignes, voir ``scripts/instructions-budget.py``) impose de garder cette table
+de référence hors du fichier toujours chargé, tout en restant à un chemin stable que
+les deux piles peuvent lire à la demande.
 
 Usage :
     python3 scripts/agent-index.py            # régénère le bloc
@@ -31,7 +35,7 @@ BMM_DIR = REPO_ROOT / ".github" / "agents"
 KIT_DIR = REPO_ROOT / ".claude" / "agents"
 BRIDGES = REPO_ROOT / "_grimoire-runtime" / "_config" / "agent-bridges.yaml"
 MANIFEST = REPO_ROOT / "_grimoire-runtime" / "_config" / "agent-manifest.csv"
-TARGET = REPO_ROOT / ".github" / "copilot-instructions.md"
+TARGET = REPO_ROOT / "docs" / "agent-map.md"
 
 START = "<!-- agent-index:start — généré par scripts/agent-index.py, ne pas éditer à la main -->"
 END = "<!-- agent-index:end -->"
