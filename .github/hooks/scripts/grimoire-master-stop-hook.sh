@@ -83,7 +83,10 @@ print(json.dumps(payload))
   exit 0
 fi
 
-if [[ -n "$stop_additional_context" ]]; then
+# systemMessage doit etre relaye des qu'il est present, meme sans
+# additionalContext : guardrail-policy.py peut renvoyer un payload Stop ne
+# portant que l'enforcement du budget de tokens (systemMessage seul).
+if [[ -n "$stop_additional_context" || -n "$stop_system_message" ]]; then
   "$policy_python" -c "
 import json, sys
 additional_context = sys.argv[1]
@@ -92,8 +95,9 @@ specific = {
     'hookEventName': 'Stop',
     'decision': 'block',
     'reason': \"Avant de conclure, demande a l'utilisateur sa prochaine demande en une phrase concise et attends sa reponse dans cette conversation. N'affiche pas le menu si cette nouvelle demande est deja actionable.\",
-    'additionalContext': additional_context,
 }
+if additional_context:
+    specific['additionalContext'] = additional_context
 payload = {'hookSpecificOutput': specific}
 if system_message:
     payload['systemMessage'] = system_message
