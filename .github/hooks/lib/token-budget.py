@@ -18,7 +18,8 @@ Usage :
   python3 token-budget.py --project-root . enforce --agent dev --model claude-sonnet-4-20250514
   python3 token-budget.py --project-root . report --json
 
-Stdlib only — importe context-summarizer.py par importlib.
+Stdlib de base (importe context-summarizer.py par importlib) ; tiktoken et
+yaml sont des imports optionnels, chargés à l'usage avec repli silencieux.
 
 Références :
   - MemGPT/Letta: https://github.com/letta-ai/letta — tiered memory & eviction
