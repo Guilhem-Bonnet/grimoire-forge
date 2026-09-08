@@ -3,6 +3,9 @@ name: 'art-director'
 description: 'Art Director — Visual identity, prompt aesthetics, output formatting'
 tools: 'Read, Glob, Grep, Edit, Write, Bash'
 model: 'opus'
+effort: 'high'
+maxTurns: 30
+background: true
 ---
 <!-- grimoire:managed — régénéré par `grimoire host sync`; éditez la source, pas ce fichier. -->
 

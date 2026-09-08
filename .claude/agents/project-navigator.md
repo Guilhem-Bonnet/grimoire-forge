@@ -3,6 +3,9 @@ name: 'project-navigator'
 description: 'Project Knowledge Curator & Navigator — Atlas'
 tools: 'Read, Glob, Grep, Edit, Write, Bash'
 model: 'inherit'
+effort: 'low'
+maxTurns: 30
+background: true
 ---
 <!-- grimoire:managed — régénéré par `grimoire host sync`; éditez la source, pas ce fichier. -->
 

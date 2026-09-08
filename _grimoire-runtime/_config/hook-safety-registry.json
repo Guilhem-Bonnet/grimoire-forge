@@ -195,10 +195,10 @@
         ".github/hooks/lib/guardrail-policy-follow-through.py",
         ".github/hooks/lib/guardrail-policy-rules.yaml"
       ],
-      "mode": "shadow",
+      "mode": "enforced",
       "validatedDigest": "3f82d8b867f5d802a813516b611c8f3d03ef3703589f6a5f76d1650d9fb7c28c",
-      "validatedAt": "2026-09-08T16:23:50Z",
-      "note": "Retrograde en shadow le 2026-09-08 (ecart B8, audit-ecarts-reference-agentique-20260908.md) : SubagentStart est enforced dans ce registre mais cet evenement n'est pas emis par host sync cote Claude Code (le kit ne le connait pas encore, cf. src/grimoire/hosts/surface.py). Un hook enforced sur un evenement non cable est un hook mort qui donne une fausse impression de garde active. Repasser en enforced (hook-safety-gate.py promote grimoire-subagent-context) a la release du kit qui ajoute SubagentStart a la famille Claude Code (lot C du plan d'execution)."
+      "validatedAt": "2026-09-08T22:01:17Z",
+      "note": "Repromu enforced le 2026-09-08 (consommation grimoire-kit 3.41.0) : diff verifie entre grimoire_kit-3.40.0 et 3.41.0 sur grimoire/hosts/capabilities.py (_HOOK_FIELDS gagne HookEvent.SUBAGENT_START/POST_TOOL_USE_FAILURE) et grimoire/hosts/runtime.py (mapping HookEvent.SUBAGENT_START -> \"SubagentStart\"), absents en 3.40.0 malgre le champ subagent_start=True deja present sur CLAUDE_CODE_CLI_MANIFEST (bridges/schemas.py) depuis 3.40.0 sans etre cable nulle part. Le kit connait desormais reellement SubagentStart pour la famille Claude Code ; ecart B8 (audit-ecarts-reference-agentique-20260908.md) resolu."
     },
     "grimoire-subagent-trace": {
       "event": "SubagentStart/Stop",
