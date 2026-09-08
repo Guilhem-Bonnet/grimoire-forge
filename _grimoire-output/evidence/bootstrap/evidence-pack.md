@@ -99,3 +99,5 @@ The bootstrap task is complete for the orchestrated profile baseline when `stand
 | `grimoire providers audit` sans dépenser | `Grimoire-kit#331` (issue #330) | sous-agent Sonnet | 92 tests verts, mergée |
 | Politique de dispatch émise aux hôtes | `Grimoire-kit#332` (issue #329) | sous-agent Sonnet | 102 tests hôtes verts, mergée |
 | Relisibilité du diff + incertitudes déclarées | `Grimoire-kit#334` (issues #327, #328) | sous-agent Sonnet + surfaces génériques | 883 tests verts, mergée (27 checks) |
+| Lot 4, palier de départ par historique | `Grimoire-kit#335` (issue #312) | sous-agent Sonnet + verrou de plancher | 910 tests verts, mergée |
+| Lot 3, exécuteur dispatch dans flow run | `Grimoire-kit#336` (issue #311) | sous-agent Sonnet + correctif import mypy strict | mypy strict 217 fichiers propre, tests verts, mergée |
