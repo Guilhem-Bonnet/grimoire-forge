@@ -11,6 +11,10 @@ providers:
     provider_type: "hosted"
     allowed_capabilities: ["chat", "code", "review"]
     default_models: ["copilot-integrated-models"]
+    currency: "quota"
+    # Pas d'`invocation` : le CLI Copilot n'est pas installé sur ce poste, et un
+    # fournisseur sans commande headless est ignoré par la cascade au lieu de
+    # lui faire perdre une tentative. La renseigner suffit à le réactiver.
     data_policy:
       allowed_data_classes: ["public-docs", "project-source", "generated-artifacts", "non-secret-metadata"]
       forbidden_data_classes: ["secrets", "credentials", "personal-data", "regulated-data"]
@@ -35,15 +39,24 @@ providers:
       log_metadata: true
 
   - id: "anthropic"
-    enabled: false
+    enabled: true
     provider_type: "hosted"
     allowed_capabilities: ["chat", "code", "reasoning"]
     default_models: ["claude-sonnet-4.6", "claude-opus-4.7", "claude-haiku-4.5"]
+    currency: "quota"
+    invocation: "claude -p {prompt} --model {model} --permission-mode acceptEdits"
+    models:
+      - id: "haiku"
+        tier: "cheap"
+      - id: "sonnet"
+        tier: "mid"
+      - id: "opus"
+        tier: "strong"
     data_policy:
       allowed_data_classes: ["public-docs", "project-source", "generated-artifacts", "non-secret-metadata"]
       forbidden_data_classes: ["secrets", "credentials", "personal-data", "regulated-data"]
-      retention_notes: "Disabled by default until project credentials and data policy approval are configured."
-    fallback_order: ["github-copilot", "openai", "local"]
+      retention_notes: "Appelé par le CLI Claude déjà authentifié sur le poste ; cascade mesurée le 2026-09-08 (Grimoire-kit#308)."
+    fallback_order: ["local", "github-copilot", "openai"]
     audit:
       log_prompts: false
       log_metadata: true
@@ -63,10 +76,15 @@ providers:
       log_metadata: true
 
   - id: "local"
-    enabled: false
+    enabled: true
     provider_type: "local"
     allowed_capabilities: ["chat", "code", "embeddings"]
     default_models: ["local-open-weight"]
+    currency: "local"
+    invocation: "ollama run {model} {prompt}"
+    models:
+      - id: "qwen3-coder:30b"
+        tier: "cheap"
     data_policy:
       allowed_data_classes: ["public-docs", "project-source", "generated-artifacts", "non-secret-metadata", "sensitive-local-only"]
       forbidden_data_classes: ["secrets-without-redaction", "regulated-data-without-approval"]
