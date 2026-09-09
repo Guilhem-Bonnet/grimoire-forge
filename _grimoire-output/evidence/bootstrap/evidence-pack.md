@@ -113,3 +113,8 @@ The bootstrap task is complete for the orchestrated profile baseline when `stand
 | Artefacts que la 3.41.0 exige au profil governed : bloc `write_validation` dans `memory-policy.yaml`, `prompt-firewall.yaml` (trois sources en quarantaine) | `_grimoire/standard/` | concierge | `standard verify` 0 erreur 0 avertissement ; gate bootstrap OK |
 | Forge sur 3.41.0, registre renseigné | commit `2e27150`, `grimoire providers audit` | session Claude Code | anthropic et local sondés disponibles, copilot ignoré faute de commande |
 | Chaîne de dispatch prouvée bout-en-bout | `task dispatch --dry-run` sur une tâche V0 jetable | session Claude Code | V0 détectée, chaîne cheap → mid → strong, consigne d'incertitudes présente |
+| Écritures du cockpit réparées | `Grimoire-kit#358`, garde 4 routes avec query string | session Claude Code | garde rouge sans correctif, verte avec |
+| Registre du cockpit assaini | `Grimoire-kit#343` | sous-agent + relecture | 31,2 s → 1,15 s, suppression d'office refusée |
+| Pyramide de tests | `Grimoire-kit#361` | agent isolé + correctif encodage Windows | 4 défauts couverts, chacun prouvé rouge avant son correctif |
+| Agent de sécurité | `Grimoire-kit#357` | sous-agent | campagne ~850 exemples, 0 plantage, couverture mesurée |
+| Audit Rust | `Grimoire-kit#354` commentaire | agent isolé | premier module `policies`, coût 5 roues par version |
