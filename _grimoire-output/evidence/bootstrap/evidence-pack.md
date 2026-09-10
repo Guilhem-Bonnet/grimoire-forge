@@ -127,3 +127,4 @@ The bootstrap task is complete for the orchestrated profile baseline when `stand
 | Skills attachés par défaut | `Grimoire-kit#377` | sous-agent + double régime de garde par le concierge | 1 480 vs 0 tokens/tour mesurés, job CI rejoué localement |
 | Contexte déclaré câblé | `Grimoire-kit#378` | sous-agent | 476 vs 157 tokens, agent sans contexte identique bit à bit |
 | infra-ops refait | `Grimoire-kit#380` | agent-optimizer + relecture de conversion | 4 agents → 4 skills, sujets techniques conservés, init sans note |
+| Cockpit : agents et skills | `Grimoire-kit#382` (issue #374) | sous-agent navigateur + fusion de main et 4 suites rejouées par le concierge | 11 fichiers additifs, e2e vert, registre réel revérifié intact |
