@@ -129,3 +129,4 @@ The bootstrap task is complete for the orchestrated profile baseline when `stand
 | infra-ops refait | `Grimoire-kit#380` | agent-optimizer + relecture de conversion | 4 agents → 4 skills, sujets techniques conservés, init sans note |
 | Cockpit : agents et skills | `Grimoire-kit#382` (issue #374) | sous-agent navigateur + fusion de main et 4 suites rejouées par le concierge | 11 fichiers additifs, e2e vert, registre réel revérifié intact |
 | Instrumentation fusionnée après correctif lint | `Grimoire-kit#366` | concierge, ruff épinglé version CI | noqa restauré, suites vertes, mergée |
+| Identité d'agent, source unique | `Grimoire-kit#383` (issue #381) | sous-agent + lint CI, typage, e2e rejoués par le concierge | garde rouge avant, verte après, mergée |
