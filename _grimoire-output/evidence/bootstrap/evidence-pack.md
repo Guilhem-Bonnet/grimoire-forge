@@ -118,3 +118,5 @@ The bootstrap task is complete for the orchestrated profile baseline when `stand
 | Pyramide de tests | `Grimoire-kit#361` | agent isolé + correctif encodage Windows | 4 défauts couverts, chacun prouvé rouge avant son correctif |
 | Agent de sécurité | `Grimoire-kit#357` | sous-agent | campagne ~850 exemples, 0 plantage, couverture mesurée |
 | Audit Rust | `Grimoire-kit#354` commentaire | agent isolé | premier module `policies`, coût 5 roues par version |
+| Premier port Rust | `Grimoire-kit#363` | agent isolé + correctif CI | parité prouvée dans les deux configurations, roue restée universelle |
+| Bouton mort retiré | `Grimoire-kit#362` | sous-agent + vérification navigateur | en-tête intact, garde contre un bouton sans écouteur |
