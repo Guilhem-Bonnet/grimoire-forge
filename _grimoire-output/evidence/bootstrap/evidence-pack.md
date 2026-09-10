@@ -124,3 +124,6 @@ The bootstrap task is complete for the orchestrated profile baseline when `stand
 | Audits agents, contextes, skills | `Grimoire-kit#369`, `#371` commentaires | trois agents spécialisés | 0/33 tools déclarés, 21/33 même contexte, 0 skill rattaché |
 | Instrumentation du choix d'agent | `Grimoire-kit#366` | sous-agent + commit par le concierge | best-effort testé, mypy strict propre |
 | Outil d'ajout d'agent réel | `Grimoire-kit#367` | sous-agent | fichier vu par diagnostic et routage |
+| Skills attachés par défaut | `Grimoire-kit#377` | sous-agent + double régime de garde par le concierge | 1 480 vs 0 tokens/tour mesurés, job CI rejoué localement |
+| Contexte déclaré câblé | `Grimoire-kit#378` | sous-agent | 476 vs 157 tokens, agent sans contexte identique bit à bit |
+| infra-ops refait | `Grimoire-kit#380` | agent-optimizer + relecture de conversion | 4 agents → 4 skills, sujets techniques conservés, init sans note |
