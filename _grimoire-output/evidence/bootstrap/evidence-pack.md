@@ -120,3 +120,7 @@ The bootstrap task is complete for the orchestrated profile baseline when `stand
 | Audit Rust | `Grimoire-kit#354` commentaire | agent isolé | premier module `policies`, coût 5 roues par version |
 | Premier port Rust | `Grimoire-kit#363` | agent isolé + correctif CI | parité prouvée dans les deux configurations, roue restée universelle |
 | Bouton mort retiré | `Grimoire-kit#362` | sous-agent + vérification navigateur | en-tête intact, garde contre un bouton sans écouteur |
+| Doctrine des artefacts | `Grimoire-kit#370` (issue #368) | sous-agent + relecture d'échantillon | garde use_when/tools sur 33 agents, mergée |
+| Audits agents, contextes, skills | `Grimoire-kit#369`, `#371` commentaires | trois agents spécialisés | 0/33 tools déclarés, 21/33 même contexte, 0 skill rattaché |
+| Instrumentation du choix d'agent | `Grimoire-kit#366` | sous-agent + commit par le concierge | best-effort testé, mypy strict propre |
+| Outil d'ajout d'agent réel | `Grimoire-kit#367` | sous-agent | fichier vu par diagnostic et routage |
