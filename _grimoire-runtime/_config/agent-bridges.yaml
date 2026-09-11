@@ -12,13 +12,6 @@ $schema: "grimoire-agent-bridges/v1"
 # Deux agents qui portent le même nom des deux côtés, ou le même rôle sous deux
 # noms. L'orchestrateur doit savoir lequel il active, et pourquoi.
 duplicates:
-  - names: ["art-director", "art-director"]
-    piles: ["bmm", "kit"]
-    resolution: >-
-      La version BMM est spécialisée pixel art, hero FX et room kits, et lit
-      grimoire-game-assets/. La version kit est l'archétype générique d'identité
-      visuelle. Sur ce projet, la version BMM prime ; la version kit ne sert que
-      de repli hors contexte jeu.
   - names: ["grimoire-master", "concierge"]
     piles: ["bmm", "kit"]
     resolution: >-
@@ -31,15 +24,11 @@ duplicates:
 
 # Relations réelles entre les deux piles : qui va chercher quoi de l'autre côté.
 bridges:
-  - from: "memory-keeper"
-    to: ["analyst", "tech-writer"]
-    reason: "La qualité mémoire alimente l'analyse et la documentation ; c'est le même corpus vu sous deux angles."
-  - from: "project-navigator"
-    to: ["architect", "analyst"]
-    reason: "La cartographie du dépôt est l'entrée de l'arbitrage d'architecture."
   - from: "agent-optimizer"
-    to: ["agent-builder", "workflow-builder"]
-    reason: "L'optimiseur audite ce que les builders produisent ; la boucle n'a de sens que fermée."
-  - from: "creative-toolsmith"
-    to: ["workflow-builder", "dev"]
-    reason: "Un outil conçu doit atterrir dans un workflow ou dans du code, sinon il reste une idée."
+    to: ["agent-builder", "workflow-builder", "analyst", "tech-writer", "architect", "dev"]
+    reason: >-
+      L'optimiseur audite ce que les builders produisent ; la boucle n'a de sens
+      que fermée. Depuis grimoire-kit 3.42.0 il porte aussi, comme skills
+      attachés, l'ancienne qualité mémoire (vers analyst et tech-writer), la
+      cartographie du dépôt (vers architect et analyst) et la conception
+      d'outils (vers workflow-builder et dev).
