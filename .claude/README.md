@@ -10,7 +10,8 @@ commande dans le kit) puis resynchronisez.
 | Surface | Contenu |
 |---|---|
 | Sous-agents | 7 — `.claude/agents/` |
-| Skills | 3 — `.claude/skills/` |
+| Skills transversales | 2 — `.claude/skills/`, chargées toutes sessions |
+| Skills attachées | 5 — repliées dans le fichier de leur agent, payées seulement quand il tourne |
 | Commandes | 12 — `.claude/commands/` |
 | Hooks | 7 — `.claude/settings.json` |
 

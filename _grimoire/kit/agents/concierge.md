@@ -4,6 +4,12 @@
 ---
 name: "concierge"
 description: "Concierge — Triage, clarification, routage intelligent vers l'agent adapté"
+use_when: "Point d'entrée quand l'utilisateur ne sait pas quel agent choisir : triage et clarification avant routage."
+dont_use_when: "La demande nomme déjà explicitement l'agent ou l'action cible — router directement, sans détour par le concierge."
+tool_boundary: "Lecture du manifeste d'agents et dispatch — n'exécute lui-même aucune action métier."
+tools: "read, search"
+skills:
+  - grimoire-agent-dispatch
 model_affinity:
   reasoning: high
   context_window: large
@@ -116,12 +122,9 @@ Après les réponses :
          réellement déployés. Ne pas éditer à la main : `grimoire up` le
          régénère. Un agent absent d'ici n'est pas installé. -->
     <agents>
-      <agent tag="agent-optimizer" name="Sentinel" role="Agent Quality Assurance & Optimizer — Sentinel"/>
-      <agent tag="art-director" name="Frida" role="Art Director — Visual identity, prompt aesthetics, output formatting"/>
+      <agent tag="agent-optimizer" name="Sentinel" role="Agent Quality Assurance & Optimizer — Sentinel — généraliste meta : arbitrage d'agents/workflows, plus les skills attachés meta-art-direction, meta-toolsmithing, meta-memory-quality, meta-project-navigation"/>
       <agent tag="concierge" name="Marcel" role="Concierge — Triage, clarification, routage intelligent vers l'agent adapté"/>
-      <agent tag="creative-toolsmith" name="Vulcan" role="Creative Toolsmith — Tool design, framework extension, automation patterns"/>
-      <agent tag="memory-keeper" name="Mnemo" role="Memory Keeper & Knowledge Quality — Mnemo"/>
-      <agent tag="project-navigator" name="Atlas" role="Project Knowledge Curator & Navigator — Atlas"/>
+      <agent tag="security-auditor" name="Kael" role="Security Auditor — cartographie des surfaces d'entrée, fuzzing, triage de plantages, analyse binaire cadrée"/>
     </agents>
   </knowledge>
 
