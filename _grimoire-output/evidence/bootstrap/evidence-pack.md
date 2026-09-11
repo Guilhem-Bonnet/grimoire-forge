@@ -130,3 +130,4 @@ The bootstrap task is complete for the orchestrated profile baseline when `stand
 | Cockpit : agents et skills | `Grimoire-kit#382` (issue #374) | sous-agent navigateur + fusion de main et 4 suites rejouées par le concierge | 11 fichiers additifs, e2e vert, registre réel revérifié intact |
 | Instrumentation fusionnée après correctif lint | `Grimoire-kit#366` | concierge, ruff épinglé version CI | noqa restauré, suites vertes, mergée |
 | Identité d'agent, source unique | `Grimoire-kit#383` (issue #381) | sous-agent + lint CI, typage, e2e rejoués par le concierge | garde rouge avant, verte après, mergée |
+| Archétypes refaits, cinq lots + émission allégée | `Grimoire-kit#384` `#385` `#386` `#387` `#388` `#390` | sous-agents Sonnet, conflits CHANGELOG et régressions (détection de pile, e2e reciblé, test lisant origin/main) traités en session | tous fusionnés le 2026-09-11, 0 PR ouverte, worktrees supprimés, release 3.42.0 déléguée |
