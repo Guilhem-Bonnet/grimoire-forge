@@ -99,3 +99,12 @@ routing:
   default_fallback_chain: ["github-copilot", "anthropic", "openai", "google-gemini", "local"]
   require_capability_match: true
   require_data_policy_match: true
+
+# SLO du dispatch (grimoire-kit 3.46.0, point 5 de l'audit du 2026-09-12).
+# Mesure réelle du 2026-09-12 : 0,19 USD par tâche résolue, pass^k 4/4.
+dispatch_cost_slo:
+  max_cost_per_resolved_task_usd: 0.30
+  min_pass_k_rate: 0.9
+  min_resolved_observations: 5
+  min_pass_k_observations: 3
+  enforce: false

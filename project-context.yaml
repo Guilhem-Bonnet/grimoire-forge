@@ -26,3 +26,9 @@ memory:
   memory_graph: "neo4j"
   code_graph: "neo4j"
   task_memory: "neo4j"
+
+# Assistant d'édition de l'espace Source par modèle local (grimoire-kit 3.46.0,
+# point 7 de l'audit du 2026-09-12). Ollama sur ce poste, jamais de fournisseur distant.
+source:
+  assist:
+    model: "qwen3-coder:30b"

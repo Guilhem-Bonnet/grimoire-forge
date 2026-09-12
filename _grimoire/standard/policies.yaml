@@ -1,0 +1,32 @@
+# Politiques temporelles par session (grimoire-kit 3.46.0, point 3 de l'audit
+# du 2026-09-12). Activées sur la Forge le 2026-09-12 pour un test en direct.
+# Les budgets sont larges : ils protègent contre un agent qui s'emballe, pas
+# contre une session de travail normale.
+rules:
+  - id: destructive-shell-requires-approval
+    description: "Une suppression récursive ou une poussée forcée demande une confirmation, une fois par session"
+    action_kinds: []
+    mutation_classes: []
+    risk_profiles: []
+    verdict_on_match: warn
+    reason_template: "Commande destructive : approbation explicite demandée une fois par session"
+    tool_pattern: "Bash(rm:*)"
+    require_approval: true
+    cooldown_after: {pattern: "Bash(rm:*)", count: 5, minutes: 10}
+  - id: session-budget
+    description: "Garde-fou de session : 800 écritures, 3000 appels d'outil, 12 heures"
+    action_kinds: []
+    mutation_classes: []
+    risk_profiles: []
+    verdict_on_match: block
+    reason_template: "Budget de session dépassé : la session doit être relancée"
+    per_session: {max_writes: 800, max_tool_calls: 3000, max_duration_min: 720}
+  - id: git-push-requires-approval
+    description: "Une poussée vers le dépôt distant demande une confirmation, une fois par session"
+    action_kinds: []
+    mutation_classes: []
+    risk_profiles: []
+    verdict_on_match: warn
+    reason_template: "Poussée distante : approbation explicite demandée une fois par session"
+    tool_pattern: "Bash(git push:*)"
+    require_approval: true
