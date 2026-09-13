@@ -32,3 +32,8 @@ memory:
 source:
   assist:
     model: "qwen3-coder:30b"
+
+# Hôtes émis par host sync (grimoire-kit 3.47.0, #177). Liste explicite,
+# égale à la détection : les cinq hôtes ont déjà leurs fichiers dans la Forge.
+hosts:
+  enabled: [claude, copilot, gemini, cursor, codex]

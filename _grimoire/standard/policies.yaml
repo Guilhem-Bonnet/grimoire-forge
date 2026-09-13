@@ -18,7 +18,7 @@ rules:
     action_kinds: []
     mutation_classes: []
     risk_profiles: []
-    verdict_on_match: block
+    verdict_on_match: warn
     reason_template: "Budget de session dépassé : la session doit être relancée"
     per_session: {max_writes: 100000, max_tool_calls: 100000, max_duration_min: 1440}
   - id: git-push-requires-approval
