@@ -20,7 +20,7 @@ rules:
     risk_profiles: []
     verdict_on_match: block
     reason_template: "Budget de session dépassé : la session doit être relancée"
-    per_session: {max_writes: 800, max_tool_calls: 3000, max_duration_min: 720}
+    per_session: {max_writes: 100000, max_tool_calls: 100000, max_duration_min: 1440}
   - id: git-push-requires-approval
     description: "Une poussée vers le dépôt distant demande une confirmation, une fois par session"
     action_kinds: []
