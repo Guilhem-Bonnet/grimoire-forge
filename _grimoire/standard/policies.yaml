@@ -20,7 +20,9 @@ rules:
     risk_profiles: []
     verdict_on_match: warn
     reason_template: "Budget de session dépassé : la session doit être relancée"
-    per_session: {max_writes: 100000, max_tool_calls: 100000, max_duration_min: 1440}
+    # 2026-09-14 : max_duration_min retiré — la fenêtre de 24 h bloquait toute la
+    # session (lectures et réparation comprises), défaut à corriger dans le kit.
+    per_session: {max_writes: 100000, max_tool_calls: 100000}
   - id: git-push-requires-approval
     description: "Une poussée vers le dépôt distant demande une confirmation, une fois par session"
     action_kinds: []
