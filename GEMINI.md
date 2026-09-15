@@ -32,6 +32,7 @@ conversation courante au lieu de s'exécuter à part.
 | `meta-memory-quality` | Auditer à la demande la qualité de la mémoire du projet : contradictions, doublons de learnings, fraîcheur, drift. À utiliser pour un audit ponctuel avec enjeu de qualité — la maintenance de routine (pruning, archivage) tourne déjà sans agent, via les hooks du cercle vertueux. | `_grimoire/hosts/skills/meta-memory-quality.md` |
 | `meta-project-navigation` | Cartographier ou retrouver une connaissance dispersée du projet (services, ports, configs, ADRs) et arbitrer `shared-context.md` quand deux sources se contredisent. À utiliser quand la connaissance cherchée n'est pas déjà indexée et nommée — sinon une recherche directe suffit. | `_grimoire/hosts/skills/meta-project-navigation.md` |
 | `meta-toolsmithing` | Créer, auditer ou refactorer un outil framework Grimoire (CLI, module, pattern d'automatisation sous framework/tools/). À utiliser dès qu'un outil doit être forgé, testé triple-interface (CLI/MCP/module) ou découpé — pas pour créer un agent (arbitrage d'agent-optimizer) ni un workflow métier. | `_grimoire/hosts/skills/meta-toolsmithing.md` |
+| `upgrade-review` | Revue de mise à jour : lire, expliquer et recommander ce qu'un `grimoire upgrade-flow run` a laissé en attente (checkpoint destructif, propositions d'override/mémoire/besoins-hôtes) — jamais appliquer. À utiliser après un `up`/`upgrade-flow run` qui s'est arrêté avant son terme, ou dès qu'une proposition attend une décision. | `_grimoire/hosts/skills/upgrade-review.md` |
 
 Aucun chargement automatique ici : lire le fichier quand la situation décrite se présente.
 
@@ -50,6 +51,7 @@ Aucun chargement automatique ici : lire le fichier quand la situation décrite s
 | `grimoire host run grimoire-self-heal` | Auto-diagnostic et réparation Grimoire — identifie et corrige les problèmes courants |
 | `grimoire host run grimoire-session-bootstrap` | Bootstrap une nouvelle session Grimoire — contexte projet, historique, état git, santé |
 | `grimoire host run grimoire-status` | Tableau de bord Grimoire — agents actifs, mémoire, activité récente, état projet |
+| `grimoire host run grimoire-upgrade-review` | Revoir ce que `grimoire upgrade-flow run` a laissé en attente (checkpoint destructif, propositions) et décider — jamais appliquer sans réponse explicite |
 | `grimoire host run grimoire-verify` | Vérification complète du standard agentique et score de conformité |
 
 ## MCP

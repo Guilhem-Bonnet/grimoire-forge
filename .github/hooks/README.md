@@ -9,7 +9,7 @@ instructions : `.github/copilot-instructions.md`.
 |---|---|
 | Agents | 3 — `.github/agents/` |
 | Skills transversales | 2 — `.github/skills/` |
-| Skills attachées | 5 — repliées dans le fichier de leur agent |
+| Skills attachées | 6 — repliées dans le fichier de leur agent |
 | Prompts | 5 — `.github/prompts/` |
 | Hooks | 7 — `.github/hooks/` |
 

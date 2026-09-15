@@ -11,8 +11,8 @@ commande dans le kit) puis resynchronisez.
 |---|---|
 | Sous-agents | 3 — `.claude/agents/` |
 | Skills transversales | 2 — `.claude/skills/`, chargées toutes sessions |
-| Skills attachées | 5 — repliées dans le fichier de leur agent, payées seulement quand il tourne |
-| Commandes | 12 — `.claude/commands/` |
+| Skills attachées | 6 — repliées dans le fichier de leur agent, payées seulement quand il tourne |
+| Commandes | 13 — `.claude/commands/` |
 | Hooks | 7 — `.claude/settings.json` |
 
 ## Hooks bloquants
