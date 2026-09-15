@@ -1,6 +1,7 @@
 project:
   name: "Grimoire-Forge"
-  description: "Grimoire R&D forge — agentic runtime, memory OS, and standard adoption workspace."
+  description: "Grimoire R&D forge — agentic runtime, memory OS, and standard adoption
+    workspace."
   type: "library"
 
 user:
@@ -15,12 +16,13 @@ memory:
   # false : recherche lexicale locale (sqlite FTS5 BM25) — zéro service, zéro vecteur,
   #         zéro réseau. Pour les environnements interdisant une DB vectorielle locale.
   #         Bascule aussi semantic_memory vers sqlite-fts5 (voir memory-policy.yaml).
+  layer_profile: "complet"   # lexical | standard | graphe | complet (grimoire.memory.profiles)
   vector_database: true
   retrieval_mode: "vector"   # vector | lexical
-  backend: "auto"            # auto | weaviate-server | qdrant-server | qdrant-local | ollama | lexical | local
+  backend: "weaviate-server" # auto | weaviate-server | qdrant-server | qdrant-local | ollama | lexical | local
   # --- Mémoire chaude (contrat R8, optionnelle) ---
-  short_term_backend: "sqlite"
-  redis_url: ""
+  short_term_backend: "redis"
+  redis_url: "redis://localhost:6379/0"
   neo4j_uri: "bolt://localhost:7687"
   knowledge_graph: "neo4j"
   memory_graph: "neo4j"
@@ -29,6 +31,13 @@ memory:
 
 # Assistant d'édition de l'espace Source par modèle local (grimoire-kit 3.46.0,
 # point 7 de l'audit du 2026-09-12). Ollama sur ce poste, jamais de fournisseur distant.
+  collection_prefix: grimoire_forge
+  embedding_model: sentence-transformers/all-MiniLM-L6-v2
+  neo4j_database: neo4j
+  neo4j_password_env: GRIMOIRE_NEO4J_PASSWORD
+  neo4j_user: neo4j
+  weaviate_collection: GrimoireForgeMemory
+  weaviate_url: http://localhost:8080
 source:
   assist:
     model: "qwen3-coder:30b"
