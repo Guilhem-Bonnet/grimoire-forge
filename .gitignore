@@ -90,3 +90,4 @@ site/
 _grimoire-output/.runs/
 # Memory archives — compressed old sessions
 _grimoire/_memory/archives/
+_scratch/
