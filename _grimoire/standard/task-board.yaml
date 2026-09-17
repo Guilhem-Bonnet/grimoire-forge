@@ -1,202 +1,303 @@
-$schema: "grimoire-agentic-standard-task-board/v1"
+$schema: grimoire-agentic-standard-task-board/v1
 metadata:
-  project: "Grimoire-Forge"
-  generated_by: "grimoire standard init"
-  purpose: "Governed kanban for agentic work."
+  project: Grimoire-Forge
+  generated_by: grimoire task board export
+  purpose: Projection du Mission Ledger (ADR-005) — ne pas éditer à la main.
+  source: mission-ledger
 states:
-  - proposed
-  - ready
-  - in_progress
-  - blocked
-  - review
-  - accepted
-  - released
-  - archived
+- proposed
+- ready
+- in_progress
+- blocked
+- review
+- accepted
+- released
+- archived
 transitions:
   proposed_to_ready:
     requires:
-      - acceptance_criteria
-      - owner_or_agent_role
+    - acceptance_criteria
+    - owner_or_agent_role
   ready_to_in_progress:
     requires:
-      - context_bundle
-      - provider_policy
-      - memory_os_hot_layer_policy
+    - context_bundle
+    - provider_policy
   in_progress_to_review:
     requires:
-      - evidence_pack
-      - decision_trace
+    - evidence_pack
+    - decision_trace
   review_to_accepted:
     requires:
-      - review_gate
-      - evidence_gate
+    - review_gate
+    - evidence_gate
   accepted_to_released:
     requires:
-      - compliance_score
-      - release_authorization
-      - hot_memory_degradation_recorded
+    - compliance_score
+    - release_authorization
   any_to_blocked:
     requires:
-      - blocker_reason
-      - remediation_plan
+    - blocker_reason
+    - remediation_plan
 tasks:
-  - task_id: "bootstrap"
-    title: "Bootstrap — baseline du standard agentique sur la Forge"
-    status: "accepted"
-    priority: "high"
-    owner: "grimoire-maintainers"
-    agent_roles:
-      - orchestrator
-    acceptance_criteria:
-      - "grimoire standard verify passe sans erreur depuis la racine de la Forge."
-      - "Les artefacts du profil sont générés, remplis et vérifiés."
-    blockers: []
-    context_bundle_ref: "_grimoire-output/context/bootstrap/context-bundle.yaml"
-    decision_trace_ref: "_grimoire-output/decisions/bootstrap/decision-trace.yaml"
-    evidence_pack_ref: "_grimoire-output/evidence/bootstrap/evidence-pack.md"
-    remediation_ref: "_grimoire/standard/remediation-plan.yaml"
-  - task_id: "r7-forge-kit-adoption"
-    title: "R7 — Forge adopts canonical grimoire-kit"
-    status: "accepted"
-    priority: "high"
-    owner: "grimoire-maintainers"
-    agent_roles:
-      - orchestrator
-      - implementation-agent
-    acceptance_criteria:
-      - "The Forge venv installs the published grimoire-kit release (>= 3.34.2) from PyPI, not an editable working tree."
-      - "grimoire standard verify passes from Forge root."
-      - "Forge standard artifacts aligned with Memory OS contract."
-    blockers: []
-    context_bundle_ref: "_grimoire-output/context/r7-forge-kit-adoption/context-bundle.yaml"
-    decision_trace_ref: "_grimoire-output/decisions/r7-forge-kit-adoption/decision-trace.yaml"
-    evidence_pack_ref: "_grimoire-output/evidence/r7-forge-kit-adoption/evidence-pack.md"
-    remediation_ref: "_grimoire/standard/remediation-plan.yaml"
-  - task_id: "r8-redis-adapter"
-    title: "R8 — Redis hot memory adapter"
-    status: "archived"
-    priority: "high"
-    owner: "grimoire-maintainers"
-    agent_roles:
-      - implementation-agent
-    acceptance_criteria:
-      - "Redis adapter implemented in Kit with TTL payloads, leases, namespaced event publishing, and optional install extra."
-      - "Forge declares Redis as optional hot memory while keeping durable Weaviate, Neo4j, and SQLite authoritative."
-      - "Memory OS status reports Redis as ready when configured, or partial/soft-fail without data loss when Redis is absent."
-      - "Standard verify stays green from a Forge-only checkout without vendored grimoire-kit."
-    blockers:
-      - "Archivée le 2026-09-04 : chantier d'atelier gelé par la doctrine du 2026-07-12, en revue depuis juillet sans task envelope ni gate de revue passée. Le planning produit vit dans le dépôt Grimoire-kit."
-    context_bundle_ref: "_grimoire-output/context/r8-redis-adapter/context-bundle.yaml"
-    decision_trace_ref: "_grimoire-output/decisions/r8-redis-adapter/decision-trace.yaml"
-    evidence_pack_ref: "_grimoire-output/evidence/r8-redis-adapter/evidence-pack.md"
-  - task_id: "r9-hooks-skills"
-    title: "R9 — Normalize hooks/rules/skills/agents taxonomy"
-    status: "archived"
-    priority: "medium"
-    owner: "grimoire-maintainers"
-    agent_roles:
-      - implementation-agent
-    acceptance_criteria:
-      - "Hooks are classified into core template candidates, Forge project pack, and incubator assets."
-      - "Skills are classified before promotion into Kit templates or governed Forge packs."
-      - "hook-registry.yaml, rule-packs.yaml and pattern-catalog.yaml link hook/skill rules to evidence gates."
-      - "standard verify stays green after taxonomy changes."
-    blockers:
-      - "Archivée le 2026-09-04 : chantier d'atelier gelé par la doctrine du 2026-07-12, en revue depuis juillet sans task envelope ni gate de revue passée. Le planning produit vit dans le dépôt Grimoire-kit."
-    context_bundle_ref: "_grimoire-output/context/r9-hooks-skills/context-bundle.yaml"
-    decision_trace_ref: "_grimoire-output/decisions/r9-hooks-skills/decision-trace.yaml"
-    evidence_pack_ref: "_grimoire-output/evidence/r9-hooks-skills/evidence-pack.md"
-  - task_id: "r10-cockpit"
-    title: "R10 — Cockpit/observability"
-    status: "archived"
-    priority: "medium"
-    owner: "grimoire-maintainers"
-    agent_roles:
-      - implementation-agent
-    acceptance_criteria:
-      - "Cockpit inputs are declared in observability-policy.yaml."
-      - "Cockpit report is generated from standard artifacts, runtime events and evidence packs only."
-      - "Cockpit remains read-only and never becomes the source of truth for tasks, memory, gates or scores."
-      - "Governed standard verify, audit and docs build stay green."
-    blockers:
-      - "Archivée le 2026-09-04 : chantier d'atelier gelé par la doctrine du 2026-07-12, en revue depuis juillet sans task envelope ni gate de revue passée. Le planning produit vit dans le dépôt Grimoire-kit."
-    context_bundle_ref: "_grimoire-output/context/r10-cockpit/context-bundle.yaml"
-    decision_trace_ref: "_grimoire-output/decisions/r10-cockpit/decision-trace.yaml"
-    evidence_pack_ref: "_grimoire-output/evidence/r10-cockpit/evidence-pack.md"
-  - task_id: "c1-board-transitions"
-    title: "C1 — Journal append-only des transitions kanban"
-    status: "archived"
-    priority: "high"
-    owner: "grimoire-maintainers"
-    agent_roles:
-      - implementation-agent
-    acceptance_criteria:
-      - "Toute edition de task-board.yaml changeant un statut produit un event journalise par hook."
-      - "Une transition illegale fait echouer npm run quality."
-      - "grimoire-hooks-smoke.sh couvre le hook grimoire-board-transitions."
-    blockers:
-      - "Archivée le 2026-09-04 : chantier d'atelier gelé par la doctrine du 2026-07-12, en revue depuis juillet sans task envelope ni gate de revue passée. Le planning produit vit dans le dépôt Grimoire-kit."
-    context_bundle_ref: "_grimoire-output/context/c1-board-transitions/context-bundle.yaml"
-    decision_trace_ref: "_grimoire-output/decisions/c1-board-transitions/decision-trace.yaml"
-    evidence_pack_ref: "_grimoire-output/evidence/c1-board-transitions/evidence-pack.md"
-  - task_id: "c2-evidence-reconcile"
-    title: "C2 — Reconciliateur evidence contre traces machine"
-    status: "archived"
-    priority: "high"
-    owner: "grimoire-maintainers"
-    agent_roles:
-      - implementation-agent
-    acceptance_criteria:
-      - "Un claim de chemin absent du disque est classe CONTRADICTED et fait echouer la gate."
-      - "Les refs manquantes d'une tache en review sont detectees."
-      - "Les packs existants passent ou portent une requalification explicite."
-    blockers:
-      - "Archivée le 2026-09-04 : chantier d'atelier gelé par la doctrine du 2026-07-12, en revue depuis juillet sans task envelope ni gate de revue passée. Le planning produit vit dans le dépôt Grimoire-kit."
-    context_bundle_ref: "_grimoire-output/context/c2-evidence-reconcile/context-bundle.yaml"
-    decision_trace_ref: "_grimoire-output/decisions/c2-evidence-reconcile/decision-trace.yaml"
-    evidence_pack_ref: "_grimoire-output/evidence/c2-evidence-reconcile/evidence-pack.md"
-  - task_id: "c3-step-proof"
-    title: "C3 — Preuve par step via workflow-state-manifest"
-    status: "archived"
-    priority: "medium"
-    owner: "grimoire-maintainers"
-    agent_roles:
-      - implementation-agent
-    acceptance_criteria:
-      - "La suppression de l'artefact d'un step intermediaire fait echouer le checker."
-      - "La dette anterieure est exemptee explicitement, jamais silencieuse."
-    blockers:
-      - "Archivée le 2026-09-04 : chantier d'atelier gelé par la doctrine du 2026-07-12, en revue depuis juillet sans task envelope ni gate de revue passée. Le planning produit vit dans le dépôt Grimoire-kit."
-    context_bundle_ref: "_grimoire-output/context/c3-step-proof/context-bundle.yaml"
-    decision_trace_ref: "_grimoire-output/decisions/c3-step-proof/decision-trace.yaml"
-    evidence_pack_ref: "_grimoire-output/evidence/c3-step-proof/evidence-pack.md"
-  - task_id: "c4-engagement-metric"
-    title: "C4 — Mesure d'engagement des workflows"
-    status: "archived"
-    priority: "medium"
-    owner: "grimoire-maintainers"
-    agent_roles:
-      - implementation-agent
-    acceptance_criteria:
-      - "Chaque session produit des events d'engagement horodates."
-      - "Le rapport distingue jamais engage de engage sans effet."
-    blockers:
-      - "Archivée le 2026-09-04 : chantier d'atelier gelé par la doctrine du 2026-07-12, en revue depuis juillet sans task envelope ni gate de revue passée. Le planning produit vit dans le dépôt Grimoire-kit."
-    context_bundle_ref: "_grimoire-output/context/c4-engagement-metric/context-bundle.yaml"
-    decision_trace_ref: "_grimoire-output/decisions/c4-engagement-metric/decision-trace.yaml"
-    evidence_pack_ref: "_grimoire-output/evidence/c4-engagement-metric/evidence-pack.md"
-  - task_id: "c5-golden-run"
-    title: "C5 — Golden run du workflow pilote"
-    status: "archived"
-    priority: "low"
-    owner: "grimoire-maintainers"
-    agent_roles:
-      - implementation-agent
-    acceptance_criteria:
-      - "Un run degrade est signale par le diff sans audit manuel."
-      - "Le referentiel est versionne avec procedure de mise a jour documentee."
-    blockers:
-      - "Archivée le 2026-09-04 : chantier d'atelier gelé par la doctrine du 2026-07-12, en revue depuis juillet sans task envelope ni gate de revue passée. Le planning produit vit dans le dépôt Grimoire-kit."
-    context_bundle_ref: "_grimoire-output/context/c5-golden-run/context-bundle.yaml"
-    decision_trace_ref: "_grimoire-output/decisions/c5-golden-run/decision-trace.yaml"
-    evidence_pack_ref: "_grimoire-output/evidence/c5-golden-run/evidence-pack.md"
+- task_id: bootstrap
+  title: Bootstrap — baseline du standard agentique sur la Forge
+  status: accepted
+  priority: medium
+  owner: grimoire-maintainers
+  agent_roles:
+  - implementation
+  acceptance_criteria:
+  - grimoire standard verify passe sans erreur depuis la racine de la Forge.
+  - Les artefacts du profil sont générés, remplis et vérifiés.
+  verifiability:
+    class: V2
+    explanation: "Au moins un critère ne nomme ni verdict mécanique reconnu ni revue reconnue — ou la tâche n'a aucun critère
+      : sa vérifiabilité reste à démontrer."
+    criteria:
+    - criterion: grimoire standard verify passe sans erreur depuis la racine de la Forge.
+      pattern:
+    - criterion: Les artefacts du profil sont générés, remplis et vérifiés.
+      pattern:
+  blockers: []
+  context_bundle_ref: _grimoire-output/context/bootstrap/context-bundle.yaml
+  decision_trace_ref: _grimoire-output/decisions/bootstrap/decision-trace.yaml
+  evidence_pack_ref: _grimoire-output/evidence/bootstrap/evidence-pack.md
+- task_id: r7-forge-kit-adoption
+  title: R7 — Forge adopts canonical grimoire-kit
+  status: accepted
+  priority: medium
+  owner: grimoire-maintainers
+  agent_roles:
+  - implementation
+  acceptance_criteria:
+  - The Forge venv installs the published grimoire-kit release (>= 3.34.2) from PyPI, not an editable working tree.
+  - grimoire standard verify passes from Forge root.
+  - Forge standard artifacts aligned with Memory OS contract.
+  verifiability:
+    class: V2
+    explanation: "Au moins un critère ne nomme ni verdict mécanique reconnu ni revue reconnue — ou la tâche n'a aucun critère
+      : sa vérifiabilité reste à démontrer."
+    criteria:
+    - criterion: The Forge venv installs the published grimoire-kit release (>= 3.34.2) from PyPI, not an editable 
+        working tree.
+      pattern:
+    - criterion: grimoire standard verify passes from Forge root.
+      pattern:
+    - criterion: Forge standard artifacts aligned with Memory OS contract.
+      pattern:
+  blockers: []
+  context_bundle_ref: _grimoire-output/context/r7-forge-kit-adoption/context-bundle.yaml
+  decision_trace_ref: _grimoire-output/decisions/r7-forge-kit-adoption/decision-trace.yaml
+  evidence_pack_ref: _grimoire-output/evidence/r7-forge-kit-adoption/evidence-pack.md
+- task_id: c1-board-transitions
+  title: C1 — Journal append-only des transitions kanban
+  status: archived
+  priority: medium
+  owner: grimoire-maintainers
+  agent_roles:
+  - implementation
+  acceptance_criteria:
+  - Toute edition de task-board.yaml changeant un statut produit un event journalise par hook.
+  - Une transition illegale fait echouer npm run quality.
+  - grimoire-hooks-smoke.sh couvre le hook grimoire-board-transitions.
+  verifiability:
+    class: V2
+    explanation: "Au moins un critère ne nomme ni verdict mécanique reconnu ni revue reconnue — ou la tâche n'a aucun critère
+      : sa vérifiabilité reste à démontrer."
+    criteria:
+    - criterion: Toute edition de task-board.yaml changeant un statut produit un event journalise par hook.
+      pattern:
+    - criterion: Une transition illegale fait echouer npm run quality.
+      pattern:
+    - criterion: grimoire-hooks-smoke.sh couvre le hook grimoire-board-transitions.
+      pattern:
+  blockers: []
+  context_bundle_ref: _grimoire-output/context/c1-board-transitions/context-bundle.yaml
+  decision_trace_ref: _grimoire-output/decisions/c1-board-transitions/decision-trace.yaml
+  evidence_pack_ref: _grimoire-output/evidence/c1-board-transitions/evidence-pack.md
+- task_id: c2-evidence-reconcile
+  title: C2 — Reconciliateur evidence contre traces machine
+  status: archived
+  priority: medium
+  owner: grimoire-maintainers
+  agent_roles:
+  - implementation
+  acceptance_criteria:
+  - Un claim de chemin absent du disque est classe CONTRADICTED et fait echouer la gate.
+  - Les refs manquantes d'une tache en review sont detectees.
+  - Les packs existants passent ou portent une requalification explicite.
+  verifiability:
+    class: V2
+    explanation: "Au moins un critère ne nomme ni verdict mécanique reconnu ni revue reconnue — ou la tâche n'a aucun critère
+      : sa vérifiabilité reste à démontrer."
+    criteria:
+    - criterion: Un claim de chemin absent du disque est classe CONTRADICTED et fait echouer la gate.
+      pattern: gate
+    - criterion: Les refs manquantes d'une tache en review sont detectees.
+      pattern: revue
+    - criterion: Les packs existants passent ou portent une requalification explicite.
+      pattern:
+  blockers: []
+  context_bundle_ref: _grimoire-output/context/c2-evidence-reconcile/context-bundle.yaml
+  decision_trace_ref: _grimoire-output/decisions/c2-evidence-reconcile/decision-trace.yaml
+  evidence_pack_ref: _grimoire-output/evidence/c2-evidence-reconcile/evidence-pack.md
+- task_id: c3-step-proof
+  title: C3 — Preuve par step via workflow-state-manifest
+  status: archived
+  priority: medium
+  owner: grimoire-maintainers
+  agent_roles:
+  - implementation
+  acceptance_criteria:
+  - La suppression de l'artefact d'un step intermediaire fait echouer le checker.
+  - La dette anterieure est exemptee explicitement, jamais silencieuse.
+  verifiability:
+    class: V2
+    explanation: "Au moins un critère ne nomme ni verdict mécanique reconnu ni revue reconnue — ou la tâche n'a aucun critère
+      : sa vérifiabilité reste à démontrer."
+    criteria:
+    - criterion: La suppression de l'artefact d'un step intermediaire fait echouer le checker.
+      pattern:
+    - criterion: La dette anterieure est exemptee explicitement, jamais silencieuse.
+      pattern:
+  blockers: []
+  context_bundle_ref: _grimoire-output/context/c3-step-proof/context-bundle.yaml
+  decision_trace_ref: _grimoire-output/decisions/c3-step-proof/decision-trace.yaml
+  evidence_pack_ref: _grimoire-output/evidence/c3-step-proof/evidence-pack.md
+- task_id: c4-engagement-metric
+  title: C4 — Mesure d'engagement des workflows
+  status: archived
+  priority: medium
+  owner: grimoire-maintainers
+  agent_roles:
+  - implementation
+  acceptance_criteria:
+  - Chaque session produit des events d'engagement horodates.
+  - Le rapport distingue jamais engage de engage sans effet.
+  verifiability:
+    class: V2
+    explanation: "Au moins un critère ne nomme ni verdict mécanique reconnu ni revue reconnue — ou la tâche n'a aucun critère
+      : sa vérifiabilité reste à démontrer."
+    criteria:
+    - criterion: Chaque session produit des events d'engagement horodates.
+      pattern:
+    - criterion: Le rapport distingue jamais engage de engage sans effet.
+      pattern:
+  blockers: []
+  context_bundle_ref: _grimoire-output/context/c4-engagement-metric/context-bundle.yaml
+  decision_trace_ref: _grimoire-output/decisions/c4-engagement-metric/decision-trace.yaml
+  evidence_pack_ref: _grimoire-output/evidence/c4-engagement-metric/evidence-pack.md
+- task_id: c5-golden-run
+  title: C5 — Golden run du workflow pilote
+  status: archived
+  priority: medium
+  owner: grimoire-maintainers
+  agent_roles:
+  - implementation
+  acceptance_criteria:
+  - Un run degrade est signale par le diff sans audit manuel.
+  - Le referentiel est versionne avec procedure de mise a jour documentee.
+  verifiability:
+    class: V2
+    explanation: "Au moins un critère ne nomme ni verdict mécanique reconnu ni revue reconnue — ou la tâche n'a aucun critère
+      : sa vérifiabilité reste à démontrer."
+    criteria:
+    - criterion: Un run degrade est signale par le diff sans audit manuel.
+      pattern: verification_manuelle
+    - criterion: Le referentiel est versionne avec procedure de mise a jour documentee.
+      pattern:
+  blockers: []
+  context_bundle_ref: _grimoire-output/context/c5-golden-run/context-bundle.yaml
+  decision_trace_ref: _grimoire-output/decisions/c5-golden-run/decision-trace.yaml
+  evidence_pack_ref: _grimoire-output/evidence/c5-golden-run/evidence-pack.md
+- task_id: r10-cockpit
+  title: R10 — Cockpit/observability
+  status: archived
+  priority: medium
+  owner: grimoire-maintainers
+  agent_roles:
+  - implementation
+  acceptance_criteria:
+  - Cockpit inputs are declared in observability-policy.yaml.
+  - Cockpit report is generated from standard artifacts, runtime events and evidence packs only.
+  - Cockpit remains read-only and never becomes the source of truth for tasks, memory, gates or scores.
+  - Governed standard verify, audit and docs build stay green.
+  verifiability:
+    class: V2
+    explanation: "Au moins un critère ne nomme ni verdict mécanique reconnu ni revue reconnue — ou la tâche n'a aucun critère
+      : sa vérifiabilité reste à démontrer."
+    criteria:
+    - criterion: Cockpit inputs are declared in observability-policy.yaml.
+      pattern:
+    - criterion: Cockpit report is generated from standard artifacts, runtime events and evidence packs only.
+      pattern:
+    - criterion: Cockpit remains read-only and never becomes the source of truth for tasks, memory, gates or scores.
+      pattern: gate
+    - criterion: Governed standard verify, audit and docs build stay green.
+      pattern:
+  blockers: []
+  context_bundle_ref: _grimoire-output/context/r10-cockpit/context-bundle.yaml
+  decision_trace_ref: _grimoire-output/decisions/r10-cockpit/decision-trace.yaml
+  evidence_pack_ref: _grimoire-output/evidence/r10-cockpit/evidence-pack.md
+- task_id: r8-redis-adapter
+  title: R8 — Redis hot memory adapter
+  status: archived
+  priority: medium
+  owner: grimoire-maintainers
+  agent_roles:
+  - implementation
+  acceptance_criteria:
+  - Redis adapter implemented in Kit with TTL payloads, leases, namespaced event publishing, and optional install extra.
+  - Forge declares Redis as optional hot memory while keeping durable Weaviate, Neo4j, and SQLite authoritative.
+  - Memory OS status reports Redis as ready when configured, or partial/soft-fail without data loss when Redis is 
+    absent.
+  - Standard verify stays green from a Forge-only checkout without vendored grimoire-kit.
+  verifiability:
+    class: V2
+    explanation: "Au moins un critère ne nomme ni verdict mécanique reconnu ni revue reconnue — ou la tâche n'a aucun critère
+      : sa vérifiabilité reste à démontrer."
+    criteria:
+    - criterion: Redis adapter implemented in Kit with TTL payloads, leases, namespaced event publishing, and optional 
+        install extra.
+      pattern:
+    - criterion: Forge declares Redis as optional hot memory while keeping durable Weaviate, Neo4j, and SQLite 
+        authoritative.
+      pattern:
+    - criterion: Memory OS status reports Redis as ready when configured, or partial/soft-fail without data loss when 
+        Redis is absent.
+      pattern:
+    - criterion: Standard verify stays green from a Forge-only checkout without vendored grimoire-kit.
+      pattern:
+  blockers: []
+  context_bundle_ref: _grimoire-output/context/r8-redis-adapter/context-bundle.yaml
+  decision_trace_ref: _grimoire-output/decisions/r8-redis-adapter/decision-trace.yaml
+  evidence_pack_ref: _grimoire-output/evidence/r8-redis-adapter/evidence-pack.md
+- task_id: r9-hooks-skills
+  title: R9 — Normalize hooks/rules/skills/agents taxonomy
+  status: archived
+  priority: medium
+  owner: grimoire-maintainers
+  agent_roles:
+  - implementation
+  acceptance_criteria:
+  - Hooks are classified into core template candidates, Forge project pack, and incubator assets.
+  - Skills are classified before promotion into Kit templates or governed Forge packs.
+  - hook-registry.yaml, rule-packs.yaml and pattern-catalog.yaml link hook/skill rules to evidence gates.
+  - standard verify stays green after taxonomy changes.
+  verifiability:
+    class: V2
+    explanation: "Au moins un critère ne nomme ni verdict mécanique reconnu ni revue reconnue — ou la tâche n'a aucun critère
+      : sa vérifiabilité reste à démontrer."
+    criteria:
+    - criterion: Hooks are classified into core template candidates, Forge project pack, and incubator assets.
+      pattern:
+    - criterion: Skills are classified before promotion into Kit templates or governed Forge packs.
+      pattern:
+    - criterion: hook-registry.yaml, rule-packs.yaml and pattern-catalog.yaml link hook/skill rules to evidence gates.
+      pattern: gate
+    - criterion: standard verify stays green after taxonomy changes.
+      pattern:
+  blockers: []
+  context_bundle_ref: _grimoire-output/context/r9-hooks-skills/context-bundle.yaml
+  decision_trace_ref: _grimoire-output/decisions/r9-hooks-skills/decision-trace.yaml
+  evidence_pack_ref: _grimoire-output/evidence/r9-hooks-skills/evidence-pack.md
