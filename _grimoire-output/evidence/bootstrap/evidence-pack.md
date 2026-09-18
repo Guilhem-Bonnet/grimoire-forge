@@ -25,47 +25,47 @@ Régénéré automatiquement depuis `evidence-log.jsonl` (hooks du host) — ne 
 
 | Preuve | Détail | Source | Résultat |
 |---|---|---|---|
-| … 55 entrée(s) plus ancienne(s) omise(s) |  |  |  |
-| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-core-I/src/grimoire/core/standard_checks/controls.py | hook PostToolUse (observé) | — |
-| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-core-I/src/grimoire/core/standard_checks/controls.py | hook PostToolUse (observé) | — |
-| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-core-I/src/grimoire/core/standard_checks/controls.py | hook PostToolUse (observé) | — |
-| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-core-I/src/grimoire/core/standard_checks/claim_ledger_verify.py | hook PostToolUse (observé) | — |
-| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-bench-toolchain/CHANGELOG.md | hook PostToolUse (observé) | — |
-| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-core-I/src/grimoire/core/standard_checks/verifiers.py | hook PostToolUse (observé) | — |
-| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-bench-toolchain/CHANGELOG.md | hook PostToolUse (observé) | — |
-| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-core-I/src/grimoire/core/standard_checks/verifiers.py | hook PostToolUse (observé) | — |
-| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-core-I/src/grimoire/core/standard_checks/gate_review_checks.py | hook PostToolUse (observé) | — |
-| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-core-I/src/grimoire/core/agentic_standard.py | hook PostToolUse (observé) | — |
-| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-core-I/src/grimoire/core/agentic_standard.py | hook PostToolUse (observé) | — |
-| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-core-I/src/grimoire/cli/cmd_standard.py | hook PostToolUse (observé) | — |
-| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-bench-toolchain/CHANGELOG.md | hook PostToolUse (observé) | — |
-| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-bench-toolchain/CHANGELOG.md | hook PostToolUse (observé) | — |
-| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-core-I/src/grimoire/cli/cmd_standard.py | hook PostToolUse (observé) | — |
-| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-core-I/src/grimoire/cli/cmd_standard.py | hook PostToolUse (observé) | — |
-| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-core-I/src/grimoire/cli/cmd_standard.py | hook PostToolUse (observé) | — |
-| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-core-I/src/grimoire/core/claude_activation.py | hook PostToolUse (observé) | — |
-| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-core-I/src/grimoire/core/standard_checks/gate_test_run.py | hook PostToolUse (observé) | — |
-| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-core-I/tests/unit/core/test_no_tests_collected.py | hook PostToolUse (observé) | — |
-| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-core-I/tests/test_agentic_standard.py | hook PostToolUse (observé) | — |
-| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-core-I/tests/test_agentic_standard.py | hook PostToolUse (observé) | — |
-| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-core-I/tests/test_agentic_standard.py | hook PostToolUse (observé) | — |
-| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-core-I/tests/test_agentic_standard.py | hook PostToolUse (observé) | — |
-| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-core-I/src/grimoire/core/standard_checks/registry.py | hook PostToolUse (observé) | — |
-| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-core-I/tests/unit/test_claude_activation.py | hook PostToolUse (observé) | — |
-| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-core-I/tests/unit/test_claude_activation.py | hook PostToolUse (observé) | — |
-| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-core-I/src/grimoire/core/standard_checks/gate_test_run.py | hook PostToolUse (observé) | — |
-| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-core-I/src/grimoire/core/standard_checks/claim_ledger_verify.py | hook PostToolUse (observé) | — |
-| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-core-I/CHANGELOG.md | hook PostToolUse (observé) | — |
-| Fichier modifié | /tmp/claude-1000/-mnt-Travail-Projets-Dev-Grimoire-Forge/3b37b0f8-4462-424b-878b-bac40e75aa45/scratchpad/wait_bench_j.sh | hook PostToolUse (observé) | — |
-| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-lot-j-report/docs/bench/rejeu-lot-j-2026-09-18.md | hook PostToolUse (observé) | — |
-| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-lot-j-report/docs/plan-2026-q4.md | hook PostToolUse (observé) | — |
-| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-lot-j-report/docs/plan-2026-q4.md | hook PostToolUse (observé) | — |
-| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-lot-j-report/docs/plan-2026-q4.md | hook PostToolUse (observé) | — |
-| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-lot-j-report/docs/plan-2026-q4.md | hook PostToolUse (observé) | — |
-| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-lot-j-report/docs/plan-2026-q4.md | hook PostToolUse (observé) | — |
-| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-lot-j-report/docs/index.md | hook PostToolUse (observé) | — |
-| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-lot-j-report/CHANGELOG.md | hook PostToolUse (observé) | — |
-| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/onboarding-audit/rapport-onboarding-2026-09-18.md | hook PostToolUse (observé) | — |
+| … 113 entrée(s) plus ancienne(s) omise(s) |  |  |  |
+| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-onboarding-1/src/grimoire/core/archetype_resolver.py | hook PostToolUse (observé) | — |
+| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-onboarding-1/src/grimoire/core/project_capabilities.py | hook PostToolUse (observé) | — |
+| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-onboarding-1/tests/test_project_capabilities.py | hook PostToolUse (observé) | — |
+| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-onboarding-1/src/grimoire/core/onboarding_panel.py | hook PostToolUse (observé) | — |
+| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-onboarding-1/src/grimoire/core/onboarding_panel.py | hook PostToolUse (observé) | — |
+| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-onboarding-1/src/grimoire/core/onboarding_panel.py | hook PostToolUse (observé) | — |
+| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-onboarding-1/src/grimoire/cli/cmd_init.py | hook PostToolUse (observé) | — |
+| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-onboarding-1/src/grimoire/cli/cmd_init.py | hook PostToolUse (observé) | — |
+| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-onboarding-1/tests/test_cmd_init.py | hook PostToolUse (observé) | — |
+| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-onboarding-1/src/grimoire/cli/cmd_init.py | hook PostToolUse (observé) | — |
+| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-onboarding-1/src/grimoire/core/policy_budget_guard_check.py | hook PostToolUse (observé) | — |
+| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-onboarding-1/src/grimoire/cli/app.py | hook PostToolUse (observé) | — |
+| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-onboarding-1/src/grimoire/core/project_capabilities.py | hook PostToolUse (observé) | — |
+| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-onboarding-1/src/grimoire/cli/app.py | hook PostToolUse (observé) | — |
+| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-onboarding-1/src/grimoire/cli/app.py | hook PostToolUse (observé) | — |
+| Fichier modifié | /tmp/claude-1000/-mnt-Travail-Projets-Dev-Grimoire-Forge/3b37b0f8-4462-424b-878b-bac40e75aa45/scratchpad/fil-init-grimoire.html | hook PostToolUse (observé) | — |
+| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-onboarding-1/src/grimoire/core/archetype_resolver.py | hook PostToolUse (observé) | — |
+| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-onboarding-1/src/grimoire/core/archetype_resolver.py | hook PostToolUse (observé) | — |
+| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-onboarding-1/src/grimoire/core/archetype_resolver.py | hook PostToolUse (observé) | — |
+| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-onboarding-1/src/grimoire/core/archetype_resolver.py | hook PostToolUse (observé) | — |
+| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-onboarding-1/src/grimoire/core/archetype_resolver.py | hook PostToolUse (observé) | — |
+| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-onboarding-1/src/grimoire/core/archetype_resolver.py | hook PostToolUse (observé) | — |
+| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-onboarding-1/tests/test_archetype_resolver.py | hook PostToolUse (observé) | — |
+| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-onboarding-1/tests/test_archetype_resolver.py | hook PostToolUse (observé) | — |
+| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-onboarding-1/tests/test_archetype_resolver.py | hook PostToolUse (observé) | — |
+| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-onboarding-1/tests/test_archetype_resolver.py | hook PostToolUse (observé) | — |
+| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-onboarding-1/tests/test_archetype_resolver.py | hook PostToolUse (observé) | — |
+| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-onboarding-1/src/grimoire/core/onboarding_panel.py | hook PostToolUse (observé) | — |
+| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-onboarding-1/src/grimoire/core/onboarding_panel.py | hook PostToolUse (observé) | — |
+| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-onboarding-1/src/grimoire/cli/cmd_init.py | hook PostToolUse (observé) | — |
+| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-onboarding-1/src/grimoire/cli/cmd_init.py | hook PostToolUse (observé) | — |
+| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-onboarding-1/src/grimoire/cli/cmd_init.py | hook PostToolUse (observé) | — |
+| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-onboarding-1/tests/test_cmd_init.py | hook PostToolUse (observé) | — |
+| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-onboarding-1/tests/test_onboarding_panel.py | hook PostToolUse (observé) | — |
+| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-onboarding-1/tests/unit/cli/test_app.py | hook PostToolUse (observé) | — |
+| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-onboarding-1/tests/unit/cli/test_app.py | hook PostToolUse (observé) | — |
+| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-onboarding-1/tests/unit/cli/test_app.py | hook PostToolUse (observé) | — |
+| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-onboarding-1/_scratch_verify_wizard.py | hook PostToolUse (observé) | — |
+| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-onboarding-1/src/grimoire/cli/cmd_init.py | hook PostToolUse (observé) | — |
+| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-onboarding-1/CHANGELOG.md | hook PostToolUse (observé) | — |
 <!-- grimoire:observed-inventory:end -->
 
 ## Validation
@@ -317,3 +317,4 @@ The bootstrap task is complete for the orchestrated profile baseline when `stand
 | Lot J terminé : le bras gouverné rejoint Claude nu | 60 runs kit-gov sur main @ G1-G3 + I (#607 #608 #609), campagne en deux exécutions (OAuth), 0 erreur, rapport ci-joint `banc-lot-j-kit-gov-2026-09-18.md` (PR `#611`) : tours médians 28,5 (F) → 12,0 (H) → **6,0** (= nu), coût par tâche résolue 1,915 → 0,769 → **0,445 USD** (nu 0,399, ≈ 112 %), succès 83,3 → 90,0 → **96,7 %** (nu 91,7), pass^k 75 → 85 → **95 %** (nu 90), gate vert au dernier appel 100 % ; par langue go 16 → 6, js 16 → 9, python 5, rust 8 ; verdicts : (a) cible du lot ATTEINTE, (b) critère historique 2/3 (tours 1,0×, succès > nu, coût 112 % au lieu de ≤ 70 %), (c) parité ≤ 110 % manquée de 1,7 point (bruit d'échantillon probable) ; `#610` MERGÉE (garde rejouable, `--auth api-key`) | agents Sonnet, relecture Fable | DÉCISION À PRENDRE par Guilhem : re-baser le critère de coût sur la parité → dégel des extras ; release 3.57.0 lancée (alignement Forge/homelab) ; suites : dosage V1/V2 par classe, second jeu de tâches lourdes pour mesurer le bénéfice |
 | Release 3.57.0 et alignement | PR `#612` MERGÉE, tag `v3.57.0` sur `ecda0fee`, `release.yml`/`publish.yml` verts, 5 assets, PyPI 3.57.0 ; 5 entrées sous `[3.57.0]` (#607-#611), aucun recalage git ; Forge : venv 3.57.0, flow cockpit (backup/preview/orphans/apply/verify faits, 3 propositions, checkpoint destructif en attente), doctor 31/31, gate bootstrap OK (7 passed), hook SessionStart sain, commit `577c6e4` ; homelab : pipx 3.57.0, flow cockpit verify OK, doctor 33/33, 7 propositions override-migration + 2 needs-hosts intactes | agent Sonnet, relecture Fable | phase 2bis close côté livraison ; en attente de Guilhem : re-base du critère de coût (dégel des extras), checkpoints destructifs et propositions sur les projets |
 | Onboarding : audit vécu de `grimoire init` (kit 3.57.0) | rapport ci-joint `audit-onboarding-2026-09-18.md`, trois projets jetables (Python nu, Node nu, vide), aucun inscrit au registre ; 5 manques : `-y`/`up` donnent toujours `minimal` (détection limitée à React/Vue/Django/FastAPI/Terraform/K8s/Ansible), la guided discovery existe mais n'est jamais proposée par défaut, panneau Next Steps 100 % statique (jamais cockpit/standard/hôtes/flows/skills/MCP), `docs/onboarding.md` obsolète (grimoire.sh, personas BMM, archétypes inexistants), init non-TTY bascule en express sans le dire ; correction factuelle : 5 hôtes réels (Claude Code, Copilot, Codex, Cursor, Gemini), « 177 » = issue #177 | agent Sonnet (lecture seule), Fable | niveau 1 « 60 secondes » lancé (détection des piles nues, discovery par défaut, next steps dynamiques, pied de page découvrir), relecture des textes par Guilhem avant fusion ; niveaux 2 (docs onboarding, tour guidé, message du concierge) et 3 (needs, propositions, bannière cockpit) à trancher |
+| Onboarding niveau 1 livré (relecture Guilhem) | issue `#616`, PR `#617` (sans auto-merge) : `archetype_resolver.resolve()` n'installe plus jamais `minimal` (Python/Rust/Go/vide nus → `platform-engineering`, Node nu → `web-app`, signaux faibles bundler/Dockerfile/CI+tests), `is_best_guess` jamais présenté comme « détecté », discovery par défaut à l'étape archétype du wizard, `-i/--interactive`, avis visible en non-TTY, `core/onboarding_panel.py` (Next Steps dynamiques ≤ 3 actions) + `core/project_capabilities.py` (capacités non exploitées, pied de page « Découvrir » sur doctor/status), `policy_budget_guard_check.py` extrait pour le ratchet ; 8145 tests verts, rejeu Python nu/Node nu/vide en `-y` et interactif (pexpect) < 1 s, rejeu Forge lecture seule 31/31 | agent Sonnet, relecture Fable | PR 2 (étape mémoire, fin de `--lite`) lancée sur la même branche de sujet ; CONSTAT : le catalogue n'a que 4 archétypes de domaine (web-app, platform-engineering, infra-ops, creative-studio), une pile nue tombe sur platform-engineering : à trancher (archétypes backend-service/cli/library/data ?) |
