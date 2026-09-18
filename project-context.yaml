@@ -46,3 +46,15 @@ source:
 # égale à la détection : les cinq hôtes ont déjà leurs fichiers dans la Forge.
 hosts:
   enabled: [claude, copilot, gemini, cursor, codex]
+
+# Besoins d'exécution (grimoire-kit #205, lot 2). Déclaration explicite parce
+# que la détection par marqueurs est fausse ici : la Forge est un atelier
+# Python + scripts shell, mais son seul manifeste racine est un `package.json`
+# (Playwright pour les recettes d'interface du cockpit, plus quatre scripts
+# `quality`/`standard:*`) — sans script `test`. La détection retenait donc
+# `npm test`, une commande qui n'existe pas dans ce dépôt.
+# La vraie suite de l'atelier est celle des gardes de hooks :
+# `.github/hooks/tests/` (7 tests, ~0,1 s).
+needs:
+  commands:
+    test-runner: ".venv/bin/python -m pytest .github/hooks/tests/ -q"

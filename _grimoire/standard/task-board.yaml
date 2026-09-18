@@ -42,10 +42,10 @@ tasks:
 - task_id: bootstrap
   title: Bootstrap — baseline du standard agentique sur la Forge
   status: accepted
-  priority: medium
+  priority: high
   owner: grimoire-maintainers
   agent_roles:
-  - implementation
+  - orchestrator
   acceptance_criteria:
   - grimoire standard verify passe sans erreur depuis la racine de la Forge.
   - Les artefacts du profil sont générés, remplis et vérifiés.
@@ -62,13 +62,15 @@ tasks:
   context_bundle_ref: _grimoire-output/context/bootstrap/context-bundle.yaml
   decision_trace_ref: _grimoire-output/decisions/bootstrap/decision-trace.yaml
   evidence_pack_ref: _grimoire-output/evidence/bootstrap/evidence-pack.md
+  remediation_ref: _grimoire/standard/remediation-plan.yaml
 - task_id: r7-forge-kit-adoption
   title: R7 — Forge adopts canonical grimoire-kit
   status: accepted
-  priority: medium
+  priority: high
   owner: grimoire-maintainers
   agent_roles:
-  - implementation
+  - orchestrator
+  - implementation-agent
   acceptance_criteria:
   - The Forge venv installs the published grimoire-kit release (>= 3.34.2) from PyPI, not an editable working tree.
   - grimoire standard verify passes from Forge root.
@@ -89,13 +91,14 @@ tasks:
   context_bundle_ref: _grimoire-output/context/r7-forge-kit-adoption/context-bundle.yaml
   decision_trace_ref: _grimoire-output/decisions/r7-forge-kit-adoption/decision-trace.yaml
   evidence_pack_ref: _grimoire-output/evidence/r7-forge-kit-adoption/evidence-pack.md
+  remediation_ref: _grimoire/standard/remediation-plan.yaml
 - task_id: c1-board-transitions
   title: C1 — Journal append-only des transitions kanban
   status: archived
-  priority: medium
+  priority: high
   owner: grimoire-maintainers
   agent_roles:
-  - implementation
+  - implementation-agent
   acceptance_criteria:
   - Toute edition de task-board.yaml changeant un statut produit un event journalise par hook.
   - Une transition illegale fait echouer npm run quality.
@@ -118,10 +121,10 @@ tasks:
 - task_id: c2-evidence-reconcile
   title: C2 — Reconciliateur evidence contre traces machine
   status: archived
-  priority: medium
+  priority: high
   owner: grimoire-maintainers
   agent_roles:
-  - implementation
+  - implementation-agent
   acceptance_criteria:
   - Un claim de chemin absent du disque est classe CONTRADICTED et fait echouer la gate.
   - Les refs manquantes d'une tache en review sont detectees.
@@ -147,7 +150,7 @@ tasks:
   priority: medium
   owner: grimoire-maintainers
   agent_roles:
-  - implementation
+  - implementation-agent
   acceptance_criteria:
   - La suppression de l'artefact d'un step intermediaire fait echouer le checker.
   - La dette anterieure est exemptee explicitement, jamais silencieuse.
@@ -170,7 +173,7 @@ tasks:
   priority: medium
   owner: grimoire-maintainers
   agent_roles:
-  - implementation
+  - implementation-agent
   acceptance_criteria:
   - Chaque session produit des events d'engagement horodates.
   - Le rapport distingue jamais engage de engage sans effet.
@@ -190,10 +193,10 @@ tasks:
 - task_id: c5-golden-run
   title: C5 — Golden run du workflow pilote
   status: archived
-  priority: medium
+  priority: low
   owner: grimoire-maintainers
   agent_roles:
-  - implementation
+  - implementation-agent
   acceptance_criteria:
   - Un run degrade est signale par le diff sans audit manuel.
   - Le referentiel est versionne avec procedure de mise a jour documentee.
@@ -216,7 +219,7 @@ tasks:
   priority: medium
   owner: grimoire-maintainers
   agent_roles:
-  - implementation
+  - implementation-agent
   acceptance_criteria:
   - Cockpit inputs are declared in observability-policy.yaml.
   - Cockpit report is generated from standard artifacts, runtime events and evidence packs only.
@@ -242,10 +245,10 @@ tasks:
 - task_id: r8-redis-adapter
   title: R8 — Redis hot memory adapter
   status: archived
-  priority: medium
+  priority: high
   owner: grimoire-maintainers
   agent_roles:
-  - implementation
+  - implementation-agent
   acceptance_criteria:
   - Redis adapter implemented in Kit with TTL payloads, leases, namespaced event publishing, and optional install extra.
   - Forge declares Redis as optional hot memory while keeping durable Weaviate, Neo4j, and SQLite authoritative.
@@ -278,7 +281,7 @@ tasks:
   priority: medium
   owner: grimoire-maintainers
   agent_roles:
-  - implementation
+  - implementation-agent
   acceptance_criteria:
   - Hooks are classified into core template candidates, Forge project pack, and incubator assets.
   - Skills are classified before promotion into Kit templates or governed Forge packs.
