@@ -2,8 +2,9 @@
   "task_id": "bootstrap",
   "command": ".venv/bin/python -m pytest .github/hooks/tests/ -q",
   "ok": true,
+  "collected": null,
   "exit_code": 0,
-  "output_excerpt": ".......                                                                  [100%]\n7 passed in 0.50s\n",
-  "recorded_at": "2026-09-18T04:40:01.455111+00:00",
-  "tree_fingerprint": "167f3744e3499ca006044ed50818db0467cd3d95197e5d982bb4c3dd8bc6db1a"
+  "output_excerpt": ".......                                                                  [100%]\n7 passed in 0.54s\n",
+  "recorded_at": "2026-09-18T14:59:26.165759+00:00",
+  "tree_fingerprint": "c753891fa913a65b27103f433ea2aacd3de65adea0ce03ecf0920aa8d112b2a9"
 }
