@@ -25,17 +25,47 @@ Régénéré automatiquement depuis `evidence-log.jsonl` (hooks du host) — ne 
 
 | Preuve | Détail | Source | Résultat |
 |---|---|---|---|
-| Fichier modifié | /tmp/claude-1000/-mnt-Travail-Projets-Dev-Grimoire-Forge/3b37b0f8-4462-424b-878b-bac40e75aa45/scratchpad/analyze_lot_h.py | hook PostToolUse (observé) | — |
-| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-lot-h-report/docs/bench/rejeu-lot-h-2026-09-18.md | hook PostToolUse (observé) | — |
-| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-lot-h-report/docs/bench/rejeu-lot-h-2026-09-18.md | hook PostToolUse (observé) | — |
-| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-lot-h-report/docs/plan-2026-q4.md | hook PostToolUse (observé) | — |
-| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-lot-h-report/docs/plan-2026-q4.md | hook PostToolUse (observé) | — |
-| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-lot-h-report/docs/plan-2026-q4.md | hook PostToolUse (observé) | — |
-| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-lot-h-report/docs/plan-2026-q4.md | hook PostToolUse (observé) | — |
-| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-lot-h-report/docs/plan-2026-q4.md | hook PostToolUse (observé) | — |
-| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-lot-h-report/docs/plan-2026-q4.md | hook PostToolUse (observé) | — |
-| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-lot-h-report/docs/index.md | hook PostToolUse (observé) | — |
-| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-lot-h-report/CHANGELOG.md | hook PostToolUse (observé) | — |
+| … 45 entrée(s) plus ancienne(s) omise(s) |  |  |  |
+| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-bench-toolchain/docs/bench-three-arms.md | hook PostToolUse (observé) | — |
+| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-bench-toolchain/docs/bench-three-arms.md | hook PostToolUse (observé) | — |
+| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-core-I/src/grimoire/core/standard_checks/no_tests_collected.py | hook PostToolUse (observé) | — |
+| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-core-I/src/grimoire/core/standard_checks/acceptance_test_run.py | hook PostToolUse (observé) | — |
+| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-core-I/src/grimoire/core/standard_checks/acceptance_test_run.py | hook PostToolUse (observé) | — |
+| Fichier modifié | /tmp/claude-1000/-mnt-Travail-Projets-Dev-Grimoire-Forge/3b37b0f8-4462-424b-878b-bac40e75aa45/scratchpad/verify_lot_i.py | hook PostToolUse (observé) | — |
+| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/bench-lot-i-verify/verify_lot_i.py | hook PostToolUse (observé) | — |
+| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-core-I/src/grimoire/core/standard_checks/gate_test_run.py | hook PostToolUse (observé) | — |
+| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-core-I/src/grimoire/core/standard_checks/gate_test_run.py | hook PostToolUse (observé) | — |
+| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-core-I/src/grimoire/core/standard_checks/gate_test_run.py | hook PostToolUse (observé) | — |
+| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-core-I/src/grimoire/core/standard_checks/controls.py | hook PostToolUse (observé) | — |
+| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-core-I/src/grimoire/core/standard_checks/controls.py | hook PostToolUse (observé) | — |
+| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-core-I/src/grimoire/core/standard_checks/controls.py | hook PostToolUse (observé) | — |
+| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-core-I/src/grimoire/core/standard_checks/claim_ledger_verify.py | hook PostToolUse (observé) | — |
+| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-bench-toolchain/CHANGELOG.md | hook PostToolUse (observé) | — |
+| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-core-I/src/grimoire/core/standard_checks/verifiers.py | hook PostToolUse (observé) | — |
+| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-bench-toolchain/CHANGELOG.md | hook PostToolUse (observé) | — |
+| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-core-I/src/grimoire/core/standard_checks/verifiers.py | hook PostToolUse (observé) | — |
+| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-core-I/src/grimoire/core/standard_checks/gate_review_checks.py | hook PostToolUse (observé) | — |
+| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-core-I/src/grimoire/core/agentic_standard.py | hook PostToolUse (observé) | — |
+| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-core-I/src/grimoire/core/agentic_standard.py | hook PostToolUse (observé) | — |
+| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-core-I/src/grimoire/cli/cmd_standard.py | hook PostToolUse (observé) | — |
+| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-bench-toolchain/CHANGELOG.md | hook PostToolUse (observé) | — |
+| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-bench-toolchain/CHANGELOG.md | hook PostToolUse (observé) | — |
+| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-core-I/src/grimoire/cli/cmd_standard.py | hook PostToolUse (observé) | — |
+| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-core-I/src/grimoire/cli/cmd_standard.py | hook PostToolUse (observé) | — |
+| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-core-I/src/grimoire/cli/cmd_standard.py | hook PostToolUse (observé) | — |
+| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-core-I/src/grimoire/core/claude_activation.py | hook PostToolUse (observé) | — |
+| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-core-I/src/grimoire/core/standard_checks/gate_test_run.py | hook PostToolUse (observé) | — |
+| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-core-I/tests/unit/core/test_no_tests_collected.py | hook PostToolUse (observé) | — |
+| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-core-I/tests/test_agentic_standard.py | hook PostToolUse (observé) | — |
+| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-core-I/tests/test_agentic_standard.py | hook PostToolUse (observé) | — |
+| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-core-I/tests/test_agentic_standard.py | hook PostToolUse (observé) | — |
+| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-core-I/tests/test_agentic_standard.py | hook PostToolUse (observé) | — |
+| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-core-I/src/grimoire/core/standard_checks/registry.py | hook PostToolUse (observé) | — |
+| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-core-I/tests/unit/test_claude_activation.py | hook PostToolUse (observé) | — |
+| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-core-I/tests/unit/test_claude_activation.py | hook PostToolUse (observé) | — |
+| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-core-I/src/grimoire/core/standard_checks/gate_test_run.py | hook PostToolUse (observé) | — |
+| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-core-I/src/grimoire/core/standard_checks/claim_ledger_verify.py | hook PostToolUse (observé) | — |
+| Fichier modifié | /mnt/Travail/Projets/Dev/Grimoire-Forge/_scratch/kit-core-I/CHANGELOG.md | hook PostToolUse (observé) | — |
 <!-- grimoire:observed-inventory:end -->
 
 ## Validation
@@ -282,3 +312,4 @@ The bootstrap task is complete for the orchestrated profile baseline when `stand
 | Release 3.56.0 et alignement | PR `#606` MERGÉE, tag `v3.56.0` sur `c5fd59d7`, `release.yml` 17 s et `publish.yml` 1 min 28 verts, 5 assets, PyPI 3.56.0 ; job Windows 5 min 01 (fin du timeout chronique, #593) ; 13 entrées sous `[3.56.0]` dont #593 remise à sa place ; Forge : venv 3.56.0, migration des tâches RÉPARÉE (restore `20260917T111706Z` puis rejeu : bootstrap `high`/`[orchestrator]`/`remediation_ref`, board identique à `5de804a^`, 10 tâches, états conservés), `needs.commands.test-runner` déclaré (`.venv/bin/python -m pytest .github/hooks/tests/ -q`, plus de `npm test`), flow cockpit `WFI-project-upgrade-015` (backup, preview, orphans, apply, verify faits ; 3 propositions ; checkpoint destructif en attente), doctor 31/31, `gate check --strict` exécute la suite (7 passed) et écrit `test-run.json`, hook SessionStart sain avec la directive de 396 caractères, commit `9e8d4ab` ; homelab : pipx 3.56.0, migration réparée (rôles et remediation_ref), flow `WFI-project-upgrade-012` avec `verify` FAIT (#595 confirmé), doctor 33/33, overrides et propositions intacts | agent Sonnet, relecture Fable | section « Inventaire observé » (G2) apparue dans ce pack : commitée ici ; worktrees fusionnés retirés ; lot H en campagne (`_scratch/bench-h2`) |
 | Lot H terminé (campagne valide) | 60 runs kit-gov sur main (lots G1-G3, #604, #605), 53,38 USD, rapport ci-joint `banc-lot-h-kit-gov-2026-09-18.md` (PR `#607`) : tours médians 28,5 → 12,0 (nu 6), coût par tâche résolue 1,915 → 0,769 USD (nu 0,399), succès 83 % → 90 % (= kit non gouverné), `test-run.json` 68 → 75 % ; par langue (tours médians kit-gov / nu) : python 7/4, rust 8/6, go 16/6, javascript 16/5 ; spéléologie dans le source du kit disparue (0/8 transcriptions), orientation gouvernance 4 tours, gate check 1 appel ; poste nouveau : recherche de la toolchain Go/Rust par l'agent (le harnais ne la provisionne que pour sa propre vérification) ; harnais `#603` (dépendances de test) et `#605` (binaire absolu + garde du gabarit) MERGÉS ; cible du lot (≤ 9 tours) NON atteinte, critère de phase non atteint : extras toujours gelés | agent Sonnet, relecture Fable | analyse Go/JS lancée (toolchain, checks encore manuels) ; lot I = harnais (toolchain dans le PATH de l'agent) + produit (checks auto-satisfaits, dosage V0) |
 | Lot H : analyse Go/JS et cadrage du lot I | analyse de 35 runs (`analyse-go-js-kit-gov-2026-09-18.md`, ci-joint) : Go 15/15 échouent au premier gate sur `acceptance.test_run_failed` (`go test` exit 127 : la toolchain provisionnée par le harnais n'est jamais dans le PATH de l'agent, 4 tours/run perdus) ; JS 0/15 n'atteignent jamais un gate vert (tests cachés par le banc → `npm test` « No tests found » exit 1, alors que 14/15 réussissent au jugement réel : le gate mesure autre chose que le succès) ; AUCUN échec dû aux artefacts de gouvernance sur 30 runs ; le gate ré-exécute un run rouge sur arbre identique | agent Sonnet (lecture seule), Fable (cadrage) | lot I lancé : harnais (toolchains et caches transmis à la session de l'agent, vérification par langue) + produit (`acceptance.no_tests_collected` distinct du rouge, pas de ré-exécution sur arbre identique, tâche V0 sans artefact à ouvrir) ; puis lot J = rejeu kit-gov |
+| Lot I livré | `#608` MERGÉE (harnais : `run_environment()` unique pour la session de l'agent et la vérification, Go en tête du PATH, caches Go/Cargo/npm sous le workspace, garde par langue avant toute dépense : go/js/python/rust exécutables sur dépôt réel, indicateur « friction toolchain » par run) ; `#609` relue et acceptée (auto-merge) : `acceptance.no_tests_collected` (pytest exit 5, jest « No tests found », go « no test files », cargo « running 0 tests », mocha « 0 passing ») en avertissement justifiable par « sans test : <raison> », matrice état × profil (erreur seulement en review/accepted/released pour governed/production), pas de ré-exécution sur arbre identique + `--rerun`, phrase V0 dans la directive et `decision_pending`/`claims.empty` tus pour une V0 hors profil governed ; rejeu Forge lecture seule : sortie du gate identique octet à octet | agents Sonnet, relecture Fable | lot J lancé : rejeu kit-gov après I, cible ≤ 9 tours, Go/JS < 10 |
