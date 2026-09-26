@@ -4,7 +4,7 @@
   "ok": true,
   "collected": null,
   "exit_code": 0,
-  "output_excerpt": ".......                                                                  [100%]\n7 passed in 0.54s\n",
-  "recorded_at": "2026-09-18T14:59:26.165759+00:00",
-  "tree_fingerprint": "c753891fa913a65b27103f433ea2aacd3de65adea0ce03ecf0920aa8d112b2a9"
+  "output_excerpt": ".......                                                                  [100%]\n7 passed in 0.06s\n",
+  "recorded_at": "2026-09-26T18:47:35.134848+00:00",
+  "tree_fingerprint": "8735216c189c482c43c3d925f5b09756709a41f1233860ae88c8be26b3dee5cf"
 }

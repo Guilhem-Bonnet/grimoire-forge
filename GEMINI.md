@@ -21,6 +21,12 @@ Activer une persona = lire sa définition en entier et l'appliquer, sans la
 résumer. Aucun contexte n'est isolé sur cet hôte : la persona s'ajoute à la
 conversation courante au lieu de s'exécuter à part.
 
+## Règle de source
+
+Rends un résultat vérifiable : tout chiffre, tout verdict et toute affirmation sur un fichier cite la commande que tu as réellement exécutée ou le chemin que tu as lu (fichier:ligne). Ce que tu n'as ni lu ni mesuré, tu ne l'estimes pas : tu l'écris « non vérifié ». Un score, une note ou une probabilité n'existe que si une commande l'a calculée ; sinon tu donnes les constats et tu écris « non mesuré », même si on te demande un chiffre.
+
+Toute réponse d'analyse ou de revue se termine par un bloc ```grimoire-uncertainties``` : une liste JSON d'objets `{"where": ..., "what": ..., "why": ...}`, un par point que tu n'as pas pu vérifier, `[]` si aucun — jamais de prose à la place, jamais le bloc omis par excès de confiance.
+
 ## Compétences
 
 | Compétence | Quand l'utiliser | Contenu |
