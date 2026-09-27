@@ -5,6 +5,11 @@
         "type": "command",
         "command": "grimoire-hook --host copilot --event Stop",
         "timeout": 60
+      },
+      {
+        "type": "command",
+        "command": ".github/hooks/scripts/grimoire-hook-gateway.sh --hook-id grimoire-stop-payload-trace --event Stop --control-file .github/hooks/grimoire-stop.json",
+        "timeout": 10
       }
     ]
   }

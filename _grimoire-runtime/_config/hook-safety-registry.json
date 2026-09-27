@@ -214,6 +214,18 @@
       "mode": "enforced",
       "validatedDigest": "44c03cb3ce0be96adeb4d7a43aabd32100675f9673bda9a15758c7ffa8e1c166",
       "validatedAt": "2026-09-08T18:23:03Z"
+    },
+    "grimoire-stop-payload-trace": {
+      "event": "Stop",
+      "target": ".github/hooks/scripts/grimoire-stop-payload-trace.sh",
+      "controlFiles": [
+        ".github/hooks/grimoire-stop.json",
+        ".github/hooks/scripts/grimoire-hook-gateway.sh"
+      ],
+      "mode": "shadow",
+      "validatedDigest": "",
+      "validatedAt": "",
+      "note": "TEMPORAIRE — Grimoire-kit#627 : établir si le Stop de Copilot fournit transcript_path. Retirer ensuite."
     }
   }
 }
